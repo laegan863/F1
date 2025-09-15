@@ -2,9 +2,9 @@
 @section("title", "Treatment Plan and Diagnosis")
 @section("nav_title", "TREATMENT PLAN AND DIAGNOSIS FORM")
 @section("content")
-<form id="form" method="POST" action="">
+<form id="form" method="POST" action="{{ route('submit-treatment-data') }}">
     @csrf
-    <div class="card-body p-5">
+    <div class="card-body p-4">
 
         {{-- Q56: Date of Diagnosis --}}
         <div class="mb-3">
@@ -83,6 +83,7 @@
             @endforeach
         </div>
         <div id="anticancer_details" class="{{ old('anticancer_drug') == 'Yes' ? '' : 'd-none' }}">
+
             <label class="form-label fw-bold">Purpose of Drug Administration</label><br>
             @foreach(['Neoadjuvant','Adjuvant','Palliative'] as $purpose)
                 <div class="form-check form-check-inline">
@@ -94,14 +95,29 @@
 
             <div class="mt-3">
                 <label class="form-label fw-bold">Drug Types</label><br>
-                @foreach(['Cytotoxic','Hormonal','Immunologic','Targeted','Others'] as $type)
+                @php
+                    $standardTypes = ['Cytotoxic','Hormonal','Immunologic','Targeted'];
+                    $oldTypes = old('drug_types', []);
+                    $otherType = collect($oldTypes)->diff($standardTypes)->first();
+                @endphp
+
+                @foreach($standardTypes as $type)
                     <div class="form-check form-check-inline">
                         <input type="checkbox" class="form-check-input" name="drug_types[]" value="{{ $type }}"
-                               {{ in_array($type, old('drug_types', [])) ? 'checked' : '' }}>
+                            {{ in_array($type, $oldTypes) ? 'checked' : '' }}>
                         <label class="form-check-label">{{ $type }}</label>
                     </div>
                 @endforeach
+
+                <div class="form-check form-check-inline">
+                    <div class="d-flex align-items-center gap-2">
+                        <label class="form-check-label">Others</label>
+                        <input type="text" class="form-control" name="drug_types[]"
+                            value="{{ $otherType ?? '' }}" placeholder="Specify">
+                    </div>
+                </div>
             </div>
+
         </div>
 
         {{-- Q60–Q63: First to Third Line & Other Anti-Cancer Drugs --}}
@@ -167,7 +183,7 @@
             <label class="form-label">If yes, indicate type:</label>
             @php
                 $radio_types = ["2D conventional","3DCRT","Brachytherapy","Electron Therapy","IMRT/VMAT/Helical",
-                                "IORT","Heavy Particles","Proton Therapy","Stereotactic Radiosurgery / Radiotherapy","Others"];
+                                "IORT","Heavy Particles","Proton Therapy","Stereotactic Radiosurgery / Radiotherapy"];
             @endphp
             <div class="row">
                 @foreach($radio_types as $i => $rt)
@@ -179,6 +195,12 @@
                     </div>
                 </div>
                 @endforeach
+                <div class="col-md-4">
+                    <div class="my-1">
+                        <label class="form-check-label" for="others">Others</label>
+                        <input type="text" class="form-control" name="radiotherapy_types_others" value="{{ old('radiotherapy_types_others') }}">
+                    </div>
+                </div>
             </div>
 
             <label class="form-label mt-2">Specify Sequence</label><br>
@@ -214,11 +236,11 @@
         <div id="theranostics_details" class="{{ old('theranostics') == 'Yes' ? '' : 'd-none' }}">
             <label class="form-label">If yes, indicate type:</label>
             @php
-                $thera_types = ["RAI","PRRT","PRLT","SIRT","Others"];
+                $thera_types = ["RAI","PRRT","PRLT","SIRT"];
             @endphp
             <div class="row">
                 @foreach($thera_types as $i => $th)
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-check">
                         <input type="checkbox" class="form-check-input" name="theranostics_types[]" value="{{ $th }}"
                                id="th{{ $i }}" {{ in_array($th, old('theranostics_types', [])) ? 'checked' : '' }}>
@@ -226,6 +248,12 @@
                     </div>
                 </div>
                 @endforeach
+                <div class="col-md-6">
+                    <div class="my-2 d-flex gap-2 align-items-center">
+                        <label class="form-check-label">Others</label>
+                        <input type="text" class="form-control" value="{{ old('theranostics_types_others') }}" name="theranostics_types_others" placeholder="Please specify" value="">
+                    </div>
+                </div>
             </div>
 
             <br><label class="form-label mt-2">If yes, specify the Goal</label><br>
