@@ -28,7 +28,6 @@ Route::view(uri: '/', view: 'forms.demographic');
 Route::view(uri: "risk-factor", view: "forms.riskfactor");
 Route::view(uri: 'cancer-diagnose', view: 'forms.cancer-diagnose');
 Route::view('treatment-diagnose', 'forms.treatment-diagnose');
-Route::view('automatic-print', 'forms.auto-print');
 
 Route::middleware(IsAuthenticated::class)->group(function () {
     Route::view(uri: '/admin', view: 'login')->name( name: 'login');
