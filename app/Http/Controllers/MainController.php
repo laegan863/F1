@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Demographicprofile;
 use App\Models\Riskfactor;
 use App\Models\Cancerdiagnose;
+use App\Models\Treatment;
 
 class MainController extends Controller
 {
@@ -251,6 +252,76 @@ class MainController extends Controller
 
         return response()->json([
             'data' => $validated
+        ]);
+    }
+
+    public function submit_treatment_data(Request $request)
+    {
+        $validate = $request->validate([
+            'date_of_diagnosis' => 'required|date',
+            'team_approach' => 'required|in:Yes,No',
+            'disciplines' => $request->team_approach == "Yes" ? "required|array" : "nullable",
+            'discipline_other' => "nullable",
+
+            'surgery' => 'required|in:Yes,No',
+            'surgery_goal' => $request->surgery == "Yes" ? "required" : "nullable",
+
+            'anticancer_drug' => 'required|in:Yes,No',
+            'drug_purpose' => $request->anticancer_drug == "Yes" ? "required|array" : "nullable",
+            'drug_types' => $request->anticancer_drug == "Yes" ? "required|array" : "nullable",
+
+            'first_line_drug' => 'required|in:Yes,No',
+            "first_drug_regimen" => $request->first_line_drug == "Yes" ? "required" : "nullable",
+            "first_cycles" => $request->first_line_drug == "Yes" ? "required" : "nullable",
+            "first_treatment_goal" => $request->first_line_drug == "Yes" ? "required" : "nullable",
+            "first_time" => $request->first_line_drug == "Yes" ? "required" : "nullable",
+
+            'second_line_drug' => 'required|in:Yes,No',
+            "second_drug_regimen" => $request->second_line_drug == "Yes" ? "required" : "nullable",
+            "second_cycles" => $request->second_line_drug == "Yes" ? "required" : "nullable",
+            "second_treatment_goal" => $request->second_line_drug == "Yes" ? "required" : "nullable",
+            "second_time" => $request->second_line_drug == "Yes" ? "required" : "nullable",
+
+            'third_line_drug' => 'required|in:Yes,No',
+            "third_drug_regimen" => $request->third_line_drug == "Yes" ? "required" : "nullable",
+            "third_cycles" => $request->third_line_drug == "Yes" ? "required" : "nullable",
+            "third_treatment_goal" => $request->third_line_drug == "Yes" ? "required" : "nullable",
+            "third_time" => $request->third_line_drug == "Yes" ? "required" : "nullable",
+
+            'other_subsequent_line_drug' => 'required|in:Yes,No',
+            'indicate_line' => $request->other_subsequent_line_drug == "Yes" ? "required" : "nullable",
+            "other_subsequent_drug_regimen" => $request->other_subsequent_line_drug == "Yes" ? "required" : "nullable",
+            "other_subsequent_cycles" => $request->other_subsequent_line_drug == "Yes" ? "required" : "nullable",
+            "other_subsequent_treatment_goal" => $request->other_subsequent_line_drug == "Yes" ? "required" : "nullable",
+            "other_subsequent_time" => $request->other_subsequent_line_drug == "Yes" ? "required" : "nullable",
+
+            'radiotherapy' => 'required|in:Yes,No',
+            'radiotherapy_types' => $request->other_subsequent_line_drug == "Yes" ? "required|array" : "nullable",
+            'radiotherapy_types_others' => 'nullable',
+            'radiotherapy_sequence' => $request->other_subsequent_line_drug == "Yes" ? "required" : "nullable",
+            'radiotherapy_goal' => $request->other_subsequent_line_drug == "Yes" ? "required" : "nullable",
+
+            'theranostics' => 'required|in:Yes,No',
+            'theranostics_types' => $request->theranostics == "Yes" ? "required|array" : "nullable",
+            'theranostics_types_others' => "nullable",
+            'theranostics_goal' => $request->theranostics == "Yes" ? "required" : "nullable",
+
+            'other_therapies' => 'required|in:Yes,No',
+            'other_therapies_types' => $request->other_therapies == "Yes" ? "required|array" : "nullable",
+            'other_therapies_other' => "nullable",
+
+        ],[
+            'team_approach.required' => 'The Multidisciplinary Cancer Team Approach Practiced',
+            'other_therapies.required' => 'The Other Cancer Directed Therapies is required',
+            'disciplines.required' => 'Please specify all disciplines involved',
+            'surgery_goal.required' => 'Please specify the goal in Surgery',
+            'drug_purpose.required' => 'Please specify the Purpose of Drug Administration',
+        ]);
+
+        Treatment::create($validate);
+
+        return response()->json([
+            'data' => $request->all()
         ]);
     }
 }

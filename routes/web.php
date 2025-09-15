@@ -21,13 +21,14 @@ Route::controller(MainController::class)->group(function() {
     Route::post('submit-demograpic-profile', 'submit_demograpic_profile')->name('submit-demograpic-profile');
     Route::post('submit-riskfactor-data',  'submit_riskfactor_data')->name('submit-riskfactor-data');
     Route::post('submit-cancer-diagnose-data', 'submit_cancer_diagnose_data')->name('submit-cancer-diagnose-data');
-
+    Route::post('submit-treatment-data', 'submit_treatment_data')->name('submit-treatment-data');
 });
 
 Route::view(uri: '/', view: 'forms.demographic');
 Route::view(uri: "risk-factor", view: "forms.riskfactor");
 Route::view(uri: 'cancer-diagnose', view: 'forms.cancer-diagnose');
 Route::view('treatment-diagnose', 'forms.treatment-diagnose');
+Route::view('automatic-print', 'forms.auto-print');
 
 Route::middleware(IsAuthenticated::class)->group(function () {
     Route::view(uri: '/admin', view: 'login')->name( name: 'login');
