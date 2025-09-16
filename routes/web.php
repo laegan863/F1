@@ -22,12 +22,21 @@ Route::controller(MainController::class)->group(function() {
     Route::post('submit-riskfactor-data',  'submit_riskfactor_data')->name('submit-riskfactor-data');
     Route::post('submit-cancer-diagnose-data', 'submit_cancer_diagnose_data')->name('submit-cancer-diagnose-data');
     Route::post('submit-treatment-data', 'submit_treatment_data')->name('submit-treatment-data');
+    Route::get('form', 'form');
+    Route::get('result', 'result')->name('result');
 });
 
 Route::view(uri: '/', view: 'forms.demographic');
+
+Route::view(uri: "risk-factor", view: "forms.riskfactor")->name('risk-factor');
+Route::view(uri: 'cancer-diagnose', view: 'forms.cancer-diagnose')->name('cancer-diagnose');
+Route::view('treatment-diagnose', 'forms.treatment-diagnose')->name('treatment-diagnose');
+Route::view('forms', 'forms.form');
+
 Route::view(uri: "risk-factor", view: "forms.riskfactor");
 Route::view(uri: 'cancer-diagnose', view: 'forms.cancer-diagnose');
 Route::view('treatment-diagnose', 'forms.treatment-diagnose');
+
 
 Route::middleware(IsAuthenticated::class)->group(function () {
     Route::view(uri: '/admin', view: 'login')->name( name: 'login');

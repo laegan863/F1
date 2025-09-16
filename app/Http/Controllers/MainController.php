@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
+use App\Models\Invoice;
+use Spatie\LaravelPdf\Facades\Pdf;
 use App\Models\Demographicprofile;
 use App\Models\Riskfactor;
 use App\Models\Cancerdiagnose;
@@ -12,6 +15,13 @@ use App\Models\Treatment;
 
 class MainController extends Controller
 {
+    public function form()
+    {
+        return Pdf::view('forms.form')
+            ->format('A4')
+            ->margins(0, 0, 0, 0)
+            ->download('test.pdf');
+    }
     public function convert_code_to_name($province_code, $city_code, $barangay_code)
     {
         $data = [];
@@ -20,21 +30,21 @@ class MainController extends Controller
         if ($province->successful()) {
             $provinces = $province->json();
             $provinceList = collect($provinces)->pluck('name', 'code')->toArray();
-            $data['permanent']['province'] = $provinceList[$province_code] ?? 'Unknown';
+            $data['province'] = $provinceList[$province_code] ?? 'Unknown';
         }
 
         $city = Http::get("https://psgc.gitlab.io/api/provinces/{$province_code}/cities-municipalities/");
         if ($city->successful()) {
             $cities = $city->json();
             $cityList = collect($cities)->pluck('name', 'code')->toArray();
-            $data['permanent']['city'] = $cityList[$city_code] ?? 'Unknown';
+            $data['city'] = $cityList[$city_code] ?? 'Unknown';
         }
 
         $brgy = Http::get("https://psgc.gitlab.io/api/cities-municipalities/{$city_code}/barangays/");
         if ($brgy->successful()) {
             $brgys = $brgy->json();
             $brgyList = collect($brgys)->pluck('name', 'code')->toArray();
-            $data['permanent']['barangay'] = $brgyList[$barangay_code] ?? 'Unknown';
+            $data['barangay'] = $brgyList[$barangay_code] ?? 'Unknown';
         }
 
         return $data;
@@ -43,8 +53,10 @@ class MainController extends Controller
     public function submit_demograpic_profile(Request $request)
     {
         $validate = $request->validate([
+            "philhealth_facilty_id_number" => "required|min:12",
+            "philhealth_number"   => "required|string",
             "name.firstname"   => "required|string",
-            "name.middlename"  => "required|string",
+            "name.middlename"  => "nullable|string",
             "name.lastname"    => "required|string",
             "name.suffix"      => "required|string",
             "married_maiden_name" => "nullable|string",
@@ -74,6 +86,7 @@ class MainController extends Controller
             "number_of_years_in_occupation" => "required"
 
         ],[
+            'philhealth_facilty_id_number.min' => 'The philhealth facilty id number field must be 12 numbers.',
             "name.firstname.required" => "The first name field is required!",
             "name.middlename.required"   => "The middle name field is required.",
             "name.lastname.required"  => "The lastname field is required.",
@@ -143,14 +156,11 @@ class MainController extends Controller
         $validate["relative"] = $relative;
         $validate["code"] = str::random(15);
 
-        Demographicprofile::create($validate);
+        $data = Demographicprofile::create($validate);
 
-        // return back()->withInput();
+        Session::put(key: 'code', value: $data->id);
+        return to_route(route: 'risk-factor');
 
-        return response()->json([
-            'data' => $validate,
-            "user" => $exists
-        ]);
     }
 
     public function submit_riskfactor_data(Request $request){
@@ -206,12 +216,20 @@ class MainController extends Controller
             "contraceptive_types.required" => "Please the specific type the use of contraceptives",
         ]);
 
-        $validate["code"] = str::random(10);
+        $validate["code"] = Session::get(key: 'code');
         unset($validate["_token"]);
 
         try {
 
-            Riskfactor::create($validate);
+            $exist = Riskfactor::where('code', $validate['code'])->exists();
+
+            if($exist){
+                Riskfactor::where(column: 'code', operator: $validate["code"])->update($validate);
+            }else{
+                Riskfactor::create($validate);
+            }
+
+            return to_route(route: 'cancer-diagnose');
 
         } catch (\Throwable $th) {
             return response()->json([
@@ -219,14 +237,14 @@ class MainController extends Controller
             ]);
         }
 
-        return response()->json([
-            'data' => $validate
-        ]);
+        // return response()->json([
+        //     'data' => $validate
+        // ]);
     }
 
     public function submit_cancer_diagnose_data(Request $request)
     {
-        $validated = $request->validate([
+        $validate = $request->validate([
             'multiple_sites'       => 'required',
             'primary_site_number'  => $request->multiple_sites == "yes" ? "required" : 'nullable|integer|min:1',
             'cancer_sites'         => 'nullable|array',
@@ -246,13 +264,27 @@ class MainController extends Controller
             'multiple_sites.required' => 'The active Primary Cancer Site(s) field is required',
         ]);
 
-        $validated["code"] = str::random(10);
+        $validate["code"] = Session::get(key: 'code');
 
-        Cancerdiagnose::create($validated);
+        if($validate["multiple_sites"] == "no"){
+            $validate["primary_site_number"] = null;
+            $validate["cancer_sites"] = null;
+            $validate["cancer_site_other"] = null;
+        }
 
-        return response()->json([
-            'data' => $validated
-        ]);
+        $exist = Cancerdiagnose::where('code', $validate['code'])->exists();
+
+        if($exist){
+            Cancerdiagnose::where(column: 'code', operator: $validate["code"])->update($validate);
+        }else{
+            Cancerdiagnose::create($validate);
+        }
+
+        return to_route(route: 'treatment-diagnose');
+
+        // return response()->json([
+        //     'data' => $validated
+        // ]);
     }
 
     public function submit_treatment_data(Request $request)
@@ -317,11 +349,57 @@ class MainController extends Controller
             'surgery_goal.required' => 'Please specify the goal in Surgery',
             'drug_purpose.required' => 'Please specify the Purpose of Drug Administration',
         ]);
+        $validate["code"] = Session::get(key: 'code');
 
-        Treatment::create($validate);
+        $nullables = [
+            'team_approach' => ['disciplines','discipline_other'],
+            'surgery' => ['surgery_goal'],
+            'anticancer_drug' => ['drug_purpose','drug_types'],
+            'first_line_drug' => ['first_drug_regimen','first_cycles','first_treatment_goal','first_time'],
+            'second_line_drug' => ['second_drug_regimen','second_cycles','second_treatment_goal','second_time'],
+            'third_line_drug' => ['third_drug_regimen','third_cycles','third_treatment_goal','third_time'],
+            'other_subsequent_line_drug' => ['indicate_line','other_subsequent_drug_regimen','other_subsequent_cycles','other_subsequent_treatment_goal','other_subsequent_time'],
+            'radiotherapy' => ['radiotherapy_types','radiotherapy_types_others','radiotherapy_sequence','radiotherapy_goal'],
+            'theranostics' => ['theranostics_types','theranostics_types_others','theranostics_goal'],
+            'other_therapies' => ['other_therapies_types','other_therapies_other'],
+        ];
 
-        return response()->json([
-            'data' => $request->all()
-        ]);
+        foreach ($nullables as $condition => $fields) {
+            if ($validate[$condition] === "No") {
+                foreach ($fields as $field) {
+                    $validate[$field] = null;
+                }
+            }
+        }
+
+        $exist = Treatment::where('code', $validate['code'])->exists();
+
+        if($exist){
+            Treatment::where(column: 'code', operator: $validate["code"])->update($validate);
+        }else{
+            Treatment::create($validate);
+        }
+
+        return to_route('result');
+
+    }
+
+    public function result(){
+
+        // $code = Session::get('code');
+        $code = 2;
+        $data = Demographicprofile::where('id', $code)->first();
+
+        $data['date_of_birth'] = str_replace(search: "-", replace: "", subject: $data->date_of_birth);
+        $data['date_of_birth'] = str_split($data['date_of_birth']);
+        $data['philhealth_number'] = str_split($data['philhealth_number']);
+        foreach ($data->name as $key => $value) {
+            $data[$key] = $value;
+        }
+        unset($data['name']);
+
+        // return response()->json(['data' => $data]);
+        return view('forms.form', ['data' => $data]);
+
     }
 }
