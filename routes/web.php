@@ -27,16 +27,21 @@ Route::controller(MainController::class)->group(function() {
 });
 
 Route::view(uri: '/', view: 'forms.demographic');
-<<<<<<< HEAD
+
 Route::view(uri: "risk-factor", view: "forms.riskfactor")->name('risk-factor');
 Route::view(uri: 'cancer-diagnose', view: 'forms.cancer-diagnose')->name('cancer-diagnose');
 Route::view('treatment-diagnose', 'forms.treatment-diagnose')->name('treatment-diagnose');
 Route::view('forms', 'forms.form');
-=======
+
 Route::view(uri: "risk-factor", view: "forms.riskfactor");
 Route::view(uri: 'cancer-diagnose', view: 'forms.cancer-diagnose');
 Route::view('treatment-diagnose', 'forms.treatment-diagnose');
->>>>>>> main
+
+Route::view(uri: "risk-factor", view: "forms.riskfactor");
+Route::view(uri: 'cancer-diagnose', view: 'forms.cancer-diagnose');
+Route::view('treatment-diagnose', 'forms.treatment-diagnose');
+
+
 
 Route::middleware(IsAuthenticated::class)->group(function () {
     Route::view(uri: '/admin', view: 'login')->name( name: 'login');
