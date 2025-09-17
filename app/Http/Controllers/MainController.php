@@ -387,6 +387,7 @@ class MainController extends Controller
     public function result(){
 
         // $code = Session::get('code');
+
         $code = 2;
         $data = Demographicprofile::where('id', $code)->first();
 

@@ -2964,20 +2964,20 @@
                 <td class="s24" dir="ltr">10</td>
                 <td class="s25" colspan="10">If Married, Maiden Name</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data->married_maiden_name ? 'unchecked' : 'checked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">1</td>
                 <td class="s34" colspan="2">N/A</td>
-                <td class="s27" dir="ltr" colspan="11">DAMES</td>
+                <td class="s27" dir="ltr" colspan="11">{{ $data->married_maiden_name && $data->married_maiden_name }}</td>
                 <td class="s24" dir="ltr">11</td>
                 <td class="s25" colspan="4">Sex at Birth</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data->sex == 'male' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">1</td>
                 <td class="s35" dir="ltr" colspan="2">Male</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data->sex == 'female' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s36" dir="ltr" colspan="3">Female</td>
@@ -3009,17 +3009,17 @@
                 <td class="s24" dir="ltr" rowspan="2">14</td>
                 <td class="s25" colspan="10" rowspan="2">Civil Status</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data->civil_status == 'Single' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s40" colspan="5">Single </td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data->civil_status == 'Married' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">3</td>
                 <td class="s41" colspan="9">Common-law/Live-in</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data->civil_status == 'Common-law/Live-in' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">5</td>
                 <td class="s42" colspan="9">Widowed</td>
@@ -3029,12 +3029,12 @@
                         <div class="row-header-wrapper" style="line-height: 21px">29</div>
                     </th> -->
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data->civil_status == 'Married' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s43" colspan="5">Married </td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data->civil_status == 'Divorced' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">4</td>
                 <td class="s35" colspan="9">Divorced/Separated/Annulled</td>
