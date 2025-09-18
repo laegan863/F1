@@ -33,10 +33,6 @@ Route::view(uri: 'cancer-diagnose', view: 'forms.cancer-diagnose')->name('cancer
 Route::view('treatment-diagnose', 'forms.treatment-diagnose')->name('treatment-diagnose');
 Route::view('forms', 'forms.form');
 
-Route::view(uri: "risk-factor", view: "forms.riskfactor");
-Route::view(uri: 'cancer-diagnose', view: 'forms.cancer-diagnose');
-Route::view('treatment-diagnose', 'forms.treatment-diagnose');
-
 
 Route::middleware(IsAuthenticated::class)->group(function () {
     Route::view(uri: '/admin', view: 'login')->name( name: 'login');

@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('demographicprofiles', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('code');
+            $table->string('patient_first_encounter');
+            $table->string('patient_health_facility_id');
+            $table->string('philhealth_id');
             $table->json('name');
             $table->string('married_maiden_name')->nullable();
             $table->string('date_of_birth');

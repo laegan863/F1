@@ -6,6 +6,27 @@
         @csrf
         <div class="card-body p-5">
             <div class="row mb-3">
+                <div class="col-md-4 mb-3">
+                    <label for="firstName" class="form-label">Date of Patient's First Encounter<small class="text-danger">*</small></label>
+                    {{-- @error('name.firstname')
+                        <div class="text-danger small">{{ $message }}</div>
+                    @enderror --}}
+                    <input type="date" class="form-control" value="{{ old('patient_first_encounter') }}" name="patient_first_encounter" id="" autofocus>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Patient’s Health Facility ID No.<small class="text-danger">*</small></label>
+                    {{-- @error('name.middlename')
+                        <div class="text-danger small">{{ $message }}</div>
+                    @enderror --}}
+                    <input type="text" class="form-control" value="{{ old('patient_health_facility_id') }}" name="patient_health_facility_id" id="" placeholder="Enter Patient’s Health Facility ID No.">
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="lastName" class="form-label">PhilHealth Identification No. (PIN)<small class="text-danger">*</small></label>
+                    {{-- @error('name.lastname')
+                        <div class="text-danger small">{{ $message }}</div>
+                    @enderror --}}
+                    <input type="text" class="form-control" value="{{ old('philhealth_id') }}" name="philhealth_id" id="" placeholder="Enter PhilHealth Identification No. (PIN)">
+                </div>
                 <div class="col-md-3">
                     <label for="firstName" class="form-label">First Name<small class="text-danger">*</small></label>
                     {{-- @error('name.firstname')

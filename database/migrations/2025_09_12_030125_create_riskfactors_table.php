@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->string('code');
+            $table->foreignId('code')->constrained('demographicprofiles')->onDelete('cascade');
 
             $table->string('tobacco_use')->nullable();
             $table->string('second_hand_smoke')->nullable();

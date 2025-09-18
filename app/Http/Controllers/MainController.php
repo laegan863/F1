@@ -53,8 +53,9 @@ class MainController extends Controller
     public function submit_demograpic_profile(Request $request)
     {
         $validate = $request->validate([
-            "philhealth_facilty_id_number" => "required|min:12",
-            "philhealth_number"   => "required|string",
+            'patient_first_encounter' => 'required|date',
+            "patient_health_facility_id" => "required|min:12",
+            "philhealth_id"   => "required|string",
             "name.firstname"   => "required|string",
             "name.middlename"  => "nullable|string",
             "name.lastname"    => "required|string",
@@ -127,6 +128,8 @@ class MainController extends Controller
 
             $validate["permanent"] = $response;
             $validate["current"] = $response;
+            $validate["current"]['sitio'] = $request->permanent['sitio'];
+            $validate["permanent"]['sitio'] = $request->permanent['sitio'];
 
         }else{
 
@@ -142,6 +145,9 @@ class MainController extends Controller
                 barangay_code: $request->permanent['barangay']
             );
 
+            $current['sitio'] = $request->current['sitio'];
+            $permanent['sitio'] = $request->permanent['sitio'];
+
             $validate["current"] = $current;
             $validate["permanent"] = $permanent;
             $validate["same_as_address"] = "off";
@@ -152,9 +158,9 @@ class MainController extends Controller
             city_code: $request->relative['city'],
             barangay_code: $request->relative['barangay']
         );
+        $relative['sitio'] = $request->relative['sitio'];
 
         $validate["relative"] = $relative;
-        $validate["code"] = str::random(15);
 
         $data = Demographicprofile::create($validate);
 
@@ -388,19 +394,53 @@ class MainController extends Controller
 
         // $code = Session::get('code');
 
-        $code = 2;
-        $data = Demographicprofile::where('id', $code)->first();
+        $code = 4;
+        $data = Demographicprofile::with(['riskfactors', 'cancerdiagnoses', 'treatments'])->find($code);
 
         $data['date_of_birth'] = str_replace(search: "-", replace: "", subject: $data->date_of_birth);
         $data['date_of_birth'] = str_split($data['date_of_birth']);
-        $data['philhealth_number'] = str_split($data['philhealth_number']);
-        foreach ($data->name as $key => $value) {
-            $data[$key] = $value;
-        }
-        unset($data['name']);
+        $data['philhealth_id'] = str_split($data['philhealth_id']);
+
+        $data['patient_first_encounter'] = str_replace(search: "-", replace: "", subject: $data->patient_first_encounter);
+        $data['patient_first_encounter'] = str_split($data['patient_first_encounter']);
+
+        // foreach ($data->name as $key => $value) {
+        //     $data[$key] = $value;
+        // }
+        // unset($data['name']);
+
+
+
+        // $patient_diagnosed_w_cancer = [];
+        // foreach ($data['riskfactors']['patient_diagnosed_w_cancer'] as $key => $value) {
+        //     // foreach($value as $new_k => $new_v){
+        //     //     // if($new_k == "year"){
+        //     //     //     $patient_diagnosed_w_cancer[$key][$new_k] = str_split($new_v);
+        //     //     // }else{
+        //     //     //     $patient_diagnosed_w_cancer[$key][$new_k] = $new_v;
+        //     //     // }
+        //     //     // $patient_diagnosed_w_cancer[$key][$new_k] = $new_v;
+        //     // }
+        //     $patient_diagnosed_w_cancer[] = $key;
+        // }
+
+        // $data["riskfactors"]["patient_diagnosed_w_cancer"] = $patient_diagnosed_w_cancer;
+
+        // return response()->json([
+        //     'data' => array_keys($data['riskfactors']['patient_diagnosed_w_cancer'] ?? [])
+        // ]);
 
         // return response()->json(['data' => $data]);
-        return view('forms.form', ['data' => $data]);
+        return view(view: 'forms.form', data: [
+            'data' => $data,
+        ]);
+
+        // return response()->json([
+        //     'data' => $data,
+        //     'riskfactor' => $data->riskfactor,
+        //     'cancerdiagnose' => $data->cancerdiagnose,
+        //     'treatment' => $data->treatment
+        // ]);
 
     }
 }

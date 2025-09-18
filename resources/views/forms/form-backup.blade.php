@@ -5654,130 +5654,2327 @@
                 <td class="s122" dir="ltr" colspan="10">S t a t u s</td>
                 <td class="s52"></td>
             </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R105" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">106</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#{{ !empty($data['riskfactors']['patient_diagnosed_w_cancer']['Adrenal']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">1</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:76px;left:-1px">Adrenal</div>
+                </td>
+                <td class="s54"></td>
+                <td class="s55"></td>
+                <td class="s55"></td>
+                <td class="s57"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">
+                    {{ isset($data['riskfactors']['patient_diagnosed_w_cancer']['Adrenal']['year'][0])
+                        ? $data['riskfactors']['patient_diagnosed_w_cancer']['Adrenal']['year'][0]
+                        : 'Y' }}
+                </td>
 
-            @php
-                $cancerSites = [
-                    "Adrenal","Anus","Biliary Tract","Blood - Acute Lymphocytic Leukemia",
-                    "Blood - Acute Myelogenous Leukemia","Blood - Chronic Lymphocytic Leukemia",
-                    "Blood - Chronic Myelogenous Leukemia","Blood - Myelodysplastic Syndromes",
-                    "Blood - Plasma Cell Disorders","Bone","Brain (CNS)","Breast","Cervix",
-                    "Colon","Esophagus","Eyes and Orbit","Gallbladder","Gastroesophageal Junction",
-                    "Hodgkin Lymphoma","Hypopharynx","Kaposi Sarcoma","Kidney"
-                ];
-                $diagnosed = array_keys($data['riskfactors']['patient_diagnosed_w_cancer'] ?? []);
-                $var = $data['riskfactors']['patient_diagnosed_w_cancer'];
-            @endphp
-            @foreach($cancerSites as $key => $value)
-                <tr style="height: 24px">
-                    <td class="s51"></td>
-                    <td class="s51"></td>
-                    <td class="s51"></td>
-                    <td class="s51"></td>
-                    <td class="s52"></td>
-                    <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ in_array($value, $diagnosed) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
-                        </svg></td>
-                    <td class="s39" dir="ltr">{{ $key + 1 }}</td>
-                    <td class="s53 softmerge">
-                        <div class="softmerge-inner" style="width: 270px">{{ $value }}</div>
-                    </td>
-                    <td class="s55"></td>
-                    <td class="s55"></td>
-                    <td class="s41"></td>
-                    <td class="s57"></td>
-                    <td class="s57"></td>
-                    <td class="s57"></td>
-                    <td class="s57" colspan="2"></td>
-                    <td class="s83"></td>
-                    <td class="s123" dir="ltr" style="{{ isset($var[$value]['year'][0]) ? 'color: black' : 'Y' }}">
-                        {{ isset($var[$value]['year'][0]) ? $var[$value]['year'][0] : 'Y' }}
-                    </td>
-                    <td class="s123" dir="ltr" style="{{ isset($var[$value]['year'][0]) ? 'color: black' : 'Y' }}">
-                        {{ isset($var[$value]['year'][1]) ? $var[$value]['year'][1] : 'Y' }}
-                    </td>
-                    <td class="s123" dir="ltr" style="{{ isset($var[$value]['year'][0]) ? 'color: black' : 'Y' }}">
-                        {{ isset($var[$value]['year'][2]) ? $var[$value]['year'][2] : 'Y' }}
-                    </td>
-                    <td class="s123" dir="ltr" style="{{ isset($var[$value]['year'][0]) ? 'color: black' : 'Y' }}">
-                        {{ isset($var[$value]['year'][3]) ? $var[$value]['year'][3] : 'Y' }}
-                    </td>
-                    <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ isset($var[$value]['status']) && $var[$value]['status'] === 'Active' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
-                        </svg></td>
-                    <td class="s33" dir="ltr">1</td>
-                    <td class="s35" dir="ltr" colspan="2">Active</td>
-                    <td class="s63"></td>
-                    <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ isset($var[$value]['status']) && $var[$value]['status'] !== 'Active' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
-                        </svg></td>
-                    <td class="s33" dir="ltr">2</td>
-                    <td class="s36" dir="ltr" colspan="3">Remission</td>
-                    <td class="s52"></td>
-                </tr>
-            @endforeach
+                <td class="s123" dir="ltr">
+                    {{ isset($data['riskfactors']['patient_diagnosed_w_cancer']['Adrenal']['year'][1])
+                        ? $data['riskfactors']['patient_diagnosed_w_cancer']['Adrenal']['year'][1]
+                        : 'Y' }}
+                </td>
 
-            @php
-                $otherSites = [
-                    "Larynx","Leukemia",
-                    "Lip/Oral Cavity","Liver","Lung","Melanoma of Skin","Mesothelioma","Multiple Myeloma",
-                    "Nasopharynx","Non-Hodgkin Lymphoma","Oral Cavity","Oropharynx","Ovary","Pancreas",
-                    "Paranasal Sinus","Peritoneal","Prostate","Rectum","Renal Pelvis/Ureters","Salivary Glands",
-                    "Skin","Small Bowel","Soft Tissue Sarcoma","Spinal Cord","Stomach","Testis","Thymus","Thyroid",
-                    "Unknown Primary (Occult Primary)","Urinary Bladder","Uterus","Vagina","Vulva", "others"
-                ];
+                <td class="s123" dir="ltr">
+                    {{ isset($data['riskfactors']['patient_diagnosed_w_cancer']['Adrenal']['year'][2])
+                        ? $data['riskfactors']['patient_diagnosed_w_cancer']['Adrenal']['year'][2]
+                        : 'Y' }}
+                </td>
 
-            @endphp
-            @foreach ($otherSites as $index => $site)
-                <tr style="height: 23px">
-                    <td class="s51"></td>
-                    <td class="s51"></td>
-                    <td class="s51"></td>
-                    <td class="s51"></td>
-                    <td class="s52"></td>
-                    <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ in_array($site, $diagnosed) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
-                        </svg></td>
-                    <td class="s39" dir="ltr">{{ $index + 23 }}</td>
-                    <td class="s53 softmerge">
-                        <div class="softmerge-inner" style="width:276px;left:-1px">{{ $site }}</div>
-                    </td>
-                    <td class="s103"></td>
-                    <td class="s110"></td>
-                    <td class="s110"></td>
-                    <td class="s51"></td>
-                    <td class="s57"></td>
-                    <td class="s57"></td>
-                    <td class="s57" colspan="2"></td>
-                    <td class="s83"></td>
-
-                    <td class="s123" dir="ltr" style="{{ isset($var[$site]['year'][0]) ? 'color: black' : 'Y' }}">
-                        {{ isset($var[$site]['year'][0]) ? $var[$site]['year'][0] : 'Y' }}
-                    </td>
-                    <td class="s123" dir="ltr" style="{{ isset($var[$site]['year'][0]) ? 'color: black' : 'Y' }}">
-                        {{ isset($var[$site]['year'][1]) ? $var[$site]['year'][1] : 'Y' }}
-                    </td>
-                    <td class="s123" dir="ltr" style="{{ isset($var[$site]['year'][0]) ? 'color: black' : 'Y' }}">
-                        {{ isset($var[$site]['year'][2]) ? $var[$site]['year'][2] : 'Y' }}
-                    </td>
-                    <td class="s123" dir="ltr" style="{{ isset($var[$site]['year'][0]) ? 'color: black' : 'Y' }}">
-                        {{ isset($var[$site]['year'][3]) ? $var[$site]['year'][3] : 'Y' }}
-                    </td>
-
-                    <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ isset($var[$site]['status']) && $var[$site]['status'] === 'Active' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
-                        </svg></td>
-                    <td class="s33" dir="ltr">1</td>
-                    <td class="s35" dir="ltr" colspan="2">Active</td>
-                    <td class="s63"></td>
-                    <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ isset($var[$site]['status']) && $var[$site]['status'] !== 'Active' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
-                        </svg></td>
-                    <td class="s33" dir="ltr">2</td>
-                    <td class="s36" dir="ltr" colspan="3">Remission</td>
-                    <td class="s52"></td>
-                </tr>
-            @endforeach
-
+                <td class="s123" dir="ltr">
+                    {{ isset($data['riskfactors']['patient_diagnosed_w_cancer']['Adrenal']['year'][3])
+                        ? $data['riskfactors']['patient_diagnosed_w_cancer']['Adrenal']['year'][3]
+                        : 'Y' }}
+                </td>
+                <td class="s32" dir="ltr">
+                    <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#{{ isset($data['riskfactors']['patient_diagnosed_w_cancer']['Adrenal']['status']) && $data['riskfactors']['patient_diagnosed_w_cancer']['Adrenal']['status'] === 'Active' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                    </svg>
+                </td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#{{ isset($data['riskfactors']['patient_diagnosed_w_cancer']['Adrenal']['status']) && $data['riskfactors']['patient_diagnosed_w_cancer']['Adrenal']['status'] !== 'Active' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R106" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">107</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#{{ !empty($data['riskfactors']['patient_diagnosed_w_cancer']['Anus']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">2</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:50px;left:-1px">Anus</div>
+                </td>
+                <td class="s55"></td>
+                <td class="s55"></td>
+                <td class="s41"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">
+                    {{ isset($data['riskfactors']['patient_diagnosed_w_cancer']['Anus']['year'][0])
+                        ? $data['riskfactors']['patient_diagnosed_w_cancer']['Anus']['year'][0]
+                        : 'Y' }}
+                </td>
+                <td class="s123" dir="ltr">
+                    {{ isset($data['riskfactors']['patient_diagnosed_w_cancer']['Anus']['year'][1])
+                        ? $data['riskfactors']['patient_diagnosed_w_cancer']['Anus']['year'][1]
+                        : 'Y' }}
+                </td>
+                <td class="s123" dir="ltr">
+                    {{ isset($data['riskfactors']['patient_diagnosed_w_cancer']['Anus']['year'][2])
+                        ? $data['riskfactors']['patient_diagnosed_w_cancer']['Anus']['year'][2]
+                        : 'Y' }}
+                </td>
+                <td class="s123" dir="ltr">
+                    {{ isset($data['riskfactors']['patient_diagnosed_w_cancer']['Anus']['year'][3])
+                        ? $data['riskfactors']['patient_diagnosed_w_cancer']['Anus']['year'][3]
+                        : 'Y' }}
+                </td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#{{ isset($data['riskfactors']['patient_diagnosed_w_cancer']['Anus']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#{{ isset($data['riskfactors']['patient_diagnosed_w_cancer']['Anus']['status']) && $data['riskfactors']['patient_diagnosed_w_cancer']['Anus']['status'] !== 'Active' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R107" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">108</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">3</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:102px;left:-1px">Biliary Tract</div>
+                </td>
+                <td class="s54"></td>
+                <td class="s54"></td>
+                <td class="s55"></td>
+                <td class="s85"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R108" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">109</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">4</td>
+                <td class="s53 softmerge" dir="ltr">
+                    <div class="softmerge-inner" style="width:258px;left:-1px">Blood - Acute Lymphocytic Leukemia</div>
+                </td>
+                <td class="s54"></td>
+                <td class="s54"></td>
+                <td class="s54"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s56"></td>
+                <td class="s123" style="border-left: 1px solid black;" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr">
+                    <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R109" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">110</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">5</td>
+                <td class="s53 softmerge" dir="ltr">
+                    <div class="softmerge-inner" style="width:258px;left:-1px">Blood - Acute Myelogenous Leukemia</div>
+                </td>
+                <td class="s54"></td>
+                <td class="s54"></td>
+                <td class="s54"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s56"></td>
+                <td class="s123" style="border-left: 1px solid black;" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R110" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">111</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">6</td>
+                <td class="s53 softmerge" dir="ltr">
+                    <div class="softmerge-inner" style="width:257px;left:-1px">Blood - Chronic Lymphocytic Leukemia
+                    </div>
+                </td>
+                <td class="s54"></td>
+                <td class="s54"></td>
+                <td class="s54"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s56"></td>
+                <td class="s123" style="border-left: 1px solid black;" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R111" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">112</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">7</td>
+                <td class="s53 softmerge" dir="ltr">
+                    <div class="softmerge-inner" style="width:257px;left:-1px">Blood - Chronic Myelogenous Leukemia
+                    </div>
+                </td>
+                <td class="s54"></td>
+                <td class="s54"></td>
+                <td class="s54"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s56"></td>
+                <td class="s123" style="border-left: 1px solid black;" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R112" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">113</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">8</td>
+                <td class="s53 softmerge" dir="ltr">
+                    <div class="softmerge-inner" style="width:258px;left:-1px">Blood - Myelodysplastiv Syndromes</div>
+                </td>
+                <td class="s54"></td>
+                <td class="s54"></td>
+                <td class="s54"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s56"></td>
+                <td class="s123" style="border-left: 1px solid black;" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R113" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">114</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">9</td>
+                <td class="s53 softmerge" dir="ltr">
+                    <div class="softmerge-inner" style="width:206px;left:-1px">Blood - Plasma Cell Disorders</div>
+                </td>
+                <td class="s54"></td>
+                <td class="s54"></td>
+                <td class="s54"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s84"></td>
+                <td class="s85"></td>
+                <td class="s85"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R114" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">115</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">10</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:50px;left:-1px">Bone</div>
+                </td>
+                <td class="s55"></td>
+                <td class="s55"></td>
+                <td class="s41"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R115" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">116</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">11</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:102px;left:-1px">Brain (CNS)</div>
+                </td>
+                <td class="s54"></td>
+                <td class="s54"></td>
+                <td class="s55"></td>
+                <td class="s85"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R116" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">117</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">12</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:50px;left:-1px">Breast</div>
+                </td>
+                <td class="s55"></td>
+                <td class="s55"></td>
+                <td class="s41"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R117" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">118</div>
+                </th> -->
+                <td class="s40" colspan="2"></td>
+                <td class="s80" colspan="3"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">13</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:50px;left:-1px">Cervix</div>
+                </td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s40"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R118" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">119</div>
+                </th> -->
+                <td class="s40" colspan="2"></td>
+                <td class="s80" colspan="3"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">14</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:50px;left:-1px">Colon</div>
+                </td>
+                <td class="s125"></td>
+                <td class="s125"></td>
+                <td class="s39"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R119" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">120</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">15</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:102px;left:-1px">Esophagus</div>
+                </td>
+                <td class="s126"></td>
+                <td class="s126"></td>
+                <td class="s127"></td>
+                <td class="s85"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R120" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">121</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">16</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:102px;left:-1px">Eyes and Orbit</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s85"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R121" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">122</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">17</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:102px;left:-1px">Gallbladder</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s85"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R122" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">123</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">18</td>
+                <td class="s87 softmerge">
+                    <div class="softmerge-inner" style="width:180px;left:-1px">Gastroesophageal Junction</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s100"></td>
+                <td class="s84"></td>
+                <td class="s85"></td>
+                <td class="s85" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R123" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">124</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">19</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:154px;left:-1px">Hodgkin Lymphoma</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s100"></td>
+                <td class="s85"></td>
+                <td class="s85"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R124" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">125</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">20</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:102px;left:-1px">Hypopharynx</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s101"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R125" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">126</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">21</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:128px;left:-1px">Kaposi Sarcoma</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s101"></td>
+                <td class="s85"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 24px">
+                <!-- <th id="631683479R126" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">127</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">22</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:50px;left:-1px">Kidney</div>
+                </td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s40"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R127" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">128</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">23</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:50px;left:-1px">Larynx</div>
+                </td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s40"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R128" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">129</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">24</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:76px;left:-1px">Leukemia</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R129" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">130</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">25</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:102px;left:-1px">Lip/Oral Cavity</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R130" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">131</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">26</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:50px;left:-1px">Liver</div>
+                </td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s40"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R131" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">132</div>
+                </th> -->
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#{{ $data['riskfactors']->has_cancer == "yes" ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">1</td>
+                <td class="s80" colspan="3">Yes</td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#{{ $data['riskfactors']->has_lung_cancer == "yes" ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">27</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:50px;left:-1px">Lung</div>
+                </td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s40"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R132" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">133</div>
+                </th> -->
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#{{ $data['riskfactors']->has_cancer == "no" ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">2</td>
+                <td class="s80" colspan="3">No</td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">28</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:128px;left:-1px">Melanoma of Skin</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s101"></td>
+                <td class="s85"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R133" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">134</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">29</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:102px;left:-1px">Mesothelioma</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s101"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R134" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">135</div>
+                </th> -->
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="s83"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">30</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:128px;left:-1px">Multiple Myeloma</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s101"></td>
+                <td class="s85"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R135" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">136</div>
+                </th> -->
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="s83"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">31</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:102px;left:-1px">Nasopharynx</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s101"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R136" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">137</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">32</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:180px;left:-1px">Non-Hodgkin Lymphoma</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s100"></td>
+                <td class="s84"></td>
+                <td class="s85"></td>
+                <td class="s85" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R137" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">138</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">33</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:76px;left:-1px">Oral Cavity</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R138" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">139</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">34</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:102px;left:-1px">Oropharynx</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s101"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R139" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">140</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">35</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:50px;left:-1px">Ovary</div>
+                </td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s40"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R140" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">141</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">36</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:76px;left:-1px">Pancreas</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R141" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">142</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">37</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:128px;left:-1px">Paranasal Sinus</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s101"></td>
+                <td class="s85"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R142" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">143</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">38</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:76px;left:-1px">Peritoneal</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R143" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">144</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">39</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:76px;left:-1px">Prostate </div>
+                </td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R144" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">145</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">40</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:76px;left:-1px">Rectum</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R145" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">146</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">41</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:154px;left:-1px">Renal Pelvis/Ureters</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s100"></td>
+                <td class="s85"></td>
+                <td class="s85"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R146" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">147</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">42</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:128px;left:-1px">Salivary Glands</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s101"></td>
+                <td class="s85"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R147" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">148</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">43</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:50px;left:-1px">Skin</div>
+                </td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s40"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R148" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">149</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">44</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:102px;left:-1px">Small Bowel</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s101"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R149" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">150</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">45</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:154px;left:-1px">Soft Tissue Sarcoma</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s100"></td>
+                <td class="s85"></td>
+                <td class="s85"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R150" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">151</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">46</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:102px;left:-1px">Spinal Cord</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s101"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R151" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">152</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">47</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:76px;left:-1px">Stomach</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R152" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">153</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">48</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:50px;left:-1px">Testis</div>
+                </td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s40"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R153" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">154</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">49</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:76px;left:-1px">Thymus</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R154" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">155</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">50</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:76px;left:-1px">Thyroid</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R155" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">156</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">51</td>
+                <td class="s40" colspan="9">Unknown Primary (Occult Primary)</td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R156" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">157</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">52</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:128px;left:-1px">Urinary Bladder</div>
+                </td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s103"></td>
+                <td class="s101"></td>
+                <td class="s85"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R157" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">158</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">53</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:50px;left:-1px">Uterus</div>
+                </td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s40"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R158" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">159</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">54</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:50px;left:-1px">Vagina</div>
+                </td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s40"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R159" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">160</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">55</td>
+                <td class="s53 softmerge">
+                    <div class="softmerge-inner" style="width:50px;left:-1px">Vulva</div>
+                </td>
+                <td class="s110"></td>
+                <td class="s110"></td>
+                <td class="s40"></td>
+                <td class="s51"></td>
+                <td class="s57"></td>
+                <td class="s57"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
+            <tr style="height: 23px">
+                <!-- <th id="631683479R160" style="height: 23px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 23px">161</div>
+                </th> -->
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s51"></td>
+                <td class="s52"></td>
+                <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s39" dir="ltr">56</td>
+                <td class="s40" colspan="5">Others, specify:</td>
+                <td class="s40"></td>
+                <td class="s40"></td>
+                <td class="s57" colspan="2"></td>
+                <td class="s83"></td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s123" dir="ltr">Y</td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">1</td>
+                <td class="s35" dir="ltr" colspan="2">Active</td>
+                <td class="s63"></td>
+                <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                    </svg></td>
+                <td class="s33" dir="ltr">2</td>
+                <td class="s36" dir="ltr" colspan="3">Remission</td>
+                <td class="s52"></td>
+            </tr>
             <tr style="height: 23px">
                 <!-- <th id="631683479R161" style="height: 23px;" class="row-headers-background">
                     <div class="row-header-wrapper" style="line-height: 23px">162</div>
@@ -5811,7 +8008,7 @@
                 </th> -->
                 <td class="s24" dir="ltr">36</td>
                 <td class="s28" dir="ltr" colspan="7">Other Significant <br>Medical History:</td>
-                <td class="s29" dir="ltr" colspan="32">{{ ucwords($data['riskfactors']->other_significant_medical_history) }}</td>
+                <td class="s29" dir="ltr" colspan="32">N/A</td>
             </tr>
             <tr style="height: 24px">
                 <!-- <th id="631683479R163" style="height: 24px;" class="row-headers-background">
@@ -5827,18 +8024,18 @@
                 <td class="s25" dir="ltr" colspan="10" rowspan="2">Sexual Orientation <span
                         style="font-weight:normal;font-style:italic;">(optional)</span></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->sexual_orientation === 'Heterosexual' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s40" colspan="5">Heterosexual</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->sexual_orientation === 'Bisexual' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">3</td>
                 <td class="s41" colspan="4">Bisexual</td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->sexual_orientation === 'Pansexual' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">5</td>
                 <td class="s53 softmerge">
@@ -5862,24 +8059,22 @@
                     <div class="row-header-wrapper" style="line-height: 21px">166</div>
                 </th> -->
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->sexual_orientation === 'Homosexual' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s43" colspan="5">Homosexual</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->sexual_orientation === 'Asexual' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">4</td>
                 <td class="s35" colspan="4">Asexual</td>
                 <td class="s63"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->sexual_orientation_other != null ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">6</td>
                 <td class="s35" dir="ltr" colspan="4">Others, specify:</td>
-                <td class="s132" dir="ltr" colspan="9">
-                    {{ $data['riskfactors']->sexual_orientation_other != null ? ucwords($data['riskfactors']->sexual_orientation_other) : '' }}
-                </td>
+                <td class="s132" dir="ltr" colspan="9"></td>
             </tr>
             <tr style="height: 24px">
                 <!-- <th id="631683479R166" style="height: 24px;" class="row-headers-background">
@@ -5887,10 +8082,10 @@
                 </th> -->
                 <td class="s24" dir="ltr">38</td>
                 <td class="s28" colspan="10">Number of Sexual Partner/s</td>
-                <td class="s26" dir="ltr" colspan="4">{{ $data['riskfactors']->sexual_partners }}</td>
+                <td class="s26" dir="ltr" colspan="4">1</td>
                 <td class="s24" dir="ltr">39</td>
                 <td class="s28" colspan="10">Age of First Sexual Intercourse</td>
-                <td class="s26" dir="ltr" colspan="4">{{ $data['riskfactors']->age_first_intercourse }}</td>
+                <td class="s26" dir="ltr" colspan="4">22</td>
                 <td class="s66" colspan="10"></td>
             </tr>
             <tr style="height: 21px">
@@ -5903,7 +8098,7 @@
                         style="font-family:Arial;font-weight:bold;color:#000000;"> Contraceptives</span><span
                         style="font-family:Arial;font-weight:bold;color:#000000;">?</span></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->contraceptives_use == "Yes" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s40" colspan="2">Yes</td>
@@ -5919,28 +8114,23 @@
                     <div class="row-header-wrapper" style="line-height: 21px">169</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->contraceptives_use == "No" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#checked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s40" colspan="2">No</td>
                 <td class="s52"></td>
-                @php
-                    $contraceptives_types = $data['riskfactors']['contraceptive_types'];
-                    $contraceptives_use = $data['riskfactors']->contraceptives_use;
-                @endphp
-
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $contraceptives_use == "Yes" && in_array('Hormonal', $contraceptives_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s40" colspan="7">Hormonal Contraceptives</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $contraceptives_use == "Yes" && in_array('Permanent', $contraceptives_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">3</td>
                 <td class="s40" colspan="8">Permanent Methods</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Behavioral', $contraceptives_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">5</td>
                 <td class="s42" colspan="8">Behavioral Methods</td>
@@ -5960,15 +8150,15 @@
                 <td class="s33" dir="ltr">2</td>
                 <td class="s43" colspan="7">Barrier Methods</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $contraceptives_use == "Yes" && in_array('Barrier', $contraceptives_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">4</td>
                 <td class="s35" colspan="8">Intrauterine Devices (IUDs)</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->contraceptive_types_other ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">6</td>
-                <td class="s36" colspan="8">Others:  {{ ucwords($data['riskfactors']->contraceptive_types_other) }}</td>
+                <td class="s36" colspan="8">Others</td>
             </tr>
             <tr style="height: 24px">
                 <!-- <th id="631683479R170" style="height: 24px;" class="row-headers-background">
@@ -5984,7 +8174,7 @@
                 <td class="s24" dir="ltr" rowspan="7">41</td>
                 <td class="s28" colspan="10" rowspan="7">Types of Cancer Screening Received</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Clinical Breast Examination', $data['riskfactors']->cancer_screening) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#checked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s53 softmerge">
@@ -6002,7 +8192,7 @@
                 <td class="s40"></td>
                 <td class="s40"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('FIT', $data['riskfactors']->cancer_screening) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">8</td>
                 <td class="s99 softmerge" dir="ltr">
@@ -6027,7 +8217,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">173</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Breast Ultrasound', $data['riskfactors']->cancer_screening) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s53 softmerge">
@@ -6045,7 +8235,7 @@
                 <td class="s40"></td>
                 <td class="s40"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Colonoscopy', $data['riskfactors']->cancer_screening) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">9</td>
                 <td class="s53 softmerge">
@@ -6069,7 +8259,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">174</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Mammography', $data['riskfactors']->cancer_screening) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#checked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">3</td>
                 <td class="s53 softmerge">
@@ -6087,7 +8277,7 @@
                 <td class="s40"></td>
                 <td class="s40"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Low-dose chest CT Scan', $data['riskfactors']->cancer_screening) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">10</td>
                 <td class="s53 softmerge">
@@ -6111,7 +8301,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">175</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('VIA', $data['riskfactors']->cancer_screening) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">4</td>
                 <td class="s53 softmerge">
@@ -6130,7 +8320,7 @@
                 <td class="s110"></td>
                 <td class="s110"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('None', $data['riskfactors']->cancer_screening) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">11</td>
                 <td class="s53 softmerge" dir="ltr">
@@ -6154,7 +8344,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">176</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Cytology/Pap Smear', $data['riskfactors']->cancer_screening) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">5</td>
                 <td class="s53 softmerge">
@@ -6172,7 +8362,7 @@
                 <td class="s40"></td>
                 <td class="s40"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Unknown', $data['riskfactors']->cancer_screening) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">12</td>
                 <td class="s53 softmerge" dir="ltr">
@@ -6196,7 +8386,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">177</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('HPV Testing', $data['riskfactors']->cancer_screening) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">6</td>
                 <td class="s53 softmerge">
@@ -6214,18 +8404,18 @@
                 <td class="s40"></td>
                 <td class="s40"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->cancer_screening_other ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">13</td>
                 <td class="s57" dir="ltr" colspan="4">Others, specify:</td>
-                <td class="s133" colspan="9" rowspan="2">{{ $data['riskfactors']->cancer_screening_other }}</td>
+                <td class="s133" colspan="9" rowspan="2"></td>
             </tr>
             <tr style="height: 21px">
                 <!-- <th id="631683479R177" style="height: 21px;" class="row-headers-background">
                     <div class="row-header-wrapper" style="line-height: 21px">178</div>
                 </th> -->
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Clinical Breast Examination', $data['riskfactors']->cancer_screening) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">7</td>
                 <td class="s58 softmerge">
@@ -6257,7 +8447,7 @@
                 <td class="s25" colspan="10" rowspan="5">Types of Vaccines Received</td>
                 <td class="s28" colspan="8" rowspan="2">Human Papillomavirus Vaccine (HPV)</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->vaccine_hpv == "Fully Vaccinated" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s41" colspan="6">Yes, fully vaccinated </td>
@@ -6265,7 +8455,7 @@
                 <td class="s51"></td>
                 <td class="s134"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->vaccine_hpv == "No" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#checked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">3</td>
                 <td class="s41" colspan="3">No </td>
@@ -6280,14 +8470,14 @@
                     <div class="row-header-wrapper" style="line-height: 21px">180</div>
                 </th> -->
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->vaccine_hpv == "Partially Vaccinated" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s35" colspan="7">Yes, partially vaccinated</td>
                 <td class="s63"></td>
                 <td class="s136"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->vaccine_hpv == "Unknown" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">4</td>
                 <td class="s35" colspan="3">Unknown</td>
@@ -6303,7 +8493,7 @@
                 </th> -->
                 <td class="s28" colspan="8" rowspan="2">Hepatitis B Vaccine</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->vaccine_hepb == "Yes, fully vaccinated" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s41" colspan="6">Yes, fully vaccinated </td>
@@ -6311,7 +8501,7 @@
                 <td class="s51"></td>
                 <td class="s134"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->vaccine_hepb == "No" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#checked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">3</td>
                 <td class="s41" colspan="3">No </td>
@@ -6326,14 +8516,14 @@
                     <div class="row-header-wrapper" style="line-height: 21px">182</div>
                 </th> -->
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->vaccine_hepb == "Yes, partially vaccinated" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s35" colspan="7">Yes, partially vaccinated</td>
                 <td class="s63"></td>
                 <td class="s136"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']->vaccine_hepb == "Unknown" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#unchecked-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">4</td>
                 <td class="s35" colspan="3">Unknown</td>
@@ -6348,7 +8538,7 @@
                     <div class="row-header-wrapper" style="line-height: 38px">183</div>
                 </th> -->
                 <td class="s28" colspan="8">Other vaccines, specify:</td>
-                <td class="s27" colspan="21">{{ $data['riskfactors']->other_vaccines }}</td>
+                <td class="s27" colspan="21"></td>
             </tr>
             <tr style="height: 103px">
                 <!-- <th id="631683479R183" style="height: 103px;" class="row-headers-background">

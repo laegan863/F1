@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->string('code')->nullable();
+            $table->foreignId('code')->constrained('demographicprofiles')->onDelete('cascade');
 
             // Q56: Date of Diagnosis
             $table->date('date_of_diagnosis')->nullable();

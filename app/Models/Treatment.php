@@ -63,4 +63,9 @@ class Treatment extends Model
         'theranostics_types'     => 'array',
         'other_therapies_types'  => 'array',
     ];
+
+    public function demographicprofile()
+    {
+        return $this->belongsTo(Demographicprofile::class, 'code', 'id');
+    }
 }

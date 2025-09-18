@@ -54,4 +54,9 @@ class Riskfactor extends Model
         'cancer_screening' => 'array',
         'contraceptive_types' => 'array'
     ];
+
+    public function demographicprofile()
+    {
+        return $this->belongsTo(Demographicprofile::class, 'code', 'id');
+    }
 }
