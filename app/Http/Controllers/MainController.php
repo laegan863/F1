@@ -81,7 +81,7 @@ class MainController extends Controller
             "relative.barangay" => "required",
             "relative.sitio" => "required",
             "relative_phone_number" => "required",
-            "relative_email" => "required",
+            "relative_email" => "nullable|email",
             "highest_education" => "required",
             "occupation" => "required",
             "number_of_years_in_occupation" => "required"
@@ -184,6 +184,7 @@ class MainController extends Controller
             'healtydiet.sugar' => 'required',
             'occupational_exposure' => 'required',
             'occupation_specify' =>  $request->occupational_exposure == 'yes' ? 'required|array' : 'nullable',
+            'occupation_specify_others' => 'nullable',
             'air_pollution' => 'required',
             'family_history' => 'required',
             'cancer_sites' => $request->family_history == "yes" ? 'required' : 'nullable',
@@ -258,14 +259,14 @@ class MainController extends Controller
             'laterality'           => 'required|in:Left,Right,Bilateral,Not Applicable',
             'histologic_diagnosis' => 'required|string|max:255',
             'icd_10'               => 'required|string|max:20',
-            'cancer_status' => 'required',
             'clinical_stage' => 'nullable',
             't_stage' => 'nullable',
             'n_stage' => 'nullable',
             'm_stage' => 'nullable',
             's_stage' => 'nullable',
             'other_staging' => 'nullable|array',
-
+            'other_remarks' => 'nullable',
+            'cancer_status' => 'required'
         ],[
             'multiple_sites.required' => 'The active Primary Cancer Site(s) field is required',
         ]);
@@ -307,6 +308,7 @@ class MainController extends Controller
             'anticancer_drug' => 'required|in:Yes,No',
             'drug_purpose' => $request->anticancer_drug == "Yes" ? "required|array" : "nullable",
             'drug_types' => $request->anticancer_drug == "Yes" ? "required|array" : "nullable",
+            'drug_types_others' => 'nullable',
 
             'first_line_drug' => 'required|in:Yes,No',
             "first_drug_regimen" => $request->first_line_drug == "Yes" ? "required" : "nullable",
@@ -392,9 +394,9 @@ class MainController extends Controller
 
     public function result(){
 
-        // $code = Session::get('code');
+        $code = Session::get('code');
 
-        $code = 4;
+        // $code = 4;
         $data = Demographicprofile::with(['riskfactors', 'cancerdiagnoses', 'treatments'])->find($code);
 
         $data['date_of_birth'] = str_replace(search: "-", replace: "", subject: $data->date_of_birth);

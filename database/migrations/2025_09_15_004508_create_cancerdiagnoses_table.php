@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('m_stage')->nullable();
             $table->string('s_stage')->nullable();
             $table->json('other_staging')->nullable();
+            $table->string('other_remarks')->nullable();
             $table->string('cancer_status')->nullable();
         });
     }

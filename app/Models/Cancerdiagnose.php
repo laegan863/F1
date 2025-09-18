@@ -21,6 +21,7 @@ class Cancerdiagnose extends Model
         'm_stage',
         's_stage',
         'other_staging',
+        'other_remarks',
         'cancer_status',
     ];
 

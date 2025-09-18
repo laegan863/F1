@@ -1074,6 +1074,7 @@
                     <div class="col-md-4"><input class="rounded-circle form-check-input" type="checkbox" name="occupation_specify[]" value="radiation"> Radiation</div>
                     <div class="col-md-4"><input class="rounded-circle form-check-input" type="checkbox" name="occupation_specify[]" value="silica"> Silica</div>
                     <div class="col-md-4"><input class="rounded-circle form-check-input" type="checkbox" name="occupation_specify[]" value="smoke"> Smoke</div>
+                    <div class="col-md-4"><input class="mb-3 form-control" type="text" name="occupation_specify_others" placeholder="Specify other"></div>
                 </div>
             `;
         }else{

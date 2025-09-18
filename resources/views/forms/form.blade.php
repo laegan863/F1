@@ -3719,7 +3719,7 @@
                 <td class="s55"></td>
                 <td class="s41"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($data['riskfactors']->occupation_specify_others) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">10</td>
                 <td class="s41" dir="ltr" colspan="4">Others, specify:</td>
@@ -3750,7 +3750,7 @@
                 <td class="s41" colspan="4">Radiation</td>
                 <td class="s41"></td>
                 <td class="s41"></td>
-                <td class="s81" dir="ltr" colspan="10"></td>
+                <td class="s81" dir="ltr" colspan="10">{{ ucwords($data['riskfactors']->occupation_specify_others) }}</td>
             </tr>
             <tr style="height: 21px">
                 <!-- <th id="631683479R57" style="height: 21px;" class="row-headers-background">
@@ -4976,7 +4976,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($data['riskfactors']->cancer_sites_other_value) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">56</td>
                 <td class="s53 softmerge" dir="ltr">
@@ -5018,7 +5018,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"></td>
-                <td class="s94" dir="ltr" colspan="9" rowspan="2"></td>
+                <td class="s94" dir="ltr" colspan="9" rowspan="2">{{ ucwords($data['riskfactors']->cancer_sites_other_value) }}</td>
             </tr>
             <tr style="height: 21px">
                 <!-- <th id="631683479R88" style="height: 21px;" class="row-headers-background">
@@ -5445,11 +5445,11 @@
                 <td class="s74"></td>
                 <td class="s74"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($data['riskfactors']->infections_other_content) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">18</td>
                 <td class="s35" dir="ltr" colspan="4">Others, specify:</td>
-                <td class="s115" dir="ltr" colspan="10"></td>
+                <td class="s115" dir="ltr" colspan="10">{{ ucwords($data['riskfactors']->infections_other_content) }}</td>
             </tr>
             <tr style="height: 21px">
                 <!-- <th id="631683479R99" style="height: 21px;" class="row-headers-background">
@@ -5610,7 +5610,7 @@
                 <td class="s114"></td>
                 <td class="s114"></td>
                 <td class="s119"></td>
-                <td class="s120" dir="ltr" colspan="4">{{ $data['riskfactors']->comorbidities_others_content }}</td>
+                <td class="s120" dir="ltr" colspan="4">{{ ucwords($data['riskfactors']->comorbidities_others_content) }}</td>
             </tr>
             <tr style="height: 24px">
                 <!-- <th id="631683479R103" style="height: 24px;" class="row-headers-background">
@@ -5940,7 +5940,7 @@
                 <td class="s39" dir="ltr">3</td>
                 <td class="s40" colspan="8">Permanent Methods</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Behavioral', $contraceptives_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $contraceptives_use == "Yes" && in_array('Behavioral', $contraceptives_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">5</td>
                 <td class="s42" colspan="8">Behavioral Methods</td>
@@ -6218,7 +6218,7 @@
                     </svg></td>
                 <td class="s39" dir="ltr">13</td>
                 <td class="s57" dir="ltr" colspan="4">Others, specify:</td>
-                <td class="s133" colspan="9" rowspan="2">{{ $data['riskfactors']->cancer_screening_other }}</td>
+                <td class="s133" colspan="9" rowspan="2">{{ ucwords($data['riskfactors']->cancer_screening_other) }}</td>
             </tr>
             <tr style="height: 21px">
                 <!-- <th id="631683479R177" style="height: 21px;" class="row-headers-background">
@@ -6348,7 +6348,7 @@
                     <div class="row-header-wrapper" style="line-height: 38px">183</div>
                 </th> -->
                 <td class="s28" colspan="8">Other vaccines, specify:</td>
-                <td class="s27" colspan="21">{{ $data['riskfactors']->other_vaccines }}</td>
+                <td class="s27" colspan="21">{{ ucwords($data['riskfactors']->other_vaccines) }}</td>
             </tr>
             <tr style="height: 103px">
                 <!-- <th id="631683479R183" style="height: 103px;" class="row-headers-background">
@@ -6432,13 +6432,19 @@
                 </th> -->
                 <td class="s144" dir="ltr">43</td>
                 <td class="s25" colspan="14">Are there more than 1 active Primary Cancer Site/s?</td>
+
+                @php
+                    $cancerdiagnoses = $data['cancerdiagnoses'];
+                    $IsYes = isset($cancerdiagnoses['multiple_sites']) && $cancerdiagnoses['multiple_sites'] == 'yes' ? true : false;
+                @endphp
+
                 <td class="s43" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $cancerdiagnoses['multiple_sites'] == "yes" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33">1</td>
                 <td class="s43" colspan="2">Yes</td>
                 <td class="s43" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $cancerdiagnoses['multiple_sites'] == "no" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s34" colspan="2">No</td>
@@ -6453,7 +6459,7 @@
                 </th> -->
                 <td class="s144" dir="ltr">44</td>
                 <td class="s25" colspan="14">Primary Cancer Site Number </td>
-                <td class="s65" dir="ltr" colspan="8">1</td>
+                <td class="s65" dir="ltr" colspan="8">{{ $cancerdiagnoses->primary_site_number }}</td>
             </tr>
             <tr style="height: 29px">
                 <!-- <th id="631683479R191" style="height: 29px;" class="row-headers-background">
@@ -6468,7 +6474,7 @@
                 <td class="s144" dir="ltr" rowspan="20">45</td>
                 <td class="s25" colspan="6" rowspan="20">Site</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Adrenal", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s53 softmerge">
@@ -6483,7 +6489,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Kaposi Sarcoma", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">21</td>
                 <td class="s53 softmerge">
@@ -6498,7 +6504,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Renal Pelvis/Ureters", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">41</td>
                 <td class="s53 softmerge">
@@ -6518,7 +6524,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">194</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Anus", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s53 softmerge">
@@ -6533,7 +6539,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Kidney", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">22</td>
                 <td class="s53 softmerge">
@@ -6548,7 +6554,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Salivary Glands", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">42</td>
                 <td class="s53 softmerge">
@@ -6568,7 +6574,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">195</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Biliary Tract", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">3</td>
                 <td class="s53 softmerge">
@@ -6583,7 +6589,7 @@
                 <td class="s150"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Larynx", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">23</td>
                 <td class="s53 softmerge">
@@ -6598,7 +6604,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Skin", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">43</td>
                 <td class="s53 softmerge">
@@ -6618,7 +6624,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">196</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Blood - Acute Lymphocytic Leukemia", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">4</td>
                 <td class="s87 softmerge" dir="ltr">
@@ -6634,7 +6640,7 @@
                 <td class="s148"></td>
                 <td class="s101"></td>
                 <td class="s89" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Leukemia", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">24</td>
                 <td class="s53 softmerge">
@@ -6649,7 +6655,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Small Bowel", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">44</td>
                 <td class="s53 softmerge">
@@ -6669,7 +6675,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">197</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Blood - Acute Myelogenous Leukemia", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">5</td>
                 <td class="s87 softmerge" dir="ltr">
@@ -6685,7 +6691,7 @@
                 <td class="s148"></td>
                 <td class="s101"></td>
                 <td class="s89" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Lip/Oral Cavity", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">25</td>
                 <td class="s53 softmerge">
@@ -6700,7 +6706,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Soft Tissue Sarcoma", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">45</td>
                 <td class="s53 softmerge">
@@ -6720,7 +6726,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">198</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Blood - Chronic Lymphocytic Leukemia", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">6</td>
                 <td class="s87 softmerge" dir="ltr">
@@ -6736,7 +6742,7 @@
                 <td class="s148"></td>
                 <td class="s101"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Liver", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">26</td>
                 <td class="s53 softmerge">
@@ -6751,7 +6757,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Spinal Cord", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">46</td>
                 <td class="s53 softmerge">
@@ -6771,7 +6777,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">199</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Blood - Chronic Myelogenous Leukemia", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">7</td>
                 <td class="s87 softmerge" dir="ltr">
@@ -6787,7 +6793,7 @@
                 <td class="s148"></td>
                 <td class="s101"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Lung", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">27</td>
                 <td class="s53 softmerge">
@@ -6802,7 +6808,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Stomach", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">47</td>
                 <td class="s53 softmerge">
@@ -6822,7 +6828,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">200</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Blood - Myelodysplastiv Syndromes", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">8</td>
                 <td class="s87 softmerge" dir="ltr">
@@ -6838,7 +6844,7 @@
                 <td class="s148"></td>
                 <td class="s101"></td>
                 <td class="s89" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Melanoma of Skin", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">28</td>
                 <td class="s53 softmerge">
@@ -6853,7 +6859,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Testis", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">48</td>
                 <td class="s53 softmerge">
@@ -6873,7 +6879,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">201</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Blood - Plasma Cell Disorders", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">9</td>
                 <td class="s87 softmerge" dir="ltr">
@@ -6889,7 +6895,7 @@
                 <td class="s152"></td>
                 <td class="s101"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Mesothelioma", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">29</td>
                 <td class="s53 softmerge">
@@ -6904,7 +6910,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Thymus", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">49</td>
                 <td class="s53 softmerge">
@@ -6924,7 +6930,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">202</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Bone", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">10</td>
                 <td class="s53 softmerge">
@@ -6939,7 +6945,7 @@
                 <td class="s146"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Multiple Myeloma", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">30</td>
                 <td class="s53 softmerge">
@@ -6954,7 +6960,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Thyroid", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">50</td>
                 <td class="s53 softmerge">
@@ -6974,7 +6980,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">203</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Brain (CNS)", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">11</td>
                 <td class="s53 softmerge">
@@ -6989,7 +6995,7 @@
                 <td class="s146"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Nasopharynx", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">31</td>
                 <td class="s53 softmerge">
@@ -7004,7 +7010,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Unknown Primary (Occult Primary)", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">51</td>
                 <td class="s80" colspan="9">Unknown Primary (Occult Primary)</td>
@@ -7014,7 +7020,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">204</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Breast", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">12</td>
                 <td class="s53 softmerge">
@@ -7029,7 +7035,7 @@
                 <td class="s146"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Non-Hodgkin Lymphoma", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">32</td>
                 <td class="s53 softmerge">
@@ -7044,7 +7050,7 @@
                 <td class="s101"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Urinary Bladder", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">52</td>
                 <td class="s53 softmerge">
@@ -7064,7 +7070,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">205</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Cervix", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">13</td>
                 <td class="s53 softmerge">
@@ -7079,7 +7085,7 @@
                 <td class="s146"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Oral Cavity", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">33</td>
                 <td class="s53 softmerge">
@@ -7094,7 +7100,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Uterus", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">53</td>
                 <td class="s53 softmerge">
@@ -7114,7 +7120,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">206</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Colon", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">14</td>
                 <td class="s53 softmerge">
@@ -7129,7 +7135,7 @@
                 <td class="s146"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Oropharynx", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">34</td>
                 <td class="s53 softmerge">
@@ -7144,7 +7150,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Vagina", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">54</td>
                 <td class="s53 softmerge">
@@ -7164,7 +7170,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">207</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Esophagus", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">15</td>
                 <td class="s53 softmerge">
@@ -7179,7 +7185,7 @@
                 <td class="s146"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Ovary", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">35</td>
                 <td class="s53 softmerge">
@@ -7194,7 +7200,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Vulva", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">55</td>
                 <td class="s53 softmerge">
@@ -7214,7 +7220,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">208</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Eyes and Orbit", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">16</td>
                 <td class="s53 softmerge">
@@ -7229,7 +7235,7 @@
                 <td class="s146"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Pancreas", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">36</td>
                 <td class="s53 softmerge">
@@ -7244,7 +7250,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($cancerdiagnoses->cancer_site_other) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">56</td>
                 <td class="s41" dir="ltr" colspan="5">Others, specify:</td>
@@ -7258,7 +7264,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">209</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Gallbladder", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">17</td>
                 <td class="s53 softmerge">
@@ -7273,7 +7279,7 @@
                 <td class="s146"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Paranasal Sinus", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">37</td>
                 <td class="s53 softmerge">
@@ -7289,14 +7295,14 @@
                 <td class="s146"></td>
                 <td class="s38" dir="ltr"></td>
                 <td></td>
-                <td class="s153" colspan="9" rowspan="2"></td>
+                <td class="s153" colspan="9" rowspan="2">{{ ucwords($cancerdiagnoses->cancer_site_other) }}</td>
             </tr>
             <tr style="height: 21px">
                 <!-- <th id="631683479R209" style="height: 21px;" class="row-headers-background">
                     <div class="row-header-wrapper" style="line-height: 21px">210</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Gastroesophageal Junction", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">18</td>
                 <td class="s53 softmerge">
@@ -7311,7 +7317,7 @@
                 <td class="s152"></td>
                 <td class="s101"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Peritoneal", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">38</td>
                 <td class="s53 softmerge">
@@ -7333,7 +7339,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">211</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Hodgkin Lymphoma", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">19</td>
                 <td class="s53 softmerge">
@@ -7348,7 +7354,7 @@
                 <td class="s146"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Prostate", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">39</td>
                 <td class="s53 softmerge">
@@ -7379,7 +7385,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">212</div>
                 </th> -->
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Hypopharynx", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">20</td>
                 <td class="s58 softmerge">
@@ -7394,7 +7400,7 @@
                 <td class="s43"></td>
                 <td class="s43"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $IsYes && in_array("Rectum", $cancerdiagnoses['cancer_sites']) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">40</td>
                 <td class="s58 softmerge">
@@ -7427,7 +7433,7 @@
                 <td class="s144" dir="ltr" rowspan="2">46</td>
                 <td class="s25" colspan="6" rowspan="2">Laterality</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $cancerdiagnoses->laterality == 'Left' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s53 softmerge">
@@ -7436,7 +7442,7 @@
                 <td class="s110"></td>
                 <td class="s110"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $cancerdiagnoses->laterality == 'Bilateral' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">4</td>
                 <td class="s53 softmerge" dir="ltr">
@@ -7446,7 +7452,7 @@
                 <td class="s110"></td>
                 <td class="s110"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $cancerdiagnoses->laterality == 'Unknown' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">3</td>
                 <td class="s53 softmerge" dir="ltr">
@@ -7456,14 +7462,14 @@
                 <td class="s101"></td>
                 <td class="s25" style="border-left: 2px solid black;" dir="ltr" rowspan="2">47</td>
                 <td class="s25" colspan="6" rowspan="2">ICD-10</td>
-                <td class="s27" dir="ltr" colspan="10" rowspan="2">C50.0</td>
+                <td class="s27" dir="ltr" colspan="10" rowspan="2">{{ $cancerdiagnoses->icd_10 }}</td>
             </tr>
             <tr style="height: 21px">
                 <!-- <th id="631683479R213" style="height: 21px;" class="row-headers-background">
                     <div class="row-header-wrapper" style="line-height: 21px">214</div>
                 </th> -->
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $cancerdiagnoses->laterality == 'Right' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s58 softmerge">
@@ -7472,7 +7478,7 @@
                 <td class="s119"></td>
                 <td class="s119"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $cancerdiagnoses->laterality == 'Not Applicable' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">5</td>
                 <td class="s43" dir="ltr" colspan="4">Not Applicable</td>
@@ -7490,7 +7496,7 @@
                 <td class="s28" colspan="6">Histologic<span
                         style="font-size:8pt;font-family:Arial;font-weight:bold;color:#000000;"> </span><span
                         style="font-size:11pt;font-family:Arial;font-weight:bold;color:#000000;">Diagnosis</span></td>
-                <td class="s29" dir="ltr" colspan="33">INVASIVE LOBULAR CARCINOMA</td>
+                <td class="s29" dir="ltr" colspan="33">{{ ucwords($cancerdiagnoses->histologic_diagnosis) }}</td>
             </tr>
             <tr style="height: 24px">
                 <!-- <th id="631683479R215" style="height: 24px;" class="row-headers-background">
@@ -7507,7 +7513,7 @@
                         style="font-size:8pt;font-family:Arial;font-weight:normal;font-style:italic;color:#000000;">(Optional)</span>
                 </td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($cancerdiagnoses->clinical_stage) && $cancerdiagnoses->clinical_stage == 'Stage 0' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s53 softmerge">
@@ -7517,7 +7523,7 @@
                 <td class="s55"></td>
                 <td class="s55"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($cancerdiagnoses->clinical_stage) && $cancerdiagnoses->clinical_stage == 'Stage II' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">3</td>
                 <td class="s53 softmerge">
@@ -7527,7 +7533,7 @@
                 <td class="s101"></td>
                 <td class="s101"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($cancerdiagnoses->clinical_stage) && $cancerdiagnoses->clinical_stage == 'Stage IV' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">5</td>
                 <td class="s53 softmerge">
@@ -7553,7 +7559,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">218</div>
                 </th> -->
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($cancerdiagnoses->clinical_stage) && $cancerdiagnoses->clinical_stage == 'Stage I' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s58 softmerge">
@@ -7563,7 +7569,7 @@
                 <td class="s74"></td>
                 <td class="s74"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($cancerdiagnoses->clinical_stage) && $cancerdiagnoses->clinical_stage == 'Stage III' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">4</td>
                 <td class="s58 softmerge">
@@ -7573,7 +7579,7 @@
                 <td class="s61"></td>
                 <td class="s61"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($cancerdiagnoses->clinical_stage) && $cancerdiagnoses->clinical_stage == 'Unknown' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">6</td>
                 <td class="s58 softmerge">
@@ -7602,12 +7608,12 @@
                 <td class="s28" colspan="10">T (Tumor)<span
                         style="font-size:8pt;font-family:Arial;font-weight:normal;font-style:italic;color:#000000;">
                         (Optional)</span></td>
-                <td class="s160" colspan="9"></td>
+                <td class="s160" colspan="9">{{ $cancerdiagnoses->t_stage }}</td>
                 <td class="s144" dir="ltr">52</td>
                 <td class="s28" colspan="10">M (Metastasis)<span
                         style="font-size:8pt;font-family:Arial;font-weight:normal;font-style:italic;color:#000000;">
                         (Optional)</span></td>
-                <td class="s160" colspan="9"></td>
+                <td class="s160" colspan="9">{{ $cancerdiagnoses->m_stage }}</td>
             </tr>
             <tr style="height: 24px">
                 <!-- <th id="631683479R219" style="height: 24px;" class="row-headers-background">
@@ -7617,12 +7623,12 @@
                 <td class="s28" colspan="10">N (Nodes)<span
                         style="font-size:8pt;font-family:Arial;font-weight:normal;font-style:italic;color:#000000;">
                         (Optional)</span></td>
-                <td class="s160" colspan="9"></td>
+                <td class="s160" colspan="9">{{ $cancerdiagnoses->n_stage }}</td>
                 <td class="s144" dir="ltr">53</td>
                 <td class="s28" colspan="10">S (Staging) <span
                         style="font-size:8pt;font-family:Arial;font-weight:normal;font-style:italic;color:#000000;">(Optional)</span>
                 </td>
-                <td class="s161" colspan="9"></td>
+                <td class="s161" colspan="9">{{ $cancerdiagnoses->s_stage }}</td>
             </tr>
             <tr style="height: 21px">
                 <!-- <th id="631683479R220" style="height: 21px;" class="row-headers-background">
@@ -7633,7 +7639,7 @@
                         style="font-size:8pt;font-family:Arial;font-weight:normal;font-style:italic;color:#000000;">(Optional)</span>
                 </td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($cancerdiagnoses->other_staging) && in_array('FIGO Staging System (International Federation of Gynecology and Obstetrics)', $cancerdiagnoses->other_staging) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s80" colspan="27">FIGO Staging System (International Federation of Gynecology and Obstetrics)
@@ -7644,7 +7650,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">222</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($cancerdiagnoses->other_staging) && in_array('Ann Arbor Staging System', $cancerdiagnoses->other_staging) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s41" colspan="12">Ann Arbor Staging System</td>
@@ -7669,7 +7675,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">223</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($cancerdiagnoses->other_staging) && in_array('Breslow Thickness and Clark Level (for Skin Cancer)', $cancerdiagnoses->other_staging) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">3</td>
                 <td class="s40" colspan="21">Breslow Thickness and Clark Level (for Skin Cancer)</td>
@@ -7685,7 +7691,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">224</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($cancerdiagnoses->other_staging) && in_array('Durie-Salmon Staging System', $cancerdiagnoses->other_staging) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">4</td>
                 <td class="s40" colspan="13">Durie-Salmon Staging System</td>
@@ -7709,7 +7715,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">225</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($cancerdiagnoses->other_staging) && in_array('Biomarker/Hormone Receptor Status', $cancerdiagnoses->other_staging) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">5</td>
                 <td class="s41" colspan="19">Biomarker/Hormone Receptor Status</td>
@@ -7727,7 +7733,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">226</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($cancerdiagnoses->other_staging) && in_array('The Child-Pugh Score (for Liver Cancer)', $cancerdiagnoses->other_staging) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">6</td>
                 <td class="s40" colspan="12">The Child-Pugh Score (for Liver Cancer)</td>
@@ -7752,7 +7758,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">227</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($cancerdiagnoses->other_staging) && in_array('Enneking Classification', $cancerdiagnoses->other_staging) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">7</td>
                 <td class="s41" colspan="16">Enneking Classification</td>
@@ -7773,7 +7779,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">228</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($cancerdiagnoses->other_staging) && in_array('Musculoskeletal Tumor Society (MSTS) classification', $cancerdiagnoses->other_staging) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">8</td>
                 <td class="s53 softmerge">
@@ -7812,7 +7818,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">229</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($cancerdiagnoses->other_staging) && in_array('Nottingham Grading System', $cancerdiagnoses->other_staging) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">9</td>
                 <td class="s53 softmerge">
@@ -7850,7 +7856,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">230</div>
                 </th> -->
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($cancerdiagnoses->other_staging) && in_array('Not Applicable', $cancerdiagnoses->other_staging) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">10</td>
                 <td class="s35" colspan="12">Not Applicable</td>
@@ -7875,7 +7881,7 @@
                     <div class="row-header-wrapper" style="line-height: 34px">231</div>
                 </th> -->
                 <td class="s25" dir="ltr" colspan="5">Other Remarks</td>
-                <td class="s37" colspan="24"></td>
+                <td class="s37" colspan="24">{{ ucwords($cancerdiagnoses->other_remarks) }}</td>
             </tr>
             <tr style="height: 21px">
                 <!-- <th id="631683479R231" style="height: 21px;" class="row-headers-background">
@@ -7884,7 +7890,7 @@
                 <td class="s144" dir="ltr" rowspan="3">55</td>
                 <td class="s28" colspan="10" rowspan="3">Current Status of the Cancer</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $cancerdiagnoses->cancer_status == "Newly diagnosed" ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s53 softmerge">
@@ -7903,7 +7909,7 @@
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $cancerdiagnoses->cancer_status == "Old case, incomplete treatment, now progressive" ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">4</td>
                 <td class="s53 softmerge">
@@ -7927,7 +7933,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">233</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $cancerdiagnoses->cancer_status == "Old case, not treated" ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s53 softmerge">
@@ -7946,7 +7952,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $cancerdiagnoses->cancer_status == "Old case, unknown treatment" ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">5</td>
                 <td class="s53 softmerge">
@@ -7969,12 +7975,11 @@
                     <div class="row-header-wrapper" style="line-height: 21px">234</div>
                 </th> -->
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $cancerdiagnoses->cancer_status == "Old case, completed 1st treatment, now recurrent" ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">3</td>
                 <td class="s58 softmerge">
-                    <div class="softmerge-inner" style="width:362px;left:-1px">Old case, completed 1st treatment, now
-                        recurrent</div>
+                    <div class="softmerge-inner" style="width:362px;left:-1px">Old case, completed 1st treatment, now recurrent</div>
                 </td>
                 <td class="s76"></td>
                 <td class="s76"></td>
@@ -8003,6 +8008,8 @@
                 <td class="s70"></td>
                 <td class="s78"></td>
             </tr>
+
+
             <tr style="height: 29px">
                 <!-- <th id="631683479R234" style="height: 29px;" class="row-headers-background">
                     <div class="row-header-wrapper" style="line-height: 29px">235</div>
@@ -8013,18 +8020,22 @@
                 <!-- <th id="631683479R235" style="height: 24px;" class="row-headers-background">
                     <div class="row-header-wrapper" style="line-height: 24px">236</div>
                 </th> -->
+                @php
+                    $treatment = $data['treatments'];
+                    $Date = str_split(str_replace('-', '', $treatment->date_of_diagnosis));
+                @endphp
                 <td class="s144" dir="ltr">56</td>
                 <td class="s28" colspan="10">Date of Diagnosis</td>
-                <td class="s26" dir="ltr">2</td>
-                <td class="s26" dir="ltr">0</td>
-                <td class="s26" dir="ltr">2</td>
-                <td class="s26" dir="ltr">2</td>
+                <td class="s26" dir="ltr">{{ $Date[0] ?? '' }}</td>
+                <td class="s26" dir="ltr">{{ $Date[1] ?? '' }}</td>
+                <td class="s26" dir="ltr">{{ $Date[2] ?? '' }}</td>
+                <td class="s26" dir="ltr">{{ $Date[3] ?? '' }}</td>
                 <td class="s30" dir="ltr">-</td>
-                <td class="s26" dir="ltr">0</td>
-                <td class="s26" dir="ltr">7</td>
+                <td class="s26" dir="ltr">{{ $Date[4] ?? '' }}</td>
+                <td class="s26" dir="ltr">{{ $Date[5] ?? '' }}</td>
                 <td class="s30" dir="ltr">-</td>
-                <td class="s26" dir="ltr">1</td>
-                <td class="s26" dir="ltr">8</td>
+                <td class="s26" dir="ltr">{{ $Date[6] ?? '' }}</td>
+                <td class="s26" dir="ltr">{{ $Date[7] ?? '' }}</td>
                 <td class="s66" colspan="19"></td>
             </tr>
             <tr style="height: 21px">
@@ -8051,14 +8062,14 @@
                 <td class="s57"></td>
                 <td class="s79"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->team_approach == "Yes" && in_array("Surgery", $treatment->disciplines) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s41" colspan="7">Surgery</td>
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->team_approach == "Yes" && in_array("Nuclear Medicine", $treatment->disciplines) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">7</td>
                 <td class="s53 softmerge">
@@ -8081,19 +8092,19 @@
                     <div class="row-header-wrapper" style="line-height: 21px">239</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->team_approach == "Yes" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s80" colspan="2">Yes</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->team_approach == "Yes" && in_array("Medical Oncology", $treatment->disciplines) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s41" colspan="7">Medical Oncology</td>
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->team_approach == "Yes" && in_array("Pathology", $treatment->disciplines) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">8</td>
                 <td class="s53 softmerge">
@@ -8116,19 +8127,19 @@
                     <div class="row-header-wrapper" style="line-height: 21px">240</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->team_approach == "No" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s80" colspan="2">No</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->team_approach == "Yes" && in_array("Pediatric Oncology", $treatment->disciplines) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">3</td>
                 <td class="s41" colspan="7">Pediatric Oncology</td>
                 <td class="s51"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->team_approach == "Yes" && in_array("Supportive and Palliative", $treatment->disciplines) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">9</td>
                 <td class="s53 softmerge">
@@ -8155,14 +8166,14 @@
                 <td></td>
                 <td class="s52"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->team_approach == "Yes" && in_array("Hematology Oncology", $treatment->disciplines) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">4</td>
                 <td class="s41" colspan="7">Hematology Oncology</td>
                 <td class="s40"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->team_approach == "Yes" && in_array("Complementary and Alternative", $treatment->disciplines) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">10</td>
                 <td class="s53 softmerge">
@@ -8189,7 +8200,7 @@
                 <td class="s41"></td>
                 <td class="s42"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->team_approach == "Yes" && in_array("Radiation Oncology", $treatment->disciplines) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">5</td>
                 <td class="s53 softmerge">
@@ -8204,12 +8215,13 @@
                 <td class="s57"></td>
                 <td class="s51"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($treatment->discipline_other) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">11</td>
                 <td class="s41" dir="ltr" colspan="4">Others, specify: </td>
-                <td class="s164" colspan="8"></td>
+                <td class="s164" colspan="8">{{ ucwords($treatment->discipline_other) }}</td>
             </tr>
+
             <tr style="height: 21px">
                 <!-- <th id="631683479R242" style="height: 21px;" class="row-headers-background">
                     <div class="row-header-wrapper" style="line-height: 21px">243</div>
@@ -8255,7 +8267,7 @@
                 <td class="s144" dir="ltr" rowspan="2">58</td>
                 <td class="s28" colspan="10" rowspan="2">Surgery</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->surgery == "Yes" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s80" colspan="2">Yes</td>
@@ -8272,23 +8284,23 @@
                     <div class="row-header-wrapper" style="line-height: 21px">245</div>
                 </th> -->
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->surgery == "No" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s34" colspan="2">No</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->surgery == "Yes" && in_array("Diagnostic", $treatment->surgery_goal) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">1</td>
                 <td class="s35" colspan="4">Diagnostic</td>
                 <td class="s63"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->surgery == "Yes" && in_array("Curative", $treatment->surgery_goal) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s35" colspan="4">Curative</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->surgery == "Yes" && in_array("Palliative", $treatment->surgery_goal) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">3</td>
                 <td class="s35" colspan="4">Palliative</td>
@@ -8311,17 +8323,17 @@
                 <td class="s52"></td>
                 <td class="s28" colspan="8">Purpose of Drug Administration</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->anticancer_drug == "Yes" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">1</td>
                 <td class="s35" colspan="4">Neoadjuvant</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->anticancer_drug == "Yes" && in_array("Neoadjuvant", $treatment->drug_purpose) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s35" colspan="4">Adjuvant</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->anticancer_drug == "Yes" && in_array("Adjuvant", $treatment->drug_purpose) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">3</td>
                 <td class="s58 softmerge">
@@ -8335,7 +8347,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">247</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->anticancer_drug == "Yes" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s80" colspan="2">Yes</td>
@@ -8343,12 +8355,12 @@
                         style="font-size:10pt;font-family:Arial;font-weight:normal;font-style:italic;color:#000000;">(can
                         be multiple)</span></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->anticancer_drug == "Yes" && in_array("Cytotoxic", $treatment->drug_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s41" colspan="4">Cytotoxic</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->anticancer_drug == "Yes" && in_array("Targeted", $treatment->drug_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">4</td>
                 <td class="s41" colspan="6">Targeted</td>
@@ -8361,12 +8373,12 @@
                     <div class="row-header-wrapper" style="line-height: 21px">248</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->anticancer_drug == "No" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s80" colspan="2">No</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->anticancer_drug == "Yes" && in_array("Hormonal", $treatment->drug_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s41" colspan="4">Hormonal</td>
@@ -8390,11 +8402,11 @@
                 <td class="s63"></td>
                 <td class="s64"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->anticancer_drug == "Yes" && in_array("Immunologic", $treatment->drug_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">3</td>
                 <td class="s35" colspan="6">Immunologic</td>
-                <td class="s165" colspan="9"></td>
+                <td class="s165" colspan="9">{{ ucwords($treatment->drug_types_others) }}</td>
             </tr>
             <tr style="height: 24px">
                 <!-- <th id="631683479R249" style="height: 24px;" class="row-headers-background">
@@ -8407,42 +8419,42 @@
                 <td class="s40"></td>
                 <td class="s80"></td>
                 <td class="s25" dir="ltr" colspan="7">Drug/s Regimen</td>
-                <td class="s26" colspan="18"></td>
+                <td class="s26" colspan="18">{{ ucwords($treatment->first_drug_regimen) }}</td>
             </tr>
             <tr style="height: 24px">
                 <!-- <th id="631683479R250" style="height: 24px;" class="row-headers-background">
                     <div class="row-header-wrapper" style="line-height: 24px">251</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->first_line_drug == "Yes" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s80" colspan="2">Yes</td>
                 <td class="s25" dir="ltr" colspan="7">Intended no. of Cycles</td>
-                <td class="s26" colspan="18"></td>
+                <td class="s26" colspan="18">{{ ucwords($treatment->first_cycles) }}</td>
             </tr>
             <tr style="height: 21px">
                 <!-- <th id="631683479R251" style="height: 21px;" class="row-headers-background">
                     <div class="row-header-wrapper" style="line-height: 21px">252</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->first_line_drug == "No" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s80" colspan="2">No</td>
                 <td class="s25" colspan="7">Treatment Goal</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->first_line_drug == "Yes" && $treatment->first_treatment_goal == "Curative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">1</td>
                 <td class="s35" colspan="4">Curative</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->first_line_drug == "Yes" && $treatment->first_treatment_goal == "Control" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s35" colspan="4">Control</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->first_line_drug == "Yes" && $treatment->first_treatment_goal == "Palliative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">3</td>
                 <td class="s36" colspan="4">Palliative</td>
@@ -8457,21 +8469,22 @@
                 <td class="s64"></td>
                 <td class="s25" colspan="7">Time of Administration</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->first_line_drug == "Yes" && $treatment->first_time == "Pre-operative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">1</td>
                 <td class="s35" colspan="4">Pre-operative</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->first_line_drug == "Yes" && $treatment->first_time == "Post-operative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s35" colspan="4">Post-operative</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->first_line_drug == "Yes" && $treatment->first_time == "Both" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">3</td>
                 <td class="s36" colspan="4">Both</td>
             </tr>
+
             <tr style="height: 24px">
                 <!-- <th id="631683479R253" style="height: 24px;" class="row-headers-background">
                     <div class="row-header-wrapper" style="line-height: 24px">254</div>
@@ -8483,42 +8496,42 @@
                 <td class="s40"></td>
                 <td class="s80"></td>
                 <td class="s25" dir="ltr" colspan="7">Drug/s Regimen</td>
-                <td class="s26" colspan="18"></td>
+                <td class="s26" colspan="18">{{ ucwords($treatment->second_drug_regimen) }}</td>
             </tr>
             <tr style="height: 24px">
                 <!-- <th id="631683479R254" style="height: 24px;" class="row-headers-background">
                     <div class="row-header-wrapper" style="line-height: 24px">255</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->second_line_drug == "Yes" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s80" colspan="2">Yes</td>
                 <td class="s25" dir="ltr" colspan="7">Intended no. of Cycles</td>
-                <td class="s26" colspan="18"></td>
+                <td class="s26" colspan="18">{{ ucwords($treatment->second_cycles) }}</td>
             </tr>
             <tr style="height: 21px">
                 <!-- <th id="631683479R255" style="height: 21px;" class="row-headers-background">
                     <div class="row-header-wrapper" style="line-height: 21px">256</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->second_line_drug == "No" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s80" colspan="2">No</td>
                 <td class="s25" colspan="7">Treatment Goal</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->second_line_drug == "Yes" && $treatment->second_treatment_goal == "Curative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">1</td>
                 <td class="s35" colspan="4">Curative</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->second_line_drug == "Yes" && $treatment->second_treatment_goal == "Control" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s35" colspan="4">Control</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->second_line_drug == "Yes" && $treatment->second_treatment_goal == "Palliative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">3</td>
                 <td class="s36" colspan="4">Palliative</td>
@@ -8533,75 +8546,76 @@
                 <td class="s64"></td>
                 <td class="s25" colspan="7">Time of Administration</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->second_line_drug == "Yes" && $treatment->second_time == "Pre-operative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">1</td>
                 <td class="s35" colspan="4">Pre-operative</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->second_line_drug == "Yes" && $treatment->second_time == "Post-operative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s35" colspan="4">Post-operative</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->second_line_drug == "Yes" && $treatment->second_time == "Both" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">3</td>
                 <td class="s36" colspan="4">Both</td>
             </tr>
+
             <tr style="height: 24px">
-                <!-- <th id="631683479R257" style="height: 24px;" class="row-headers-background">
-                    <div class="row-header-wrapper" style="line-height: 24px">258</div>
+                <!-- <th id="631683479R253" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">254</div>
                 </th> -->
-                <td class="s144" dir="ltr" rowspan="4">62</td>
-                <td class="s28" dir="ltr" colspan="10" rowspan="4">Third Line Anti-Cancer Drug</td>
+                <td class="s144" dir="ltr" rowspan="4">61</td>
+                <td class="s28" dir="ltr" colspan="10" rowspan="4">Second Line Anti-Cancer Drug</td>
                 <td class="s40"></td>
                 <td class="s40"></td>
                 <td class="s40"></td>
                 <td class="s80"></td>
                 <td class="s25" dir="ltr" colspan="7">Drug/s Regimen</td>
-                <td class="s26" colspan="18"></td>
+                <td class="s26" colspan="18">{{ ucwords($treatment->third_drug_regimen) }}</td>
             </tr>
             <tr style="height: 24px">
-                <!-- <th id="631683479R258" style="height: 24px;" class="row-headers-background">
-                    <div class="row-header-wrapper" style="line-height: 24px">259</div>
+                <!-- <th id="631683479R254" style="height: 24px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 24px">255</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->third_line_drug == "Yes" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s80" colspan="2">Yes</td>
                 <td class="s25" dir="ltr" colspan="7">Intended no. of Cycles</td>
-                <td class="s26" colspan="18"></td>
+                <td class="s26" colspan="18">{{ ucwords($treatment->third_cycles) }}</td>
             </tr>
             <tr style="height: 21px">
-                <!-- <th id="631683479R259" style="height: 21px;" class="row-headers-background">
-                    <div class="row-header-wrapper" style="line-height: 21px">260</div>
+                <!-- <th id="631683479R255" style="height: 21px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 21px">256</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->third_line_drug == "No" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s80" colspan="2">No</td>
                 <td class="s25" colspan="7">Treatment Goal</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->third_line_drug == "Yes" && $treatment->third_treatment_goal == "Curative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">1</td>
                 <td class="s35" colspan="4">Curative</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->third_line_drug == "Yes" && $treatment->third_treatment_goal == "Control" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s35" colspan="4">Control</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->third_line_drug == "Yes" && $treatment->third_treatment_goal == "Palliative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">3</td>
                 <td class="s36" colspan="4">Palliative</td>
             </tr>
             <tr style="height: 21px">
-                <!-- <th id="631683479R260" style="height: 21px;" class="row-headers-background">
-                    <div class="row-header-wrapper" style="line-height: 21px">261</div>
+                <!-- <th id="631683479R256" style="height: 21px;" class="row-headers-background">
+                    <div class="row-header-wrapper" style="line-height: 21px">257</div>
                 </th> -->
                 <td class="s63"></td>
                 <td class="s63"></td>
@@ -8609,21 +8623,23 @@
                 <td class="s64"></td>
                 <td class="s25" colspan="7">Time of Administration</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->third_line_drug == "Yes" && $treatment->third_time == "Pre-operative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">1</td>
                 <td class="s35" colspan="4">Pre-operative</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->third_line_drug == "Yes" && $treatment->third_time == "Post-operative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s35" colspan="4">Post-operative</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->third_line_drug == "Yes" && $treatment->third_time == "Both" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">3</td>
                 <td class="s36" colspan="4">Both</td>
             </tr>
+
+
             <tr style="height: 24px">
                 <!-- <th id="631683479R261" style="height: 24px;" class="row-headers-background">
                     <div class="row-header-wrapper" style="line-height: 24px">262</div>
@@ -8633,19 +8649,19 @@
                 <td class="s40" colspan="2"></td>
                 <td class="s80" colspan="2"></td>
                 <td class="s166" colspan="7">If yes, indicate line</td>
-                <td class="s26" colspan="18"></td>
+                <td class="s26" colspan="18">{{ ucwords($treatment->indicate_line) }}</td>
             </tr>
             <tr style="height: 24px">
                 <!-- <th id="631683479R262" style="height: 24px;" class="row-headers-background">
                     <div class="row-header-wrapper" style="line-height: 24px">263</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->other_subsequent_line_drug == "Yes" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s80" colspan="2">Yes</td>
                 <td class="s25" dir="ltr" colspan="7">Drug/s Regimen</td>
-                <td class="s26" colspan="18"></td>
+                <td class="s26" colspan="18">{{ ucwords($treatment->other_subsequent_drug_regimen) }}</td>
             </tr>
             <tr style="height: 23px">
                 <!-- <th id="631683479R263" style="height: 23px;" class="row-headers-background">
@@ -8657,7 +8673,7 @@
                 <td class="s39" dir="ltr">2</td>
                 <td class="s80" colspan="2">No</td>
                 <td class="s25" dir="ltr" colspan="7">Intended no. of Cycles</td>
-                <td class="s26" colspan="18"></td>
+                <td class="s26" colspan="18">{{ ucwords($treatment->other_subsequent_cycles) }}</td>
             </tr>
             <tr style="height: 21px">
                 <!-- <th id="631683479R264" style="height: 21px;" class="row-headers-background">
@@ -8669,17 +8685,17 @@
                 <td class="s52"></td>
                 <td class="s25" colspan="7">Treatment Goal</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->other_subsequent_line_drug == "Yes" && $treatment->other_subsequent_treatment_goal == "Curative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">1</td>
                 <td class="s35" colspan="4">Curative</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->other_subsequent_line_drug == "Yes" && $treatment->other_subsequent_treatment_goal == "Control" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s35" colspan="4">Control</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->other_subsequent_line_drug == "Yes" && $treatment->other_subsequent_treatment_goal == "Palliative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">3</td>
                 <td class="s36" colspan="4">Palliative</td>
@@ -8694,21 +8710,22 @@
                 <td class="s64"></td>
                 <td class="s25" colspan="7">Time of Administration</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->other_subsequent_line_drug == "Yes" && $treatment->other_subsequent_time == "Pre-operative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">1</td>
                 <td class="s35" colspan="4">Pre-operative</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->other_subsequent_line_drug == "Yes" && $treatment->other_subsequent_time == "Post-operative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s35" colspan="4">Post-operative</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->other_subsequent_line_drug == "Yes" && $treatment->other_subsequent_time == "Both" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">3</td>
                 <td class="s36" colspan="4">Both</td>
             </tr>
+
             <tr style="height: 21px">
                 <!-- <th id="631683479R266" style="height: 21px;" class="row-headers-background">
                     <div class="row-header-wrapper" style="line-height: 21px">267</div>
@@ -8751,7 +8768,7 @@
                 <td class="s41"></td>
                 <td class="s42"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->radiotherapy == "Yes" && in_array("2D conventional", $treatment->radiotherapy_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s53 softmerge">
@@ -8763,7 +8780,7 @@
                 <td class="s55"></td>
                 <td class="s55"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->radiotherapy == "Yes" && in_array("IORT", $treatment->radiotherapy_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">6</td>
                 <td class="s53 softmerge" dir="ltr">
@@ -8793,7 +8810,7 @@
                 <td class="s41"></td>
                 <td class="s42"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->radiotherapy == "Yes" && in_array("3DCRT", $treatment->radiotherapy_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s53 softmerge">
@@ -8805,7 +8822,7 @@
                 <td class="s41"></td>
                 <td class="s41"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->radiotherapy == "Yes" && in_array("Heavy Particles", $treatment->radiotherapy_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">7</td>
                 <td class="s53 softmerge" dir="ltr">
@@ -8835,7 +8852,7 @@
                 <td class="s93"></td>
                 <td class="s168"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->radiotherapy == "Yes" && in_array("Brachytherapy", $treatment->radiotherapy_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">3</td>
                 <td class="s53 softmerge" dir="ltr">
@@ -8847,7 +8864,7 @@
                 <td class="s55"></td>
                 <td class="s41"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->radiotherapy == "Yes" && in_array("Proton Therapy", $treatment->radiotherapy_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">8</td>
                 <td class="s53 softmerge">
@@ -8873,12 +8890,12 @@
                     <div class="row-header-wrapper" style="line-height: 21px">271</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->radiotherapy == "Yes" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s80" colspan="2">Yes</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->radiotherapy == "Yes" && in_array("Electron Therapy", $treatment->radiotherapy_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">4</td>
                 <td class="s53 softmerge" dir="ltr">
@@ -8890,12 +8907,11 @@
                 <td class="s55"></td>
                 <td class="s55"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->radiotherapy == "Yes" && in_array("Stereotactic Radiosurgery / Stereotactic Radiotherapy", $treatment->radiotherapy_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">9</td>
                 <td class="s53 softmerge" dir="ltr">
-                    <div class="softmerge-inner" style="width:370px;left:-1px">Stereotactic Radiosurgery / Stereotactic
-                        Radiotherapy</div>
+                    <div class="softmerge-inner" style="width:370px;left:-1px">Stereotactic Radiosurgery / Stereotactic Radiotherapy</div>
                 </td>
                 <td class="s112"></td>
                 <td class="s112"></td>
@@ -8917,12 +8933,12 @@
                     <div class="row-header-wrapper" style="line-height: 21px">272</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->radiotherapy == "No" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s80" colspan="2">No</td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->radiotherapy == "Yes" && in_array("IMRT/VMAT/Helical", $treatment->radiotherapy_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">5</td>
                 <td class="s58 softmerge" dir="ltr">
@@ -8934,11 +8950,11 @@
                 <td class="s59"></td>
                 <td class="s74"></td>
                 <td class="s62" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($treatment->radiotherapy_types_others) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">10</td>
                 <td class="s35" dir="ltr" colspan="4">Others, specify:</td>
-                <td class="s169" colspan="11"></td>
+                <td class="s169" colspan="11">{{ ucwords($treatment->radiotherapy_types_others) }}</td>
             </tr>
             <tr style="height: 21px">
                 <!-- <th id="631683479R272" style="height: 21px;" class="row-headers-background">
@@ -8962,13 +8978,13 @@
                 <td class="s41"></td>
                 <td class="s42"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($treatment->radiotherapy_sequence) && $treatment->radiotherapy_sequence == "Concurrent ChemoRT" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">1</td>
                 <td class="s35" colspan="7">Concurrent ChemoRT</td>
                 <td class="s170"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($treatment->radiotherapy_sequence) && $treatment->radiotherapy_sequence == "Sequential" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s35" colspan="4">Sequential</td>
@@ -9004,7 +9020,7 @@
                 <td class="s35"></td>
                 <td class="s36"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($treatment->radiotherapy_goal) && $treatment->radiotherapy_goal == "Definitive" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">1</td>
                 <td class="s58 softmerge">
@@ -9013,7 +9029,7 @@
                 <td class="s59"></td>
                 <td class="s74"></td>
                 <td class="s62" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($treatment->radiotherapy_goal) && $treatment->radiotherapy_goal == "Palliative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s58 softmerge">
@@ -9022,7 +9038,7 @@
                 <td class="s113"></td>
                 <td class="s74"></td>
                 <td class="s62" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($treatment->radiotherapy_goal) && $treatment->radiotherapy_goal == "Adjuvant" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">3</td>
                 <td class="s58 softmerge">
@@ -9031,7 +9047,7 @@
                 <td class="s113"></td>
                 <td class="s171"></td>
                 <td class="s62" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($treatment->radiotherapy_goal) && $treatment->radiotherapy_goal == "Neoadjuvant" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">4</td>
                 <td class="s58 softmerge">
@@ -9070,7 +9086,7 @@
                 <td class="s40"></td>
                 <td class="s42"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->theranostics == "Yes" && in_array("RAI", $treatment->theranostics_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s53 softmerge">
@@ -9108,7 +9124,7 @@
                 <td class="s40"></td>
                 <td class="s42"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->theranostics == "Yes" && in_array("PRRT", $treatment->theranostics_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s53 softmerge">
@@ -9143,12 +9159,12 @@
                     <div class="row-header-wrapper" style="line-height: 21px">280</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->theranostics == "Yes" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s80" colspan="2">Yes</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->theranostics == "Yes" && in_array("PRLT", $treatment->theranostics_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">3</td>
                 <td class="s53 softmerge">
@@ -9182,12 +9198,12 @@
                     <div class="row-header-wrapper" style="line-height: 21px">281</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->theranostics == "No" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s80" colspan="2">No</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->theranostics == "Yes" && in_array("SIRT", $treatment->theranostics_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">4</td>
                 <td class="s53 softmerge">
@@ -9226,11 +9242,11 @@
                 <td class="s40"></td>
                 <td class="s42"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($treatment->theranostics_types_others) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">5</td>
                 <td class="s35" dir="ltr" colspan="4">Others, specify:</td>
-                <td class="s173" colspan="13"></td>
+                <td class="s173" colspan="13">{{ ucwords($treatment->theranostics_types_others) }}</td>
                 <td class="s170"></td>
                 <td class="s170"></td>
                 <td class="s170"></td>
@@ -9261,7 +9277,7 @@
                 <td class="s43"></td>
                 <td class="s36"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->theranostics == "Yes" && $treatment->theranostics_goal == "Definitive" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">1</td>
                 <td class="s58 softmerge">
@@ -9272,7 +9288,7 @@
                 <td class="s74"></td>
                 <td class="s35"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->theranostics == "Yes" && $treatment->theranostics_goal == "Palliative" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">2</td>
                 <td class="s35" colspan="7">Palliative</td>
@@ -9332,13 +9348,14 @@
                     <div class="row-header-wrapper" style="line-height: 21px">286</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->other_therapies == "Yes" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s80" colspan="2">Yes</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
-                    </svg></td>
+                        <use href="#{{ $treatment->other_therapies == "Yes" && in_array("Blood Transfusion", $treatment->other_therapies_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
+                    </svg>
+                </td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s53 softmerge">
                     <div class="softmerge-inner" style="width:154px;left:-1px">Blood Transfusion</div>
@@ -9353,7 +9370,7 @@
                 <td class="s41"></td>
                 <td class="s93"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->other_therapies == "Yes" && in_array("Transarterial chemoembolization", $treatment->other_therapies_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">5</td>
                 <td class="s53 softmerge">
@@ -9375,12 +9392,12 @@
                     <div class="row-header-wrapper" style="line-height: 21px">287</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#checked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->other_therapies == "No" ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s80" colspan="2">No</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->other_therapies == "Yes" && in_array("Cryoablation", $treatment->other_therapies_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s53 softmerge">
@@ -9396,7 +9413,7 @@
                 <td class="s41"></td>
                 <td class="s93"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->other_therapies == "Yes" && in_array("Transplant", $treatment->other_therapies_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">6</td>
                 <td class="s53 softmerge">
@@ -9422,7 +9439,7 @@
                 <td class="s40"></td>
                 <td class="s42"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->other_therapies == "Yes" && in_array("Embolization", $treatment->other_therapies_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">3</td>
                 <td class="s53 softmerge">
@@ -9438,7 +9455,7 @@
                 <td class="s41"></td>
                 <td class="s41"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ isset($treatment->other_therapies_other) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">7</td>
                 <td class="s41" dir="ltr" colspan="4">Others, specify:</td>
@@ -9459,7 +9476,7 @@
                 <td class="s170"></td>
                 <td class="s172"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#unchecked-checkbox-id" fill="#000000" />
+                        <use href="#{{ $treatment->other_therapies == "Yes" && in_array("Radiofrequency ablation", $treatment->other_therapies_types) ? "checked" : "unchecked" }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">4</td>
                 <td class="s58 softmerge">
@@ -9476,7 +9493,7 @@
                 <td class="s35"></td>
                 <td class="s32" dir="ltr"></td>
                 <td class="s33" dir="ltr"></td>
-                <td class="s115" colspan="11"></td>
+                <td class="s115" colspan="11">{{ ucwords($treatment->other_therapies_other) }}</td>
             </tr>
         </tbody>
     </table>
