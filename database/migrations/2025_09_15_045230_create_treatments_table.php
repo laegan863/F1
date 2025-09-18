@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('anticancer_drug')->nullable(); // Yes / No
             $table->json('drug_purpose')->nullable();
             $table->json('drug_types')->nullable();
+            $table->string('drug_types_others')->nullable();
 
             // Q60: First Line Anti-cancer Drug
             $table->string('first_line_drug')->nullable();

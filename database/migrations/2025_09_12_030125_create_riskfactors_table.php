@@ -26,6 +26,7 @@ return new class extends Migration
 
             $table->string('occupational_exposure');
             $table->json('occupation_specify')->nullable();
+            $table->string('occupation_specify_others')->nullable();
 
             $table->string('air_pollution')->nullable();
 

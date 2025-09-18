@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('email_address');
             $table->json('relative');
             $table->string('relative_phone_number');
-            $table->string('relative_email');
+            $table->string('relative_email')->nullable();
             $table->string('highest_education');
             $table->string('occupation');
             $table->string('number_of_years_in_occupation');

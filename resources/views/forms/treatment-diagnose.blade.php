@@ -112,8 +112,8 @@
                 <div class="form-check form-check-inline">
                     <div class="d-flex align-items-center gap-2">
                         <label class="form-check-label">Others</label>
-                        <input type="text" class="form-control" name="drug_types[]"
-                            value="{{ $otherType ?? '' }}" placeholder="Specify">
+                        <input type="text" class="form-control" name="drug_types_others"
+                            value="{{ old('drug_types_others') }}" placeholder="Specify">
                     </div>
                 </div>
             </div>

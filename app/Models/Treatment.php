@@ -19,6 +19,8 @@ class Treatment extends Model
         'anticancer_drug',
         'drug_purpose',
         'drug_types',
+        'drug_types_others',
+
         'first_line_drug',
         'first_drug_regimen',
         'first_cycles',

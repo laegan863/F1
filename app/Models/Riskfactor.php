@@ -17,6 +17,7 @@ class Riskfactor extends Model
         'healtydiet',
         'occupational_exposure',
         'occupation_specify',
+        'occupation_specify_others',
         'air_pollution',
         'family_history',
         'cancer_sites',

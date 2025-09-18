@@ -151,7 +151,7 @@
             <div class="row">
                 @php
                     $staging_systems = [
-                        "FIGO Staging System",
+                        "FIGO Staging System (International Federation of Gynecology and Obstetrics)",
                         "Ann Arbor Staging System",
                         "Breslow Thickness and Clark Level (for Skin Cancer)",
                         "Durie-Salmon Staging System",
@@ -174,6 +174,11 @@
                     </div>
                 </div>
                 @endforeach
+                <div class="col-md-6">
+                    <div class="form-check">
+                        <input placeholder="Other Remarks" class="form-control" type="text" name="other_remarks" value="{{ old('other_remarks') }}">
+                    </div>
+                </div>
             </div>
         </div>
 
