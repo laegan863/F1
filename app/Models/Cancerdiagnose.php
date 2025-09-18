@@ -28,4 +28,9 @@ class Cancerdiagnose extends Model
         'cancer_sites' => 'array',
         'other_staging' => 'array',
     ];
+
+    public function demographicprofile()
+    {
+        return $this->belongsTo(Demographicprofile::class, 'code', 'id');
+    }
 }

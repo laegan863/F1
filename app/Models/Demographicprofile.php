@@ -10,6 +10,9 @@ class Demographicprofile extends Model
     public $timestamps = true;
     protected $fillable = [
         'code',
+        'patient_first_encounter',
+        'patient_health_facility_id',
+        'philhealth_id',
         'name',
         'married_maiden_name',
         'date_of_birth',
@@ -35,4 +38,19 @@ class Demographicprofile extends Model
         'current' => 'array',
         'relative' => 'array',
     ];
+
+    public function riskfactors()
+    {
+        return $this->hasOne(Riskfactor::class, 'code', 'id');
+    }
+
+    public function cancerdiagnoses()
+    {
+        return $this->hasOne(Cancerdiagnose::class, 'code', 'id');
+    }
+
+    public function treatments()
+    {
+        return $this->hasOne(Treatment::class, 'code', 'id');
+    }
 }

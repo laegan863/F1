@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('cancerdiagnoses', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('code');
+            $table->foreignId('code')->constrained('demographicprofiles')->onDelete('cascade');
             $table->string('multiple_sites')->nullable();
             $table->string('primary_site_number')->nullable();
             $table->json('cancer_sites')->nullable();
