@@ -2538,7 +2538,7 @@
 
 </style>
 </head>
-<body style="max-width: 1100px; margin: 0 auto; padding: 20px 0px;border:1px solid black;">
+<body style="max-width: 1050px; margin: 0 auto; padding: 20px 0px;border:1px solid black;">
     <!-- SVG icons used in the spreadsheet -->
 
 <svg style="display:none;" width="16px" height="16px" viewBox="0 0 16 16" version="1.1"
@@ -2553,7 +2553,7 @@
     </defs>
 </svg>
 <div class="ritz grid-container" dir="ltr">
-    <table class="waffle no-grid" cellspacing="0" cellpadding="0" style="width: 1100px;">
+    <table class="waffle no-grid" cellspacing="0" cellpadding="0" style="width: 1050px;">
         <tbody>
             <tr style="height: 52px">
                 <!-- <th id="631683479R0" style="height: 52px;">

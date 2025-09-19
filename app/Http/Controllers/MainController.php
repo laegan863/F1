@@ -392,11 +392,11 @@ class MainController extends Controller
 
     }
 
-    public function result(){
+    public function result($id){
 
-        $code = Session::get('code');
+        // $code = Session::get('code');
 
-        // $code = 4;
+        $code = $id;
         $data = Demographicprofile::with(['riskfactors', 'cancerdiagnoses', 'treatments'])->find($code);
 
         $data['date_of_birth'] = str_replace(search: "-", replace: "", subject: $data->date_of_birth);
