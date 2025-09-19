@@ -1,20 +1,21 @@
 @extends('admin.app')
 @section('content')
-    <div class="middle-box text-center animated fadeInRightBig">
-        <h3 class="font-bold">This is page content {{ Auth::logout() }}</h3>
-        <div class="error-desc">
-            You can create here any grid layout you want. And any variation layout you imagine:) Check out
-            main dashboard and other site. It use many different layout.
-            <br/><a href="index.html" class="btn btn-primary m-t">Dashboard</a>
-            <div class="fs-5">hello world</div>
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="ibox ">
+                    <div class="ibox-title">
+                        <div class="ibox-tools">
+                            <span class="label label-success float-right">Total</span>
+                        </div>
+                        <h5 class="text-danger">Total Records</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">{{ $totalRecords }}</h1>
+                        <small>Total records</small>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="container">
-
-        <div class="bg-primary p-5"></div>
-        <div class="bg-dark p-5"></div>
-        <div class="bg-info p-5"></div>
-        <div class="bg-success p-5"></div>
-        <div class="bg-danger p-5"></div>
     </div>
 @endsection
