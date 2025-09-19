@@ -9,7 +9,7 @@
                             <th>#</th>
                             <th>Name</th>
                             <th>Date of Birth</th>
-                            <th>Status</th>
+                            <th>Civil Status</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
