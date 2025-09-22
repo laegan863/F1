@@ -19,14 +19,12 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::prefix('admin')->group(function(){
             Route::get('dashboard','dashboard')->name('admin.dashboard');
             Route::get('records','records')->name('admin.records');
-
             Route::middleware(IsAdmin::class)->group(function() {
                 Route::get('users', 'users')->name('admin.users');
                 Route::post('add-user', 'add_user')->name('admin.add-user');
                 Route::get('delete/{id}/{table}', 'delete')->name('admin.delete');
                 Route::post('edit/{id}', 'edit')->name('admin.edit-user');
             });
-
         });
     });
     Route::view(uri: 'demographic-profile', view: 'forms.demographic')->name('demographic-profile');
@@ -44,7 +42,6 @@ Route::controller(MainController::class)->group(function() {
     Route::post('hospital-number', 'hospital_number')->name('admin.validate-hospital-number');
     Route::get('result/{id}', 'result')->name('result');
     Route::get('view/{id}', 'result')->name('view');
-
 });
 
 Route::middleware(IsAuthenticated::class)->group(function () {

@@ -17,7 +17,7 @@
                 </div>
             </a>
             @if(Auth::user()->role == "admin")
-                <a href="" class="col-lg-3">
+                <a href="{{ route('admin.users') }}" class="col-lg-3">
                     <div class="ibox text-warning">
                         <div class="ibox-title">
                             <div class="ibox-tools">
