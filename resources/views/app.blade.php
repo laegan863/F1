@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CRS+</title>
+    <title>CBCR</title>
     <link rel="icon" type="image/png" class="rounded" href="{{ asset('assets/img/logo.png') }}">
     <link href="{{ asset(path: 'assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset(path: 'assets/font-awesome/css/font-awesome.css') }}" rel="stylesheet">

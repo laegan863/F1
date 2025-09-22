@@ -6,15 +6,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CRS+</title>
+    <title>CBCR</title>
     <link rel="icon" type="image/png" class="rounded" href="{{ asset('assets/img/logo.png') }}">
     <link href="{{ asset(path: 'assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset(path: 'assets/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
-
-    @if(request()->is('admin/records'))
-        <link href="{{ asset(path: 'assets/css/plugins/dataTables/datatables.min.css') }}" rel="stylesheet">
-    @endif
-
+    <link href="{{ asset(path: 'assets/css/plugins/dataTables/datatables.min.css') }}" rel="stylesheet">
     <link href="{{ asset(path: 'assets/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset(path: 'assets/css/style.css') }}" rel="stylesheet">
 
@@ -53,30 +49,23 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('demographic-profile') }}">
+                                <a href="{{ route('first-page') }}">
                                     <i class="fa fa-plus"></i>
                                     Add Record
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <li class="{{ request()->is('admin/users') ? 'active' : '' }}">
-                        <a href="#"><i class="fa fa-th-large"></i><span class="nav-label">User Management</span> <span class="fa arrow"></span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li class="{{ request()->is('admin/records') ? 'active' : '' }}">
-                                <a href="">
-                                    <i class="fa fa-list"></i>
-                                    Manage Users
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    <i class="fa fa-plus"></i>
-                                    Add Record
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+                    @if(Auth::user()->role === 'admin')
+                        <li class="{{ request()->is('admin/users') ? 'active' : '' }}">
+                            <a href="{{ route('admin.users') }}">
+                                <i class="fa fa-users"></i>
+                                <span class="nav-label">
+                                    User Management
+                                </span>
+                            </a>
+                        </li>
+                    @endif
                 </ul>
 
             </div>
@@ -134,14 +123,22 @@
     <script src="{{ asset(path: 'assets/js/bootstrap.js') }}"></script>
     <script src="{{ asset(path: 'assets/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
     <script src="{{ asset(path: 'assets/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
-    @if(request()->is('admin/records'))
+
     <script src="{{ asset(path: 'assets/js/plugins/dataTables/datatables.min.js') }}"></script>
-    @endif
+
     <!-- Custom and plugin javascript -->
     <script src="{{ asset(path: 'assets/js/inspinia.js') }}"></script>
     <script src="{{ asset(path: 'assets/js/plugins/pace/pace.min.js') }}"></script>
-
-    @if(request()->is('admin/records'))
+    <script src="{{ asset('sweetalert.min.js') }}"></script>
+    @if(Session::has('success'))
+        <script>
+            Swal.fire({
+                title: "Good job!",
+                text: "{{ Session::get('success') }}",
+                icon: "success"
+            });
+        </script>
+    @endif
     <script>
         $.fn.dataTable.Buttons.defaults.dom.button.className = 'btn btn-white btn-sm';
 
@@ -171,5 +168,4 @@
             });
         });
     </script>
-    @endif
 </body>

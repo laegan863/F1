@@ -15,6 +15,11 @@ use App\Models\Treatment;
 
 class MainController extends Controller
 {
+
+    public function hospital_number(Request $request)
+    {
+        return to_route("demographic-profile")->with('success', 'User exists in the database!');
+    }
     public function form()
     {
         return Pdf::view('forms.form')
@@ -165,7 +170,7 @@ class MainController extends Controller
         $data = Demographicprofile::create($validate);
 
         Session::put(key: 'code', value: $data->id);
-        return to_route(route: 'risk-factor');
+        return to_route(route: 'risk-factor')->with('success', 'Data has been successfully saved, Please take the next step!');
 
     }
 
@@ -236,17 +241,13 @@ class MainController extends Controller
                 Riskfactor::create($validate);
             }
 
-            return to_route(route: 'cancer-diagnose');
+            return to_route(route: 'cancer-diagnose')->with('success', 'Data has been successfully saved, Please take the next step!');
 
         } catch (\Throwable $th) {
             return response()->json([
                 'error' => $th->getMessage()
             ]);
         }
-
-        // return response()->json([
-        //     'data' => $validate
-        // ]);
     }
 
     public function submit_cancer_diagnose_data(Request $request)
@@ -287,7 +288,7 @@ class MainController extends Controller
             Cancerdiagnose::create($validate);
         }
 
-        return to_route(route: 'treatment-diagnose');
+        return to_route(route: 'treatment-diagnose')->with('success', 'Data has been successfully saved, Please take the next step!');
 
         // return response()->json([
         //     'data' => $validated
@@ -393,7 +394,6 @@ class MainController extends Controller
             'status' => 1
         ]);
 
-        // return to_route('result');
         return to_route('admin.records')->with('success', 'Data has been successfully saved!');
 
     }
