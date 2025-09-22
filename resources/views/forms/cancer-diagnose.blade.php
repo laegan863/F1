@@ -8,7 +8,7 @@
 
         {{-- ================= Q43: More than 1 active Primary Cancer Sites ================= --}}
         <div class="mb-3">
-            <label class="form-label fw-bold">Are there more than 1 active Primary Cancer Site(s)?</label><br>
+            <label class="form-label fw-bold">Are there more than 1 active Primary Cancer Site(s)? <small class="text-danger">*</small></label><br>
             <div class="form-check form-check-inline">
                 <input class="form-check-input rounded-circle" type="radio"
                        name="multiple_sites" value="yes"
@@ -28,14 +28,14 @@
         {{-- ================= Q44–45: Primary Cancer Site ================= --}}
         <div id="active_primary_cancer" class="{{ old('multiple_sites') == 'yes' ? '' : 'd-none' }}">
             <div class="mb-3">
-                <label class="form-label fw-bold">Primary Cancer Site Number</label>
+                <label class="form-label fw-bold">Primary Cancer Site Number <small class="text-danger">*</small></label>
                 <input type="number" class="form-control"
                        name="primary_site_number" min="1"
                        value="{{ old('primary_site_number') }}">
             </div>
 
             <div class="mb-3">
-                <label class="form-label fw-bold">Primary Cancer Site</label>
+                <label class="form-label fw-bold">Primary Cancer Site <small class="text-danger">*</small></label>
                 <div class="row">
                     @php
                         $sites = [
@@ -85,7 +85,7 @@
 
         {{-- ================= Q46: Laterality ================= --}}
         <div class="mb-3">
-            <label class="form-label fw-bold">Laterality</label><br>
+            <label class="form-label fw-bold">Laterality <small class="text-danger">*</small></label><br>
             @foreach(['Left','Right','Bilateral','Not Applicable'] as $lat)
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input rounded-circle"
@@ -98,7 +98,7 @@
 
         {{-- ================= Q47: ICD-10 ================= --}}
         <div class="mb-3">
-            <label class="form-label fw-bold">ICD-10</label>
+            <label class="form-label fw-bold">ICD-10 <small class="text-danger">*</small></label>
             <input type="text" class="form-control"
                    name="icd_10" placeholder="e.g. C50.0"
                    value="{{ old('icd_10') }}">
@@ -106,7 +106,7 @@
 
         {{-- ================= Q48: Histologic Diagnosis ================= --}}
         <div class="mb-3">
-            <label class="form-label fw-bold">Histologic Diagnosis</label>
+            <label class="form-label fw-bold">Histologic Diagnosis <small class="text-danger">*</small></label>
             <input type="text" class="form-control"
                    name="histologic_diagnosis" placeholder="Enter diagnosis"
                    value="{{ old('histologic_diagnosis') }}">
@@ -184,7 +184,7 @@
 
         {{-- ================= Q55: Current Status of the Cancer ================= --}}
         <div class="mb-3">
-            <label class="form-label fw-bold">Current Status of the Cancer</label><br>
+            <label class="form-label fw-bold">Current Status of the Cancer <small class="text-danger">*</small></label><br>
             @php
                 $statuses = [
                     "Newly diagnosed",

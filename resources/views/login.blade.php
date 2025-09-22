@@ -1,9 +1,9 @@
 @extends('app')
 @section('content')
-    <div class="middle-box text-center loginscreen animated fadeInDown">
-        <div>
+    <div class="max-width-400 text-center loginscreen animated fadeInDown mt-5">
+        <div class="card pb-4 px-4">
             <div>
-                <h1 class="logo-name">IN+</h1>
+                <h3 class="logo-name">CRS+</h3>
             </div>
             @error('error')
                <div class="alert alert-danger fw-semibold">

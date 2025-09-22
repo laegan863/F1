@@ -15,7 +15,7 @@
                     "Blood - Chronic Myelogenous Leukemia","Blood - Myelodysplastic Syndromes",
                     "Blood - Plasma Cell Disorders","Bone","Brain (CNS)","Breast","Cervix",
                     "Colon","Esophagus","Eyes and Orbit","Gallbladder","Gastroesophageal Junction",
-                    "Hodgkin Lymphoma","Hypopharynx","Kaposi Sarcoma","Kidney","Larynx","Leukemia",
+                    "Hodgkin Lymphoma","Hypopharynx","Kaposi Sarcoma","Kidney", "Larynx","Leukemia",
                     "Lip/Oral Cavity","Liver","Lung","Melanoma of Skin","Mesothelioma","Multiple Myeloma",
                     "Nasopharynx","Non-Hodgkin Lymphoma","Oral Cavity","Oropharynx","Ovary","Pancreas",
                     "Paranasal Sinus","Peritoneal","Prostate","Rectum","Renal Pelvis/Ureters","Salivary Glands",

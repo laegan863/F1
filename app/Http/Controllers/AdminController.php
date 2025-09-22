@@ -12,7 +12,9 @@ class AdminController extends Controller
     }
 
     public function records(){
-        $data = Demographicprofile::all();
+        $data = Demographicprofile::where('status', 1)
+                ->orderBy('id', 'desc')
+                ->get();
         return view('admin.files.records', compact('data'));
     }
 }

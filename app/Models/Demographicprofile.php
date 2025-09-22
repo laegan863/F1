@@ -30,6 +30,7 @@ class Demographicprofile extends Model
         'highest_education',
         'occupation',
         'number_of_years_in_occupation',
+        'status'
     ];
 
     protected $casts = [

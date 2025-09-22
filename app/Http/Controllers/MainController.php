@@ -357,6 +357,7 @@ class MainController extends Controller
             'surgery_goal.required' => 'Please specify the goal in Surgery',
             'drug_purpose.required' => 'Please specify the Purpose of Drug Administration',
         ]);
+
         $validate["code"] = Session::get(key: 'code');
 
         $nullables = [
@@ -388,16 +389,18 @@ class MainController extends Controller
             Treatment::create($validate);
         }
 
-        return to_route('result');
+        Demographicprofile::find($validate["code"])->update([
+            'status' => 1
+        ]);
+
+        // return to_route('result');
+        return to_route('admin.records')->with('success', 'Data has been successfully saved!');
 
     }
 
     public function result($id){
 
-        // $code = Session::get('code');
-
-        $code = $id;
-        $data = Demographicprofile::with(['riskfactors', 'cancerdiagnoses', 'treatments'])->find($code);
+        $data = Demographicprofile::with(['riskfactors', 'cancerdiagnoses', 'treatments'])->find($id);
 
         $data['date_of_birth'] = str_replace(search: "-", replace: "", subject: $data->date_of_birth);
         $data['date_of_birth'] = str_split($data['date_of_birth']);
@@ -406,43 +409,10 @@ class MainController extends Controller
         $data['patient_first_encounter'] = str_replace(search: "-", replace: "", subject: $data->patient_first_encounter);
         $data['patient_first_encounter'] = str_split($data['patient_first_encounter']);
 
-        // foreach ($data->name as $key => $value) {
-        //     $data[$key] = $value;
-        // }
-        // unset($data['name']);
-
-
-
-        // $patient_diagnosed_w_cancer = [];
-        // foreach ($data['riskfactors']['patient_diagnosed_w_cancer'] as $key => $value) {
-        //     // foreach($value as $new_k => $new_v){
-        //     //     // if($new_k == "year"){
-        //     //     //     $patient_diagnosed_w_cancer[$key][$new_k] = str_split($new_v);
-        //     //     // }else{
-        //     //     //     $patient_diagnosed_w_cancer[$key][$new_k] = $new_v;
-        //     //     // }
-        //     //     // $patient_diagnosed_w_cancer[$key][$new_k] = $new_v;
-        //     // }
-        //     $patient_diagnosed_w_cancer[] = $key;
-        // }
-
-        // $data["riskfactors"]["patient_diagnosed_w_cancer"] = $patient_diagnosed_w_cancer;
-
-        // return response()->json([
-        //     'data' => array_keys($data['riskfactors']['patient_diagnosed_w_cancer'] ?? [])
-        // ]);
-
         // return response()->json(['data' => $data]);
         return view(view: 'forms.form', data: [
             'data' => $data,
         ]);
-
-        // return response()->json([
-        //     'data' => $data,
-        //     'riskfactor' => $data->riskfactor,
-        //     'cancerdiagnose' => $data->cancerdiagnose,
-        //     'treatment' => $data->treatment
-        // ]);
 
     }
 }

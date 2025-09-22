@@ -34,6 +34,7 @@ return new class extends Migration
             $table->string('highest_education');
             $table->string('occupation');
             $table->string('number_of_years_in_occupation');
+            $table->string('status')->default(0);
         });
     }
 
