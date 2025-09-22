@@ -6,7 +6,7 @@
         @csrf
         <div class="card-body">
             <div class="mb-3">
-                <label class="form-label fw-bold">Tobacco use</label><br>
+                <label class="form-label fw-bold">Tobacco use <small class="text-danger">*</small> </label><br>
 
                 <div class="form-check form-check-inline">
                     <input id="current"
@@ -34,12 +34,12 @@
                         class="form-check-input rounded-circle"
                         name="tobacco_use"
                         value="Non-smoker"
-                        {{ old('tobacco_use') == 'Non-smoker' ? 'checked' : '' }}>
+                        {{ old('tobacco_use') == 'Non-smoker' ? 'checked' : '' }} checked>
                     <label for="non" class="form-check-label">Non-smoker</label>
                 </div>
             </div>
             <div class="mb-3">
-                <label class="form-label fw-bold">Second-Hand Smoke Exposure</label><br>
+                <label class="form-label fw-bold">Second-Hand Smoke Exposure <small class="text-danger">*</small></label><br>
                 <div class="form-check form-check-inline">
                     <input id="yes" type="radio" class="form-check-input rounded-circle"
                         name="second_hand_smoke" value="Yes"
@@ -49,13 +49,13 @@
                 <div class="form-check form-check-inline">
                     <input id="no" type="radio" class="form-check-input rounded-circle"
                         name="second_hand_smoke" value="No"
-                        {{ old('second_hand_smoke') == 'No' ? 'checked' : '' }}>
+                        {{ old('second_hand_smoke') == 'No' ? 'checked' : '' }} checked>
                     <label for="no" class="form-check-label">No</label>
                 </div>
             </div>
 
             <div class="mb-3">
-                <label class="form-label fw-bold">Harmful use of Alcohol</label>
+                <label class="form-label fw-bold">Harmful use of Alcohol <small class="text-danger">*</small></label>
                 <div class="form-check">
                     <input id="current_harmful" type="radio" class="form-check-input rounded-circle"
                         name="alcohol_use" value="With current harmful use of alcohol"
@@ -71,17 +71,17 @@
                 <div class="form-check">
                     <input id="no_history" type="radio" class="form-check-input rounded-circle"
                         name="alcohol_use" value="No history of harmful use of alcohol"
-                        {{ old('alcohol_use') == 'No history of harmful use of alcohol' ? 'checked' : '' }}>
+                        {{ old('alcohol_use') == 'No history of harmful use of alcohol' ? 'checked' : '' }} checked>
                     <label for="no_history" class="form-check-label">No history of harmful use of alcohol</label>
                 </div>
             </div>
 
             <div class="mb-3">
-                <label class="form-label fw-bold">Physical Activity</label><br>
+                <label class="form-label fw-bold">Physical Activity <small class="text-danger">*</small></label><br>
                 <div class="form-check form-check-inline">
                     <input id="Inactive" type="radio" class="form-check-input rounded-circle"
                         name="physical_activity" value="Usually Inactive"
-                        {{ old('physical_activity') == 'Usually Inactive' ? 'checked' : '' }}>
+                        {{ old('physical_activity') == 'Usually Inactive' ? 'checked' : '' }} checked>
                     <label for="Inactive" class="form-check-label">Usually Inactive</label>
                 </div>
                 <div class="form-check form-check-inline">
@@ -100,10 +100,10 @@
 
 
             <div class="mb-3">
-                <label class="form-label fw-bold">Healthy Diet</label>
+                <label class="form-label fw-bold">Healthy Diet <small class="text-danger">*</small></label>
                 <div class="row">
                     <div class="col-md-6">
-                        <label>Fat-meat</label>
+                        <label>Fat-meat <small class="text-danger">*</small></label>
                         <select class="form-select" name="healtydiet[fatmeat]">
                             <option value="">Choose...</option>
                             <option value="high" {{ old('healtydiet.fatmeat') == 'high' ? 'selected' : '' }}>High</option>
@@ -113,7 +113,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label>Vegetables</label>
+                        <label>Vegetables <small class="text-danger">*</small></label>
                         <select class="form-select" name="healtydiet[vegetables]">
                             <option value="">Choose...</option>
                             <option value="high" {{ old('healtydiet.vegetables') == 'high' ? 'selected' : '' }}>High</option>
@@ -123,7 +123,7 @@
                     </div>
 
                     <div class="col-md-6 mt-2">
-                        <label>Sodium/Salt</label>
+                        <label>Sodium/Salt <small class="text-danger">*</small></label>
                         <select class="form-select" name="healtydiet[sodium_salt]">
                             <option value="">Choose...</option>
                             <option value="high" {{ old('healtydiet.sodium_salt') == 'high' ? 'selected' : '' }}>High</option>
@@ -133,7 +133,7 @@
                     </div>
 
                     <div class="col-md-6 mt-2">
-                        <label>Sugar</label>
+                        <label>Sugar <small class="text-danger">*</small></label>
                         <select class="form-select" name="healtydiet[sugar]">
                             <option value="">Choose...</option>
                             <option value="high" {{ old('healtydiet.sugar') == 'high' ? 'selected' : '' }}>High</option>
@@ -145,7 +145,7 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label fw-bold">Occupational Exposure</label><br>
+                <label class="form-label fw-bold">Occupational Exposure <small class="text-danger">*</small></label><br>
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input rounded-circle"
                         name="occupational_exposure" value="yes"
@@ -168,7 +168,7 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label fw-bold">Outdoor Air Pollution Exposure</label><br>
+                <label class="form-label fw-bold">Outdoor Air Pollution Exposure <small class="text-danger">*</small></label><br>
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input rounded-circle"
                         name="air_pollution" value="yes"
@@ -184,7 +184,7 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label fw-bold">Family History of Cancer (Up to 3rd degree of Consanguinity)</label><br>
+                <label class="form-label fw-bold">Family History of Cancer (Up to 3rd degree of Consanguinity) <small class="text-danger">*</small></label><br>
 
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input rounded-circle"
@@ -229,7 +229,7 @@
                 {{-- Infections --}}
                 <div class="mb-3">
                     <label class="form-label fw-bold">
-                        Has the patient ever been diagnosed or tested positive for any of the following infections?
+                        Has the patient ever been diagnosed or tested positive for any of the following infections? <small class="text-danger">*</small>
                     </label>
                     <div class="row">
                         <div class="col-md-4">
@@ -359,7 +359,7 @@
                 {{-- Comorbidities --}}
                 <div class="mb-3">
                     <label class="form-label fw-bold">
-                        Has the patient been diagnosed with any of the following comorbidities?
+                        Has the patient been diagnosed with any of the following comorbidities? <small class="text-danger">*</small>
                     </label>
                     <div class="row">
                         <div class="col-md-4">
@@ -456,10 +456,10 @@
             </div>
 
             <div class="mt-4">
-            <div class="fw-bold">Cancer</div>
+            <div class="fw-bold">Cancer <small class="text-danger">*</small></div>
 
             <div class="mb-3">
-                <label class="form-label">Has the patient been diagnosed with cancer? {{ old('has_cancer') }}</label><br>
+                <label class="form-label">Has the patient been diagnosed with cancer? <small class="text-danger">*</small></label><br>
                 <div class="form-check form-check-inline">
                     <input type="radio" name="has_cancer" value="yes" class="form-check-input rounded-circle" onclick="handleHasCancer('yes')" {{ old(key: 'has_cancer') == "yes" ? "checked" : "" }}>
                     <label class="form-check-label">Yes</label>
@@ -483,7 +483,7 @@
             <h5 class="fw-bold">Sexual History</h5>
 
             <div class="mb-3">
-                <label class="form-label">37. Sexual Orientation (optional)</label>
+                <label class="form-label">37. Sexual Orientation <small class="text-danger">(optional)</small></label>
                 <div class="row">
                     <div class="col-md-4 my-2">
                         <input type="radio" name="sexual_orientation" value="Heterosexual"
@@ -547,11 +547,11 @@
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label class="form-label">38. Number of Sexual Partner/s</label>
+                    <label class="form-label">38. Number of Sexual Partner/s <small class="text-danger">*</small></label>
                     <input type="number" name="sexual_partners" value="{{ old('sexual_partners') }}" class="form-control">
                 </div>
                 <div class="col-md-6">
-                    <label class="form-label">39. Age of First Sexual Intercourse</label>
+                    <label class="form-label">39. Age of First Sexual Intercourse <small class="text-danger">*</small></label>
                     <input type="number" name="age_first_intercourse" value="{{ old('age_first_intercourse') }}" class="form-control">
                 </div>
             </div>
@@ -587,7 +587,7 @@
             <h5 class="fw-bold mt-4">Cancer Screening and Vaccination History of Patient</h5>
 
             <div class="mb-3">
-                <label class="form-label">41. Types of Cancer Screening Received</label>
+                <label class="form-label">41. Types of Cancer Screening Received <small class="text-danger">*</small></label>
                 <div class="row">
                     <div class="col-md-4 my-1">
                         <input type="checkbox" name="cancer_screening[]" value="Clinical Breast Examination"
@@ -690,11 +690,11 @@
 
 
             <div class="mb-3">
-                <label class="form-label">42. Types of Vaccines Received</label>
+                <label class="form-label">42. Types of Vaccines Received <small class="text-danger">*</small></label>
 
                 {{-- HPV Vaccine --}}
                 <div class="row mb-2">
-                    <div class="col-md-3 fw-bold">Human Papillomavirus Vaccine (HPV)</div>
+                    <div class="col-md-3 fw-bold">Human Papillomavirus Vaccine (HPV) <small class="text-danger">*</small></div>
                     <div class="col-md-9">
                         <div class="form-check form-check-inline">
                             <input type="radio" name="vaccine_hpv" value="Fully Vaccinated"
@@ -725,7 +725,7 @@
 
                 {{-- Hepatitis B Vaccine --}}
                 <div class="row mb-2">
-                    <div class="col-md-3 fw-bold">Hepatitis B Vaccine</div>
+                    <div class="col-md-3 fw-bold">Hepatitis B Vaccine <small class="text-danger">*</small></div>
                     <div class="col-md-9">
                         <div class="form-check form-check-inline">
                             <input type="radio" name="vaccine_hepb" value="Yes, fully vaccinated"

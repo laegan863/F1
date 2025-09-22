@@ -8,23 +8,23 @@
 
         {{-- Q56: Date of Diagnosis --}}
         <div class="mb-3">
-            <label class="form-label fw-bold">Date of Diagnosis</label>
+            <label class="form-label fw-bold">Date of Diagnosis <small class="text-danger">*</small></label>
             <input type="date" class="form-control" name="date_of_diagnosis" value="{{ old('date_of_diagnosis') }}">
         </div>
 
         {{-- Q57: Multidisciplinary Cancer Team --}}
         <div class="mb-3">
-            <label class="form-label fw-bold">Multidisciplinary Cancer Team Approach Practiced?</label><br>
+            <label class="form-label fw-bold">Multidisciplinary Cancer Team Approach Practiced? <small class="text-danger">*</small></label><br>
             @foreach(['Yes','No'] as $opt)
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input rounded-circle" name="team_approach" value="{{ $opt }}"
-                           {{ old('team_approach') == $opt ? 'checked' : '' }}>
+                           {{ old('team_approach', 'No') == $opt ? 'checked' : '' }}>
                     <label class="form-check-label">{{ $opt }}</label>
                 </div>
             @endforeach
         </div>
         <div id="team_disciplines" class="{{ old('team_approach') == 'Yes' ? '' : 'd-none' }}">
-            <label class="form-label fw-bold">If yes, specify all disciplines involved:</label>
+            <label class="form-label fw-bold">If yes, specify all disciplines involved: <small class="text-danger">*</small></label>
             @php
                 $disciplines = [
                     "Surgery","Medical Oncology","Pediatric Oncology","Hematology Oncology",
@@ -51,17 +51,17 @@
 
         {{-- Q58: Surgery --}}
         <div class="mb-3">
-            <label class="form-label fw-bold">Surgery</label><br>
+            <label class="form-label fw-bold">Surgery <small class="text-danger">*</small></label><br>
             @foreach(['Yes','No'] as $opt)
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input rounded-circle" name="surgery" value="{{ $opt }}"
-                           {{ old('surgery') == $opt ? 'checked' : '' }}>
+                           {{ old('surgery', 'No') == $opt ? 'checked' : '' }}>
                     <label class="form-check-label">{{ $opt }}</label>
                 </div>
             @endforeach
         </div>
         <div id="surgery_details" class="{{ old('surgery') == 'Yes' ? '' : 'd-none' }}">
-            <label class="form-label fw-bold">If yes, specify the goal:</label><br>
+            <label class="form-label fw-bold">If yes, specify the goal: <small class="text-danger">*</small></label><br>
             @foreach(['Diagnostic','Curative','Palliative'] as $goal)
                 <div class="form-check form-check-inline">
                     <input type="checkbox" class="form-check-input" name="surgery_goal[]" value="{{ $goal }}"
@@ -73,18 +73,18 @@
 
         {{-- Q59: Anti-cancer Drug --}}
         <div class="mb-3">
-            <label class="form-label fw-bold">Anti-cancer Drug</label><br>
+            <label class="form-label fw-bold">Anti-cancer Drug <small class="text-danger">*</small></label><br>
             @foreach(['Yes','No'] as $opt)
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input rounded-circle" name="anticancer_drug" value="{{ $opt }}"
-                           {{ old('anticancer_drug') == $opt ? 'checked' : '' }}>
+                           {{ old('anticancer_drug', 'No') == $opt ? 'checked' : '' }}>
                     <label class="form-check-label">{{ $opt }}</label>
                 </div>
             @endforeach
         </div>
         <div id="anticancer_details" class="{{ old('anticancer_drug') == 'Yes' ? '' : 'd-none' }}">
 
-            <label class="form-label fw-bold">Purpose of Drug Administration</label><br>
+            <label class="form-label fw-bold">Purpose of Drug Administration <small class="text-danger">*</small></label><br>
             @foreach(['Neoadjuvant','Adjuvant','Palliative'] as $purpose)
                 <div class="form-check form-check-inline">
                     <input type="checkbox" class="form-check-input" name="drug_purpose[]" value="{{ $purpose }}"
@@ -94,7 +94,7 @@
             @endforeach
 
             <div class="mt-3">
-                <label class="form-label fw-bold">Drug Types</label><br>
+                <label class="form-label fw-bold">Drug Types <small class="text-danger">*</small></label><br>
                 @php
                     $standardTypes = ['Cytotoxic','Hormonal','Immunologic','Targeted'];
                     $oldTypes = old('drug_types', []);
@@ -123,11 +123,11 @@
         {{-- Q60–Q63: First to Third Line & Other Anti-Cancer Drugs --}}
         @foreach(['First','Second','Third','Other Subsequent'] as $line)
         <div class="mb-3">
-            <label class="fw-bold">{{ $line }} Line Anti-Cancer Drug</label><br>
+            <label class="fw-bold">{{ $line }} Line Anti-Cancer Drug <small class="text-danger">*</small></label><br>
             @foreach(['Yes','No'] as $opt)
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input rounded-circle" name="{{ strtolower(str_replace(' ','_',$line)) }}_line_drug" value="{{ $opt }}"
-                           {{ old(strtolower(str_replace(' ','_',$line)).'_line_drug') == $opt ? 'checked' : '' }}>
+                           {{ old(strtolower(str_replace(' ','_',$line)).'_line_drug', "No") == $opt ? 'checked' : '' }}>
                     <label class="form-check-label">{{ $opt }}</label>
                 </div>
             @endforeach
@@ -135,20 +135,20 @@
         <div id="{{ strtolower(str_replace(' ','_',$line)) }}_line_details" class="mb-3 {{ old(strtolower(str_replace(' ','_',$line)).'_line_drug') == 'Yes' ? '' : 'd-none' }}">
 
             @if(strtolower(str_replace(' ','_',$line)) == "other_subsequent")
-                <label class="form-label">If yes, indicate line</label>
+                <label class="form-label">If yes, indicate line <small class="text-danger">*</small></label>
             <input type="text" class="form-control mb-2" name="indicate_line"
                    value="{{ old('indicate_line') }}">
             @endif
 
-            <label class="form-label">Drug’s Regimen</label>
+            <label class="form-label">Drug’s Regimen <small class="text-danger">*</small></label>
             <input type="text" class="form-control mb-2" name="{{ strtolower(str_replace(' ','_',$line)) }}_drug_regimen"
                    value="{{ old(strtolower(str_replace(' ','_',$line)).'_drug_regimen') }}">
 
-            <label class="form-label">Intended no. of Cycles</label>
+            <label class="form-label">Intended no. of Cycles <small class="text-danger">*</small></label>
             <input type="number" class="form-control mb-2" name="{{ strtolower(str_replace(' ','_',$line)) }}_cycles"
                    value="{{ old(strtolower(str_replace(' ','_',$line)).'_cycles') }}">
 
-            <label class="form-label">Treatment Goal</label><br>
+            <label class="form-label">Treatment Goal <small class="text-danger">*</small></label><br>
             @foreach(['Curative','Control','Palliative'] as $goal)
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input" name="{{ strtolower(str_replace(' ','_',$line)) }}_treatment_goal" value="{{ $goal }}"
@@ -157,7 +157,7 @@
                 </div>
             @endforeach
 
-            <br><label class="form-label">Time of Administration</label><br>
+            <br><label class="form-label">Time of Administration <small class="text-danger">*</small></label><br>
             @foreach(['Pre-operative','Post-operative','Both'] as $time)
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input" name="{{ strtolower(str_replace(' ','_',$line)) }}_time" value="{{ $time }}"
@@ -170,17 +170,17 @@
 
         {{-- Q64: Radiotherapy --}}
         <div class="mb-3">
-            <label class="form-label fw-bold">Radiotherapy</label><br>
+            <label class="form-label fw-bold">Radiotherapy <small class="text-danger">*</small></label><br>
             @foreach(['Yes','No'] as $opt)
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input rounded-circle" name="radiotherapy" value="{{ $opt }}"
-                           {{ old('radiotherapy') == $opt ? 'checked' : '' }}>
+                           {{ old('radiotherapy', "No") == $opt ? 'checked' : '' }}>
                     <label class="form-check-label">{{ $opt }}</label>
                 </div>
             @endforeach
         </div>
         <div id="radiotherapy_details" class="{{ old('radiotherapy') == 'Yes' ? '' : 'd-none' }}">
-            <label class="form-label">If yes, indicate type:</label>
+            <label class="form-label">If yes, indicate type: <small class="text-danger">*</small></label>
             @php
                 $radio_types = ["2D conventional","3DCRT","Brachytherapy","Electron Therapy","IMRT/VMAT/Helical",
                                 "IORT","Heavy Particles","Proton Therapy","Stereotactic Radiosurgery / Radiotherapy"];
@@ -203,7 +203,7 @@
                 </div>
             </div>
 
-            <label class="form-label mt-2">Specify Sequence</label><br>
+            <label class="form-label mt-2">Specify Sequence <small class="text-danger">*</small></label><br>
             @foreach(['Concurrent ChemoRT','Sequential'] as $seq)
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input" name="radiotherapy_sequence" value="{{ $seq }}"
@@ -212,7 +212,7 @@
                 </div>
             @endforeach
 
-            <br><label class="form-label mt-2">Specify Treatment Goal</label><br>
+            <br><label class="form-label mt-2">Specify Treatment Goal <small class="text-danger">*</small></label><br>
             @foreach(['Definitive','Palliative','Adjuvant','Neoadjuvant'] as $goal)
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input" name="radiotherapy_goal" value="{{ $goal }}"
@@ -224,17 +224,17 @@
 
         {{-- Q65: Theranostics --}}
         <div class="mb-3">
-            <label class="form-label fw-bold">Theranostics</label><br>
+            <label class="form-label fw-bold">Theranostics <small class="text-danger">*</small></label><br>
             @foreach(['Yes','No'] as $opt)
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input rounded-circle" name="theranostics" value="{{ $opt }}"
-                           {{ old('theranostics') == $opt ? 'checked' : '' }}>
+                           {{ old('theranostics', "No") == $opt ? 'checked' : '' }}>
                     <label class="form-check-label">{{ $opt }}</label>
                 </div>
             @endforeach
         </div>
         <div id="theranostics_details" class="{{ old('theranostics') == 'Yes' ? '' : 'd-none' }}">
-            <label class="form-label">If yes, indicate type:</label>
+            <label class="form-label">If yes, indicate type: <small class="text-danger">*</small></label>
             @php
                 $thera_types = ["RAI","PRRT","PRLT","SIRT"];
             @endphp
@@ -256,7 +256,7 @@
                 </div>
             </div>
 
-            <br><label class="form-label mt-2">If yes, specify the Goal</label><br>
+            <br><label class="form-label mt-2">If yes, specify the Goal <small class="text-danger">*</small></label><br>
             @foreach(['Definitive','Palliative'] as $goal)
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input" name="theranostics_goal" value="{{ $goal }}"
@@ -268,17 +268,17 @@
 
         {{-- Q66–68: Other Cancer Directed Therapies --}}
         <div class="mb-3">
-            <label class="form-label fw-bold">Other Cancer Directed Therapies</label><br>
+            <label class="form-label fw-bold">Other Cancer Directed Therapies <small class="text-danger">*</small></label><br>
             @foreach(['Yes','No'] as $opt)
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input rounded-circle" name="other_therapies" value="{{ $opt }}"
-                           {{ old('other_therapies') == $opt ? 'checked' : '' }}>
+                           {{ old('other_therapies', "No") == $opt ? 'checked' : '' }}>
                     <label class="form-check-label">{{ $opt }}</label>
                 </div>
             @endforeach
         </div>
         <div id="other_therapies_details" class="{{ old('other_therapies') == 'Yes' ? '' : 'd-none' }}">
-            <label class="form-label">If yes, specify:</label>
+            <label class="form-label">If yes, specify: <small class="text-danger">*</small></label>
             @php
                 $other_therapies = [
                     "Blood Transfusion","Cryoablation","Transplant","Radiofrequency ablation",

@@ -211,7 +211,7 @@
 
     .ritz .waffle .s23 {
         border-bottom: 1px SOLID #000000;
-        border-right: 1px SOLID #000000;
+        /* border-right: 1px SOLID #000000; */
         background-color: #000000;
         text-align: center;
         font-weight: bold;
@@ -677,7 +677,7 @@
 
     .ritz .waffle .s18 {
         border-bottom: 1px SOLID #000000;
-        border-right: 1px SOLID #000000;
+        /* border-right: 1px SOLID #000000; */
         background-color: #ffffff;
         text-align: center;
         color: #000000;
@@ -1120,7 +1120,7 @@
     }
 
     .ritz .waffle .s10 {
-        border-right: 1px SOLID #000000;
+        /* border-right: 1px SOLID #000000; */
         background-color: #ffffff;
         text-align: left;
         color: #000000;
@@ -1720,7 +1720,7 @@
     }
 
     .ritz .waffle .s1 {
-        border-right: 1px SOLID #000000;
+        /* border-right: 1px SOLID #000000; */
         background-color: #ffffff;
         text-align: center;
         font-weight: bold;
@@ -1803,7 +1803,7 @@
     }
 
     .ritz .waffle .s13 {
-        border-right: 1px SOLID #000000;
+        /* border-right: 1px SOLID #000000; */
         background-color: #ffffff;
         text-align: left;
         color: #000000;
@@ -1873,7 +1873,7 @@
     }
 
     .ritz .waffle .s4 {
-        border-right: 1px SOLID #000000;
+        /* border-right: 1px SOLID #000000; */
         background-color: #ffffff;
         text-align: center;
         color: #000000;
@@ -1901,7 +1901,7 @@
 
     .ritz .waffle .s19 {
         border-bottom: 1px SOLID #000000;
-        border-right: 1px SOLID #000000;
+        /* border-right: 1px SOLID #000000; */
         background-color: #000000;
         text-align: center;
         font-weight: bold;
@@ -2275,7 +2275,7 @@
     }
 
     .ritz .waffle .s0 {
-        border-right: 1px SOLID #000000;
+        /* border-right: 1px SOLID #000000; */
         background-color: #ffffff;
         text-align: center;
         font-weight: bold;
@@ -2481,7 +2481,7 @@
     }
 
     .ritz .waffle .s8 {
-        border-right: 1px SOLID #000000;
+        /* border-right: 1px SOLID #000000; */
         background-color: #ffffff;
         text-align: left;
         text-decoration: underline;
@@ -2535,10 +2535,14 @@
         direction: ltr;
         padding: 0px 3px 0px 3px;
     }
-
+    @media print {
+        body {
+            border: 1px solid black;
+        }
+    }
 </style>
 </head>
-<body style="max-width: 1050px; margin: 0 auto; padding: 20px 0px;border:1px solid black;">
+<body style="max-width: 1050px; margin: 0 auto;border:1px solid black;overflow-y: hidden">
     <!-- SVG icons used in the spreadsheet -->
 
 <svg style="display:none;" width="16px" height="16px" viewBox="0 0 16 16" version="1.1"
@@ -2552,7 +2556,7 @@
             transform="translate(-3.000000, -2.000000)"></path>
     </defs>
 </svg>
-<div class="ritz grid-container" dir="ltr">
+<div class="ritz grid-container" dir="ltr" style="overflow: hidden">
     <table class="waffle no-grid" cellspacing="0" cellpadding="0" style="width: 1050px;">
         <tbody>
             <tr style="height: 52px">
@@ -2864,7 +2868,7 @@
                 </th> -->
                 <td class="s24">1</td>
                 <td class="s25" colspan="10">Health Facility Name</td>
-                <td class="s26" dir="ltr" colspan="29">CORAZON LOCSIN MONTELIBANO MEMORIAL REGIONAL HOSPITLA</td>
+                <td class="s26" dir="ltr" colspan="29">CORAZON LOCSIN MONTELIBANO MEMORIAL REGIONAL HOSPITAL</td>
             </tr>
             <tr style="height: 24px">
                 <!-- <th id="631683479R18" style="height: 24px;" class="row-headers-background">
@@ -2886,7 +2890,7 @@
                 <td class="s26" dir="ltr" colspan="10">703 1350</td>
                 <td class="s24" dir="ltr">4</td>
                 <td class="s25" dir="ltr" colspan="9">Health Facility Email Adress</td>
-                <td class="s26" dir="ltr" colspan="9">CLMMRHONCOLOGYUNIT@GMAIL.COM</td>
+                <td class="s26" dir="ltr" colspan="9" style="font-size: 10px !important">CLMMRHONCOLOGYUNIT@GMAIL.COM</td>
             </tr>
             <tr style="height: 24px">
                 <!-- <th id="631683479R20" style="height: 24px;" class="row-headers-background">
@@ -3199,7 +3203,7 @@
                     </svg></td>
                 <td class="s39" dir="ltr">8</td>
                 <td class="s53 softmerge">
-                    <div class="softmerge-inner" style="width:314px;left:-1px">Plant and Machine Operators and
+                    <div class="softmerge-inner" style="width:314px;left:-1px;border-right: 1px solid black;">Plant and Machine Operators and
                         Assemblers </div>
                 </td>
                 <td class="s54"></td>
@@ -3663,12 +3667,12 @@
                 <td class="s39" dir="ltr">1</td>
                 <td class="s80" colspan="2">Yes</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('cement', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['occupational_exposure'] == 'yes' && in_array('cement', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s41" colspan="5">Cement dust</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('metal', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['occupational_exposure'] == 'yes' && in_array('metal', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">5</td>
                 <td class="s53 softmerge">
@@ -3678,7 +3682,7 @@
                 <td class="s55"></td>
                 <td class="s41"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('smoke', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['occupational_exposure'] == 'yes' && in_array('smoke', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">9</td>
                 <td class="s53 softmerge">
@@ -3704,12 +3708,12 @@
                 <td class="s39" dir="ltr">2</td>
                 <td class="s80" colspan="2">No</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('cotton', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['occupational_exposure'] == 'yes' && in_array('cotton', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s41" colspan="5">Cotton</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('paper', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['occupational_exposure'] == 'yes' && in_array('paper', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">6</td>
                 <td class="s53 softmerge">
@@ -3739,12 +3743,12 @@
                 <td class="s41"></td>
                 <td class="s42"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('chemfumes', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['occupational_exposure'] == 'yes' && in_array('chemfumes', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">3</td>
                 <td class="s41" colspan="5">Chemical Fumes</td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('radiation', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['occupational_exposure'] == 'yes' && in_array('radiation', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">7</td>
                 <td class="s41" colspan="4">Radiation</td>
@@ -3761,13 +3765,13 @@
                 <td class="s35"></td>
                 <td class="s36"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('grains', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['occupational_exposure'] == 'yes' && in_array('grains', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">4</td>
                 <td class="s35" colspan="4">Grains</td>
                 <td class="s35"></td>
                 <td class="s32" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('silica', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['occupational_exposure'] == 'yes' && in_array('silica', $data['riskfactors']['occupation_specify']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s33" dir="ltr">8</td>
                 <td class="s35" colspan="5">Silica</td>
@@ -3877,7 +3881,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Adrenal', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Adrenal', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">1</td>
                 <td class="s53 softmerge">
@@ -3892,7 +3896,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Multiple Myeloma', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Multiple Myeloma', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">30</td>
                 <td class="s53 softmerge">
@@ -3919,7 +3923,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Anus', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Anus', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s53 softmerge">
@@ -3934,7 +3938,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Nasopharynx', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Nasopharynx', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">31</td>
                 <td class="s53 softmerge">
@@ -3961,7 +3965,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Biliary Tract', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Biliary Tract', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">3</td>
                 <td class="s53 softmerge">
@@ -3976,7 +3980,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Non-Hodgkin Lymphoma', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Non-Hodgkin Lymphoma', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">32</td>
                 <td class="s53 softmerge">
@@ -4003,7 +4007,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Blood - Acute Lymphocytic Leukemia', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Blood - Acute Lymphocytic Leukemia', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">4</td>
                 <td class="s87 softmerge" dir="ltr">
@@ -4019,7 +4023,7 @@
                 <td class="s86"></td>
                 <td class="s56"></td>
                 <td class="s89" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Oral Cavity', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Oral Cavity', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">33</td>
                 <td class="s53 softmerge">
@@ -4046,7 +4050,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Blood - Acute Myelogenous Leukemia', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Blood - Acute Myelogenous Leukemia', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">5</td>
                 <td class="s87 softmerge" dir="ltr">
@@ -4062,7 +4066,7 @@
                 <td class="s86"></td>
                 <td class="s56"></td>
                 <td class="s89" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Oropharynx', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Oropharynx', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">34</td>
                 <td class="s53 softmerge">
@@ -4089,7 +4093,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Blood - Chronic Lymphocytic Leukemia', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Blood - Chronic Lymphocytic Leukemia', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">6</td>
                 <td class="s87 softmerge" dir="ltr">
@@ -4105,7 +4109,7 @@
                 <td class="s86"></td>
                 <td class="s56"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Ovary', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Ovary', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">35</td>
                 <td class="s53 softmerge">
@@ -4132,7 +4136,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Blood - Chronic Myelogenous Leukemia', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Blood - Chronic Myelogenous Leukemia', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">7</td>
                 <td class="s87 softmerge" dir="ltr">
@@ -4148,7 +4152,7 @@
                 <td class="s86"></td>
                 <td class="s56"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Pancreas', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Pancreas', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">36</td>
                 <td class="s53 softmerge">
@@ -4175,7 +4179,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Blood - Myelodysplastic Syndromes', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Blood - Myelodysplastic Syndromes', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">8</td>
                 <td class="s87 softmerge" dir="ltr">
@@ -4218,7 +4222,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Blood - Plasma Cell Disorders', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Blood - Plasma Cell Disorders', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">9</td>
                 <td class="s87 softmerge" dir="ltr">
@@ -4234,7 +4238,7 @@
                 <td class="s56"></td>
                 <td class="s56"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Peritoneal', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Peritoneal', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">38</td>
                 <td class="s53 softmerge">
@@ -4261,7 +4265,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Bone', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Bone', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">10</td>
                 <td class="s53 softmerge">
@@ -4276,7 +4280,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Prostate', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Prostate', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">39</td>
                 <td class="s53 softmerge">
@@ -4303,7 +4307,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Brain - Central Nervous System', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Brain - Central Nervous System', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">11</td>
                 <td class="s53 softmerge">
@@ -4319,7 +4323,7 @@
                 <td class="s56"></td>
                 <td class="s56"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Rectum', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Rectum', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">40</td>
                 <td class="s53 softmerge">
@@ -4346,7 +4350,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Breast', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Breast', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">12</td>
                 <td class="s53 softmerge">
@@ -4361,7 +4365,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Renal Pelvis/Ureters', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Renal Pelvis/Ureters', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">41</td>
                 <td class="s53 softmerge">
@@ -4388,7 +4392,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Cervix', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Cervix', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">13</td>
                 <td class="s53 softmerge">
@@ -4403,7 +4407,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Cervix', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Cervix', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">42</td>
                 <td class="s53 softmerge">
@@ -4430,7 +4434,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Colon', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Colon', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">14</td>
                 <td class="s53 softmerge">
@@ -4445,7 +4449,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Skin', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Skin', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">43</td>
                 <td class="s53 softmerge">
@@ -4472,7 +4476,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Esophagus', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Esophagus', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">15</td>
                 <td class="s53 softmerge">
@@ -4487,7 +4491,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Small Bowel', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Small Bowel', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">44</td>
                 <td class="s53 softmerge">
@@ -4514,7 +4518,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Eyes and Orbit', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Eyes and Orbit', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">16</td>
                 <td class="s53 softmerge">
@@ -4529,7 +4533,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Soft Tissue Sarcoma', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Soft Tissue Sarcoma', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">45</td>
                 <td class="s53 softmerge">
@@ -4556,7 +4560,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Gallbladder', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Gallbladder', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">17</td>
                 <td class="s53 softmerge">
@@ -4571,7 +4575,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Spinal Cord', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Spinal Cord', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">46</td>
                 <td class="s53 softmerge">
@@ -4590,7 +4594,7 @@
                     <div class="row-header-wrapper" style="line-height: 21px">78</div>
                 </th> -->
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data['riskfactors']['family_history'] == "no" ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{  $data['riskfactors']['family_history'] == "no" ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">2</td>
                 <td class="s40" colspan="3">No</td>
@@ -4598,7 +4602,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Gastroesophageal Junction', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Gastroesophageal Junction', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">18</td>
                 <td class="s53 softmerge">
@@ -4613,7 +4617,7 @@
                 <td class="s56"></td>
                 <td class="s56"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Stomach', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Stomach', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">47</td>
                 <td class="s53 softmerge">
@@ -4640,7 +4644,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Hodgkin Lymphoma', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Hodgkin Lymphoma', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">19</td>
                 <td class="s53 softmerge">
@@ -4655,7 +4659,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Testis', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Testis', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">48</td>
                 <td class="s53 softmerge">
@@ -4679,7 +4683,7 @@
                 <td class="s39" dir="ltr">4</td>
                 <td class="s91" colspan="6" rowspan="3">No known genetic disposition to Cancer </td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Hypopharynx', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Hypopharynx', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">20</td>
                 <td class="s53 softmerge">
@@ -4694,7 +4698,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Thymus', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Thymus', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">49</td>
                 <td class="s53 softmerge">
@@ -4715,7 +4719,7 @@
                 <td class="s40"></td>
                 <td class="s40"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Kaposi Sarcoma', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Kaposi Sarcoma', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">21</td>
                 <td class="s53 softmerge">
@@ -4730,7 +4734,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Thyroid', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Thyroid', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">50</td>
                 <td class="s53 softmerge">
@@ -4751,7 +4755,7 @@
                 <td class="s40"></td>
                 <td class="s40"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Kidney', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Kidney', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">22</td>
                 <td class="s53 softmerge">
@@ -4766,7 +4770,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Unknown Primary (Occult Primary)', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Unknown Primary (Occult Primary)', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">51</td>
                 <td class="s87 softmerge">
@@ -4793,7 +4797,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Larynx', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Larynx', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">23</td>
                 <td class="s53 softmerge">
@@ -4808,7 +4812,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Urinary Bladder', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Urinary Bladder', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">52</td>
                 <td class="s53 softmerge">
@@ -4835,7 +4839,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Leukemia', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Leukemia', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">24</td>
                 <td class="s53 softmerge">
@@ -4850,7 +4854,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Uterus', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Uterus', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">53</td>
                 <td class="s53 softmerge">
@@ -4877,7 +4881,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Lip/Oral Cavity', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Lip/Oral Cavity', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">25</td>
                 <td class="s53 softmerge">
@@ -4892,7 +4896,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Vagina', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Vagina', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">54</td>
                 <td class="s53 softmerge">
@@ -4919,7 +4923,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Liver', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Liver', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">26</td>
                 <td class="s53 softmerge">
@@ -4934,7 +4938,7 @@
                 <td></td>
                 <td></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Vulva', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Vulva', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">55</td>
                 <td class="s53 softmerge">
@@ -4961,7 +4965,7 @@
                 <td class="s51"></td>
                 <td class="s83"></td>
                 <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ in_array('Lung', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $data['riskfactors']['family_history'] == "yes" && in_array('Lung', $data['riskfactors']['cancer_sites']) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s39" dir="ltr">27</td>
                 <td class="s53 softmerge">
@@ -5674,9 +5678,11 @@
                     <td class="s51"></td>
                     <td class="s51"></td>
                     <td class="s52"></td>
-                    <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                    <td class="s38" dir="ltr">
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
                             <use href="#{{ in_array($value, $diagnosed) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
-                        </svg></td>
+                        </svg>
+                    </td>
                     <td class="s39" dir="ltr">{{ $key + 1 }}</td>
                     <td class="s53 softmerge">
                         <div class="softmerge-inner" style="width: 270px">{{ $value }}</div>
@@ -5729,14 +5735,35 @@
             @endphp
             @foreach ($otherSites as $index => $site)
                 <tr style="height: 23px">
-                    <td class="s51"></td>
-                    <td class="s51"></td>
-                    <td class="s51"></td>
-                    <td class="s51"></td>
-                    <td class="s52"></td>
-                    <td class="s38" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+
+                    @if($site == "Lung")
+                        <td class="s38" dir="ltr">
+                            <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                                <use href="#{{ $data['riskfactors']->has_cancer == "yes" ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            </svg>
+                        </td>
+                        <td class="s39" dir="ltr">1</td>
+                        <td class="s80" colspan="3">Yes</td>
+                    @elseif($site == "Melanoma of Skin")
+                        <td class="s38" dir="ltr">
+                            <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
+                                <use href="#{{ $data['riskfactors']->has_cancer == "no" ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            </svg>
+                        </td>
+                        <td class="s39" dir="ltr">2</td>
+                        <td class="s80" colspan="3">No</td>
+                    @else
+                        <td class="s51"></td>
+                        <td class="s51"></td>
+                        <td class="s51"></td>
+                        <td class="s51"></td>
+                        <td class="s52"></td>
+                    @endif
+                    <td class="s38" dir="ltr">
+                        <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
                             <use href="#{{ in_array($site, $diagnosed) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
-                        </svg></td>
+                        </svg>
+                    </td>
                     <td class="s39" dir="ltr">{{ $index + 23 }}</td>
                     <td class="s53 softmerge">
                         <div class="softmerge-inner" style="width:276px;left:-1px">{{ $site }}</div>
@@ -9498,6 +9525,20 @@
         </tbody>
     </table>
 </div>
+@if(Request::segment(1) == 'result')
+    <script>
+        window.onload = function() {
+            // window.onbeforeprint = () => {
+            //     console.log("Before print...");
+            // };
+            window.print();
+            window.onafterprint = () => {
+                console.log("After print...");
+                window.location.href = "{{ route('admin.records') }}";
+            };
 
+        }
+    </script>
+@endif
 </body>
 </html>

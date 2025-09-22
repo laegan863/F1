@@ -3,7 +3,7 @@
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
             <div>
-                <h1 class="logo-name">IN+</h1>
+                <h3 class="logo-name">CRS+</h3>
             </div>
             <form class="m-t" role="form" action="{{ route('register') }}" method="POST">
                 @csrf

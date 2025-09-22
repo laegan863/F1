@@ -6,8 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CPRMIS v3</title>
-
+    <title>CRS+</title>
+    <link rel="icon" type="image/png" class="rounded" href="{{ asset('assets/img/logo.png') }}">
     <link href="{{ asset(path: 'assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset(path: 'assets/font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
@@ -26,16 +26,16 @@
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
                         <div class="dropdown profile-element">
-                            <img alt="image" class="rounded-circle" src="{{ asset(path: 'assets/img/profile_small.jpg') }}"/>
+                            <img alt="image" class="rounded-circle" src="{{ asset(path: 'assets/img/profile.png') }}"/>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="block m-t-xs font-bold">Administrator</span>
+                                <span class="block m-t-xs font-bold">{{ Auth::user()->name }}</span>
                             </a>
                         </div>
                         <div class="logo-element">
-                            IN+
+                            CRS+
                         </div>
                     </li>
-                    <li>
+                    <li class="{{ request()->is('admin/dashboard') ? 'active' : '' }}">
                         <a href="{{ route('admin.dashboard') }}">
                             <i class="fa fa-dashboard"></i>
                             <span class="nav-label">
@@ -43,10 +43,10 @@
                             </span>
                         </a>
                     </li>
-                    <li>
+                    <li class="{{ request()->is('admin/records') ? 'active' : '' }} {{ request()->is('admin/records/*') ? 'active' : '' }}">
                         <a href="#"><i class="fa fa-th-large"></i><span class="nav-label">Record Management</span> <span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li>
+                            <li class="{{ request()->is('admin/records') ? 'active' : '' }}">
                                 <a href="{{ route('admin.records') }}">
                                     <i class="fa fa-list"></i>
                                     Manage Records
