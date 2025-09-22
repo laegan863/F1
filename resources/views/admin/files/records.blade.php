@@ -1,11 +1,7 @@
 @extends('admin.app')
 @section('content')
     <div class="wrapper wrapper-content">
-        @if(Session::has('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fa fa-info"></i> {{ Session::get('success') }}
-            </div>
-        @endif
+        @include('admin.component.session-alert')
         <div class="ibox-content">
             <div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover dataTables-example">

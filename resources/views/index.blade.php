@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield("title")</title>
+    <title>CBCR - @yield("title")</title>
     <link rel="icon" type="image/png" class="rounded" href="{{ asset('assets/img/logo.png') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
@@ -23,6 +23,17 @@
         }
         .bg-darkblue{
             background: #107ec7;
+        }
+        /* For Chrome, Safari, Edge, Opera */
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+
+        /* For Firefox */
+        input[type=number] {
+        -moz-appearance: textfield;
         }
     </style>
 </head>
@@ -48,7 +59,7 @@
             </div>
         </div>
     </section>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('sweetalert.min.js') }}"></script>
 @yield("script")
 <script>
     function handleSubmit() {
@@ -75,6 +86,15 @@
             icon: 'error',
             cancelButtonColor: '#6b1921',
             confirmButtonText: 'Close'
+        });
+    </script>
+@endif
+@if(Session::has('success'))
+    <script>
+        Swal.fire({
+            title: "Good job!",
+            text: "{{ Session::get('success') }}",
+            icon: "success"
         });
     </script>
 @endif
