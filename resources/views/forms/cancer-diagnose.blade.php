@@ -33,6 +33,7 @@
                        name="primary_site_number" min="1"
                        value="{{ old('primary_site_number') }}">
             </div>
+        </div>
 
             <div class="mb-3">
                 <label class="form-label fw-bold">Primary Cancer Site <small class="text-danger">*</small></label>
@@ -81,7 +82,6 @@
                     </div>
                 </div>
             </div>
-        </div>
 
         {{-- ================= Q46: Laterality ================= --}}
         <div class="mb-3">

@@ -6,8 +6,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\DB;
-use App\Models\Invoice;
-use Spatie\LaravelPdf\Facades\Pdf;
 use App\Models\Demographicprofile;
 use App\Models\Riskfactor;
 use App\Models\Cancerdiagnose;
@@ -18,15 +16,27 @@ class MainController extends Controller
 
     public function hospital_number(Request $request)
     {
-        return to_route("demographic-profile")->with('success', 'User exists in the database!');
+        $hospitalID = str_pad(string: $request->HospitalID, length: 10, pad_string: "0", pad_type: STR_PAD_LEFT);
+
+        $exists = Demographicprofile::where("hospitalID", $hospitalID)->exists();
+
+        if($exists) {
+            return back()->with("error", "This Person is already exists in the Database!");
+        }
+
+        $data = DB::connection('sqlsrv')->table('Patient')
+                ->where('HospitalID', $hospitalID)
+                ->first();
+
+        if(!empty($data)) {
+            Session::put('patient', $data);
+            return to_route("demographic-profile")->with('success','User exists in the database!');
+        } else {
+            Session::put("hospitalID", $hospitalID);
+            return to_route('demographic-profile')->with('error','User Does not exists in the database');
+        }
     }
-    public function form()
-    {
-        return Pdf::view('forms.form')
-            ->format('A4')
-            ->margins(0, 0, 0, 0)
-            ->download('test.pdf');
-    }
+
     public function convert_code_to_name($province_code, $city_code, $barangay_code)
     {
         $data = [];
@@ -163,9 +173,10 @@ class MainController extends Controller
             city_code: $request->relative['city'],
             barangay_code: $request->relative['barangay']
         );
-        $relative['sitio'] = $request->relative['sitio'];
 
+        $relative['sitio'] = $request->relative['sitio'];
         $validate["relative"] = $relative;
+        $validate["hospitalID"] = Session::has('patient') ? Session::get("patient")->HospitalID : Session::get("hospitalID");
 
         $data = Demographicprofile::create($validate);
 

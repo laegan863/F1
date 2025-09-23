@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
+    public function connection(){
+        $data = DB::connection('sqlsrv')->table('Patient')
+                ->where('HospitalID', '0000000001')
+                ->first();
+        dd($data);
+    }
     public function delete($id, $table)
     {
         DB::table($table)->where('id', $id)->delete();

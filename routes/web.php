@@ -26,6 +26,8 @@ Route::middleware(IsNotAuth::class)->group(function(){
                 Route::post('edit/{id}', 'edit')->name('admin.edit-user');
             });
         });
+
+        Route::get('connection', 'connection');
     });
     Route::view(uri: 'demographic-profile', view: 'forms.demographic')->name('demographic-profile');
     Route::view(uri: "risk-factor", view: "forms.riskfactor")->name('risk-factor');

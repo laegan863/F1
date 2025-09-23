@@ -98,6 +98,15 @@
         });
     </script>
 @endif
+@if(Session::has('error'))
+    <script>
+        Swal.fire({
+            title: "Error Alert!",
+            text: "{{ Session::get('error') }}",
+            icon: "error"
+        });
+    </script>
+@endif
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
