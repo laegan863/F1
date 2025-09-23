@@ -9,7 +9,7 @@
             <div class="col-md-12">
                 <div class="my-2">
                     <label for="">Hopital Number</label>
-                    <input type="number" class="form-control" placeholder="Enter the Hopital Number">
+                    <input type="number" name="HospitalID" class="form-control" placeholder="Enter the Hopital Number" required>
                 </div>
             </div>
         </div>

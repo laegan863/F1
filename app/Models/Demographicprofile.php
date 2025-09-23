@@ -9,6 +9,7 @@ class Demographicprofile extends Model
     protected $table = "demographicprofiles";
     public $timestamps = true;
     protected $fillable = [
+        'hospitalID',
         'code',
         'patient_first_encounter',
         'patient_health_facility_id',

@@ -1,6 +1,6 @@
 @extends('index')
 @section("title", "Riskfactor Profile")
-@section("nav_title", "RISKFACTOR PROFILE OF PATIENT")
+@section("nav_title", "RISK FACTOR PROFILE OF PATIENT")
 @section("content")
     <form id="form" method="POST" action="{{ route("submit-riskfactor-data") }}">
         @csrf

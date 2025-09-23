@@ -5,54 +5,37 @@
     <form id="form" method="POST" action="{{ route('submit-demograpic-profile') }}">
         @csrf
         <div class="card-body p-5">
+            {{ Session::get('hospitalID') }}
+            @php
+                $session = Session::get('patient');
+            @endphp
             <div class="row mb-3">
                 <div class="col-md-4 mb-3">
                     <label for="firstName" class="form-label">Date of Patient's First Encounter<small class="text-danger">*</small></label>
-                    {{-- @error('name.firstname')
-                        <div class="text-danger small">{{ $message }}</div>
-                    @enderror --}}
-                    <input type="date" class="form-control" value="{{ old('patient_first_encounter') }}" name="patient_first_encounter" id="" autofocus>
+                    <input type="date" class="form-control" value="{{ old('patient_first_encounter', \Carbon\Carbon::now()->toDateString()) }}" name="patient_first_encounter" id="" autofocus>
                 </div>
                 <div class="col-md-4 mb-3">
                     <label class="form-label">Patient’s Health Facility ID No.<small class="text-danger">*</small></label>
-                    {{-- @error('name.middlename')
-                        <div class="text-danger small">{{ $message }}</div>
-                    @enderror --}}
                     <input type="text" class="form-control" value="{{ old('patient_health_facility_id') }}" name="patient_health_facility_id" id="" placeholder="Enter Patient’s Health Facility ID No.">
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="lastName" class="form-label">PhilHealth Identification No. (PIN)<small class="text-danger">*</small></label>
-                    {{-- @error('name.lastname')
-                        <div class="text-danger small">{{ $message }}</div>
-                    @enderror --}}
                     <input type="text" class="form-control" value="{{ old('philhealth_id') }}" name="philhealth_id" id="" placeholder="Enter PhilHealth Identification No. (PIN)">
                 </div>
                 <div class="col-md-3">
                     <label for="firstName" class="form-label">First Name<small class="text-danger">*</small></label>
-                    {{-- @error('name.firstname')
-                        <div class="text-danger small">{{ $message }}</div>
-                    @enderror --}}
-                    <input type="text" class="form-control" value="{{ old('name.firstname') }}" name="name[firstname]" id="firstName" placeholder="Enter first name" autofocus>
+                    <input type="text" class="form-control" value="{{ old('name.firstname', $session ? $session->FirstName : '') }}" name="name[firstname]" id="firstName" placeholder="Enter first name" autofocus>
                 </div>
                 <div class="col-md-3">
-                    <label for="middleName" class="form-label">Middle Name<small class="text-danger">*</small></label>
-                    {{-- @error('name.middlename')
-                        <div class="text-danger small">{{ $message }}</div>
-                    @enderror --}}
-                    <input type="text" class="form-control" value="{{ old('name.middlename') }}" name="name[middlename]" id="middleName" placeholder="Enter middle name">
+                    <label for="middleName" class="form-label">Middle Name</label>
+                    <input type="text" class="form-control" value="{{ old('name.middlename', $session ? $session->MiddleName : '') }}" name="name[middlename]" id="middleName" placeholder="Enter middle name">
                 </div>
                 <div class="col-md-3">
                     <label for="lastName" class="form-label">Last Name<small class="text-danger">*</small></label>
-                    {{-- @error('name.lastname')
-                        <div class="text-danger small">{{ $message }}</div>
-                    @enderror --}}
-                    <input type="text" class="form-control" value="{{ old('name.lastname') }}" name="name[lastname]" id="lastName" placeholder="Enter last name">
+                    <input type="text" class="form-control" value="{{ old('name.lastname', $session ? $session->LastName : '') }}" name="name[lastname]" id="lastName" placeholder="Enter last name">
                 </div>
                 <div class="col-md-3">
                     <label for="suffix" class="form-label">Suffix<small class="text-danger">*</small></label>
-                    {{-- @error('name.suffix')
-                        <div class="text-danger small">{{ $message }}</div>
-                    @enderror --}}
                     <select class="form-select" id="suffix" name="name[suffix]">
                         <option disabled {{ old('name.suffix') ? '' : 'selected' }}>Choose...</option>
                         <option value="Jr." {{ old('name.suffix') == 'Jr.' ? 'selected' : '' }}>Jr.</option>
@@ -61,7 +44,7 @@
                         <option value="III" {{ old('name.suffix') == 'III' ? 'selected' : '' }}>III</option>
                         <option value="IV"  {{ old('name.suffix') == 'IV'  ? 'selected' : '' }}>IV</option>
                         <option value="V"   {{ old('name.suffix') == 'V'   ? 'selected' : '' }}>V</option>
-                        <option value="N/A" {{ old('name.suffix') == 'N/A' ? 'selected' : '' }}>N/A</option>
+                        <option value="N/A" {{ old('name.suffix') == 'N/A' || $session && $session->Suffix == null ? 'selected' : '' }}>N/A</option>
                     </select>
 
                 </div>
@@ -70,45 +53,36 @@
                     <input type="text" class="form-control" name="married_maiden_name" value="{{ old('married_maiden_name') }}" id="married" placeholder="Enter Maiden Name">
                 </div>
             </div>
+            @php
+                $date = $session ? \Carbon\Carbon::parse($session->Birthdate)->toDateString() : "";
+            @endphp
             <div class="row mb-3">
                 <div class="col-md-3">
                     <label for="dob" class="form-label">Date of Birth<small class="text-danger">*</small></label>
-                    {{-- @error('date_of_birth')
-                        <div class="text-danger small">{{ $message }}</div>
-                    @enderror --}}
-                    <input type="date" class="form-control" value="{{ old('date_of_birth') }}" name="date_of_birth" id="dob">
+                    <input type="date" class="form-control" value="{{ old('date_of_birth', $date) }}" name="date_of_birth" id="dob">
                 </div>
                 <div class="col-md-3">
                         <label for="sex" class="form-label">Sex at Birth<small class="text-danger">*</small></label>
-                        {{-- @error('sex')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror --}}
                         <select class="form-select" name="sex" id="sex">
                             <option disabled {{ old('sex') ? '' : 'selected' }}>Choose...</option>
-                            <option value="male"   {{ old('sex') == 'male' ? 'selected' : '' }}>Male</option>
-                            <option value="female" {{ old('sex') == 'female' ? 'selected' : '' }}>Female</option>
+                            <option value="male"   {{ old('sex') == 'male' || $session && $session->Gender == "Male" ? 'selected' : '' }}>Male</option>
+                            <option value="female" {{ old('sex') == 'female' || $session && $session->Gender == "Female" ? 'selected' : '' }}>Female</option>
                         </select>
                 </div>
                 <div class="col-md-3">
                     <label for="civilStatus" class="form-label">Civil Status<small class="text-danger">*</small></label>
-                    {{-- @error('civil_status')
-                        <div class="text-danger small">{{ $message }}</div>
-                    @enderror --}}
                     <select class="form-select" name="civil_status" id="civilStatus">
                         <option disabled {{ old('civil_status') ? '' : 'selected' }}>Choose...</option>
-                        <option value="Single" {{ old('civil_status') == 'Single' ? 'selected' : '' }}>Single</option>
-                        <option value="Married" {{ old('civil_status') == 'Married' ? 'selected' : '' }}>Married</option>
-                        <option value="Divorced/Separated/Annulled" {{ old('civil_status') == 'Divorced/Separated/Annulled' ? 'selected' : '' }}>Divorced/Separated/Annulled</option>
-                        <option value="Common-law/Live-in" {{ old('civil_status') == 'Common-law/Live-in' ? 'selected' : '' }}>Common-law/Live-in</option>
-                        <option value="Widowed" {{ old('civil_status') == 'Widowed' ? 'selected' : '' }}>Widowed</option>
+                        <option value="Single" {{ old('civil_status') == 'Single' || $session && $session->CivilStatus == "SINGLE" ? 'selected' : '' }}>Single</option>
+                        <option value="Married" {{ old('civil_status') == 'Married' || $session && $session->CivilStatus == strtoupper("Married") ? 'selected' : '' }}>Married</option>
+                        <option value="Divorced/Separated/Annulled" {{ old('civil_status') == 'Divorced/Separated/Annulled' || $session && $session->CivilStatus == strtoupper("Divorced/Separated/Annulled") ? 'selected' : '' }}>Divorced/Separated/Annulled</option>
+                        <option value="Common-law/Live-in" {{ old('civil_status') == 'Common-law/Live-in' || $session && $session->CivilStatus == strtoupper("Common-law/Live-in") ? 'selected' : '' }}>Common-law/Live-in</option>
+                        <option value="Widowed" {{ old('civil_status') == 'Widowed' || $session && $session->CivilStatus == strtoupper("Widowed") ? 'selected' : '' }}>Widowed</option>
                     </select>
                 </div>
                 <div class="col-md-3">
                     <label for="nationality" class="form-label">Nationality<small class="text-danger">*</small></label>
-                    {{-- @error('nationality')
-                        <div class="text-danger small">{{ $message }}</div>
-                    @enderror --}}
-                    <input type="text" class="form-control" value="{{ old('nationality') }}" name="nationality" id="nationality" placeholder="e.g. Filipino">
+                    <input type="text" class="form-control" value="{{ old('nationality', $session ? $session->Nationality : '') }}" name="nationality" id="nationality" placeholder="e.g. Filipino">
                 </div>
             </div>
 
@@ -117,36 +91,24 @@
                 <div class="row mb-3">
                     <div class="col-md-3">
                         <label for="province" class="form-label">Province<small class="text-danger">*</small></label>
-                        {{-- @error('permanent.province')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror --}}
                         <select class="form-select" id="province" name="permanent[province]">
                             <option value="">Select Province</option>
                         </select>
                     </div>
                     <div class="col-md-3">
                         <label for="city" class="form-label">City/Municipality<small class="text-danger">*</small></label>
-                        {{-- @error('permanent.city')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror --}}
                         <select class="form-select" name="permanent[city]" id="city" disabled>
                             <option value="">Select City</option>
                         </select>
                     </div>
                     <div class="col-md-3">
                         <label for="barangay" class="form-label">Barangay<small class="text-danger">*</small></label>
-                        {{-- @error('permanent.barangay')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror --}}
                         <select class="form-select" name="permanent[barangay]" id="barangay" disabled>
                             <option value="">Select Barangay</option>
                         </select>
                     </div>
                     <div class="col-md-3">
                         <label for="sitio" class="form-label">Sitio<small class="text-danger">*</small></label>
-                        {{-- @error('permanent.sitio')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror --}}
                         <input type="text" class="form-control" name="permanent[sitio]" id="sitio" placeholder="Enter Sitio">
                     </div>
                 </div>
@@ -157,36 +119,24 @@
                 <div class="row mb-3 {{ old('same_as_address') ? 'd-none' : '' }}" id="current_address">
                     <div class="col-md-3">
                         <label for="curretprovince" class="form-label">Province<small class="text-danger">*</small></label>
-                        {{-- @error('current.province')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror --}}
                         <select class="form-select" name="current[province]" id="currentprovince">
                             <option value="">Select Province</option>
                         </select>
                     </div>
                     <div class="col-md-3">
                         <label for="currentcity" class="form-label">City/Municipality<small class="text-danger">*</small></label>
-                        {{-- @error('current.city')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror --}}
                         <select class="form-select" name="current[city]" id="currentcity" disabled>
                             <option value="">Select City</option>
                         </select>
                     </div>
                     <div class="col-md-3">
                         <label for="currentbarangay" class="form-label">Barangay<small class="text-danger">*</small></label>
-                        {{-- @error('current.barangay')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror --}}
                         <select class="form-select" name="current[barangay]" id="currentbarangay" disabled>
                             <option value="">Select Barangay</option>
                         </select>
                     </div>
                     <div class="col-md-3">
                         <label for="currentsitio" class="form-label">Sitio<small class="text-danger">*</small></label>
-                        {{-- @error('current.sitio')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror --}}
                         <input type="text" value="" name="current[sitio]" class="form-control" id="currentsitio" placeholder="Enter Sitio">
                     </div>
                 </div>
@@ -208,17 +158,11 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="mobile" class="form-label">Mobile No.<small class="text-danger">*</small></label>
-                    {{-- @error('mobile_number')
-                        <div class="text-danger small">{{ $message }}</div>
-                    @enderror --}}
-                    <input type="tel" class="form-control" id="mobile" value="{{ old('mobile_number') }}" name="mobile_number" placeholder="09123456789">
+                    <input type="tel" class="form-control" id="mobile" value="{{ old('mobile_number', $session ? $session->ContactNo : "") }}" name="mobile_number" placeholder="09123456789">
                 </div>
                 <div class="col-md-6">
                     <label for="email" class="form-label">Email Address<small class="text-danger">*</small></label>
-                    {{-- @error('email_address')
-                        <div class="text-danger small">{{ $message }}</div>
-                    @enderror --}}
-                    <input type="email" class="form-control" id="email" name="email_address" value="{{ old('email_address') }}" placeholder="example@email.com">
+                    <input type="email" class="form-control" id="email" name="email_address" value="{{ old('email_address', $session ? $session->Email : "") }}" placeholder="example@email.com">
                 </div>
             </div>
 
@@ -227,36 +171,24 @@
                 <div class="row mb-3">
                     <div class="col-md-3">
                         <label for="province" class="form-label">Province<small class="text-danger">*</small></label>
-                        {{-- @error('relative.province')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror --}}
                         <select class="form-select" id="relativeprovince" value="{{ old('relative.province') }}" name="relative[province]">
                             <option value="">Select Province</option>
                         </select>
                     </div>
                     <div class="col-md-3">
                         <label for="city" class="form-label">City/Municipality<small class="text-danger">*</small></label>
-                        {{-- @error('relative.city')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror --}}
                         <select class="form-select" id="relativecity" value="{{ old('relative.city') }}" name="relative[city]" disabled>
                             <option value="">Select City</option>
                         </select>
                     </div>
                     <div class="col-md-3">
                         <label for="barangay" class="form-label">Barangay<small class="text-danger">*</small></label>
-                        {{-- @error('relative.barangay')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror --}}
                         <select class="form-select" id="relativebarangay" value="{{ old('relative.barangay') }}" name="relative[barangay]" disabled>
                             <option value="">Select Barangay</option>
                         </select>
                     </div>
                     <div class="col-md-3">
                         <label for="sitio" class="form-label">Sitio<small class="text-danger">*</small></label>
-                        {{-- @error('relative.sitio')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror --}}
                         <input type="text" class="form-control" id="relativesitio" value="{{ old('relative.sitio') }}" name="relative[sitio]" placeholder="Enter Sitio">
                     </div>
                 </div>
@@ -265,16 +197,10 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label for="mobile" class="form-label">Nearest Relative / Legal Guardian Mobile Contact No. <small class="text-danger">*</small></label>
-                    {{-- @error('relative_phone_number')
-                        <div class="text-danger small">{{ $message }}</div>
-                    @enderror --}}
                     <input type="tel" class="form-control" id="mobile" value="{{ old('relative_phone_number') }}" name="relative_phone_number" placeholder="09123456789">
                 </div>
                 <div class="col-md-6">
                     <label for="email" class="form-label">Nearest Relative / Legal Guardian Email Address <small class="text-danger">(optional)</small></label>
-                    {{-- @error('relative_email')
-                        <div class="text-danger small">{{ $message }}</div>
-                    @enderror --}}
                     <input type="email" class="form-control" id="email" value="{{ old('relative_email') }}" name="relative_email" placeholder="example@email.com">
                 </div>
             </div>
@@ -283,9 +209,6 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="education" class="form-label">Highest Level of Education <small class="text-danger">*</small></label>
-                        {{-- @error('relative_education')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror --}}
                         <select class="form-select" name="highest_education" id="education">
                             <option disabled {{ old('highest_education') ? '' : 'selected' }}>Choose...</option>
                             <option value="Elementary" {{ old('highest_education') == 'Elementary' ? 'selected' : '' }}>Elementary</option>
@@ -299,9 +222,6 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="occupation" class="form-label">Occupation <small class="text-danger">*</small></label>
-                        {{-- @error('relative_occupation')
-                            <div class="text-danger small">{{ $message }}</div>
-                        @enderror --}}
                         <select class="form-select" name="occupation" id="occupation">
                             <option value="" disabled {{ old('occupation') ? '' : 'selected' }}>Choose...</option>
                             <option value="Managers" {{ old('occupation') == 'Managers' ? 'selected' : '' }}>Managers</option>
@@ -322,9 +242,6 @@
             </div>
             <div class="mb-3">
                 <label for="yearsOccupation" class="form-label">Number of Years in Occupation <small class="text-danger"><small class="text-danger">*</small></label>
-                {{-- @error('number_of_years_in_occupation')
-                    <div class="text-danger small">{{ $message }}</div>
-                @enderror --}}
                 <input type="number" class="form-control" value="{{ old('number_of_years_in_occupation') }}" name="number_of_years_in_occupation" id="yearsOccupation" placeholder="e.g. 15">
             </div>
         </div>

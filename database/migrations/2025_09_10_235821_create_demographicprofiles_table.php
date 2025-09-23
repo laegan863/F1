@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('demographicprofiles', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('hospitalID');
             $table->string('patient_first_encounter');
             $table->string('patient_health_facility_id');
             $table->string('philhealth_id');
