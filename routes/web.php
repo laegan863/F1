@@ -29,12 +29,45 @@ Route::middleware(IsNotAuth::class)->group(function(){
 
         Route::get('connection', 'connection');
     });
-    Route::view(uri: 'demographic-profile', view: 'forms.demographic')->name('demographic-profile');
-    Route::view(uri: "risk-factor", view: "forms.riskfactor")->name('risk-factor');
-    Route::view(uri: 'cancer-diagnose', view: 'forms.cancer-diagnose')->name('cancer-diagnose');
-    Route::view('treatment-diagnose', 'forms.treatment-diagnose')->name('treatment-diagnose');
-    Route::view('first-page', 'forms.check-user-info')->name('first-page');
+
+    Route::prefix("form1")->group(function(){
+        Route::view(uri: 'demographic-profile', view: 'forms.demographic')->name('demographic-profile');
+        Route::view(uri: "risk-factor", view: "forms.riskfactor")->name('risk-factor');
+        Route::view(uri: 'cancer-diagnose', view: 'forms.cancer-diagnose')->name('cancer-diagnose');
+        Route::view('treatment-diagnose', 'forms.treatment-diagnose')->name('treatment-diagnose');
+        Route::view('validate-hospital-number', 'forms.check-user-info')->name('first-page');
+    });
 });
+
+// form 2 start
+Route::prefix("form2")->group(function(){
+    Route::view("follow-up", "forms.form2.follow-up");
+    Route::view("patient-eco-status", "forms.form2.patient-eco-status");
+    Route::view("radio-theranotics","forms.form2.radio-theranotics");
+    Route::view("other-cancer", "forms.form2.other-cancer-directed-thyrapies");
+    Route::view("change-treatment-plan", "forms.form2.change-treatment-plan");
+    Route::view("cancer-diagnose-outome", "forms.form2.cancer-diagnose-outcome");
+});
+// form 2 end
+
+// form 3 start
+Route::prefix("form3")->group(function(){
+    Route::view("patient-surveillance-form", "forms.form3.patient-surveillance-form");
+    Route::view("cancer-diagnose-outome", "forms.form3.cancer-diagnose-outcome");
+    Route::view("cancer-treatment-history", "forms.form3.cancer-treatment-history");
+    Route::view("financial-support-mechanism", "forms.form3.financial-support-mechanism");
+});
+// form 3 end
+
+// form 4 start
+Route::view("palliative-form", "forms.form4.palliative-form");
+Route::view("esas-r", "forms.form4.esas-r");
+Route::view("prqst", "forms.form4.pain-assessment");
+Route::view("palliative-care-intervention", "forms.form4.palliative-care-intervention");
+Route::view("cancer-diagnose-outcome", "forms.form4.cancer-diagnose-outcome");
+Route::view("financial-support-mechanism", "forms.form4.financial-support-mechanism");
+// form 4 end
+
 
 Route::controller(MainController::class)->group(function() {
     Route::post('submit-demograpic-profile', 'submit_demograpic_profile')->name('submit-demograpic-profile');
