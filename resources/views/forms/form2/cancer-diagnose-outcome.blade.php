@@ -5,7 +5,6 @@
     <form id="form" method="POST" action="" class="card rounded-0">
         @csrf
         <div class="card-body">
-
             <!-- Cancer Diagnosis Outcome -->
             <h5 class="fw-bold mt-3">Cancer Diagnosis Outcome</h5>
             <div class="mb-3">
@@ -145,7 +144,6 @@
                     @endforeach
                 </div>
             </div>
-
         </div>
         <!-- Submit -->
         <div class="card-footer text-end mt-3">

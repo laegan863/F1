@@ -8,9 +8,10 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Hospital Number</th>
                             <th>Name</th>
-                            <th>Date of Birth</th>
-                            <th>Civil Status</th>
+                            <th>Phone Number</th>
+                            <th>Email</th>
                             <th class="text-center">Action</th>
                         </tr>
                     </thead>
@@ -18,17 +19,14 @@
                         @foreach ($data as $item)
                             <tr class="gradeX">
                                 <td>{{ $loop->iteration }}</td>
+                                <td>{{ $item->hospitalID }}</td>
                                 <td>{{ $item->name['firstname'] }} {{ $item->name['lastname'] }}</td>
-                                <td>{{ $item->date_of_birth }}</td>
-                                <td>{{ $item->civil_status }}</td>
+                                <td>{{ $item->mobile_number }}</td>
+                                <td>{{ $item->email_address }}</td>
                                 <td class="text-center">
-                                    <button onclick="window.location.href='{{ route("result", [ 'id' => $item->id ]) }}'" class="btn btn-info dim" type="button">
-                                        <i class="fa fa-print"></i>
-                                    </button>
-                                    <a href="{{ route("view", [ 'id' => $item->id ]) }}" target="_blank" rel="noopener noreferrer">
+                                    <a href="{{ route('view.forms', ['id' => $item->id ] ) }}" class="text-white" rel="noopener noreferrer">
                                         <button type="button" class="btn btn-primary dim" type="button">
-                                            <i class="fa fa-eye"></i>
-                                        </button>
+                                            <i class="fa fa-eye"></i> View Forms
                                     </a>
                                 </td>
                             </tr>

@@ -89,56 +89,56 @@
             <div class="mb-3">
                 <label for="permanentAddress" class="form-label fw-semibold">Permanent Address</label>
                 <div class="row mb-3">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="province" class="form-label">Province<small class="text-danger">*</small></label>
                         <select class="form-select" id="province" name="permanent[province]">
                             <option value="">Select Province</option>
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="city" class="form-label">City/Municipality<small class="text-danger">*</small></label>
                         <select class="form-select" name="permanent[city]" id="city" disabled>
                             <option value="">Select City</option>
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="barangay" class="form-label">Barangay<small class="text-danger">*</small></label>
                         <select class="form-select" name="permanent[barangay]" id="barangay" disabled>
                             <option value="">Select Barangay</option>
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    {{-- <div class="col-md-3">
                         <label for="sitio" class="form-label">Sitio<small class="text-danger">*</small></label>
                         <input type="text" class="form-control" name="permanent[sitio]" id="sitio" placeholder="Enter Sitio">
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 
             <div class="mb-3" >
                 <label for="currentAddress" class="form-label fw-semibold">Current Address</label>
                 <div class="row mb-3 {{ old('same_as_address') ? 'd-none' : '' }}" id="current_address">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="curretprovince" class="form-label">Province<small class="text-danger">*</small></label>
                         <select class="form-select" name="current[province]" id="currentprovince">
                             <option value="">Select Province</option>
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="currentcity" class="form-label">City/Municipality<small class="text-danger">*</small></label>
                         <select class="form-select" name="current[city]" id="currentcity" disabled>
                             <option value="">Select City</option>
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="currentbarangay" class="form-label">Barangay<small class="text-danger">*</small></label>
                         <select class="form-select" name="current[barangay]" id="currentbarangay" disabled>
                             <option value="">Select Barangay</option>
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    {{-- <div class="col-md-3">
                         <label for="currentsitio" class="form-label">Sitio<small class="text-danger">*</small></label>
                         <input type="text" value="" name="current[sitio]" class="form-control" id="currentsitio" placeholder="Enter Sitio">
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="form-check mt-1">
@@ -169,28 +169,28 @@
             <div class="mb-3">
                 <label for="permanentAddress" class="form-label fw-semibold">Nearest Relative / Legal Guardian Permanent Address</label>
                 <div class="row mb-3">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="province" class="form-label">Province<small class="text-danger">*</small></label>
                         <select class="form-select" id="relativeprovince" value="{{ old('relative.province') }}" name="relative[province]">
                             <option value="">Select Province</option>
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="city" class="form-label">City/Municipality<small class="text-danger">*</small></label>
                         <select class="form-select" id="relativecity" value="{{ old('relative.city') }}" name="relative[city]" disabled>
                             <option value="">Select City</option>
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for="barangay" class="form-label">Barangay<small class="text-danger">*</small></label>
                         <select class="form-select" id="relativebarangay" value="{{ old('relative.barangay') }}" name="relative[barangay]" disabled>
                             <option value="">Select Barangay</option>
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    {{-- <div class="col-md-3">
                         <label for="sitio" class="form-label">Sitio<small class="text-danger">*</small></label>
                         <input type="text" class="form-control" id="relativesitio" value="{{ old('relative.sitio') }}" name="relative[sitio]" placeholder="Enter Sitio">
-                    </div>
+                    </div> --}}
                 </div>
             </div>
 

@@ -9525,20 +9525,5 @@
         </tbody>
     </table>
 </div>
-@if(Request::segment(1) == 'result')
-    <script>
-        window.onload = function() {
-            // window.onbeforeprint = () => {
-            //     console.log("Before print...");
-            // };
-            window.print();
-            window.onafterprint = () => {
-                console.log("After print...");
-                window.location.href = "{{ route('admin.records') }}";
-            };
-
-        }
-    </script>
-@endif
 </body>
 </html>
