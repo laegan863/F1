@@ -140,7 +140,9 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = `{{ url('admin/delete') }}/${userId}/users`;
+                    let url = "{{ route('admin.delete', ['id' => ':id', 'table' => 'users']) }}";
+                    url = url.replace(':id', userId);
+                    window.location.href = url;
                 }
             });
         }

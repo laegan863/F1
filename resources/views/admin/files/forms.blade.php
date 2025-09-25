@@ -1,0 +1,48 @@
+@extends('admin.app')
+@section('content')
+    <div class="wrapper wrapper-content">
+        @include('admin.component.session-alert')
+        <div class="ibox-content">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover dataTables-example">
+                    <thead>
+                        <tr class="text-center">
+                            <th>#</th>
+                            <th>Hospital Number</th>
+                            <th>Name</th>
+                            <th>Form Number</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($forms as $form => $value)
+                            <tr class="gradeX text-center">
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $value->hospitalID ?? "N/A" }}</td>
+                                <td>
+                                    {{ ($value->name['firstname'] ?? 'N/A') . ' ' . ($value->name['lastname'] ?? '') }}
+                                </td>
+
+                                <td>Form {{ $loop->iteration }}</td>
+                                <td class="text-center">
+                                    @if(isset($value->status) && $value->status == 1)
+                                        <a href="{{ route('result', ['id' => $value->id ]) }}" target="_blank" class="text-white" rel="noopener noreferrer">
+                                            <button type="button" class="btn btn-primary dim" type="button">
+                                                <i class="fa fa-eye"></i>
+                                        </a>
+                                    @else
+                                        <a href="{{ route($form.'-firstpage', [ 'hospitalID' => $hospitalID ]) }}" class="text-white" rel="noopener noreferrer">
+                                            <button type="button" class="btn btn-primary dim">
+                                                <i class="fa fa-plus"></i>
+                                            </button>
+                                        </a>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+@endsection

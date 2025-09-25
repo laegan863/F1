@@ -14,6 +14,27 @@ class AdminController extends Controller
                 ->where('HospitalID', '0000000001')
                 ->first();
         dd($data);
+        // phpinfo();
+    }
+
+    public function forms($id)
+    {
+        $form1 = Demographicprofile::find($id);
+
+        return view('admin.files.forms',[
+            'forms' => [
+                'form1' => $form1,
+                'form2' => [],
+                'form3' => [],
+                'form4' => []
+            ],
+            'hospitalID' => $form1->hospitalID
+        ]);
+
+        // return response()->json([
+        //     'hospitalID' => $form1->hospitalID
+        // ]);
+
     }
     public function delete($id, $table)
     {
@@ -22,7 +43,7 @@ class AdminController extends Controller
     }
 
     public function dashboard() {
-        $totalRecords = Demographicprofile::count();
+        $totalRecords = Demographicprofile::where('status', 1)->count();
         $totalUsers = User::count();
         return view('admin.files.dashboard', compact('totalRecords', 'totalUsers'));
     }

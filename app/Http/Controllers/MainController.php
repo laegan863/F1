@@ -18,7 +18,9 @@ class MainController extends Controller
     {
         $hospitalID = str_pad(string: $request->HospitalID, length: 10, pad_string: "0", pad_type: STR_PAD_LEFT);
 
-        $exists = Demographicprofile::where("hospitalID", $hospitalID)->exists();
+        $exists = Demographicprofile::where("hospitalID", $hospitalID)
+                ->where('status', 1)
+                ->exists();
 
         if($exists) {
             return back()->with("error", "This Person is already exists in the Database!");
@@ -70,7 +72,7 @@ class MainController extends Controller
         $validate = $request->validate([
             'patient_first_encounter' => 'required|date',
             "patient_health_facility_id" => "required|min:12",
-            "philhealth_id"   => "required|string",
+            "philhealth_id"   => "required|string|min:13",
             "name.firstname"   => "required|string",
             "name.middlename"  => "nullable|string",
             "name.lastname"    => "required|string",
@@ -83,18 +85,18 @@ class MainController extends Controller
             "permanent.province" => "required",
             "permanent.city" => "required",
             "permanent.barangay" => "required",
-            "permanent.sitio" => "required",
+            // "permanent.sitio" => "required",
             "current.province" => $request->same_as_address == "on" ? "nullable" : "required",
             "current.city" => $request->same_as_address == "on" ? "nullable" : "required",
             "current.barangay" => $request->same_as_address == "on" ? "nullable" : "required",
-            "current.sitio" => $request->same_as_address == "on" ? "nullable" : "required",
+            // "current.sitio" => $request->same_as_address == "on" ? "nullable" : "required",
             "same_as_address" => "nullable",
             "mobile_number" => "required",
             "email_address" => "required",
             "relative.province" => "required",
             "relative.city" => "required",
             "relative.barangay" => "required",
-            "relative.sitio" => "required",
+            // "relative.sitio" => "required",
             "relative_phone_number" => "required",
             "relative_email" => "nullable|email",
             "highest_education" => "required",
@@ -110,21 +112,22 @@ class MainController extends Controller
             "permanent.province.required" => "The permanent province field is required",
             "permanent.city.required" => "The permanent city field is required",
             "permanent.barangay.required" => "The permanent barangay field is required",
-            "permanent.sitio.required" => "The permanent sitio field is required",
+            // "permanent.sitio.required" => "The permanent sitio field is required",
             "current.province.required" => "The current province field is required",
             "current.city.required" => "The current city field is required",
             "current.barangay.required" => "The current barangay field is required",
-            "current.sitio.required" => "The current sitio field is required",
+            // "current.sitio.required" => "The current sitio field is required",
             "relative.province.required" => "The relative province field is required",
             "relative.city.required" => "The relative city field is required",
             "relative.barangay.required" => "The relative barangay field is required",
-            "relative.sitio.required" => "The relative sitio field is required",
+            // "relative.sitio.required" => "The relative sitio field is required",
         ]);
 
         $exists = DB::table('demographicprofiles')
             ->where('name->firstname', $request->input('name.firstname'))
             ->where('name->middlename', $request->input('name.middlename'))
             ->where('name->lastname', $request->input('name.lastname'))
+            ->where('status', 1)
             ->exists();
 
         if ($exists) {
@@ -143,8 +146,8 @@ class MainController extends Controller
 
             $validate["permanent"] = $response;
             $validate["current"] = $response;
-            $validate["current"]['sitio'] = $request->permanent['sitio'];
-            $validate["permanent"]['sitio'] = $request->permanent['sitio'];
+            // $validate["current"]['sitio'] = $request->permanent['sitio'];
+            // $validate["permanent"]['sitio'] = $request->permanent['sitio'];
 
         }else{
 
@@ -160,8 +163,8 @@ class MainController extends Controller
                 barangay_code: $request->permanent['barangay']
             );
 
-            $current['sitio'] = $request->current['sitio'];
-            $permanent['sitio'] = $request->permanent['sitio'];
+            // $current['sitio'] = $request->current['sitio'];
+            // $permanent['sitio'] = $request->permanent['sitio'];
 
             $validate["current"] = $current;
             $validate["permanent"] = $permanent;
@@ -174,7 +177,7 @@ class MainController extends Controller
             barangay_code: $request->relative['barangay']
         );
 
-        $relative['sitio'] = $request->relative['sitio'];
+        // $relative['sitio'] = $request->relative['sitio'];
         $validate["relative"] = $relative;
         $validate["hospitalID"] = Session::has('patient') ? Session::get("patient")->HospitalID : Session::get("hospitalID");
 
