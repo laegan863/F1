@@ -2,7 +2,7 @@
 @section("title", "Cancer Treatment Profile")
 @section("nav_title", "PATIENT ECOG STATUS, SURGERY, & ANTI-CANCER DRUG THERAPY")
 @section("content")
-    <form id="form" method="POST" action="" class="card">
+    <form id="form" method="POST" action="{{ route('store.patient-eco-status') }}" class="card">
         @csrf
 
         <div class="card-body">
@@ -12,15 +12,18 @@
                 <label class="form-label fw-bold">Eastern Cooperative Oncology Group (ECOG)</label>
                 <div class="d-flex flex-wrap gap-3">
                     <div class="form-check">
-                        <input type="radio" name="ecog_status" value="1" class="form-check-input rounded-circle" onclick="toggleECOG()" {{ old('ecog_status') == 1 ? 'checked' : '' }}>
+                        <input type="radio" name="ecog_status" value="Yes" class="form-check-input rounded-circle"
+                            onclick="toggleECOG()" {{ old('ecog_status') == "Yes" ? 'checked' : '' }}>
                         <label class="form-check-label">Yes</label>
                     </div>
                     <div class="form-check">
-                        <input checked type="radio" name="ecog_status" value="2" class="form-check-input rounded-circle" onclick="toggleECOG()" {{ old('ecog_status') == 2 ? 'checked' : '' }}>
+                        <input type="radio" name="ecog_status" value="No" class="form-check-input rounded-circle"
+                            onclick="toggleECOG()" {{ old('ecog_status', 'No') == "No" ? 'checked' : '' }}>
                         <label class="form-check-label">No</label>
                     </div>
                     <div class="form-check">
-                        <input type="radio" name="ecog_status" value="3" class="form-check-input rounded-circle" onclick="toggleECOG()" {{ old('ecog_status') == 3 ? 'checked' : '' }}>
+                        <input type="radio" name="ecog_status" value="Not Applicable" class="form-check-input rounded-circle"
+                            onclick="toggleECOG()" {{ old('ecog_status') == "Not Applicable" ? 'checked' : '' }}>
                         <label class="form-check-label">Not Applicable</label>
                     </div>
                 </div>
@@ -31,8 +34,9 @@
                     <div class="d-flex flex-wrap gap-3">
                         @foreach(['0','1','2','3','4','5'] as $grade)
                             <div class="form-check">
-                                <input type="radio" name="ecog_grade" value="{{ $grade }}"
-                                    class="form-check-input rounded-circle" {{ old('ecog_grade') == $grade ? 'checked' : '' }}>
+                                <input type="radio" name="ecog_grade" value="Grade {{ $grade }}"
+                                    class="form-check-input rounded-circle"
+                                    {{ old('ecog_grade') == "Grade $grade" ? 'checked' : '' }}>
                                 <label class="form-check-label">Grade {{ $grade }}</label>
                             </div>
                         @endforeach
@@ -52,11 +56,13 @@
                 <label class="form-label fw-bold">Surgery Done?</label>
                 <div class="d-flex flex-wrap gap-3">
                     <div class="form-check">
-                        <input type="radio" name="surgery_done" value="1" class="form-check-input rounded-circle" onclick="toggleSurgery()" {{ old('surgery_done') == 1 ? 'checked' : '' }}>
+                        <input type="radio" name="surgery_done" value="Yes" class="form-check-input rounded-circle"
+                            onclick="toggleSurgery()" {{ old('surgery_done') == "Yes" ? 'checked' : '' }}>
                         <label class="form-check-label">Yes</label>
                     </div>
                     <div class="form-check">
-                        <input checked type="radio" name="surgery_done" value="2" class="form-check-input rounded-circle" onclick="toggleSurgery()" {{ old('surgery_done') == 2 ? 'checked' : '' }}>
+                        <input type="radio" name="surgery_done" value="No" class="form-check-input rounded-circle"
+                            onclick="toggleSurgery()" {{ old('surgery_done', 'No') == "No" ? 'checked' : '' }}>
                         <label class="form-check-label">No</label>
                     </div>
                 </div>
@@ -83,15 +89,15 @@
                     <label class="form-label">Goal <span class="text-muted">(can be multiple)</span></label>
                     <div class="d-flex flex-wrap gap-3">
                         <div class="form-check">
-                            <input type="checkbox" name="surgery_goal[]" value="1" class="form-check-input rounded-circle">
+                            <input type="checkbox" name="surgery_goal[]" value="Diagnostic" class="form-check-input rounded-circle">
                             <label class="form-check-label">Diagnostic</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" name="surgery_goal[]" value="2" class="form-check-input rounded-circle">
+                            <input type="checkbox" name="surgery_goal[]" value="Curative" class="form-check-input rounded-circle">
                             <label class="form-check-label">Curative</label>
                         </div>
                         <div class="form-check">
-                            <input type="checkbox" name="surgery_goal[]" value="3" class="form-check-input rounded-circle">
+                            <input type="checkbox" name="surgery_goal[]" value="Palliative" class="form-check-input rounded-circle">
                             <label class="form-check-label">Palliative</label>
                         </div>
                     </div>
@@ -104,11 +110,13 @@
                 <label class="form-label fw-bold">Ongoing Anti-cancer Drug Therapy?</label>
                 <div class="d-flex flex-wrap gap-3">
                     <div class="form-check">
-                        <input type="radio" name="ongoing_drug_therapy" value="1" class="form-check-input rounded-circle" onclick="toggleDrugTherapy()" {{ old('ongoing_drug_therapy') == 1 ? 'checked' : '' }}>
+                        <input type="radio" name="ongoing_drug_therapy" value="Yes" class="form-check-input rounded-circle"
+                            onclick="toggleDrugTherapy()" {{ old('ongoing_drug_therapy') == "Yes" ? 'checked' : '' }}>
                         <label class="form-check-label">Yes</label>
                     </div>
                     <div class="form-check">
-                        <input checked type="radio" name="ongoing_drug_therapy" value="2" class="form-check-input rounded-circle" onclick="toggleDrugTherapy()" {{ old('ongoing_drug_therapy') == 2 ? 'checked' : '' }}>
+                        <input type="radio" name="ongoing_drug_therapy" value="No" class="form-check-input rounded-circle"
+                            onclick="toggleDrugTherapy()" {{ old('ongoing_drug_therapy', 'No') == "No" ? 'checked' : '' }}>
                         <label class="form-check-label">No</label>
                     </div>
                 </div>
@@ -125,15 +133,15 @@
                         <label class="form-label">Purpose of Drug Administration</label>
                         <div class="d-flex flex-wrap gap-3">
                             <div class="form-check">
-                                <input type="radio" name="drug_purpose" value="1" class="form-check-input rounded-circle">
+                                <input type="radio" name="drug_purpose" value="Neoadjuvant" class="form-check-input rounded-circle">
                                 <label class="form-check-label">Neoadjuvant</label>
                             </div>
                             <div class="form-check">
-                                <input type="radio" name="drug_purpose" value="2" class="form-check-input rounded-circle">
+                                <input type="radio" name="drug_purpose" value="Adjuvant" class="form-check-input rounded-circle">
                                 <label class="form-check-label">Adjuvant</label>
                             </div>
                             <div class="form-check">
-                                <input type="radio" name="drug_purpose" value="3" class="form-check-input rounded-circle">
+                                <input type="radio" name="drug_purpose" value="Palliative" class="form-check-input rounded-circle">
                                 <label class="form-check-label">Palliative</label>
                             </div>
                         </div>
@@ -141,33 +149,32 @@
                 </div>
 
                 <!-- Drug Types -->
-                <!-- Drug Types -->
                 <div class="mb-3">
                     <label class="form-label">Drug Type/s <span class="text-muted">(can be multiple)</span></label>
                     <div class="row">
                         @foreach([
-                            '1' => 'Cytotoxic',
-                            '2' => 'Hormonal',
-                            '3' => 'Immunologic',
-                            '4' => 'Targeted',
-                            '5' => 'Others, specify'
+                            'Cytotoxic',
+                            'Hormonal',
+                            'Immunologic',
+                            'Targeted',
+                            'Others'
                         ] as $key => $label)
                             <div class="col-md-6 mb-4">
                                 <div class="form-check">
-                                    <input type="checkbox" name="drug_types[]" value="{{ $key }}" class="form-check-input rounded-circle"
+                                    <input type="checkbox" name="drug_types[]" value="{{ $label }}" class="form-check-input rounded-circle"
                                         id="drugType{{ $key }}" onchange="toggleDrugFields({{ $key }})">
                                     <label class="form-check-label">{{ $label }}</label>
                                 </div>
                                 <div class="mt-2">
                                     <label class="form-label small">Drug Regimen</label>
-                                    <input type="text" name="drug_regimen[{{ $key }}]" class="form-control"
+                                    <input type="text" name="drug_regimen[{{ $label }}]" class="form-control"
                                         id="drugRegimen{{ $key }}" disabled>
 
                                     <label class="form-label small mt-2">Chemo Cycle No.</label>
-                                    <input type="text" name="chemo_cycle[{{ $key }}]" class="form-control"
+                                    <input type="text" name="chemo_cycle[{{ $label }}]" class="form-control"
                                         id="chemoCycle{{ $key }}" disabled>
                                 </div>
-                                @if($key == 5)
+                                @if($label == 'Others')
                                     <input type="text" name="drug_type_other" class="form-control mt-2"
                                         id="drugOther{{ $key }}" placeholder="Specify others" disabled>
                                 @endif
@@ -175,7 +182,6 @@
                         @endforeach
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -190,17 +196,17 @@
 @section("script")
 <script>
     function toggleECOG() {
-        let yes = document.querySelector('input[name="ecog_status"][value="1"]').checked;
+        let yes = document.querySelector('input[name="ecog_status"][value="Yes"]').checked;
         document.getElementById('ecogGradeSection').classList.toggle('d-none', !yes);
     }
 
     function toggleSurgery() {
-        let yes = document.querySelector('input[name="surgery_done"][value="1"]').checked;
+        let yes = document.querySelector('input[name="surgery_done"][value="Yes"]').checked;
         document.getElementById('surgeryDetails').classList.toggle('d-none', !yes);
     }
 
     function toggleDrugTherapy() {
-        let yes = document.querySelector('input[name="ongoing_drug_therapy"][value="1"]').checked;
+        let yes = document.querySelector('input[name="ongoing_drug_therapy"][value="Yes"]').checked;
         document.getElementById('drugTherapyDetails').classList.toggle('d-none', !yes);
     }
 
@@ -209,8 +215,7 @@
         toggleECOG();
         toggleSurgery();
         toggleDrugTherapy();
-
-        [1,2,3,4,5].forEach(k => toggleDrugFields(k));
+        [0,1,2,3,4].forEach(k => toggleDrugFields(k));
     };
 
     function toggleDrugFields(key) {

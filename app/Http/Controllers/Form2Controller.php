@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use App\Models\F2followup;
+use App\Models\F2patientstatus;
+use App\Models\F2radiotheraphy;
+use App\Models\F2othercancertherapy;
 
 class Form2Controller extends Controller
 {
@@ -22,14 +26,180 @@ class Form2Controller extends Controller
             'other_staging' => 'nullable',
             'other_remarks' => 'required'
         ]);
-        
+
         $validate['hospitalID'] = $hospitalID;
-        F2followup::create($validate);
-        
-        return response()->json([
-            'data' => $validate
+
+        F2followup::updateOrcreate(['hospitalID', $hospitalID], $validate);
+
+        Session::put([
+            'code' => $data->id
         ]);
+        
+        return to_route('form2-secondpage');
 
     }
+
+    public function store_patient_eco_status(Request $request)
+    {
+        $validated = $request->validate([
+            'ecog_status'                 => 'required|in:Yes,No',
+            'ecog_grade'                  => 'nullable|string|max:255',
+            'other_functional_assessment' => 'nullable|string|max:255',
+            'surgery_done'                => 'required|in:Yes,No',
+            'surgery_rvs'                 => 'nullable|string|max:255',
+            'surgery_description'         => 'nullable|string|max:255',
+            'surgery_date'                => 'nullable|date',
+            'surgery_goal'                => 'nullable|array',
+            'ongoing_drug_therapy'        => 'required|in:Yes,No',
+            'therapy_date_start'          => 'nullable|date',
+            'drug_purpose'                => 'nullable|string|max:255',
+            'drug_types'                  => 'nullable|array',
+            'drug_regimen'                => 'nullable|array',
+            'chemo_cycle'                 => 'nullable|array',
+            'drug_type_other'             => 'nullable|string|max:255',
+        ]);
+
+        $data = [
+            'ecog_status' => [
+                'ecog_grade',
+                'other_functional_assessment'
+            ], 
+            'surgery_done' => [
+                'surgery_rvs',
+                'surgery_description',
+                'surgery_date',
+                'surgery_goal'
+            ], 
+            'ongoing_drug_therapy' => [
+                'therapy_date_start',
+                'drug_purpose',
+                'drug_types',
+                'drug_regimen',
+                'chemo_cycle',
+                'drug_type_other'
+            ]
+        ];
+
+        foreach($data as $key => $value){
+            if($validated[$key] == "No"){
+                foreach($value as $newValue){
+                    $NewValidate[$newValue] = null;
+                }
+            }
+        }
+
+        $validated['code'] = Session::get('code');
+
+        F2patientstatus::updateOrCreate(['code' => $validated['code']], $validated);
+
+        return redirect()
+            ->route('form2-thirdpage')
+            ->with('success', 'Patient ECOG status saved successfully.');
+    }
+
+    public function store_radiotheraphy(Request $request)
+    {
+        $validated = $request->validate([
+            'radiotherapy'            => 'required|in:Yes,No',
+            'radio_date_start'        => 'nullable|date',
+            'radio_date_end'          => 'nullable|date|after_or_equal:radio_date_start',
+            'radio_total_dose'        => 'nullable|string|max:255',
+            'radio_dose_fraction'     => 'nullable|string|max:255',
+            'radio_total_fractions'   => 'nullable|string|max:255',
+            'radio_total_days'        => 'nullable|string|max:255',
+            'radio_body_site'         => 'nullable|array',
+            'radio_body_site.*'       => 'nullable|string|max:255',
+            'radio_body_site_other'   => 'nullable|string|max:255',
+            'radio_type'              => 'nullable|array',
+            'radio_type.*'            => 'nullable|string|max:255',
+            'radio_type_other'        => 'nullable|string|max:255',
+            'radio_goal'              => 'nullable|in:Curative,Palliative',
+
+            'theranostics'            => 'required|in:Yes,No',
+            'theranostics_type'       => 'nullable|array',
+            'theranostics_type.*'     => 'nullable|string|max:255',
+            'theranostics_type_other' => 'nullable|string|max:255',
+            'thera_total_planned'     => 'nullable|string|max:255',
+            'thera_total_received'    => 'nullable|string|max:255',
+            'thera_sequences'         => 'nullable|string|max:255',
+            'thera_goal'              => 'nullable|in:Definitive,Palliative',
+        ]);
+
+        $groups = [
+            'radiotherapy' => [
+                'radio_date_start',
+                'radio_date_end',
+                'radio_total_dose',
+                'radio_dose_fraction',
+                'radio_total_fractions',
+                'radio_total_days',
+                'radio_body_site',
+                'radio_body_site_other',
+                'radio_type',
+                'radio_type_other',
+                'radio_goal',
+            ],
+            'theranostics' => [
+                'theranostics_type',
+                'theranostics_type_other',
+                'thera_total_planned',
+                'thera_total_received',
+                'thera_sequences',
+                'thera_goal',
+            ],
+        ];
+
+        foreach ($groups as $parent => $fields) {
+            if (($validated[$parent] ?? null) === "No") {
+                foreach ($fields as $field) {
+                    $validated[$field] = null;
+                }
+            }
+        }
+
+        $validated['code'] = Session::get('code');
+
+        F2radiotheraphy::updateOrCreate(
+            ['code' => $validated['code']],
+            $validated
+        );
+
+        return redirect()
+            ->route('form2.fourthpage')
+            ->with('success', 'Patient ECOG status saved successfully.');
+    }
+
+    public function store_other_theraphy(Request $request)
+    {
+        $validated = $request->validate([
+            'other_cancer_therapies'   => 'required|in:Yes,No',
+            'cancer_therapies'         => 'nullable|array',
+            'cancer_therapies_other'   => 'nullable|string|max:255',
+
+            'pre_op_scenario'          => 'required|string',
+            'post_op_scenario'         => 'required|string',
+            'treatment_status'         => 'required|string',
+        ]);
+
+        if ($validated["other_cancer_therapies"] === "No") {
+            $validated["cancer_therapies"] = null;
+            $validated["cancer_therapies_other"] = null;
+        }
+
+        $validated["code"] = Session::get("code");
+
+        // updateOrCreate expects: (search condition, update values)
+        F2othercancertherapy::updateOrCreate(
+            ['code' => $validated["code"]],
+            $validated
+        );
+
+        return response()->json([
+            'data' => $validated
+        ]);
+    }
+
+
+
 }
  
