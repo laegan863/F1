@@ -3063,7 +3063,7 @@
                 <td class="s27" dir="ltr" colspan="7" style="text-transform:capitalize;">{{ $data['permanent']['province'] }}</td>
                 <td class="s27" dir="ltr" colspan="7" style="text-transform:capitalize;">{{ $data['permanent']['city'] }}</td>
                 <td class="s27" dir="ltr" colspan="8" style="text-transform:capitalize;">{{ $data['permanent']['barangay'] }}</td>
-                <td class="s27" dir="ltr" colspan="7" style="text-transform:capitalize;">{{ $data['permanent']['sitio'] }}</td>
+                <td class="s27" dir="ltr" colspan="7" style="text-transform:capitalize;"></td>
             </tr>
             <tr style="height: 21px">
                 <!-- <th id="631683479R30" style="height: 21px;" class="row-headers-background">
@@ -3092,9 +3092,7 @@
                 <td class="s47" dir="ltr" colspan="8">
                     {{ $data['current']['barangay'] ? ucwords($data['current']['barangay']) : 'N/A' }}
                 </td>
-                <td class="s48" dir="ltr" colspan="7">
-                    {{ $data['current']['sitio'] ? ucwords($data['current']['sitio']) : 'N/A' }}
-                </td>
+                <td class="s48" dir="ltr" colspan="7"></td>
             </tr>
             <tr style="height: 24px">
                 <!-- <th id="631683479R32" style="height: 24px;" class="row-headers-background">
@@ -3116,7 +3114,7 @@
                 <td class="s27" dir="ltr" colspan="7">{{ $data['relative']['province'] ? ucwords($data['relative']['province']) : 'N/A' }}</td>
                 <td class="s27" dir="ltr" colspan="7">{{ $data['relative']['city'] ? ucwords($data['relative']['city']) : 'N/A' }}</td>
                 <td class="s27" dir="ltr" colspan="8">{{ $data['relative']['barangay'] ? ucwords($data['relative']['barangay']) : 'N/A' }}</td>
-                <td class="s27" dir="ltr" colspan="7">{{ $data['relative']['sitio'] ? ucwords($data['relative']['sitio']) : 'N/A' }}</td>
+                <td class="s27" dir="ltr" colspan="7"></td>
             </tr>
             <tr style="height: 34px">
                 <!-- <th id="631683479R34" style="height: 34px;" class="row-headers-background">
