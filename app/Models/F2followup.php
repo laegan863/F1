@@ -30,4 +30,19 @@ class F2followup extends Model
         'other_staging' => 'array',
     ];
 
+    public function f2patientstatus()
+    {
+        return $this->hasOne(F2patientstatus::class, 'code', 'id');
+    }
+
+    public function f2radiotheraphy()
+    {
+        return $this->hasOne(f2radiotheraphy::class, 'code', 'id');
+    }
+
+    public function f2othercancertheraphy()
+    {
+        return $this->hasOne(f2othercancertheraphy::class, 'code', 'id');
+    }
+
 }

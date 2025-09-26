@@ -408,6 +408,8 @@ class MainController extends Controller
             'status' => 1
         ]);
 
+        Session::forget(['code', 'hospitalID']);
+
         return to_route('admin.records')->with('success', 'Data has been successfully saved!');
 
     }
@@ -423,7 +425,6 @@ class MainController extends Controller
         $data['patient_first_encounter'] = str_replace(search: "-", replace: "", subject: $data->patient_first_encounter);
         $data['patient_first_encounter'] = str_split($data['patient_first_encounter']);
 
-        // return response()->json(['data' => $data]);
         return view(view: 'forms.form', data: [
             'data' => $data,
         ]);

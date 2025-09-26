@@ -40,27 +40,20 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::view('validate-hospital-number', 'forms.check-user-info')->name('first-page');
     });
 
-    // form 2 start
     Route::prefix("form2")->group(function(){
         Route::view("follow-up", "forms.form2.follow-up")->name('form2-firstpage');
-        Route::view("patient-eco-status", "forms.form2.patient-eco-status");
-        Route::view("radio-theranotics","forms.form2.radio-theranotics");
-        Route::view("other-cancer", "forms.form2.other-cancer-directed-thyrapies");
-        Route::view("change-treatment-plan", "forms.form2.change-treatment-plan");
+        Route::view("patient-eco-status", "forms.form2.patient-eco-status")->name('form2-secondpage');
+        Route::view("radio-theranotics","forms.form2.radio-theranotics")->name('form2-thirdpage');
+        Route::view("other-cancer", "forms.form2.other-cancer-directed-thyrapies")->name('form2.fourthpage');
+        Route::view("change-treatment-plan", "forms.form2.change-treatment-plan")->name('form2.fifthpage');
         Route::view("cancer-diagnose-outome", "forms.form2.cancer-diagnose-outcome");
     });
-    // form 2 end   
-
-    // form 3 start
     Route::prefix("form3")->group(function(){
         Route::view("patient-surveillance-form", "forms.form3.patient-surveillance-form")->name('form3-firstpage');
         Route::view("cancer-diagnose-outome", "forms.form3.cancer-diagnose-outcome");
         Route::view("cancer-treatment-history", "forms.form3.cancer-treatment-history");
         Route::view("financial-support-mechanism", "forms.form3.financial-support-mechanism");
     });
-    // form 3 end
-
-    // form 4 start
     Route::prefix("form4")->group(function(){
         Route::view("palliative-form", "forms.form4.palliative-form")->name('form4-firstpage');
         Route::view("esas-r", "forms.form4.esas-r");
@@ -69,12 +62,14 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::view("cancer-diagnose-outcome", "forms.form4.cancer-diagnose-outcome");
         Route::view("financial-support-mechanism", "forms.form4.financial-support-mechanism");
     });
-    // form 4 end
 
 });
 
 Route::controller(Form2Controller::class)->group(function(){
     Route::post('submit-follow-up/{hospitalID}', 'submit_follow_up')->name('submit.follow-up');
+    Route::post('store-patient-eco-status', 'store_patient_eco_status')->name('store.patient-eco-status');
+    Route::post("store-radiotheraphy", "store_radiotheraphy")->name("store.radiotheraphy");
+    Route::post('store-other-theraphy', "store_other_theraphy")->name("store.other-theraphy");
 });
 
 Route::controller(MainController::class)->group(function() {
