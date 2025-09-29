@@ -1,13 +1,15 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Middleware\IsAdmin;
+use App\Http\Middleware\IsNotAuth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
-use App\Http\Middleware\IsNotAuth;
 use App\Http\Middleware\IsAuthenticated;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\Form2Controller;
-use App\Http\Middleware\IsAdmin;
+use App\Http\Controllers\Form3Controller;
+use App\Http\Controllers\Form4Controller;
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('verify-auth', 'verify_auth')->name('verify-auth');
@@ -54,7 +56,7 @@ Route::middleware(IsNotAuth::class)->group(function(){
             Route::get('result2/{id}', 'result')->name('result.form3');
             Route::get('result3/{id}', 'result')->name('result.form4');
         });
-        
+
     });
 
     Route::prefix("form2")->group(function(){
@@ -76,17 +78,31 @@ Route::middleware(IsNotAuth::class)->group(function(){
 
     Route::prefix("form3")->group(function(){
         Route::view("patient-surveillance-form", "forms.form3.patient-surveillance-form")->name('form3-firstpage');
-        Route::view("cancer-diagnose-outome", "forms.form3.cancer-diagnose-outcome");
-        Route::view("cancer-treatment-history", "forms.form3.cancer-treatment-history");
-        Route::view("financial-support-mechanism", "forms.form3.financial-support-mechanism");
+        Route::view("cancer-diagnose-outome", "forms.form3.cancer-diagnose-outcome")->name('form3.secondpage');
+        Route::view("cancer-treatment-history", "forms.form3.cancer-treatment-history")->name('form3.page3');
+        Route::view("financial-support-mechanism", "forms.form3.financial-support-mechanism")->name('form3.page4');
     });
+
+    Route::controller(Form3Controller::class)->group(function(){
+        Route::post('store-f3patientsurveillanceforms/{hospitalID}', 'f3patientsurveillanceforms')->name('store.f3patientsurveillanceforms');
+        Route::post('store-cancerdiagnoseoutcome', 'cancerdiagnoseoutcome')->name('store.cancerdiagnoseoutcome');
+        Route::post('store-treatment-history', 'treatment_history')->name('store.treatment-history');
+        Route::post('store.financial-support', 'financial_support')->name('store.financial-support');
+    });
+    
     Route::prefix("form4")->group(function(){
         Route::view("palliative-form", "forms.form4.palliative-form")->name('form4-firstpage');
-        Route::view("esas-r", "forms.form4.esas-r");
-        Route::view("prqst", "forms.form4.pain-assessment");
+        Route::view("esas-r", "forms.form4.esas-r")->name('form4.page2');
+        Route::view("prqst", "forms.form4.pain-assessment")->name('form4.page3');
         Route::view("palliative-care-intervention", "forms.form4.palliative-care-intervention");
         Route::view("cancer-diagnose-outcome", "forms.form4.cancer-diagnose-outcome");
         Route::view("financial-support-mechanism", "forms.form4.financial-support-mechanism");
+    });
+
+    Route::controller(Form4Controller::class)->group(function(){
+        Route::post('store-palliative-form/{hospitalID}', 'palliative_form')->name('store.palliative-form');
+        Route::post('store-esas', 'esas')->name('store.esas');
+        Route::post('store-pain-assessment', 'pain_assessment')->name('store.pain-assessment');
     });
 
 });

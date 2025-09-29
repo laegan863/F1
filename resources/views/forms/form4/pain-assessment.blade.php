@@ -2,7 +2,7 @@
 @section("title", "Pain Assessment (PQRST)")
 @section("nav_title", "B. Pain Assessment (PQRST)")
 @section("content")
-    <form id="form" method="POST" action="" class="p-3">
+    <form id="form" method="POST" action="{{ route('store.pain-assessment') }}" class="p-3">
         @csrf
 
         <!-- Date + Pain -->
@@ -14,11 +14,11 @@
         <div class="mb-3">
             <label class="form-label fw-bold">Is there Pain?</label><br>
             <div class="form-check form-check-inline">
-                <input type="radio" name="is_pain" value="1" class="form-check-input rounded-circle">
+                <input type="radio" name="is_pain" value="Yes" class="form-check-input rounded-circle">
                 <label class="form-check-label">Yes</label>
             </div>
             <div class="form-check form-check-inline">
-                <input type="radio" name="is_pain" value="2" class="form-check-input rounded-circle">
+                <input type="radio" name="is_pain" value="No" class="form-check-input rounded-circle">
                 <label class="form-check-label">No</label>
             </div>
         </div>
@@ -26,20 +26,20 @@
         <!-- Pain Score Acceptable -->
         <div class="mb-3">
             <label class="form-label fw-bold">Pain Score acceptable to Patient</label><br>
-            <input type="text" name="" id="" class="form-control">
+            <input type="text" name="pain_score" class="form-control">
         </div>
 
         <div class="mb-3">
             <label class="form-label fw-bold">Provocation</label><br>
-            <input type="text" name="" id="" class="form-control">
+            <input type="text" name="provocation" class="form-control">
         </div>
 
         <!-- Provocation -->
         <div class="mb-3">
             <label class="form-label fw-bold">Quality</label><br>
-            @foreach([1=>'Sensory',2=>'Affective',3=>'Cognitive'] as $k=>$label)
+            @foreach(['Sensory','Affective','Cognitive'] as $label)
                 <div class="form-check form-check-inline">
-                    <input type="checkbox" name="provocation_quality[]" value="{{ $k }}" class="form-check-input rounded-circle">
+                    <input type="checkbox" name="provocation_quality[]" value="{{ $label }}" class="form-check-input rounded-circle">
                     <label class="form-check-label">{{ $label }}</label>
                 </div>
             @endforeach
@@ -104,12 +104,12 @@
                         <td><strong>Verbal/Vocal</strong></td>
                         <td colspan="4">
                             @foreach([
-                                0 => '0 = Positive',
-                                1 => '1 = Other complaint, whimper',
-                                2 => '2 = Pain, crying'
-                            ] as $val => $desc)
+                                '0 = Positive',
+                                '1 = Other complaint, whimper',
+                                '2 = Pain, crying'
+                            ] as $desc)
                                 <div class="form-check">
-                                    <input type="checkbox" name="verbal_vocal" value="{{ $val }}" class="form-check-input rounded-circle">
+                                    <input type="checkbox" name="verbal_vocal[]" value="{{ $desc }}" class="form-check-input rounded-circle">
                                     <label class="form-check-label">{{ $desc }}</label>
                                 </div>
                             @endforeach
@@ -121,12 +121,12 @@
                         <td><strong>Body Movement</strong></td>
                         <td colspan="4">
                             @foreach([
-                                0 => '0 = Moves easily',
-                                1 => '1 = Neutral shifting',
-                                2 => '2 = Tense, failing arms/leg'
-                            ] as $val => $desc)
+                                '0 = Moves easily',
+                                '1 = Neutral shifting',
+                                '2 = Tense, failing arms/leg'
+                            ] as $desc)
                                 <div class="form-check">
-                                    <input type="checkbox" name="body_movement" value="{{ $val }}" class="form-check-input rounded-circle">
+                                    <input type="checkbox" name="body_movement[]" value="{{ $desc }}" class="form-check-input rounded-circle">
                                     <label class="form-check-label">{{ $desc }}</label>
                                 </div>
                             @endforeach
@@ -138,13 +138,13 @@
                         <td><strong>Facial</strong></td>
                         <td colspan="4">
                             @foreach([
-                                0 => '0 = Smiling',
-                                1 => '1 = Neutral shifting',
-                                2 => '2 = Frown, grimace',
-                                3 => '3 = Clenched teeth'
-                            ] as $val => $desc)
+                                '0 = Smiling',
+                                '1 = Neutral shifting',
+                                '2 = Frown, grimace',
+                                '3 = Clenched teeth'
+                            ] as $desc)
                                 <div class="form-check">
-                                    <input type="checkbox" name="facial" value="{{ $val }}" class="form-check-input rounded-circle">
+                                    <input type="checkbox" name="facial[]" value="{{ $desc }}" class="form-check-input rounded-circle">
                                     <label class="form-check-label">{{ $desc }}</label>
                                 </div>
                             @endforeach
@@ -156,12 +156,12 @@
                         <td><strong>Touching (localizing pain)</strong></td>
                         <td colspan="4">
                             @foreach([
-                                0 => '0 = No touching',
-                                1 => '1 = Reaching patting',
-                                2 => '2 = Grabbing'
-                            ] as $val => $desc)
+                                '0 = No touching',
+                                '1 = Reaching patting',
+                                '2 = Grabbing'
+                            ] as $desc)
                                 <div class="form-check">
-                                    <input type="radio" name="touching" value="{{ $val }}" class="form-check-input rounded-circle">
+                                    <input type="radio" name="touching" value="{{ $desc }}" class="form-check-input rounded-circle">
                                     <label class="form-check-label">{{ $desc }}</label>
                                 </div>
                             @endforeach
@@ -174,9 +174,10 @@
         <!-- Associated Signs -->
         <div class="mb-3">
             <h6 class="fw-bold">Associated Signs/Symptoms</h6>
-            <input type="text" class="form-control">
+            <input type="text" name="associated_signs" class="form-control">
         </div>
-        <!-- Associated Signs -->
+
+        <!-- Pain Diagnosis -->
         <div class="mb-3">
             <h6 class="fw-bold">Pain Diagnosis</h6>
             @foreach(['Acute Pain','Chronic Pain','Neuropathic Pain','Nociceptive Pain','Psychogenic Pain','Phantom Pain','Central Pain','Nociplastic Pain'] as $symptom)
@@ -201,11 +202,11 @@
                 <div class="border p-2 mb-2">
                     <label class="form-label">{{ $label }}</label><br>
                     <div class="form-check form-check-inline">
-                        <input type="radio" name="{{ $key }}" value="1" class="form-check-input rounded-circle" onclick="toggleSection('{{ $key }}Details')">
+                        <input type="radio" name="{{ $key }}" value="Yes" class="form-check-input rounded-circle" onclick="toggleSection('{{ $key }}Details')">
                         <label class="form-check-label">Yes</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input type="radio" name="{{ $key }}" value="2" class="form-check-input rounded-circle" onclick="toggleSection('{{ $key }}Details')" checked>
+                        <input type="radio" name="{{ $key }}" value="No" class="form-check-input rounded-circle" onclick="toggleSection('{{ $key }}Details')" checked>
                         <label class="form-check-label">No</label>
                     </div>
 
@@ -221,11 +222,11 @@
                         @endif
                         <label class="form-label">If Yes, Is pain controlled?</label><br>
                         <div class="form-check form-check-inline">
-                            <input type="radio" name="{{ $key }}_pain_controlled" value="1" class="form-check-input rounded-circle">
+                            <input type="radio" name="{{ $key }}_pain_controlled" value="Yes" class="form-check-input rounded-circle">
                             <label class="form-check-label">Yes</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input type="radio" name="{{ $key }}_pain_controlled" value="2" class="form-check-input rounded-circle">
+                            <input type="radio" name="{{ $key }}_pain_controlled" value="No" class="form-check-input rounded-circle">
                             <label class="form-check-label">No</label>
                         </div>
                         <div >
@@ -251,7 +252,7 @@
     function toggleSection(id) {
         const section = document.getElementById(id);
         if (section) {
-            const yesSelected = event.target.value === '1';
+            const yesSelected = event.target.value === 'Yes';
             section.classList.toggle('d-none', !yesSelected);
         }
     }
