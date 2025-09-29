@@ -26,7 +26,7 @@
                                 <td>Form {{ $loop->iteration }}</td>
                                 <td class="text-center">
                                     @if(isset($value->status) && $value->status == 1)
-                                        <a href="{{ route('result', ['id' => $value->id ]) }}" target="_blank" class="text-white" rel="noopener noreferrer">
+                                        <a href="{{ route('result.form'.$loop->iteration, ['id' => $value->id ]) }}" target="_blank" class="text-white" rel="noopener noreferrer">
                                             <button type="button" class="btn btn-primary dim" type="button">
                                                 <i class="fa fa-eye"></i>
                                         </a>

@@ -21,6 +21,7 @@ class F2followup extends Model
         'stage',
         'other_staging',
         'other_remarks',
+        'status'
     ];
 
     protected $casts = [

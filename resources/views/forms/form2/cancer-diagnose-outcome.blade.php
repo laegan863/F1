@@ -2,7 +2,7 @@
 @section("title", "Cancer Diagnosis Outcome & Financial Support")
 @section("nav_title", "CANCER DIAGNOSIS OUTCOME & FINANCIAL SUPPORT")
 @section("content")
-    <form id="form" method="POST" action="" class="card rounded-0">
+    <form id="form" method="POST" action="{{ route('store.cancer-diagnose-outcome') }}" class="card rounded-0">
         @csrf
         <div class="card-body">
             <!-- Cancer Diagnosis Outcome -->
@@ -11,15 +11,15 @@
                 <label class="form-label">Diagnosis Outcome</label>
                 <div class="row">
                     @foreach([
-                        1=>'Stable Disease', 2=>'Complete Remission', 3=>'Partial Response',
-                        4=>'Disease Progression', 5=>'Recurrent Disease', 6=>'Death (Cancer related)',
-                        7=>'Death (treatment related)', 8=>'Death (other cause/Non-Cancer related)',
-                        9=>'Ongoing evaluation', 10=>'Ongoing treatment',
-                        11=>'Completed treatment', 12=>'Undetermined'
-                    ] as $k=>$label)
+                        'Stable Disease', 'Complete Remission', 'Partial Response',
+                        'Disease Progression', 'Recurrent Disease', 'Death (Cancer related)',
+                        'Death (treatment related)', 'Death (other cause/Non-Cancer related)',
+                        'Ongoing evaluation', 'Ongoing treatment',
+                        'Completed treatment', 'Undetermined'
+                    ] as $label)
                         <div class="col-md-4">
                             <div class="form-check">
-                                <input type="checkbox" name="diagnosis_outcome[]" value="{{ $k }}" class="form-check-input rounded-circle">
+                                <input type="checkbox" name="diagnosis_outcome[]" value="{{ $label }}" class="form-check-input rounded-circle">
                                 <label class="form-check-label">{{ $label }}</label>
                             </div>
                         </div>
@@ -46,11 +46,11 @@
             <div class="mb-2">
                 <label class="form-label">Did patient avail any financial support mechanism?</label>
                 <div class="form-check d-inline-block me-3">
-                    <input type="radio" name="financial_support" value="1" class="form-check-input rounded-circle" onclick="toggleSection('financialDetails')">
+                    <input type="radio" name="financial_support" value="Yes" class="form-check-input rounded-circle" onclick="toggleSection('financialDetails')">
                     <label class="form-check-label">Yes</label>
                 </div>
                 <div class="form-check d-inline-block">
-                    <input type="radio" name="financial_support" value="2" class="form-check-input rounded-circle" onclick="toggleSection('financialDetails')" checked>
+                    <input type="radio" name="financial_support" value="No" class="form-check-input rounded-circle" onclick="toggleSection('financialDetails')" checked>
                     <label class="form-check-label">No</label>
                 </div>
             </div>
@@ -59,19 +59,19 @@
                 <label class="form-label">If yes, specify:</label>
                 <div class="row">
                     @foreach([
-                        1=>'Discounts under Law (e.g. Senior Citizen, PWD)', 2=>'PhilHealth', 3=>'HMO',
-                        4=>'PCSO', 5=>'AICS', 6=>'Cancer Assistance Fund (CAF)',
-                        7=>'MAIP/DOH', 8=>'Hospital Assistance Funds', 9=>'CSPMAP',
-                        10=>'PAGCOR', 11=>'NGO/Civil Society Org.', 12=>'Clinical Trial',
-                        13=>'Charitable Institutions', 14=>'Private Sector Assistance Program',
-                        15=>'None', 16=>'Others, specify:'
-                    ] as $k=>$support)
+                        'Discounts under Law (e.g. Senior Citizen, PWD)', 'PhilHealth', 'HMO',
+                        'PCSO', 'AICS', 'Cancer Assistance Fund (CAF)',
+                        'MAIP/DOH', 'Hospital Assistance Funds', 'CSPMAP',
+                        'PAGCOR', 'NGO/Civil Society Org.', 'Clinical Trial',
+                        'Charitable Institutions', 'Private Sector Assistance Program',
+                        'None', 'Others, specify:'
+                    ] as $support)
                         <div class="col-md-6">
                             <div class="form-check">
-                                <input type="checkbox" name="financial_type[]" value="{{ $k }}" class="form-check-input rounded-circle" onchange="toggleFinancialOther({{ $k }})">
+                                <input type="checkbox" name="financial_type[]" value="{{ $support }}" class="form-check-input rounded-circle" onchange="toggleFinancialOther('{{ $support }}')">
                                 <label class="form-check-label">{{ $support }}</label>
                             </div>
-                            @if($k == 16)
+                            @if($support == 'Others, specify:')
                                 <input type="text" name="financial_other" id="financialOther" class="form-control mt-1" placeholder="Specify" disabled>
                             @endif
                         </div>
@@ -84,37 +84,37 @@
                 <label class="form-label">If CSPMAP is checked, select the medicines availed:</label>
                 <div class="row">
                     @foreach([
-                        1=>'Asparaginase 10,000 IU vial',2=>'Bicalutamide 50 mg',3=>'Bleomycin (as Sulfate) 15 mg vial',
-                        4=>'Calcium Folinate 50 mg vial',5=>'Capecitabine 500 mg tablet',6=>'Carboplatin 150 mg vial',
-                        7=>'Carboplatin 450 mg vial',8=>'Cisplatin 1 mg/mL, 10 mL vial',9=>'Cisplatin 1 mg/mL, 50 mL vial',
-                        10=>'Cyclophosphamide 500 mg vial',11=>'Cytarabine 100 mg/mL 1 mL vial',
-                        12=>'Cytarabine 100 mg/mL 5 mL vial',13=>'Dacarbazine 200 mg vial',14=>'Dactinomycin 500 mcg vial',
-                        15=>'Diazepam 5mg/mL 2 mL amp',16=>'Diphenhydramine HCl 50 mg/mL 1 mL',17=>'Docetaxel 20 mg/mL vial',
-                        18=>'Docetaxel 80 mg/mL 2 mL vial',19=>'Doxorubicin 10 mg vial',20=>'Doxorubicin 50 mg vial',
-                        21=>'Epirubicin 50 mg vial',22=>'Etoposide 20 mg/mL 5 mL amp',23=>'Fentanyl Citrate 50 mcg/mL 2 mL amp',
-                        24=>'Filgrastim (G-CSF) 300 mcg/mL 0.5 mL PFS',25=>'Fluorouracil 50 mg/mL 10 mL vial',
-                        26=>'Gemcitabine 1 g vial',27=>'Gemcitabine 200 mg vial',28=>'Goserelin 3.6 mg PFS',
-                        29=>'Haloperidol 5 mg/mL 1 mL amp',30=>'Hydroxyurea 500 mg capsule',31=>'Hyoscine 20 mg/mL 1 mL amp',
-                        32=>'Idarubicin 5 mg vial',33=>'Ifosfamide 1 g vial',34=>'Imatinib 400 mg tablet',
-                        35=>'Irinotecan 40 mg/2 mL vial',36=>'Irinotecan 100 mg/5 mL vial',37=>'Letrozole 2.5 mg tablet',
-                        38=>'Leuprolide 3.75 mg vial',39=>'Mercaptopurine 50 mg tablet',40=>'Mesna 100 mg/mL 4 mL amp',
-                        41=>'Methotrexate 2.5 mg tablet',42=>'Methotrexate 25 mg/mL 2 mL amp',
-                        43=>'Metoclopramide 5 mg/mL 2 mL amp',44=>'Morphine 10 mg/mL 1 mL amp',
-                        45=>'Morphine 30 mg/mL 1 mL amp',46=>'Morphine oral solution 10 mg/5 mL',
-                        47=>'Omeprazole 40 mg vial + solvent',48=>'Ondansetron 2 mg/mL 2 mL amp',
-                        49=>'Ondansetron 2 mg/mL 4 mL amp',50=>'Oxaliplatin 5 mg/mL solution',
-                        51=>'Paclitaxel 6 mg/mL 17 mL vial',52=>'Paclitaxel 6 mg/mL 25 mL vial',
-                        53=>'Paclitaxel 30 mg/5 mL vial',54=>'Rituximab 10 mg/mL 10 mL vial',
-                        55=>'Tamoxifen 20 mg tablet',56=>'Trastuzumab 150 mg vial',57=>'Trastuzumab 600 mg/5 mL vial',
-                        58=>'Vinblastine 1 mg/mL 10 mL vial',59=>'Vincristine 1 mg/mL 1 mL vial',
-                        60=>'Vincristine 1 mg/mL 2 mL vial',61=>'None',62=>'Others, specify:'
-                    ] as $k=>$med)
+                        'Asparaginase 10,000 IU vial','Bicalutamide 50 mg','Bleomycin (as Sulfate) 15 mg vial',
+                        'Calcium Folinate 50 mg vial','Capecitabine 500 mg tablet','Carboplatin 150 mg vial',
+                        'Carboplatin 450 mg vial','Cisplatin 1 mg/mL, 10 mL vial','Cisplatin 1 mg/mL, 50 mL vial',
+                        'Cyclophosphamide 500 mg vial','Cytarabine 100 mg/mL 1 mL vial',
+                        'Cytarabine 100 mg/mL 5 mL vial','Dacarbazine 200 mg vial','Dactinomycin 500 mcg vial',
+                        'Diazepam 5mg/mL 2 mL amp','Diphenhydramine HCl 50 mg/mL 1 mL','Docetaxel 20 mg/mL vial',
+                        'Docetaxel 80 mg/mL 2 mL vial','Doxorubicin 10 mg vial','Doxorubicin 50 mg vial',
+                        'Epirubicin 50 mg vial','Etoposide 20 mg/mL 5 mL amp','Fentanyl Citrate 50 mcg/mL 2 mL amp',
+                        'Filgrastim (G-CSF) 300 mcg/mL 0.5 mL PFS','Fluorouracil 50 mg/mL 10 mL vial',
+                        'Gemcitabine 1 g vial','Gemcitabine 200 mg vial','Goserelin 3.6 mg PFS',
+                        'Haloperidol 5 mg/mL 1 mL amp','Hydroxyurea 500 mg capsule','Hyoscine 20 mg/mL 1 mL amp',
+                        'Idarubicin 5 mg vial','Ifosfamide 1 g vial','Imatinib 400 mg tablet',
+                        'Irinotecan 40 mg/2 mL vial','Irinotecan 100 mg/5 mL vial','Letrozole 2.5 mg tablet',
+                        'Leuprolide 3.75 mg vial','Mercaptopurine 50 mg tablet','Mesna 100 mg/mL 4 mL amp',
+                        'Methotrexate 2.5 mg tablet','Methotrexate 25 mg/mL 2 mL amp',
+                        'Metoclopramide 5 mg/mL 2 mL amp','Morphine 10 mg/mL 1 mL amp',
+                        'Morphine 30 mg/mL 1 mL amp','Morphine oral solution 10 mg/5 mL',
+                        'Omeprazole 40 mg vial + solvent','Ondansetron 2 mg/mL 2 mL amp',
+                        'Ondansetron 2 mg/mL 4 mL amp','Oxaliplatin 5 mg/mL solution',
+                        'Paclitaxel 6 mg/mL 17 mL vial','Paclitaxel 6 mg/mL 25 mL vial',
+                        'Paclitaxel 30 mg/5 mL vial','Rituximab 10 mg/mL 10 mL vial',
+                        'Tamoxifen 20 mg tablet','Trastuzumab 150 mg vial','Trastuzumab 600 mg/5 mL vial',
+                        'Vinblastine 1 mg/mL 10 mL vial','Vincristine 1 mg/mL 1 mL vial',
+                        'Vincristine 1 mg/mL 2 mL vial','None','Others, specify:'
+                    ] as $med)
                         <div class="col-md-6">
                             <div class="form-check">
-                                <input type="checkbox" name="cspmap_meds[]" value="{{ $k }}" class="form-check-input rounded-circle" onchange="toggleCspmapOther({{ $k }})">
+                                <input type="checkbox" name="cspmap_meds[]" value="{{ $med }}" class="form-check-input rounded-circle" onchange="toggleCspmapOther('{{ $med }}')">
                                 <label class="form-check-label">{{ $med }}</label>
                             </div>
-                            @if($k == 62)
+                            @if($med == 'Others, specify:')
                                 <input type="text" name="cspmap_other" id="cspmapOther" class="form-control mt-1" placeholder="Specify" disabled>
                             @endif
                         </div>
@@ -127,17 +127,17 @@
                 <label class="form-label">Other Medicines Availed</label>
                 <div class="row">
                     @foreach([
-                        1=>'All-trans Retinoic Acid (ATRA)',2=>'Arsenic',3=>'Atezolizumab',4=>'Bevacizumab',5=>'Blinatumomab',
-                        6=>'Bortezomib',7=>'Dasatinib',8=>'Ivosidenib',9=>'Lenvatinib',10=>'Osimertinib',
-                        11=>'Pegylated Asparaginase',12=>'Pembrolizumab',13=>'Procarbazine',14=>'Ruxolitinib',
-                        15=>'Others, specify:'
-                    ] as $k=>$med)
+                        'All-trans Retinoic Acid (ATRA)','Arsenic','Atezolizumab','Bevacizumab','Blinatumomab',
+                        'Bortezomib','Dasatinib','Ivosidenib','Lenvatinib','Osimertinib',
+                        'Pegylated Asparaginase','Pembrolizumab','Procarbazine','Ruxolitinib',
+                        'Others, specify:'
+                    ] as $med)
                         <div class="col-md-4">
                             <div class="form-check">
-                                <input type="checkbox" name="other_meds[]" value="{{ $k }}" class="form-check-input rounded-circle" onchange="toggleOtherMed({{ $k }})">
+                                <input type="checkbox" name="other_meds[]" value="{{ $med }}" class="form-check-input rounded-circle" onchange="toggleOtherMed('{{ $med }}')">
                                 <label class="form-check-label">{{ $med }}</label>
                             </div>
-                            @if($k == 15)
+                            @if($med == 'Others, specify:')
                                 <input type="text" name="other_med_other" id="otherMedOther" class="form-control mt-1" placeholder="Specify" disabled>
                             @endif
                         </div>
@@ -158,25 +158,25 @@
     function toggleSection(id) {
         const section = document.getElementById(id);
         if (section) {
-            const yesSelected = event.target.value === '1';
+            const yesSelected = event.target.value === 'Yes';
             section.classList.toggle('d-none', !yesSelected);
         }
     }
-    function toggleFinancialOther(k) {
-        if (k === 16) {
-            const checked = document.querySelector('input[name="financial_type[]"][value="16"]').checked;
+    function toggleFinancialOther(val) {
+        if (val === 'Others, specify:') {
+            const checked = document.querySelector('input[name="financial_type[]"][value="Others, specify:"]').checked;
             document.getElementById('financialOther').disabled = !checked;
         }
     }
-    function toggleCspmapOther(k) {
-        if (k === 62) {
-            const checked = document.querySelector('input[name="cspmap_meds[]"][value="62"]').checked;
+    function toggleCspmapOther(val) {
+        if (val === 'Others, specify:') {
+            const checked = document.querySelector('input[name="cspmap_meds[]"][value="Others, specify:"]').checked;
             document.getElementById('cspmapOther').disabled = !checked;
         }
     }
-    function toggleOtherMed(k) {
-        if (k === 15) {
-            const checked = document.querySelector('input[name="other_meds[]"][value="15"]').checked;
+    function toggleOtherMed(val) {
+        if (val === 'Others, specify:') {
+            const checked = document.querySelector('input[name="other_meds[]"][value="Others, specify:"]').checked;
             document.getElementById('otherMedOther').disabled = !checked;
         }
     }

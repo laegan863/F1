@@ -26,6 +26,7 @@ return new class extends Migration
             $table->json('stage')->nullable();
             $table->json('other_staging')->nullable();
             $table->string('other_remarks');
+            $table->string('status')->default(0);
         });
     }
 

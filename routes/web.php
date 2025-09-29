@@ -40,14 +40,40 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::view('validate-hospital-number', 'forms.check-user-info')->name('first-page');
     });
 
+    Route::controller(MainController::class)->group(function() {
+        Route::post('submit-demograpic-profile', 'submit_demograpic_profile')->name('submit-demograpic-profile');
+        Route::post('submit-riskfactor-data',  'submit_riskfactor_data')->name('submit-riskfactor-data');
+        Route::post('submit-cancer-diagnose-data', 'submit_cancer_diagnose_data')->name('submit-cancer-diagnose-data');
+        Route::post('submit-treatment-data', 'submit_treatment_data')->name('submit-treatment-data');
+        Route::post('hospital-number', 'hospital_number')->name('admin.validate-hospital-number');
+        Route::get('view/{id}', 'result')->name('view');
+
+        Route::prefix('form1')->group(function(){
+            Route::get('result/{id}', 'result')->name('result.form1');
+            Route::get('result1/{id}', 'result')->name('result.form2');
+            Route::get('result2/{id}', 'result')->name('result.form3');
+            Route::get('result3/{id}', 'result')->name('result.form4');
+        });
+        
+    });
+
     Route::prefix("form2")->group(function(){
         Route::view("follow-up", "forms.form2.follow-up")->name('form2-firstpage');
         Route::view("patient-eco-status", "forms.form2.patient-eco-status")->name('form2-secondpage');
         Route::view("radio-theranotics","forms.form2.radio-theranotics")->name('form2-thirdpage');
         Route::view("other-cancer", "forms.form2.other-cancer-directed-thyrapies")->name('form2.fourthpage');
         Route::view("change-treatment-plan", "forms.form2.change-treatment-plan")->name('form2.fifthpage');
-        Route::view("cancer-diagnose-outome", "forms.form2.cancer-diagnose-outcome");
+        Route::view("cancer-diagnose-outome", "forms.form2.cancer-diagnose-outcome")->name('form2.sixpage');
     });
+
+    Route::controller(Form2Controller::class)->group(function(){
+        Route::post('submit-follow-up/{hospitalID}', 'submit_follow_up')->name('submit.follow-up');
+        Route::post('store-patient-eco-status', 'store_patient_eco_status')->name('store.patient-eco-status');
+        Route::post("store-radiotheraphy", "store_radiotheraphy")->name("store.radiotheraphy");
+        Route::post('store-other-theraphy', "store_other_theraphy")->name("store.other-theraphy");
+        Route::post('store-cancer-diagnose-outcome', 'store_cancer_diagnose')->name('store.cancer-diagnose-outcome');
+    });
+
     Route::prefix("form3")->group(function(){
         Route::view("patient-surveillance-form", "forms.form3.patient-surveillance-form")->name('form3-firstpage');
         Route::view("cancer-diagnose-outome", "forms.form3.cancer-diagnose-outcome");
@@ -63,23 +89,6 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::view("financial-support-mechanism", "forms.form4.financial-support-mechanism");
     });
 
-});
-
-Route::controller(Form2Controller::class)->group(function(){
-    Route::post('submit-follow-up/{hospitalID}', 'submit_follow_up')->name('submit.follow-up');
-    Route::post('store-patient-eco-status', 'store_patient_eco_status')->name('store.patient-eco-status');
-    Route::post("store-radiotheraphy", "store_radiotheraphy")->name("store.radiotheraphy");
-    Route::post('store-other-theraphy', "store_other_theraphy")->name("store.other-theraphy");
-});
-
-Route::controller(MainController::class)->group(function() {
-    Route::post('submit-demograpic-profile', 'submit_demograpic_profile')->name('submit-demograpic-profile');
-    Route::post('submit-riskfactor-data',  'submit_riskfactor_data')->name('submit-riskfactor-data');
-    Route::post('submit-cancer-diagnose-data', 'submit_cancer_diagnose_data')->name('submit-cancer-diagnose-data');
-    Route::post('submit-treatment-data', 'submit_treatment_data')->name('submit-treatment-data');
-    Route::post('hospital-number', 'hospital_number')->name('admin.validate-hospital-number');
-    Route::get('result/{id}', 'result')->name('result');
-    Route::get('view/{id}', 'result')->name('view');
 });
 
 Route::middleware(IsAuthenticated::class)->group(function () {

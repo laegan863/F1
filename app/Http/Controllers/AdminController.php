@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Demographicprofile;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use App\Models\F2followup;
 
 class AdminController extends Controller
 {
@@ -20,20 +21,20 @@ class AdminController extends Controller
     public function forms($id)
     {
         $form1 = Demographicprofile::find($id);
-
+        $form2 = F2followup::where('hospitalID', $form1->hospitalID)->where('status', 1)->first();
         return view('admin.files.forms',[
             'forms' => [
                 'form1' => $form1,
-                'form2' => [],
+                'form2' => $form2,
                 'form3' => [],
                 'form4' => []
             ],
             'hospitalID' => $form1->hospitalID
         ]);
 
-        // return response()->json([
-        //     'hospitalID' => $form1->hospitalID
-        // ]);
+        return response()->json([
+            'hospitalID' => $form1->hospitalID
+        ]);
 
     }
     public function delete($id, $table)

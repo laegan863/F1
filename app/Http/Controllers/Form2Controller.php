@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 use App\Models\F2followup;
 use App\Models\F2patientstatus;
 use App\Models\F2radiotheraphy;
 use App\Models\F2othercancertherapy;
+use App\Models\F2cancerdiagnoseoutcome;
 
 class Form2Controller extends Controller
 {
@@ -29,7 +31,10 @@ class Form2Controller extends Controller
 
         $validate['hospitalID'] = $hospitalID;
 
-        F2followup::updateOrcreate(['hospitalID', $hospitalID], $validate);
+        $data = F2followup::updateOrCreate(
+            ['hospitalID' => $hospitalID],
+            $validate
+        );
 
         Session::put([
             'code' => $data->id
@@ -188,17 +193,61 @@ class Form2Controller extends Controller
 
         $validated["code"] = Session::get("code");
 
-        // updateOrCreate expects: (search condition, update values)
         F2othercancertherapy::updateOrCreate(
             ['code' => $validated["code"]],
             $validated
         );
 
-        return response()->json([
-            'data' => $validated
-        ]);
+        return to_route('form2.sixpage')
+                ->with('success', 'Patient ECOG status saved successfully.');
     }
 
+    public function store_cancer_diagnose(Request $request)
+    {
+        $validated = $request->validate([
+            'diagnosis_outcome'       => 'nullable|array',
+            'diagnosis_outcome.*'     => 'string|max:255',
+            'diagnosis_outcome_date'  => 'nullable|date',
+
+            'cause_immediate'   => 'nullable|string|max:255',
+            'cause_antecedent'  => 'nullable|string|max:255',
+            'cause_underlying'  => 'nullable|string|max:255',
+            'cause_other'       => 'nullable|string|max:255',
+
+            'financial_support' => 'required|in:Yes,No',
+            'financial_type'    => 'nullable|array',
+            'financial_type.*'  => 'string|max:255',
+            'financial_other'   => 'nullable|string|max:255',
+
+            'cspmap_meds'       => 'nullable|array',
+            'cspmap_meds.*'     => 'string|max:255',
+            'cspmap_other'      => 'nullable|string|max:255',
+
+            'other_meds'        => 'nullable|array',
+            'other_meds.*'      => 'string|max:255',
+            'other_med_other'   => 'nullable|string|max:255',
+        ]);
+
+        $validated['code'] = session()->get('code');
+
+        F2cancerdiagnoseoutcome::updateOrCreate(
+            ['code' => $validated['code']],
+            $validated
+        );
+
+        $user = F2followup::findOrFail($validated['code']);
+        $user->status = 1;
+        $user->save();
+
+        $data = DB::table('demographicprofiles')
+                ->where('hospitalID', $user->hospitalID)
+                ->where('status', 1)
+                ->first();
+        
+        return redirect('admin/forms/'.$data->id);
+
+        
+    }
 
 
 }
