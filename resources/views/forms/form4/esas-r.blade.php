@@ -2,7 +2,7 @@
 @section("title", "ESAS-r Assessment")
 @section("nav_title", "A. ESAS-r (Edmonton Symptom Assessment System Revised)")
 @section("content")
-    <form id="form" method="POST" action="" class="p-2">
+    <form id="form" method="POST" action="{{ route('store.esas') }}" class="p-2">
         @csrf
 
         <!-- GCS & ESAS-r Score -->
@@ -47,7 +47,7 @@
                             <div class="d-flex flex-wrap">
                                 @for($i=0;$i<=10;$i++)
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" name="{{ $key }}" value="{{ $i }}" class="form-check-input">
+                                        <input type="radio" name="{{ $key }}" value="{{ $i }}" class="form-check-input rounded-circle" {{ $i == 0 ? 'checked' : '' }}>
                                         <label class="form-check-label">{{ $i }}</label>
                                     </div>
                                 @endfor
@@ -68,7 +68,7 @@
                         <div class="d-flex flex-wrap">
                             @for($i=0;$i<=10;$i++)
                                 <div class="form-check form-check-inline">
-                                    <input type="radio" name="other_problem_score" value="{{ $i }}" class="form-check-input">
+                                    <input type="radio" name="other_problem_score" value="{{ $i }}" class="form-check-input rounded-circle">
                                     <label class="form-check-label">{{ $i }}</label>
                                 </div>
                             @endfor

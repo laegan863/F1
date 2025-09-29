@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('f2cancerdiagnoseoutcomes', function (Blueprint $table) {
+        Schema::create('f3cancerdiagnoseoutcomes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('code')->constrained('f2followups')->onDelete('cascade'); 
 
+            $table->foreignId('code')->constrained('f3patientsurveillanceforms')->onDelete('cascade');
             $table->json('diagnosis_outcome')->nullable();
             $table->date('diagnosis_outcome_date')->nullable();
 
@@ -23,16 +23,6 @@ return new class extends Migration
             $table->string('cause_antecedent')->nullable();
             $table->string('cause_underlying')->nullable();
             $table->string('cause_other')->nullable();
-
-            $table->string('financial_support')->nullable();
-            $table->json('financial_type')->nullable();
-            $table->string('financial_other')->nullable();
-
-            $table->json('cspmap_meds')->nullable();
-            $table->string('cspmap_other')->nullable();
-
-            $table->json('other_meds')->nullable();
-            $table->string('other_med_other')->nullable();
         });
     }
 
@@ -41,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('f2cancerdiagnoseoutcomes');
+        Schema::dropIfExists('f3cancerdiagnoseoutcomes');
     }
 };

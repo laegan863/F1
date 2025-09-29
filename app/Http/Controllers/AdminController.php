@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Demographicprofile;
 use App\Models\User;
 use App\Models\F2followup;
+use App\Models\F3patientsurveillanceform;
 
 class AdminController extends Controller
 {
@@ -22,11 +23,12 @@ class AdminController extends Controller
     {
         $form1 = Demographicprofile::find($id);
         $form2 = F2followup::where('hospitalID', $form1->hospitalID)->where('status', 1)->first();
+        $form3 = F3patientsurveillanceform::where('hospitalID', $form1->hospitalID)->where('status', 1)->first();
         return view('admin.files.forms',[
             'forms' => [
                 'form1' => $form1,
                 'form2' => $form2,
-                'form3' => [],
+                'form3' => $form3,
                 'form4' => []
             ],
             'hospitalID' => $form1->hospitalID
