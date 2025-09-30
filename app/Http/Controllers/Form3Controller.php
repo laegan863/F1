@@ -255,7 +255,7 @@ class Form3Controller extends Controller
                 ->where('status', 1)
                 ->first();
 
-        return redirect('admin/forms/'.$data->id)->with('success', 'Form 2 was saved successfully!');
+        return redirect('admin/forms/'.$data->id)->with('success', 'Form 3 was saved successfully!');
     }
 
 

@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Demographicprofile;
 use App\Models\User;
+use App\Models\Demographicprofile;
 use App\Models\F2followup;
 use App\Models\F3patientsurveillanceform;
+use App\Models\F4palliativeform;
 
 class AdminController extends Controller
 {
@@ -24,12 +25,13 @@ class AdminController extends Controller
         $form1 = Demographicprofile::find($id);
         $form2 = F2followup::where('hospitalID', $form1->hospitalID)->where('status', 1)->first();
         $form3 = F3patientsurveillanceform::where('hospitalID', $form1->hospitalID)->where('status', 1)->first();
+        $form4 = F4palliativeform::where('hospitalID', $form1->hospitalID)->where('status', 1)->first();        
         return view('admin.files.forms',[
             'forms' => [
-                'form1' => $form1,
-                'form2' => $form2,
-                'form3' => $form3,
-                'form4' => []
+                'form1' => $form1 ?? [],
+                'form2' => $form2 ?? [],
+                'form3' => $form3 ?? [],
+                'form4' => $form4 ?? []
             ],
             'hospitalID' => $form1->hospitalID
         ]);

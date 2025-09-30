@@ -35,4 +35,24 @@ class F4palliativeform extends Model
     {
         return $this->hasOne(F4esas::class, 'code', 'id');
     }
+
+    public function F4painassessment()
+    {
+        return $this->hasOne(F4painassessment::class, "code", "id");
+    }
+
+    public function F4palliativecare()
+    {
+        return $this->hasOne(F4palliativecare::class, "code", "id");
+    }
+
+    public function F4cancerdiagnoseoutcome()
+    {
+        return $this->hasOne(F4cancerdiagnoseoutcome::class, "code", "id");
+    }
+
+    public function F4financialsupportmechanism()
+    {
+        return $this->hasOne(F4financialsupportmechanism::class, "code", "id");
+    }
 }

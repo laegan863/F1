@@ -161,7 +161,7 @@
                                 '2 = Grabbing'
                             ] as $desc)
                                 <div class="form-check">
-                                    <input type="radio" name="touching" value="{{ $desc }}" class="form-check-input rounded-circle">
+                                    <input type="checkbox" name="touching[]" value="{{ $desc }}" class="form-check-input rounded-circle">
                                     <label class="form-check-label">{{ $desc }}</label>
                                 </div>
                             @endforeach

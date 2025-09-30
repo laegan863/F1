@@ -2,7 +2,7 @@
 @section("title", "Cancer Diagnosis Outcome")
 @section("nav_title", "Cancer Diagnosis Outcome")
 @section("content")
-    <form id="form" method="POST" action="" class="p-3">
+    <form id="form" method="POST" action="{{ route('store.cancer-diagnose-outcome')}}" class="p-3">
         @csrf
 
         <!-- Diagnosis Outcome -->
@@ -10,29 +10,28 @@
             <label class="fw-bold">Diagnosis Outcome</label>
             <div class="row">
                 @foreach([
-                    1 => 'Stable Disease',
-                    2 => 'Complete Remission',
-                    3 => 'Partial Response',
-                    4 => 'Disease Progression',
-                    5 => 'Recurrent Disease',
-                    6 => 'Death (Cancer related)',
-                    7 => 'Death (treatment related)',
-                    8 => 'Death (other Cause/Non-Cancer Related)',
-                    9 => 'Ongoing evaluation',
-                    10 => 'Ongoing treatment',
-                    11 => 'Completed treatment',
-                    12 => 'Undetermined'
-                ] as $val => $label)
+                    'Stable Disease',
+                    'Complete Remission',
+                    'Partial Response',
+                    'Disease Progression',
+                    'Recurrent Disease',
+                    'Death (Cancer related)',
+                    'Death (treatment related)',
+                    'Death (other Cause/Non-Cancer Related)',
+                    'Ongoing evaluation',
+                    'Ongoing treatment',
+                    'Completed treatment',
+                    'Undetermined'
+                ] as $label)
                     <div class="col-md-6">
                         <div class="form-check">
-                            <input type="checkbox" name="diagnosis_outcome[]" value="{{ $val }}" class="form-check-input" id="outcome{{ $val }}">
-                            <label class="form-check-label" for="outcome{{ $val }}">{{ $val }} {{ $label }}</label>
+                            <input type="checkbox" name="diagnosis_outcome[]" value="{{ $label }}" class="form-check-input rounded-circle" id="outcome{{ Str::slug($label, '_') }}">
+                            <label class="form-check-label" for="outcome{{ Str::slug($label, '_') }}">{{ $label }}</label>
                         </div>
                     </div>
                 @endforeach
             </div>
         </div>
-
 
         <!-- Date of Diagnosis Outcome -->
         <div class="mb-3">

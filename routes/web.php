@@ -94,15 +94,18 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::view("palliative-form", "forms.form4.palliative-form")->name('form4-firstpage');
         Route::view("esas-r", "forms.form4.esas-r")->name('form4.page2');
         Route::view("prqst", "forms.form4.pain-assessment")->name('form4.page3');
-        Route::view("palliative-care-intervention", "forms.form4.palliative-care-intervention");
-        Route::view("cancer-diagnose-outcome", "forms.form4.cancer-diagnose-outcome");
-        Route::view("financial-support-mechanism", "forms.form4.financial-support-mechanism");
+        Route::view("palliative-care-intervention", "forms.form4.palliative-care-intervention")->name('form4.page4');
+        Route::view("cancer-diagnose-outcome", "forms.form4.cancer-diagnose-outcome")->name('form4.page5');
+        Route::view("financial-support-mechanism", "forms.form4.financial-support-mechanism")->name('form4.page6');
     });
 
     Route::controller(Form4Controller::class)->group(function(){
         Route::post('store-palliative-form/{hospitalID}', 'palliative_form')->name('store.palliative-form');
         Route::post('store-esas', 'esas')->name('store.esas');
         Route::post('store-pain-assessment', 'pain_assessment')->name('store.pain-assessment');
+        Route::post('store-palliative-care', 'palliative_care')->name('store.palliative-care');
+        Route::post('store-cancer-diagnose-outcome', 'cancer_diagnose_outcome')->name('store.cancer-diagnose-outcome');
+        Route::post('store-financial-support-mechanism', 'financial_support_mechanism')->name('store.financial-support-mechanism');
     });
 
 });

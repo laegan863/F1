@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Models\F4palliativeform;
 use App\Models\F4esas;
+use App\Models\F4palliativeform;
+use App\Models\F4painassessment;
+use App\Models\F4palliativecare;
+use App\Models\F4cancerdiagnoseoutcome;
+use App\Models\F4financialsupportmechanism;
 
 class Form4Controller extends Controller
 {
@@ -87,7 +92,7 @@ class Form4Controller extends Controller
             'body_movement.*' => 'string|max:255',
             'facial' => 'nullable|array',
             'facial.*' => 'string|max:255',
-            'touching' => 'nullable|string|max:255',
+            'touching' => 'nullable|array|max:255',
             'associated_signs' => 'nullable|string|max:255',
             'signs' => 'nullable|array',
             'signs.*' => 'string|max:255',
@@ -111,13 +116,114 @@ class Form4Controller extends Controller
             'non_pharma_specify_name' => 'nullable|string|max:255',
             'non_pharma_pain_controlled' => 'nullable|in:Yes,No',
             'non_pharma_date' => 'nullable|date',
-            // any other free-text fallback
             'other_notes' => 'nullable|string|max:2000',
         ]);
+        $code = session('code');
+        $validated['code'] = $code;
+        F4painassessment::updateOrCreate(['code' => $code], $validated);
+
+        return to_route('form4.page4')->with('success', 'Pain Assessment Data Saved Successfully!');
 
         return response()->json([
             'status' => 'success',
             'data' => $validated,
         ]);
     }
+
+    public function palliative_care(Request $request)
+    {
+        $validated = $request->validate([
+            'nutritional_care'     => 'nullable|in:Yes,No',
+            'nutritional_place'    => 'nullable|in:Home,Hospital,Community-based',
+            'nutritional_improved' => 'nullable|in:Yes,No,Not assessed',
+
+            'nursing_care'     => 'nullable|in:Yes,No',
+            'nursing_place'    => 'nullable|in:Home,Hospital,Community-based',
+            'nursing_improved' => 'nullable|in:Yes,No,Not assessed',
+
+            'rehabilitation_care'     => 'nullable|in:Yes,No',
+            'rehabilitation_place'    => 'nullable|in:Home,Hospital,Community-based',
+            'rehabilitation_improved' => 'nullable|in:Yes,No,Not assessed',
+
+            'psychosocial_care'     => 'nullable|in:Yes,No',
+            'psychosocial_place'    => 'nullable|in:Home,Hospital,Community-based',
+            'psychosocial_improved' => 'nullable|in:Yes,No,Not assessed',
+
+            'spiritual_care'     => 'nullable|in:Yes,No',
+            'spiritual_place'    => 'nullable|in:Home,Hospital,Community-based',
+            'spiritual_improved' => 'nullable|in:Yes,No,Not assessed',
+
+            'others_care'     => 'nullable|in:Yes,No',
+            'others_specify'  => 'nullable|string|max:255',
+            'others_place'    => 'nullable|in:Home,Hospital,Community-based',
+            'others_improved' => 'nullable|in:Yes,No,Not assessed',
+        ]);
+
+        $validated['code'] = session('code');
+
+        F4palliativecare::updateOrCreate(
+            ['code' => $validated['code']], 
+            $validated
+        );
+
+        return to_route('form4.page5')->with('success', 'Palliative Care Intervention Data Saved Successfully!');
+
+        return response()->json([
+            'success' => true,
+            'data' => $validated
+        ]);
+    }
+
+    public function cancer_diagnose_outcome(Request $request)
+    {
+        $validated = $request->validate([
+            'diagnosis_outcome'      => 'required|array',
+            'diagnosis_outcome.*'    => 'string|max:255',
+            'diagnosis_outcome_date' => 'nullable|date',
+            'immediate_cause'        => 'nullable|string|max:255',
+            'antecedent_cause'       => 'nullable|string|max:255',
+            'underlying_cause'       => 'nullable|string|max:255',
+            'other_condition'        => 'nullable|string|max:255',
+        ]);
+        $validated['code'] = session('code');
+
+        F4cancerdiagnoseoutcome::updateOrCreate(['code' => $validated['code']], $validated);
+        return to_route('form4.page6')->with('success', 'Cancer Diagnosis Outcome Data Saved Successfully!');
+    }
+
+    public function financial_support_mechanism(Request $request)
+    {
+        $validated = $request->validate([
+            'financial_support' => 'required|in:Yes,No',
+            'financial_type'    => 'nullable|array',
+            'financial_type.*'  => 'nullable|string|max:255',
+            'financial_other'   => 'nullable|string|max:255',
+            'cspmap_meds'       => 'nullable|array',
+            'cspmap_meds.*'     => 'nullable|string|max:255',
+            'cspmap_other'      => 'nullable|string|max:255',
+            'other_meds'        => 'nullable|array',
+            'other_meds.*'      => 'nullable|string|max:255',
+            'other_med_other'   => 'nullable|string|max:255',
+        ]);
+
+        $validated['code'] = session('code');
+
+        F4financialsupportmechanism::updateOrCreate(
+            ['code' => $validated['code']],
+            $validated
+        );
+
+        $user = F4palliativeform::find($validated['code']);
+        $user->status = 1;
+        $user->save();
+
+        $data = DB::table('demographicprofiles')
+                ->where('hospitalID', $user->hospitalID)
+                ->where('status', 1)
+                ->first();
+
+        return redirect('admin/forms/'.$data->id)->with('success', 'Form 4 was saved successfully!');
+
+    }
+
 }
