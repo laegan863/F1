@@ -123,18 +123,18 @@ class MainController extends Controller
             // "relative.sitio.required" => "The relative sitio field is required",
         ]);
 
-        $exists = DB::table('demographicprofiles')
-            ->where('name->firstname', $request->input('name.firstname'))
-            ->where('name->middlename', $request->input('name.middlename'))
-            ->where('name->lastname', $request->input('name.lastname'))
-            ->where('status', 1)
-            ->exists();
+        // $exists = DB::table('demographicprofiles')
+        //     ->where('name->firstname', $request->input('name.firstname'))
+        //     ->where('name->middlename', $request->input('name.middlename'))
+        //     ->where('name->lastname', $request->input('name.lastname'))
+        //     ->where('status', 1)
+        //     ->exists();
 
-        if ($exists) {
-            return back()->withErrors([
-                'name' => "This user is already exists!"
-            ])->withInput();
-        }
+        // if ($exists) {
+        //     return back()->withErrors([
+        //         'name' => "This user is already exists!"
+        //     ])->withInput();
+        // }
 
         if(!empty($validate["same_as_address"])){
 
@@ -146,8 +146,6 @@ class MainController extends Controller
 
             $validate["permanent"] = $response;
             $validate["current"] = $response;
-            // $validate["current"]['sitio'] = $request->permanent['sitio'];
-            // $validate["permanent"]['sitio'] = $request->permanent['sitio'];
 
         }else{
 
@@ -163,9 +161,6 @@ class MainController extends Controller
                 barangay_code: $request->permanent['barangay']
             );
 
-            // $current['sitio'] = $request->current['sitio'];
-            // $permanent['sitio'] = $request->permanent['sitio'];
-
             $validate["current"] = $current;
             $validate["permanent"] = $permanent;
             $validate["same_as_address"] = "off";
@@ -177,7 +172,6 @@ class MainController extends Controller
             barangay_code: $request->relative['barangay']
         );
 
-        // $relative['sitio'] = $request->relative['sitio'];
         $validate["relative"] = $relative;
         $validate["hospitalID"] = Session::has('patient') ? Session::get("patient")->HospitalID : Session::get("hospitalID");
 
@@ -247,13 +241,7 @@ class MainController extends Controller
 
         try {
 
-            $exist = Riskfactor::where('code', $validate['code'])->exists();
-
-            if($exist){
-                Riskfactor::where(column: 'code', operator: $validate["code"])->update($validate);
-            }else{
-                Riskfactor::create($validate);
-            }
+            Riskfactor::updateOrCreate(['code' => $validate['code']], $validate);
 
             return to_route(route: 'cancer-diagnose')->with('success', 'Data has been successfully saved, Please take the next step!');
 

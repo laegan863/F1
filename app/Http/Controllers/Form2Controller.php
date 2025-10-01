@@ -12,6 +12,15 @@ use App\Models\F2cancerdiagnoseoutcome;
 
 class Form2Controller extends Controller
 {
+
+    public function form2($id){
+        
+        $data = F2followup::with(['f2othercancertherapies', 'f2patientstatuses', 'f2radiotheraphies'])->where('id', $id)->first();
+        
+        return response()->json([
+            'data' => $data
+        ]);
+    }
     public function submit_follow_up(Request $request, $hospitalID)
     {
         $validate = $request->validate([
@@ -26,21 +35,19 @@ class Form2Controller extends Controller
             'clinical_stage' => 'nullable',
             'stage' => 'nullable',
             'other_staging' => 'nullable',
-            'other_remarks' => 'required'
+            'other_remarks' => 'nullable'
         ]);
 
         $validate['hospitalID'] = $hospitalID;
+        $validate['other_remarks'] = isset($validate['other_remarks']) ? $validate['other_remarks'] : "N/A";
 
-        $data = F2followup::updateOrCreate(
-            ['hospitalID' => $hospitalID],
-            $validate
-        );
+        $data = F2followup::create($validate);
 
         Session::put([
             'code' => $data->id
         ]);
         
-        return to_route('form2-secondpage');
+        return to_route('form2-secondpage')->with('success', 'PATIENT FOLLOW-UP FORM Data successfully Saved!');
 
     }
 

@@ -20,17 +20,21 @@
                 <!-- Name of Patient -->
                 <div class="mb-3">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label class="form-label fw-bold">First Name</label>
                             <input type="text" name="name[firstname]" class="form-control" value="{{ $data->name['firstname'] }}">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label class="form-label fw-bold">Middle Name</label>
                             <input type="text" name="name[middlename]" class="form-control" value="{{ $data->name['middlename'] }}">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label class="form-label fw-bold">Last Name</label>
                             <input type="text" name="name[lastname]" class="form-control" value="{{ $data->name['lastname'] }}">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">Suffix</label>
+                            <input type="text" name="name[suffix]" class="form-control" value="{{ $data->name['suffix'] }}">
                         </div>
                     </div>
 
@@ -194,7 +198,7 @@
                     @foreach ($tumors as $tumor => $t_value )
                         <div class="col-md-3">
                             <label class="form-label fw-bold">{{ $t_value }}<span class="text-muted">(Optional)</span></label>
-                            <input type="text" name="stage[{{ $tumor }}.'_stage']" class="form-control" value="{{ $data->cancerdiagnoses[$tumor.'_stage'] }}">
+                            <input type="text" name="stage[{{ $tumor }}_stage]" class="form-control" value="{{ $data->cancerdiagnoses[$tumor.'_stage'] }}">
                         </div>
                     @endforeach
                 </div>
@@ -212,7 +216,7 @@
                                 '5' => 'Biomarker/Hormone Receptor Status'
                             ] as $key => $label)
                                 <div class="form-check">
-                                    <input type="checkbox" name="other_staging[]" value="{{ $key }}"
+                                    <input type="checkbox" name="other_staging[]" value="{{ $label }}"
                                         class="form-check-input rounded-circle" {{ isset($data->cancerdiagnoses['other_staging']) && in_array($label, $data->cancerdiagnoses['other_staging']) ? 'checked' : '' }}>
                                     <label class="form-check-label">{{ $label }}</label>
                                 </div>
@@ -227,7 +231,7 @@
                                 '10' => 'Not Applicable'
                             ] as $key => $label)
                                 <div class="form-check">
-                                    <input type="checkbox" name="other_staging[]" value="{{ $key }}"
+                                    <input type="checkbox" name="other_staging[]" value="{{ $label }}"
                                         class="form-check-input rounded-circle" {{ isset($data->cancerdiagnoses['other_staging']) && in_array($label, $data->cancerdiagnoses['other_staging']) ? 'checked' : '' }}>
                                     <label class="form-check-label">{{ $label }}</label>
                                 </div>

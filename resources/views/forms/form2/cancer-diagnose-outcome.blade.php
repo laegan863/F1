@@ -2,7 +2,7 @@
 @section("title", "Cancer Diagnosis Outcome & Financial Support")
 @section("nav_title", "CANCER DIAGNOSIS OUTCOME & FINANCIAL SUPPORT")
 @section("content")
-    <form id="form" method="POST" action="{{ route('store.cancer-diagnose-outcome') }}" class="card rounded-0">
+    <form id="form" method="POST" action="{{ route('store-cancer-diagnose-outcome') }}" class="card rounded-0">
         @csrf
         <div class="card-body">
             <!-- Cancer Diagnosis Outcome -->

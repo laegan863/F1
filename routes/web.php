@@ -23,6 +23,7 @@ Route::middleware(IsNotAuth::class)->group(function(){
             Route::get('dashboard','dashboard')->name('admin.dashboard');
             Route::get('records','records')->name('admin.records');
             Route::get('forms/{id}', 'forms')->name('view.forms');
+            Route::get('user-multiform/{hospitalID}/{form}', 'user_multiform')->name('user.multiform');
             Route::middleware(IsAdmin::class)->group(function() {
                 Route::get('users', 'users')->name('admin.users');
                 Route::post('add-user', 'add_user')->name('admin.add-user');
@@ -58,8 +59,10 @@ Route::middleware(IsNotAuth::class)->group(function(){
         });
 
     });
+        
 
     Route::prefix("form2")->group(function(){
+        Route::view('form/{id}', 'forms.form2.form')->name('form2');
         Route::view("follow-up", "forms.form2.follow-up")->name('form2-firstpage');
         Route::view("patient-eco-status", "forms.form2.patient-eco-status")->name('form2-secondpage');
         Route::view("radio-theranotics","forms.form2.radio-theranotics")->name('form2-thirdpage');
@@ -73,7 +76,7 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::post('store-patient-eco-status', 'store_patient_eco_status')->name('store.patient-eco-status');
         Route::post("store-radiotheraphy", "store_radiotheraphy")->name("store.radiotheraphy");
         Route::post('store-other-theraphy', "store_other_theraphy")->name("store.other-theraphy");
-        Route::post('store-cancer-diagnose-outcome', 'store_cancer_diagnose')->name('store.cancer-diagnose-outcome');
+        Route::post('form2-store-cancer-diagnose-outcome', 'store_cancer_diagnose')->name('store-cancer-diagnose-outcome');
     });
 
     Route::prefix("form3")->group(function(){
@@ -115,4 +118,3 @@ Route::middleware(IsAuthenticated::class)->group(function () {
     Route::view(uri: 'register', view: 'register')->name(name: 'register');
     Route::view(uri: 'forgot-password', view: 'forgot')->name(name: 'forgot');
 });
-

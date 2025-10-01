@@ -31,10 +31,7 @@ class Form3Controller extends Controller
 
         $validate['hospitalID'] = $hospitalID;
 
-        $data = F3patientsurveillanceform::updateOrCreate(
-            ['hospitalID' => $hospitalID],
-            $validate
-        );
+        $data = F3patientsurveillanceform::create($validate);
 
         Session::put([
             'code' => $data->id
