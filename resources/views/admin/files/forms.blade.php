@@ -26,10 +26,28 @@
                                 <td>Form {{ $loop->iteration }}</td>
                                 <td class="text-center">
                                     @if(isset($value->status) && $value->status == 1)
-                                        <a href="{{ route('result.form'.$loop->iteration, ['id' => $value->id ]) }}" target="_blank" class="text-white" rel="noopener noreferrer">
-                                            <button type="button" class="btn btn-primary dim" type="button">
-                                                <i class="fa fa-eye"></i>
-                                        </a>
+                                        @if($loop->iteration == 1)
+                                            <a href="{{ route('result.form'.$loop->iteration, ['id' => $value->id ]) }}" target="_blank" class="text-white" rel="noopener noreferrer">
+                                                <button type="button" class="btn btn-success dim" type="button">
+                                                    <i class="fa fa-eye"></i>
+                                            </a>
+                                            <a href="" class="text-white" rel="noopener noreferrer">
+                                                <button type="button" class="btn btn-danger dim">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </a>
+                                        @endif
+                                        @if($loop->iteration != 1)
+                                            <a href="{{ route('user.multiform', [ 'hospitalID' => $value->hospitalID, 'form' => $loop->iteration ]) }}" class="text-white" rel="noopener noreferrer">
+                                                <button type="button" class="btn btn-warning dim" type="button">
+                                                    <i class="fa fa-arrow-right"></i>
+                                            </a>
+                                            <a href="{{ route($form.'-firstpage', [ 'hospitalID' => $hospitalID ]) }}" class="text-white" rel="noopener noreferrer">
+                                                <button type="button" class="btn btn-primary dim">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </a>
+                                        @endif
                                     @else
                                         <a href="{{ route($form.'-firstpage', [ 'hospitalID' => $hospitalID ]) }}" class="text-white" rel="noopener noreferrer">
                                             <button type="button" class="btn btn-primary dim">

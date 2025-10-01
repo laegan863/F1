@@ -32,10 +32,7 @@ class Form4Controller extends Controller
 
         $validate['hospitalID'] = $hospitalID;
 
-        $data = F4palliativeform::updateOrCreate(
-            ['hospitalID' => $hospitalID],
-            $validate
-        );
+        $data = F4palliativeform::updateOrCreate($validate);
 
         Session::put([
             'code' => $data->id

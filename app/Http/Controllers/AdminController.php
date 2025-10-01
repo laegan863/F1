@@ -17,7 +17,6 @@ class AdminController extends Controller
                 ->where('HospitalID', '0000000001')
                 ->first();
         dd($data);
-        // phpinfo();
     }
 
     public function forms($id)
@@ -103,5 +102,35 @@ class AdminController extends Controller
         $user->save();
 
         return to_route('admin.users')->with('success', 'User updated successfully.');
+    }
+
+    public function user_multiform($hospitalID, $form)
+    {
+        $data = [];
+        $route = '';
+        switch ($form) {
+            case 2:
+                $data = F2followup::where('status', 1)->where('hospitalID', $hospitalID)->get();
+                $route = 'form2';
+                break;
+            case 3:
+                $data = F3patientsurveillanceform::where('status', 1)->where('hospitalID', $hospitalID)->get();
+                $route = 'form3';
+                break;
+            
+            default:
+                $data = F4palliativeform::where('status', 1)->where('hospitalID', $hospitalID)->get();
+                $route = 'form4';
+                break;
+        }
+
+        return view('admin.files.user-form', [
+            'data' => $data,
+            'route' => $route
+        ]);
+
+        return response()->json([
+            'data' => $data
+        ]);
     }
 }

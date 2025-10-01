@@ -37,7 +37,7 @@ class F2cancerdiagnoseoutcome extends Model
         'other_meds'        => 'array',
     ];
 
-    public function f2followup(){
-        return $this->belongsTo(f2followup::class, 'code', 'id');
+    public function F2followup(){
+        return $this->belongsTo(F2followup::class, 'code', 'id');
     }
 }
