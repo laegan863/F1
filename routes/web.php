@@ -76,6 +76,7 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::post('store-patient-eco-status', 'store_patient_eco_status')->name('store.patient-eco-status');
         Route::post("store-radiotheraphy", "store_radiotheraphy")->name("store.radiotheraphy");
         Route::post('store-other-theraphy', "store_other_theraphy")->name("store.other-theraphy");
+        Route::post('form2-store-change-treatment-plan', 'change_treatment_plan')->name('form2.store.change-treatment-plan');
         Route::post('form2-store-cancer-diagnose-outcome', 'store_cancer_diagnose')->name('store-cancer-diagnose-outcome');
     });
 

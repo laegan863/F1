@@ -9,6 +9,7 @@ use App\Models\F2patientstatus;
 use App\Models\F2radiotheraphy;
 use App\Models\F2othercancertherapy;
 use App\Models\F2cancerdiagnoseoutcome;
+use App\Models\F2changetreatmentplan;
 
 class Form2Controller extends Controller
 {
@@ -21,6 +22,7 @@ class Form2Controller extends Controller
             'data' => $data
         ]);
     }
+
     public function submit_follow_up(Request $request, $hospitalID)
     {
         $validate = $request->validate([
@@ -256,6 +258,133 @@ class Form2Controller extends Controller
         
     }
 
+    public function change_treatment_plan(Request $request)
+    {
+        $validated = $request->validate([
+            'surgery_plan'       => 'required|string',
+            'treatment_plan'     => 'nullable|string',
+            'surgery_reason'     => 'nullable|string',
+
+            // Anti-Cancer Drug Therapy
+            'anti_cancer_change' => 'required|string',
+            'new_regimen'        => 'nullable|string',
+            'same_regimen'       => 'nullable|string',
+            'deferred_regimen'   => 'nullable|string',
+            'new_drug_type'      => 'nullable|array',
+            'same_drug_type'     => 'nullable|array',
+            'deferred_drug_type' => 'nullable|array',
+            'new_drug_regimen'   => 'nullable|array',
+            'same_drug_regimen'  => 'nullable|array',
+            'deferred_drug_regimen' => 'nullable|array',
+            'new_chemo_cycle'    => 'nullable|array',
+            'same_chemo_cycle'   => 'nullable|array',
+            'deferred_chemo_cycle' => 'nullable|array',
+            'new_drug_other'     => 'nullable|string',
+            'same_drug_other'    => 'nullable|string',
+            'deferred_drug_other'=> 'nullable|string',
+            'new_next_cycle'     => 'nullable|date',
+            'same_next_cycle'    => 'nullable|date',
+            'deferred_next_cycle'=> 'nullable|date',
+            'deferred_reason'    => 'nullable|string',
+
+            // Radiotherapy
+            'radio_change'       => 'required|string',
+            'radio_reason'       => 'nullable|string',
+            'radio_date_start'   => 'nullable|date',
+            'radio_date_end'     => 'nullable|date',
+            'radio_total_dose'   => 'nullable|string',
+            'radio_dose_fraction'=> 'nullable|string',
+            'radio_total_fractions' => 'nullable|string',
+            'radio_type'         => 'nullable|array',
+            'radio_type_other'   => 'nullable|string',
+
+            // Theranostics
+            'thera_change'       => 'required|string',
+            'thera_reason'       => 'nullable|string',
+            'thera_type'         => 'nullable|array',
+            'thera_type_other'   => 'nullable|string',
+            'thera_total_fractions' => 'nullable|string',
+            'thera_dose_fraction'=> 'nullable|string',
+
+            // Palliative Care
+            'palliative'         => 'required|string',
+            'palliative_reason'  => 'nullable|string',
+
+            // Other Cancer Directed Therapies
+            'other_cancer'       => 'required|string',
+            'other_cancer_type'  => 'nullable|array',
+            'other_cancer_other' => 'nullable|string',
+            'other_cancer_reason'=> 'nullable|string',
+
+            // Remarks
+            'remarks'            => 'required|string',
+        ]);
+
+        if ($validated['surgery_plan'] === "No") {
+            $validated['treatment_plan'] = null;
+            $validated['surgery_reason'] = null;
+        }
+
+        if ($validated['anti_cancer_change'] === "No") {
+            $validated['new_regimen'] = null;
+            $validated['same_regimen'] = null;
+            $validated['deferred_regimen'] = null;
+            $validated['new_drug_type'] = null;
+            $validated['same_drug_type'] = null;
+            $validated['deferred_drug_type'] = null;
+            $validated['new_drug_regimen'] = null;
+            $validated['same_drug_regimen'] = null;
+            $validated['deferred_drug_regimen'] = null;
+            $validated['new_chemo_cycle'] = null;
+            $validated['same_chemo_cycle'] = null;
+            $validated['deferred_chemo_cycle'] = null;
+            $validated['new_drug_other'] = null;
+            $validated['same_drug_other'] = null;
+            $validated['deferred_drug_other'] = null;
+            $validated['new_next_cycle'] = null;
+            $validated['same_next_cycle'] = null;
+            $validated['deferred_next_cycle'] = null;
+            $validated['deferred_reason'] = null;
+        }
+
+        if ($validated['radio_change'] === "No") {
+            $validated['radio_reason'] = null;
+            $validated['radio_date_start'] = null;
+            $validated['radio_date_end'] = null;
+            $validated['radio_total_dose'] = null;
+            $validated['radio_dose_fraction'] = null;
+            $validated['radio_total_fractions'] = null;
+            $validated['radio_type'] = null;
+            $validated['radio_type_other'] = null;
+        }
+
+        if ($validated['thera_change'] === "No") {
+            $validated['thera_reason'] = null;
+            $validated['thera_type'] = null;
+            $validated['thera_type_other'] = null;
+            $validated['thera_total_fractions'] = null;
+            $validated['thera_dose_fraction'] = null;
+        }
+
+        if ($validated['palliative'] === "No") {
+            $validated['palliative_reason'] = null;
+        }
+
+        if ($validated['other_cancer'] === "No") {
+            $validated['other_cancer_type'] = null;
+            $validated['other_cancer_other'] = null;
+            $validated['other_cancer_reason'] = null;
+        }
+
+        $validated['code'] = 7;
+
+        F2changetreatmentplan::updateOrCreate(['code' => $validated['code']], $validated);
+
+        return to_route('form2.sixpage')->with('success', 'Change in treatment plan data, Saved successfully!');
+        return response()->json([
+            'data' => $validated
+        ]);
+    }
 
 }
  

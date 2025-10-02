@@ -2,18 +2,18 @@
 @section("title", "Change in Treatment Plan")
 @section("nav_title", "CHANGE IN TREATMENT PLAN")
 @section("content")
-    <form id="form" method="POST" action="{{ route('form2.store.change-treatment-plan') }}" class="card">
+    <form id="form" method="POST" action="" class="card">
         @csrf
         <div class="card-body">
             <!-- Surgery -->
             <h5 class="fw-bold mt-3">Surgery</h5>
             <div class="mb-2">
                 <div class="form-check d-inline-block me-3">
-                    <input type="radio" name="surgery_plan" value="Yes" class="form-check-input rounded-circle" onclick="toggleSection('surgeryDetails')">
+                    <input type="radio" name="surgery_plan" value="1" class="form-check-input rounded-circle" onclick="toggleSection('surgeryDetails')">
                     <label class="form-check-label">Yes</label>
                 </div>
                 <div class="form-check d-inline-block">
-                    <input type="radio" name="surgery_plan" value="No" class="form-check-input rounded-circle" onclick="toggleSection('surgeryDetails')" checked>
+                    <input type="radio" name="surgery_plan" value="2" class="form-check-input rounded-circle" onclick="toggleSection('surgeryDetails')" checked>
                     <label class="form-check-label">No</label>
                 </div>
             </div>
@@ -32,11 +32,11 @@
             <h5 class="fw-bold mt-3">Anti-Cancer Drug Therapy</h5>
             <div class="mb-2">
                 <div class="form-check d-inline-block me-3">
-                    <input type="radio" name="anti_cancer_change" value="Yes" class="form-check-input rounded-circle" onclick="toggleSection('antiCancerDetails')">
+                    <input type="radio" name="anti_cancer_change" value="1" class="form-check-input rounded-circle" onclick="toggleSection('antiCancerDetails')">
                     <label class="form-check-label">Yes</label>
                 </div>
                 <div class="form-check d-inline-block">
-                    <input type="radio" name="anti_cancer_change" value="No" class="form-check-input rounded-circle" onclick="toggleSection('antiCancerDetails')" checked>
+                    <input type="radio" name="anti_cancer_change" value="2" class="form-check-input rounded-circle" onclick="toggleSection('antiCancerDetails')" checked>
                     <label class="form-check-label">No</label>
                 </div>
             </div>
@@ -51,40 +51,36 @@
                     <div class="mt-3">
                         <label class="form-label">{{ $label }}</label>
                         <div class="form-check d-inline-block me-3">
-                            <input type="radio" name="{{ $prefix }}_regimen" value="Yes" class="form-check-input rounded-circle" onclick="toggleSection('{{ $prefix }}RegimenDetails')">
+                            <input type="radio" name="{{ $prefix }}_regimen" value="1" class="form-check-input rounded-circle" onclick="toggleSection('{{ $prefix }}RegimenDetails')">
                             <label class="form-check-label">Yes</label>
                         </div>
                         <div class="form-check d-inline-block">
-                            <input type="radio" name="{{ $prefix }}_regimen" value="No" class="form-check-input rounded-circle" onclick="toggleSection('{{ $prefix }}RegimenDetails')" checked>
+                            <input type="radio" name="{{ $prefix }}_regimen" value="2" class="form-check-input rounded-circle" onclick="toggleSection('{{ $prefix }}RegimenDetails')" checked>
                             <label class="form-check-label">No</label>
                         </div>
                     </div>
 
                     <div id="{{ $prefix }}RegimenDetails" class="d-none">
                         @foreach([
-                            'Cytotoxic',
-                            'Hormonal',
-                            'Immunologic',
-                            'Targeted',
-                            'Others'
-                        ] as $drug)
+                            1=>'Cytotoxic',2=>'Hormonal',3=>'Immunologic',4=>'Targeted',5=>'Others, specify:'
+                        ] as $k=>$drug)
                             <div class="mb-2">
                                 <div class="form-check">
-                                    <input type="checkbox" name="{{ $prefix }}_drug_type[]" value="{{ $drug }}" class="form-check-input rounded-circle"
-                                        onchange="toggleDrugInputs('{{ $prefix }}', '{{ $drug }}')">
+                                    <input type="checkbox" name="{{ $prefix }}_drug_type[]" value="{{ $k }}" class="form-check-input rounded-circle"
+                                        onchange="toggleDrugInputs('{{ $prefix }}', {{ $k }})">
                                     <label class="form-check-label">{{ $drug }}</label>
                                 </div>
                                 <div class="row mt-1">
                                     <div class="col-md-6">
-                                        <input type="text" name="{{ $prefix }}_drug_regimen[{{ $drug }}]" id="{{ $prefix }}DrugRegimen{{ $drug }}"
+                                        <input type="text" name="{{ $prefix }}_drug_regimen[{{ $k }}]" id="{{ $prefix }}DrugRegimen{{ $k }}"
                                             class="form-control" placeholder="Drug Regimen" disabled>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" name="{{ $prefix }}_chemo_cycle[{{ $drug }}]" id="{{ $prefix }}ChemoCycle{{ $drug }}"
+                                        <input type="text" name="{{ $prefix }}_chemo_cycle[{{ $k }}]" id="{{ $prefix }}ChemoCycle{{ $k }}"
                                             class="form-control" placeholder="Intended Chemo Cycle No." disabled>
                                     </div>
                                 </div>
-                                @if($drug === 'Others')
+                                @if($k == 5)
                                     <input type="text" name="{{ $prefix }}_drug_other" id="{{ $prefix }}DrugOther"
                                         class="form-control mt-1" placeholder="Specify others" disabled>
                                 @endif
@@ -106,11 +102,11 @@
             <h5 class="fw-bold mt-3">Radiotherapy</h5>
             <div class="mb-2">
                 <div class="form-check d-inline-block me-3">
-                    <input type="radio" name="radio_change" value="Yes" class="form-check-input rounded-circle" onclick="toggleSection('radioDetails')">
+                    <input type="radio" name="radio_change" value="1" class="form-check-input rounded-circle" onclick="toggleSection('radioDetails')">
                     <label class="form-check-label">Yes</label>
                 </div>
                 <div class="form-check d-inline-block">
-                    <input type="radio" name="radio_change" value="No" class="form-check-input rounded-circle" onclick="toggleSection('radioDetails')" checked>
+                    <input type="radio" name="radio_change" value="2" class="form-check-input rounded-circle" onclick="toggleSection('radioDetails')" checked>
                     <label class="form-check-label">No</label>
                 </div>
             </div>
@@ -143,22 +139,15 @@
 
                 <label class="form-label mt-2">Specific type of radiotherapy</label>
                 @foreach([
-                    '2D conventional',
-                    '3DCRT',
-                    'Brachytherapy',
-                    'Electron Therapy',
-                    'IMRT/IMAT/Helical',
-                    'IORT',
-                    'Heavy Particles',
-                    'Proton Therapy',
-                    'Stereotactic Radiosurgery',
-                    'Others'
-                ] as $type)
+                    1=>'2D conventional',2=>'3DCRT',3=>'Brachytherapy',4=>'Electron Therapy',
+                    5=>'IMRT/IMAT/Helical',6=>'IORT',7=>'Heavy Particles',8=>'Proton Therapy',
+                    9=>'Stereotactic Radiosurgery',10=>'Others, specify:'
+                ] as $k=>$type)
                     <div class="form-check">
-                        <input type="checkbox" name="radio_type[]" value="{{ $type }}" class="form-check-input rounded-circle">
+                        <input type="checkbox" name="radio_type[]" value="{{ $k }}" class="form-check-input rounded-circle">
                         <label class="form-check-label">{{ $type }}</label>
                     </div>
-                    @if($type === 'Others')
+                    @if($k == 10)
                         <input type="text" name="radio_type_other" class="form-control mt-1" placeholder="Specify">
                     @endif
                 @endforeach
@@ -168,11 +157,11 @@
             <h5 class="fw-bold mt-3">Theranostics</h5>
             <div class="mb-2">
                 <div class="form-check d-inline-block me-3">
-                    <input type="radio" name="thera_change" value="Yes" class="form-check-input rounded-circle" onclick="toggleSection('theraDetails')">
+                    <input type="radio" name="thera_change" value="1" class="form-check-input rounded-circle" onclick="toggleSection('theraDetails')">
                     <label class="form-check-label">Yes</label>
                 </div>
                 <div class="form-check d-inline-block">
-                    <input type="radio" name="thera_change" value="No" class="form-check-input rounded-circle" onclick="toggleSection('theraDetails')" checked>
+                    <input type="radio" name="thera_change" value="2" class="form-check-input rounded-circle" onclick="toggleSection('theraDetails')" checked>
                     <label class="form-check-label">No</label>
                 </div>
             </div>
@@ -183,17 +172,13 @@
 
                 <label class="form-label mt-2">If yes, indicate type:</label>
                 @foreach([
-                    'Radioactive Iodine Therapy (RAI)',
-                    'PRRT',
-                    'PRLT',
-                    'SIRT',
-                    'Others'
-                ] as $type)
+                    1=>'Radioactive Iodine Therapy (RAI)',2=>'PRRT',3=>'PRLT',4=>'SIRT',5=>'Others, specify:'
+                ] as $k=>$type)
                     <div class="form-check">
-                        <input type="checkbox" name="thera_type[]" value="{{ $type }}" class="form-check-input rounded-circle" onchange="toggleTheraOther('{{ $type }}')">
+                        <input type="checkbox" name="thera_type[]" value="{{ $k }}" class="form-check-input rounded-circle" onchange="toggleTheraOther({{ $k }})">
                         <label class="form-check-label">{{ $type }}</label>
                     </div>
-                    @if($type === 'Others')
+                    @if($k == 5)
                         <input type="text" name="thera_type_other" id="theraOther" class="form-control mt-1" placeholder="Specify" disabled>
                     @endif
                 @endforeach
@@ -214,11 +199,11 @@
             <h5 class="fw-bold mt-3">Supportive Palliative Care Only</h5>
             <div class="mb-2">
                 <div class="form-check d-inline-block me-3">
-                    <input type="radio" name="palliative" value="Yes" class="form-check-input rounded-circle" onclick="toggleSection('palliativeDetails')">
+                    <input type="radio" name="palliative" value="1" class="form-check-input rounded-circle" onclick="toggleSection('palliativeDetails')">
                     <label class="form-check-label">Yes</label>
                 </div>
                 <div class="form-check d-inline-block">
-                    <input type="radio" name="palliative" value="No" class="form-check-input rounded-circle" onclick="toggleSection('palliativeDetails')" checked>
+                    <input type="radio" name="palliative" value="2" class="form-check-input rounded-circle" onclick="toggleSection('palliativeDetails')" checked>
                     <label class="form-check-label">No</label>
                 </div>
             </div>
@@ -231,29 +216,24 @@
             <h5 class="fw-bold mt-3">Other Cancer Directed Therapies</h5>
             <div class="mb-2">
                 <div class="form-check d-inline-block me-3">
-                    <input type="radio" name="other_cancer" value="Yes" class="form-check-input rounded-circle" onclick="toggleSection('otherCancerDetails')">
+                    <input type="radio" name="other_cancer" value="1" class="form-check-input rounded-circle" onclick="toggleSection('otherCancerDetails')">
                     <label class="form-check-label">Yes</label>
                 </div>
                 <div class="form-check d-inline-block">
-                    <input type="radio" name="other_cancer" value="No" class="form-check-input rounded-circle" onclick="toggleSection('otherCancerDetails')" checked>
+                    <input type="radio" name="other_cancer" value="2" class="form-check-input rounded-circle" onclick="toggleSection('otherCancerDetails')" checked>
                     <label class="form-check-label">No</label>
                 </div>
             </div>
             <div id="otherCancerDetails" class="d-none">
                 @foreach([
-                    'Blood Transfusion',
-                    'Cryoablation',
-                    'Embolization',
-                    'Radiofrequency ablation',
-                    'Transarterial chemoembolization',
-                    'Transplant',
-                    'Others'
-                ] as $therapy)
+                    1=>'Blood Transfusion',2=>'Cryoablation',3=>'Embolization',4=>'Radiofrequency ablation',
+                    5=>'Transarterial chemoembolization',6=>'Transplant',7=>'Others, specify:'
+                ] as $k=>$therapy)
                     <div class="form-check">
-                        <input type="checkbox" name="other_cancer_type[]" value="{{ $therapy }}" class="form-check-input rounded-circle" onchange="toggleOtherCancer('{{ $therapy }}')">
+                        <input type="checkbox" name="other_cancer_type[]" value="{{ $k }}" class="form-check-input rounded-circle" onchange="toggleOtherCancer({{ $k }})">
                         <label class="form-check-label">{{ $therapy }}</label>
                     </div>
-                    @if($therapy === 'Others')
+                    @if($k == 7)
                         <input type="text" name="other_cancer_other" id="otherCancerOther" class="form-control mt-1" placeholder="Specify" disabled>
                     @endif
                 @endforeach
@@ -280,7 +260,7 @@
     function toggleSection(id) {
         const section = document.getElementById(id);
         if (section) {
-            const yesSelected = event.target.value === 'Yes';
+            const yesSelected = event.target.value === '1';
             section.classList.toggle('d-none', !yesSelected);
         }
     }
@@ -289,21 +269,21 @@
         let checked = document.querySelector(`input[name="${prefix}_drug_type[]"][value="${key}"]`).checked;
         document.getElementById(prefix + 'DrugRegimen' + key).disabled = !checked;
         document.getElementById(prefix + 'ChemoCycle' + key).disabled = !checked;
-        if (key === 'Others') {
+        if (key === 5) {
             document.getElementById(prefix + 'DrugOther').disabled = !checked;
         }
     }
 
     function toggleTheraOther(k) {
-        if (k === 'Others') {
-            const checked = document.querySelector('input[name="thera_type[]"][value="Others"]').checked;
+        if (k === 5) {
+            const checked = document.querySelector('input[name="thera_type[]"][value="5"]').checked;
             document.getElementById('theraOther').disabled = !checked;
         }
     }
 
     function toggleOtherCancer(k) {
-        if (k === 'Others') {
-            const checked = document.querySelector('input[name="other_cancer_type[]"][value="Others"]').checked;
+        if (k === 7) {
+            const checked = document.querySelector('input[name="other_cancer_type[]"][value="7"]').checked;
             document.getElementById('otherCancerOther').disabled = !checked;
         }
     }

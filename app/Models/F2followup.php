@@ -51,5 +51,10 @@ class F2followup extends Model
         return $this->hasOne(F2othercancertherapy::class, 'code', 'id');
     }
 
+    public function f2changetreatmentplans()
+    {
+        return $this->hasOne(F2changetreatmentplan::class, 'code', 'id');
+    }
+
 
 }
