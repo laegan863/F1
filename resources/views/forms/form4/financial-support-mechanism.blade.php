@@ -12,16 +12,22 @@
 
                 <label class="form-label">Did patient avail any financial support mechanism?</label>
                 <div class="form-check form-check-inline">
-                    <input type="radio" name="financial_support" value="Yes" class="form-check-input rounded-circle" onclick="toggleSection('financialDetails')">
+                    <input type="radio" name="financial_support" value="Yes"
+                           class="form-check-input rounded-circle"
+                           onclick="toggleSection('financialDetails')"
+                           {{ old('financial_support') == 'Yes' ? 'checked' : '' }}>
                     <label class="form-check-label">Yes</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input type="radio" name="financial_support" value="No" class="form-check-input rounded-circle" onclick="toggleSection('financialDetails')" checked>
+                    <input type="radio" name="financial_support" value="No"
+                           class="form-check-input rounded-circle"
+                           onclick="toggleSection('financialDetails')"
+                           {{ old('financial_support','No') == 'No' ? 'checked' : '' }}>
                     <label class="form-check-label">No</label>
                 </div>
 
                 <!-- Financial Mechanism Options -->
-                <div id="financialDetails" class="d-none mt-3">
+                <div id="financialDetails" class="{{ old('financial_support') == 'Yes' ? '' : 'd-none' }} mt-3">
                     <label class="form-label">If yes, specify:</label>
                     <div class="row">
                         @foreach([
@@ -44,11 +50,18 @@
                         ] as $label)
                             <div class="col-md-6">
                                 <div class="form-check">
-                                    <input type="checkbox" name="financial_type[]" value="{{ $label }}" class="form-check-input rounded-circle" onchange="toggleFinancialOther('{{ $label }}')">
+                                    <input type="checkbox" name="financial_type[]" value="{{ $label }}"
+                                           class="form-check-input rounded-circle"
+                                           onchange="toggleFinancialOther('{{ $label }}')"
+                                           {{ in_array($label, old('financial_type', [])) ? 'checked' : '' }}>
                                     <label class="form-check-label">{{ $label }}</label>
                                 </div>
                                 @if($label === 'Others, specify:')
-                                    <input type="text" name="financial_other" id="financialOther" class="form-control mt-1" placeholder="Specify" disabled>
+                                    <input type="text" name="financial_other" id="financialOther"
+                                           class="form-control mt-1"
+                                           placeholder="Specify"
+                                           value="{{ old('financial_other') }}"
+                                           {{ in_array('Others, specify:', old('financial_type', [])) ? '' : 'disabled' }}>
                                 @endif
                             </div>
                         @endforeach
@@ -94,11 +107,17 @@
                     ] as $label)
                         <div class="col-md-6">
                             <div class="form-check">
-                                <input type="checkbox" name="cspmap_meds[]" value="{{ $label }}" class="form-check-input rounded-circle" onchange="toggleCspmapOther('{{ $label }}')">
+                                <input type="checkbox" name="cspmap_meds[]" value="{{ $label }}"
+                                       class="form-check-input rounded-circle"
+                                       onchange="toggleCspmapOther('{{ $label }}')"
+                                       {{ in_array($label, old('cspmap_meds', [])) ? 'checked' : '' }}>
                                 <label class="form-check-label">{{ $label }}</label>
                             </div>
                             @if($label === 'Others, specify:')
-                                <input type="text" name="cspmap_other" id="cspmapOther" class="form-control mt-1" placeholder="Specify" disabled>
+                                <input type="text" name="cspmap_other" id="cspmapOther" class="form-control mt-1"
+                                       placeholder="Specify"
+                                       value="{{ old('cspmap_other') }}"
+                                       {{ in_array('Others, specify:', old('cspmap_meds', [])) ? '' : 'disabled' }}>
                             @endif
                         </div>
                     @endforeach
@@ -118,11 +137,17 @@
                     ] as $label)
                         <div class="col-md-4">
                             <div class="form-check">
-                                <input type="checkbox" name="other_meds[]" value="{{ $label }}" class="form-check-input rounded-circle" onchange="toggleOtherMed('{{ $label }}')">
+                                <input type="checkbox" name="other_meds[]" value="{{ $label }}"
+                                       class="form-check-input rounded-circle"
+                                       onchange="toggleOtherMed('{{ $label }}')"
+                                       {{ in_array($label, old('other_meds', [])) ? 'checked' : '' }}>
                                 <label class="form-check-label">{{ $label }}</label>
                             </div>
                             @if($label === 'Others, specify:')
-                                <input type="text" name="other_med_other" id="otherMedOther" class="form-control mt-1" placeholder="Specify" disabled>
+                                <input type="text" name="other_med_other" id="otherMedOther" class="form-control mt-1"
+                                       placeholder="Specify"
+                                       value="{{ old('other_med_other') }}"
+                                       {{ in_array('Others, specify:', old('other_meds', [])) ? '' : 'disabled' }}>
                             @endif
                         </div>
                     @endforeach
@@ -133,7 +158,7 @@
         <!-- ================= SUBMIT ================= -->
         <div class="card-footer text-end mt-3">
             <button type="reset" class="btn btn-secondary rounded-0">Reset</button>
-            <button type="submit" class="btn btn-primary rounded-0">Submit</button>
+            <button type="button" onclick="handleSubmit()" class="btn btn-primary rounded-0">Submit</button>
         </div>
 
     </form>

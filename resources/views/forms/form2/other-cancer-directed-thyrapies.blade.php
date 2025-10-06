@@ -11,45 +11,50 @@
                 <label class="form-label fw-bold">Other Cancer Directed Therapies</label>
                 <div class="d-flex gap-3">
                     <div class="form-check">
-                        <input type="radio" name="other_cancer_therapies" value="Yes" class="form-check-input rounded-circle" onclick="toggleCancerTherapies()">
+                        <input type="radio" name="other_cancer_therapies" value="Yes"
+                               class="form-check-input rounded-circle"
+                               onclick="toggleCancerTherapies()"
+                               {{ old('other_cancer_therapies') == 'Yes' ? 'checked' : '' }}>
                         <label class="form-check-label">Yes</label>
                     </div>
                     <div class="form-check">
-                        <input type="radio" name="other_cancer_therapies" value="No" class="form-check-input rounded-circle" onclick="toggleCancerTherapies()" checked>
+                        <input type="radio" name="other_cancer_therapies" value="No"
+                               class="form-check-input rounded-circle"
+                               onclick="toggleCancerTherapies()"
+                               {{ old('other_cancer_therapies','No') == 'No' ? 'checked' : '' }}>
                         <label class="form-check-label">No</label>
                     </div>
                 </div>
             </div>
 
             <!-- Cancer Therapies Details -->
-            <div id="cancerTherapiesDetails" class="d-none mb-3">
+            <div id="cancerTherapiesDetails" class="{{ old('other_cancer_therapies') == 'Yes' ? '' : 'd-none' }} mb-3">
                 <label class="form-label">If yes, specify other cancer-directed therapies:</label>
                 <div class="row">
                     <div class="col-md-6">
-                        @foreach([
-                            'Blood Transfusion',
-                            'Cryoablation',
-                            'Embolization',
-                            'Radiofrequency ablation'
-                        ] as $label)
+                        @foreach(['Blood Transfusion','Cryoablation','Embolization','Radiofrequency ablation'] as $label)
                             <div class="form-check">
-                                <input type="checkbox" name="cancer_therapies[]" value="{{ $label }}" class="form-check-input rounded-circle">
+                                <input type="checkbox" name="cancer_therapies[]" value="{{ $label }}"
+                                       class="form-check-input rounded-circle"
+                                       {{ in_array($label, old('cancer_therapies', [])) ? 'checked' : '' }}>
                                 <label class="form-check-label">{{ $label }}</label>
                             </div>
                         @endforeach
                     </div>
                     <div class="col-md-6">
-                        @foreach([
-                            'Transarterial chemoembolization',
-                            'Transplant',
-                            'Others, specify:'
-                        ] as $label)
+                        @foreach(['Transarterial chemoembolization','Transplant','Others, specify:'] as $label)
                             <div class="form-check">
-                                <input type="checkbox" name="cancer_therapies[]" value="{{ $label }}" class="form-check-input rounded-circle" onchange="toggleTherapyOther('{{ $label }}')">
+                                <input type="checkbox" name="cancer_therapies[]" value="{{ $label }}"
+                                       class="form-check-input rounded-circle"
+                                       onchange="toggleTherapyOther('{{ $label }}')"
+                                       {{ in_array($label, old('cancer_therapies', [])) ? 'checked' : '' }}>
                                 <label class="form-check-label">{{ $label }}</label>
                             </div>
                             @if($label === 'Others, specify:')
-                                <input type="text" name="cancer_therapies_other" id="therapyOther" class="form-control mt-1" placeholder="Specify" disabled>
+                                <input type="text" name="cancer_therapies_other" id="therapyOther"
+                                       class="form-control mt-1" placeholder="Specify"
+                                       value="{{ old('cancer_therapies_other') }}"
+                                       {{ in_array('Others, specify:', old('cancer_therapies', [])) ? '' : 'disabled' }}>
                             @endif
                         @endforeach
                     </div>
@@ -63,13 +68,11 @@
             <div class="mb-3">
                 <label class="form-label fw-bold">Pre-operative Scenario</label>
                 <div class="d-flex flex-wrap gap-3">
-                    @foreach([
-                        'No evidence of disease',
-                        'Progressive Disease',
-                        'Not Applicable'
-                    ] as $label)
+                    @foreach(['No evidence of disease','Progressive Disease','Not Applicable'] as $label)
                         <div class="form-check">
-                            <input type="radio" name="pre_op_scenario" value="{{ $label }}" class="form-check-input rounded-circle">
+                            <input type="radio" name="pre_op_scenario" value="{{ $label }}"
+                                   class="form-check-input rounded-circle"
+                                   {{ old('pre_op_scenario') == $label ? 'checked' : '' }}>
                             <label class="form-check-label">{{ $label }}</label>
                         </div>
                     @endforeach
@@ -80,11 +83,11 @@
             <div class="mb-3">
                 <label class="form-label fw-bold">Post-operative Scenario</label>
                 <div class="d-flex flex-wrap gap-3">
-                    @foreach([
-                        'R0','R1','R2','R3','Unknown','Not Applicable'
-                    ] as $label)
+                    @foreach(['R0','R1','R2','R3','Unknown','Not Applicable'] as $label)
                         <div class="form-check">
-                            <input type="radio" name="post_op_scenario" value="{{ $label }}" class="form-check-input rounded-circle">
+                            <input type="radio" name="post_op_scenario" value="{{ $label }}"
+                                   class="form-check-input rounded-circle"
+                                   {{ old('post_op_scenario') == $label ? 'checked' : '' }}>
                             <label class="form-check-label">{{ $label }}</label>
                         </div>
                     @endforeach
@@ -95,15 +98,11 @@
             <div class="mb-3">
                 <label class="form-label fw-bold">Patient Treatment Status</label>
                 <div class="d-flex flex-wrap gap-3">
-                    @foreach([
-                        'Ongoing',
-                        'Completed',
-                        'Stopped/Interrupted',
-                        'Undetermined',
-                        'Not Initiated'
-                    ] as $label)
+                    @foreach(['Ongoing','Completed','Stopped/Interrupted','Undetermined','Not Initiated'] as $label)
                         <div class="form-check">
-                            <input type="radio" name="treatment_status" value="{{ $label }}" class="form-check-input rounded-circle">
+                            <input type="radio" name="treatment_status" value="{{ $label }}"
+                                   class="form-check-input rounded-circle"
+                                   {{ old('treatment_status') == $label ? 'checked' : '' }}>
                             <label class="form-check-label">{{ $label }}</label>
                         </div>
                     @endforeach
@@ -125,15 +124,13 @@
         let yes = document.querySelector('input[name="other_cancer_therapies"][value="Yes"]').checked;
         document.getElementById('cancerTherapiesDetails').classList.toggle('d-none', !yes);
     }
-
     function toggleTherapyOther(label) {
         if (label === 'Others, specify:') {
             let checked = document.querySelector('input[name="cancer_therapies[]"][value="Others, specify:"]').checked;
             document.getElementById('therapyOther').disabled = !checked;
         }
     }
-
-    // Init on load
+    // Initialize on page load
     window.onload = function() {
         toggleCancerTherapies();
         toggleTherapyOther('Others, specify:');

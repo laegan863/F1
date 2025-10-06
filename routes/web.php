@@ -59,7 +59,6 @@ Route::middleware(IsNotAuth::class)->group(function(){
         });
 
     });
-        
 
     Route::prefix("form2")->group(function(){
         Route::view('form/{id}', 'forms.form2.form')->name('form2');
