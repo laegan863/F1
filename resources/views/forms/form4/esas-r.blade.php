@@ -11,11 +11,15 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label fw-bold">GCS Score of the Patient</label>
-                        <input type="number" name="gcs_score" class="form-control" min="0" max="15">
+                        <input type="number" name="gcs_score" placeholder="Enter GCS Score of the Patient" 
+                               class="form-control" min="0" max="15"
+                               value="{{ old('gcs_score') }}">
                     </div>
                     <div class="col-md-6">
                         <label class="form-label fw-bold">ESAS-r Score of the Patient <small>(Only if GCS Score ≥ 8)</small></label>
-                        <input type="number" name="esasr_score" class="form-control" min="0" max="100">
+                        <input type="number" name="esasr_score" placeholder="Enter ESAS-r Score of the Patient" 
+                               class="form-control" min="0" max="100"
+                               value="{{ old('esasr_score') }}">
                     </div>
                 </div>
             </div>
@@ -47,7 +51,11 @@
                             <div class="d-flex flex-wrap">
                                 @for($i=0;$i<=10;$i++)
                                     <div class="form-check form-check-inline">
-                                        <input type="radio" name="{{ $key }}" value="{{ $i }}" class="form-check-input rounded-circle" {{ $i == 0 ? 'checked' : '' }}>
+                                        <input type="radio" 
+                                               name="{{ $key }}" 
+                                               value="{{ $i }}" 
+                                               class="form-check-input rounded-circle"
+                                               {{ old($key, 0) == $i ? 'checked' : '' }}>
                                         <label class="form-check-label">{{ $i }}</label>
                                     </div>
                                 @endfor
@@ -60,21 +68,28 @@
                 <!-- Other Problem -->
                 <div class="mb-3">
                     <label class="form-label fw-bold">Other Problem</label>
-                    <input type="text" name="other_problem" class="form-control mb-2" placeholder="Describe problem">
+                    <input type="text" name="other_problem" class="form-control mb-2" placeholder="Describe problem"
+                           value="{{ old('other_problem') }}">
                     <div class="d-flex align-items-center">
                         <span class="me-2">
-                            <input type="text" name="" id="" placeholder="title" class="form-control">
+                            <input type="text" name="other_problem_left_title" placeholder="title" class="form-control"
+                                   value="{{ old('other_problem_left_title') }}">
                         </span>
                         <div class="d-flex flex-wrap">
                             @for($i=0;$i<=10;$i++)
                                 <div class="form-check form-check-inline">
-                                    <input type="radio" name="other_problem_score" value="{{ $i }}" class="form-check-input rounded-circle">
+                                    <input type="radio" 
+                                           name="other_problem_score" 
+                                           value="{{ $i }}" 
+                                           class="form-check-input rounded-circle"
+                                           {{ old('other_problem_score') == $i ? 'checked' : '' }}>
                                     <label class="form-check-label">{{ $i }}</label>
                                 </div>
                             @endfor
                         </div>
                         <span class="ms-2">
-                            <input type="text" name="" id="" placeholder="title" class="form-control">
+                            <input type="text" name="other_problem_right_title" placeholder="title" class="form-control"
+                                   value="{{ old('other_problem_right_title') }}">
                         </span>
                     </div>
                 </div>
@@ -84,7 +99,7 @@
         <!-- Submit -->
         <div class="card-footer text-end">
             <button type="reset" class="btn btn-secondary rounded-0">Reset</button>
-            <button type="submit" class="btn btn-primary rounded-0">Submit</button>
+            <button type="button" onclick="handleSubmit()" class="btn btn-primary rounded-0">Submit</button>
         </div>
     </form>
 @endsection

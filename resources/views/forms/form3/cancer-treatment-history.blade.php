@@ -18,27 +18,33 @@
                     <div class="border rounded p-3 mb-3">
                         <label class="form-label">{{ $key == 'first' ? 'Surgery Done?' : $label }}</label>
                         <div class="form-check form-check-inline">
-                            <input type="radio" name="{{ $key }}_surgery" value="Yes" class="form-check-input rounded-circle" onclick="toggleSection('{{ $key }}SurgeryDetails')">
+                            <input type="radio" name="{{ $key }}_surgery" value="Yes" class="form-check-input rounded-circle"
+                                   onclick="toggleSection('{{ $key }}SurgeryDetails')"
+                                   {{ old($key.'_surgery') == 'Yes' ? 'checked' : '' }}>
                             <label class="form-check-label">Yes</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input type="radio" name="{{ $key }}_surgery" value="No" class="form-check-input rounded-circle" onclick="toggleSection('{{ $key }}SurgeryDetails')" checked>
+                            <input type="radio" name="{{ $key }}_surgery" value="No" class="form-check-input rounded-circle"
+                                   onclick="toggleSection('{{ $key }}SurgeryDetails')"
+                                   {{ old($key.'_surgery','No') == 'No' ? 'checked' : '' }}>
                             <label class="form-check-label">No</label>
                         </div>
 
                         <div id="{{ $key }}SurgeryDetails" class="d-none mt-2">
                             <label class="form-label">Surgery Date</label>
-                            <input type="date" name="{{ $key }}_surgery_date" class="form-control mb-2">
+                            <input type="date" name="{{ $key }}_surgery_date" class="form-control mb-2" value="{{ old($key.'_surgery_date') }}">
+                            @error($key.'_surgery_date') <small class="text-danger">{{ $message }}</small> @enderror
 
                             <label class="form-label">What surgery type (RVS Code / Description)</label>
-                            <input type="text" name="{{ $key }}_surgery_code" class="form-control mb-2" placeholder="RVS Code">
-                            <input type="text" name="{{ $key }}_surgery_desc" class="form-control mb-2" placeholder="Description">
+                            <input type="text" name="{{ $key }}_surgery_code" class="form-control mb-2" placeholder="RVS Code" value="{{ old($key.'_surgery_code') }}">
+                            <input type="text" name="{{ $key }}_surgery_desc" class="form-control mb-2" placeholder="Description" value="{{ old($key.'_surgery_desc') }}">
 
                             <label class="form-label">Goal (can be multiple)</label>
                             <div class="d-flex flex-wrap gap-3">
                                 @foreach(['Diagnostic','Curative','Palliative','Unknown'] as $val)
                                     <div class="form-check">
-                                        <input type="checkbox" name="{{ $key }}_goal[]" value="{{ $val }}" class="form-check-input rounded-circle">
+                                        <input type="checkbox" name="{{ $key }}_goal[]" value="{{ $val }}" class="form-check-input rounded-circle"
+                                               {{ in_array($val, old($key.'_goal', [])) ? 'checked' : '' }}>
                                         <label class="form-check-label">{{ $val }}</label>
                                     </div>
                                 @endforeach
@@ -48,7 +54,8 @@
                             <div class="d-flex flex-wrap gap-3">
                                 @foreach(['None','Minor','Major','Serious','Unknown'] as $val)
                                     <div class="form-check">
-                                        <input type="radio" name="{{ $key }}_adverse_event" value="{{ $val }}" class="form-check-input rounded-circle">
+                                        <input type="radio" name="{{ $key }}_adverse_event" value="{{ $val }}" class="form-check-input rounded-circle"
+                                               {{ old($key.'_adverse_event') == $val ? 'checked' : '' }}>
                                         <label class="form-check-label">{{ $val }}</label>
                                     </div>
                                 @endforeach
@@ -72,11 +79,15 @@
                     <div class="border rounded p-3 mb-3">
                         <label class="form-label">{{ $key == "first" ? 'Anti-cancer Drug' : $label.' : Anti-Cancer Drug' }}</label>
                         <div class="form-check form-check-inline">
-                            <input type="radio" name="{{ $key }}_drug" value="Yes" class="form-check-input rounded-circle" onclick="toggleSection('{{ $key }}DrugDetails')">
+                            <input type="radio" name="{{ $key }}_drug" value="Yes" class="form-check-input rounded-circle"
+                                   onclick="toggleSection('{{ $key }}DrugDetails')"
+                                   {{ old($key.'_drug') == 'Yes' ? 'checked' : '' }}>
                             <label class="form-check-label">Yes</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input type="radio" name="{{ $key }}_drug" value="No" class="form-check-input rounded-circle" onclick="toggleSection('{{ $key }}DrugDetails')" checked>
+                            <input type="radio" name="{{ $key }}_drug" value="No" class="form-check-input rounded-circle"
+                                   onclick="toggleSection('{{ $key }}DrugDetails')"
+                                   {{ old($key.'_drug','No') == 'No' ? 'checked' : '' }}>
                             <label class="form-check-label">No</label>
                         </div>
 
@@ -85,7 +96,8 @@
                             <div class="d-flex flex-wrap gap-3">
                                 @foreach(['Neoadjuvant','Adjuvant','Palliative'] as $val)
                                     <div class="form-check">
-                                        <input type="radio" name="{{ $key }}_purpose_administration" value="{{ $val }}" class="form-check-input rounded-circle">
+                                        <input type="radio" name="{{ $key }}_purpose_administration" value="{{ $val }}" class="form-check-input rounded-circle"
+                                               {{ old($key.'_purpose_administration') == $val ? 'checked' : '' }}>
                                         <label class="form-check-label">{{ $val }}</label>
                                     </div>
                                 @endforeach
@@ -95,23 +107,25 @@
                             <div class="d-flex flex-wrap gap-3">
                                 @foreach(['Cytotoxic','Hormonal','Immunologic','Targeted'] as $val)
                                     <div class="form-check">
-                                        <input type="checkbox" name="{{ $key }}_drug_type[]" value="{{ $val }}" class="form-check-input rounded-circle">
+                                        <input type="checkbox" name="{{ $key }}_drug_type[]" value="{{ $val }}" class="form-check-input rounded-circle"
+                                               {{ in_array($val, old($key.'_drug_type', [])) ? 'checked' : '' }}>
                                         <label class="form-check-label">{{ $val }}</label>
                                     </div>
                                 @endforeach
                             </div>
 
                             <label class="form-label mt-2">Drug Regimen</label>
-                            <input type="text" name="{{ $key }}_drug_regimen" class="form-control">
+                            <input type="text" name="{{ $key }}_drug_regimen" class="form-control" value="{{ old($key.'_drug_regimen') }}">
 
                             <label class="form-label mt-2">Drug Response</label>
-                            <input type="text" name="{{ $key }}_drug_response" class="form-control">
+                            <input type="text" name="{{ $key }}_drug_response" class="form-control" value="{{ old($key.'_drug_response') }}">
 
                             <label class="form-label mt-2">Is there medically confirmed adverse event?</label>
                             <div class="d-flex flex-wrap gap-3">
                                 @foreach(['None','Minor','Major','Serious','Unknown'] as $val)
                                     <div class="form-check">
-                                        <input type="radio" name="{{ $key }}_drug_adverse" value="{{ $val }}" class="form-check-input rounded-circle">
+                                        <input type="radio" name="{{ $key }}_drug_adverse" value="{{ $val }}" class="form-check-input rounded-circle"
+                                               {{ old($key.'_drug_adverse') == $val ? 'checked' : '' }}>
                                         <label class="form-check-label">{{ $val }}</label>
                                     </div>
                                 @endforeach
@@ -135,11 +149,15 @@
                     <div class="border rounded p-3 mb-3">
                         <label class="form-label">{{ $key == "first" ? 'Radiotherapy' : $label.': Radiotherapy' }}</label>
                         <div class="form-check form-check-inline">
-                            <input type="radio" name="{{ $key }}_radio" value="Yes" class="form-check-input rounded-circle" onclick="toggleSection('{{ $key }}RadioDetails')">
+                            <input type="radio" name="{{ $key }}_radio" value="Yes" class="form-check-input rounded-circle"
+                                   onclick="toggleSection('{{ $key }}RadioDetails')"
+                                   {{ old($key.'_radio') == 'Yes' ? 'checked' : '' }}>
                             <label class="form-check-label">Yes</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input type="radio" name="{{ $key }}_radio" value="No" class="form-check-input rounded-circle" onclick="toggleSection('{{ $key }}RadioDetails')" checked>
+                            <input type="radio" name="{{ $key }}_radio" value="No" class="form-check-input rounded-circle"
+                                   onclick="toggleSection('{{ $key }}RadioDetails')"
+                                   {{ old($key.'_radio','No') == 'No' ? 'checked' : '' }}>
                             <label class="form-check-label">No</label>
                         </div>
 
@@ -153,39 +171,43 @@
                                 ] as $val)
                                     <div class="col-md-4">
                                         <div class="form-check">
-                                            <input type="checkbox" name="{{ $key }}_radio_type[]" value="{{ $val }}" class="form-check-input rounded-circle">
+                                            <input type="checkbox" name="{{ $key }}_radio_type[]" value="{{ $val }}" class="form-check-input rounded-circle"
+                                                   {{ in_array($val, old($key.'_radio_type', [])) ? 'checked' : '' }}>
                                             <label class="form-check-label">{{ $val }}</label>
                                         </div>
                                     </div>
                                 @endforeach
                                 <div class="col-md-4">
-                                    <input type="text" name="radio_type_other" placeholder="Please Specify Others" class="form-control">
+                                    <input type="text" name="{{ $key }}_radio_type_other" placeholder="Please Specify Others" class="form-control" value="{{ old($key.'_radio_type_other') }}">
                                 </div>
                             </div>
 
                             <label class="form-label mt-2">Specify Sequence:</label>
                             <div class="d-flex flex-wrap gap-3">
                                 <div class="form-check">
-                                    <input type="radio" name="{{ $key }}_sequence" value="Concurrent ChemoRT" class="form-check-input rounded-circle">
+                                    <input type="radio" name="{{ $key }}_sequence" value="Concurrent ChemoRT" class="form-check-input rounded-circle"
+                                           {{ old($key.'_sequence') == 'Concurrent ChemoRT' ? 'checked' : '' }}>
                                     <label class="form-check-label">Concurrent ChemoRT</label>
                                 </div>
                                 <div class="form-check">
-                                    <input type="radio" name="{{ $key }}_sequence" value="Sequential" class="form-check-input rounded-circle">
+                                    <input type="radio" name="{{ $key }}_sequence" value="Sequential" class="form-check-input rounded-circle"
+                                           {{ old($key.'_sequence') == 'Sequential' ? 'checked' : '' }}>
                                     <label class="form-check-label">Sequential</label>
                                 </div>
                             </div>
 
                             <label class="form-label mt-2">Specify Treatment Goal:</label>
                             <div class="d-flex flex-wrap gap-3">
-                                <div class="form-check"><input type="radio" name="{{ $key }}_treatment_goal" value="Definitive" class="form-check-input rounded-circle"><label class="form-check-label">Definitive</label></div>
-                                <div class="form-check"><input type="radio" name="{{ $key }}_treatment_goal" value="Palliative" class="form-check-input rounded-circle"><label class="form-check-label">Palliative</label></div>
+                                <div class="form-check"><input type="radio" name="{{ $key }}_treatment_goal" value="Definitive" class="form-check-input rounded-circle" {{ old($key.'_treatment_goal') == 'Definitive' ? 'checked' : '' }}><label class="form-check-label">Definitive</label></div>
+                                <div class="form-check"><input type="radio" name="{{ $key }}_treatment_goal" value="Palliative" class="form-check-input rounded-circle" {{ old($key.'_treatment_goal') == 'Palliative' ? 'checked' : '' }}><label class="form-check-label">Palliative</label></div>
                             </div>
 
                             <label class="form-label mt-2">Is there medically confirmed adverse event?</label>
                             <div class="d-flex flex-wrap gap-3">
                                 @foreach(['None','Minor','Major','Serious','Unknown'] as $val)
                                     <div class="form-check">
-                                        <input type="radio" name="{{ $key }}_radio_adverse" value="{{ $val }}" class="form-check-input rounded-circle">
+                                        <input type="radio" name="{{ $key }}_radio_adverse" value="{{ $val }}" class="form-check-input rounded-circle"
+                                               {{ old($key.'_radio_adverse') == $val ? 'checked' : '' }}>
                                         <label class="form-check-label">{{ $val }}</label>
                                     </div>
                                 @endforeach
@@ -209,11 +231,15 @@
                     <div class="border rounded p-3 mb-3">
                         <label class="form-label">{{ $key == "first" ? 'Theranostics' : $label.': Theranostics' }}</label>
                         <div class="form-check form-check-inline">
-                            <input type="radio" name="{{ $key }}_theranostics" value="Yes" class="form-check-input rounded-circle" onclick="toggleSection('{{ $key }}TheraDetails')">
+                            <input type="radio" name="{{ $key }}_theranostics" value="Yes" class="form-check-input rounded-circle"
+                                   onclick="toggleSection('{{ $key }}TheraDetails')"
+                                   {{ old($key.'_theranostics') == 'Yes' ? 'checked' : '' }}>
                             <label class="form-check-label">Yes</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input type="radio" name="{{ $key }}_theranostics" value="No" class="form-check-input rounded-circle" onclick="toggleSection('{{ $key }}TheraDetails')" checked>
+                            <input type="radio" name="{{ $key }}_theranostics" value="No" class="form-check-input rounded-circle"
+                                   onclick="toggleSection('{{ $key }}TheraDetails')"
+                                   {{ old($key.'_theranostics','No') == 'No' ? 'checked' : '' }}>
                             <label class="form-check-label">No</label>
                         </div>
 
@@ -226,27 +252,29 @@
                                 ] as $val)
                                     <div class="col-md-4 my-2">
                                         <div class="form-check">
-                                            <input type="checkbox" name="{{ $key }}_thera_type[]" value="{{ $val }}" class="form-check-input rounded-circle">
+                                            <input type="checkbox" name="{{ $key }}_thera_type[]" value="{{ $val }}" class="form-check-input rounded-circle"
+                                                   {{ in_array($val, old($key.'_thera_type', [])) ? 'checked' : '' }}>
                                             <label class="form-check-label">{{ $val }}</label>
                                         </div>
                                     </div>
                                 @endforeach
                                 <div class="col-md-8 my-2">
-                                    <input type="text" placeholder="Please Specify Others" name="theranostics_other_specify" class="form-control">
+                                    <input type="text" placeholder="Please Specify Others" name="{{ $key }}_theranostics_other_specify" class="form-control" value="{{ old($key.'_theranostics_other_specify') }}">
                                 </div>
                             </div>
 
                             <label class="form-label mt-2">Specify the goal</label>
                             <div class="d-flex flex-wrap gap-3">
-                                <div class="form-check"><input type="radio" name="{{ $key }}_thera_goal" value="Definitive" class="form-check-input rounded-circle"><label class="form-check-label">Definitive</label></div>
-                                <div class="form-check"><input type="radio" name="{{ $key }}_thera_goal" value="Palliative" class="form-check-input rounded-circle"><label class="form-check-label">Palliative</label></div>
+                                <div class="form-check"><input type="radio" name="{{ $key }}_thera_goal" value="Definitive" class="form-check-input rounded-circle" {{ old($key.'_thera_goal') == 'Definitive' ? 'checked' : '' }}><label class="form-check-label">Definitive</label></div>
+                                <div class="form-check"><input type="radio" name="{{ $key }}_thera_goal" value="Palliative" class="form-check-input rounded-circle" {{ old($key.'_thera_goal') == 'Palliative' ? 'checked' : '' }}><label class="form-check-label">Palliative</label></div>
                             </div>
 
                             <label class="form-label mt-2">Is there medically confirmed adverse event?</label>
                             <div class="d-flex flex-wrap gap-3">
                                 @foreach(['None','Minor','Major','Serious','Unknown'] as $val)
                                     <div class="form-check">
-                                        <input type="radio" name="{{ $key }}_thera_adverse" value="{{ $val }}" class="form-check-input rounded-circle">
+                                        <input type="radio" name="{{ $key }}_thera_adverse" value="{{ $val }}" class="form-check-input rounded-circle"
+                                               {{ old($key.'_thera_adverse') == $val ? 'checked' : '' }}>
                                         <label class="form-check-label">{{ $val }}</label>
                                     </div>
                                 @endforeach
@@ -262,11 +290,15 @@
             <div class="card-body">
                 <h5 class="fw-bold">Other Cancer Directed Therapies</h5>
                 <div class="form-check form-check-inline">
-                    <input type="radio" name="other_cancer" value="Yes" class="form-check-input rounded-circle" onclick="toggleSection('otherCancerDetails')">
+                    <input type="radio" name="other_cancer" value="Yes" class="form-check-input rounded-circle"
+                           onclick="toggleSection('otherCancerDetails')"
+                           {{ old('other_cancer') == 'Yes' ? 'checked' : '' }}>
                     <label class="form-check-label">Yes</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input type="radio" name="other_cancer" value="No" class="form-check-input rounded-circle" onclick="toggleSection('otherCancerDetails')" checked>
+                    <input type="radio" name="other_cancer" value="No" class="form-check-input rounded-circle"
+                           onclick="toggleSection('otherCancerDetails')"
+                           {{ old('other_cancer','No') == 'No' ? 'checked' : '' }}>
                     <label class="form-check-label">No</label>
                 </div>
 
@@ -276,11 +308,12 @@
                         'Transarterial chemoembolization','Transplant'
                     ] as $val)
                         <div class="form-check">
-                            <input type="checkbox" name="other_cancer_type[]" value="{{ $val }}" class="form-check-input rounded-circle">
+                            <input type="checkbox" name="other_cancer_type[]" value="{{ $val }}" class="form-check-input rounded-circle"
+                                   {{ in_array($val, old('other_cancer_type', [])) ? 'checked' : '' }}>
                             <label class="form-check-label">{{ $val }}</label>
                         </div>
                     @endforeach
-                    <input type="text" name="cancer_type_other_specify" placeholder="Please Specify Others" class="form-control">
+                    <input type="text" name="cancer_type_other_specify" placeholder="Please Specify Others" class="form-control" value="{{ old('cancer_type_other_specify') }}">
                 </div>
             </div>
         </div>
@@ -289,7 +322,7 @@
         <div class="card shadow-sm mb-3">
             <div class="card-body">
                 <h5 class="fw-bold">Remarks</h5>
-                <textarea name="remarks" class="form-control"></textarea>
+                <textarea name="remarks" class="form-control">{{ old('remarks') }}</textarea>
             </div>
         </div>
 
@@ -311,5 +344,20 @@
             section.classList.toggle('d-none', !yesSelected);
         }
     }
+
+    // restore hidden sections if old values exist
+    window.onload = function() {
+        document.querySelectorAll('input[type=radio][value=Yes]').forEach(radio => {
+            if (radio.checked) {
+                const onclickAttr = radio.getAttribute('onclick');
+                if (onclickAttr) {
+                    const match = onclickAttr.match(/'([^']+)'/);
+                    if (match) {
+                        toggleSection(match[1]);
+                    }
+                }
+            }
+        });
+    };
 </script>
 @endsection

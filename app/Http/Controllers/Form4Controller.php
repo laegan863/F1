@@ -27,7 +27,7 @@ class Form4Controller extends Controller
             'clinical_stage' => 'nullable',
             'stage' => 'nullable',
             'other_staging' => 'nullable',
-            'other_remarks' => 'required',
+            'other_remarks' => 'nullable',
         ]);
 
         $validate['hospitalID'] = $hospitalID;
@@ -38,7 +38,7 @@ class Form4Controller extends Controller
             'code' => $data->id
         ]);
         
-        return to_route('form4.page2');
+        return to_route('form4.page2')->with('success', 'PATIENT SURVEILLANCE FORM Saved Successfully!');
     }
 
     public function esas(Request $request)
@@ -46,8 +46,8 @@ class Form4Controller extends Controller
         $code = session('code');
 
         $validated = $request->validate([
-            'gcs_score'            => 'nullable|integer|min:0|max:15',
-            'esasr_score'          => 'nullable|integer|min:0|max:10',
+            'gcs_score'            => 'required|integer|min:0|max:15',
+            'esasr_score'          => 'required|integer|min:0|max:10',
             'pain'                 => 'nullable|integer|min:0|max:10',
             'tiredness'            => 'nullable|integer|min:0|max:10',
             'drowsiness'           => 'nullable|integer|min:0|max:10',
@@ -66,56 +66,80 @@ class Form4Controller extends Controller
         F4esas::updateOrCreate(['code' => $code], $validated);
 
         return to_route('form4.page3')
-                ->with('success', 'A. ESAS-r (Edmonton Symptom Assessment System Revised) Saved Successfully!');
+                ->with('success', 'ESAS-r (Edmonton Symptom Assessment System Revised) Saved Successfully!');
     }
 
     public function pain_assessment(Request $request)
     {
         $validated = $request->validate([
-            'assessment_date' => 'nullable|date',
-            'is_pain' => 'nullable|in:Yes,No',
-            'pain_score' => 'nullable|integer|min:0|max:10',
-            'provocation' => 'nullable|string|max:255',
-            'provocation_quality' => 'nullable|array',
+            'assessment_date' => 'required|date',
+            'is_pain' => 'required|in:Yes,No',
+            'pain_score' => 'required|integer|min:0|max:10',
+            'provocation' => 'required|string|max:255',
+            'provocation_quality' => 'required|array',
             'provocation_quality.*' => 'string|max:100',
-            'provocation_region' => 'nullable|string|max:1000',
-            'provocation_remarks' => 'nullable|string|max:255',
-            'severity' => 'nullable|integer|min:1|max:10',
-            'timing' => 'nullable|string|max:1000',
+            'provocation_region' => 'required|string|max:1000',
+            'provocation_remarks' => 'required|string|max:255',
+            'severity' => 'required|integer|min:1|max:10',
+            'timing' => 'required|string|max:1000',
             'findings' => 'nullable|string|max:1000',
-            'verbal_vocal' => 'nullable|array',
+            'verbal_vocal' => 'required|array',
             'verbal_vocal.*' => 'string|max:255',
-            'body_movement' => 'nullable|array',
+            'body_movement' => 'required|array',
             'body_movement.*' => 'string|max:255',
-            'facial' => 'nullable|array',
+            'facial' => 'required|array',
             'facial.*' => 'string|max:255',
-            'touching' => 'nullable|array|max:255',
-            'associated_signs' => 'nullable|string|max:255',
-            'signs' => 'nullable|array',
+            'touching' => 'required|array|max:255',
+            'associated_signs' => 'required|string|max:255',
+            'signs' => 'required|array',
             'signs.*' => 'string|max:255',
-            'paracetamol' => 'nullable|in:Yes,No',
+
+            'paracetamol' => 'required|in:Yes,No',
             'paracetamol_pain_controlled' => 'nullable|in:Yes,No',
             'paracetamol_date' => 'nullable|date',
-            'nsaids' => 'nullable|in:Yes,No',
+
+            'nsaids' => 'required|in:Yes,No',
             'nsaids_pain_controlled' => 'nullable|in:Yes,No',
             'nsaids_date' => 'nullable|date',
-            'tramadol' => 'nullable|in:Yes,No',
+
+            'tramadol' => 'required|in:Yes,No',
             'tramadol_pain_controlled' => 'nullable|in:Yes,No',
             'tramadol_date' => 'nullable|date',
-            'opioid' => 'nullable|in:Yes,No',
+            
+            'opioid' => 'required|in:Yes,No',
             'opioid_pain_controlled' => 'nullable|in:Yes,No',
             'opioid_date' => 'nullable|date',
-            'other_drugs' => 'nullable|in:Yes,No',
+
+            'other_drugs' => 'required|in:Yes,No',
             'other_drugs_specify_name' => 'nullable|string|max:255',
             'other_drugs_pain_controlled' => 'nullable|in:Yes,No',
             'other_drugs_date' => 'nullable|date',
-            'non_pharma' => 'nullable|in:Yes,No',
+
+            'non_pharma' => 'required|in:Yes,No',
             'non_pharma_specify_name' => 'nullable|string|max:255',
             'non_pharma_pain_controlled' => 'nullable|in:Yes,No',
             'non_pharma_date' => 'nullable|date',
+
             'other_notes' => 'nullable|string|max:2000',
         ]);
-        $code = session('code');
+
+        foreach ([
+            'paracetamol','nsaids',
+            'tramadol', 'opioid',
+            'other_drugs', 'non_pharma'
+         ] as $key) {
+            if($validated[$key] == "No"){
+                $validated[$key.'_pain_controlled'] = null;
+                $validated[$key.'_date'] = null;
+                if($key == "other_drugs" || $key == "non_pharma"){
+                    $validated[$key.'_specify_name'] = null;
+                }
+            }
+        }
+
+        // $code = session('code');
+        $code = 1;
+
         $validated['code'] = $code;
         F4painassessment::updateOrCreate(['code' => $code], $validated);
 
@@ -130,31 +154,48 @@ class Form4Controller extends Controller
     public function palliative_care(Request $request)
     {
         $validated = $request->validate([
-            'nutritional_care'     => 'nullable|in:Yes,No',
+            'nutritional_care'     => 'required|in:Yes,No',
             'nutritional_place'    => 'nullable|in:Home,Hospital,Community-based',
             'nutritional_improved' => 'nullable|in:Yes,No,Not assessed',
 
-            'nursing_care'     => 'nullable|in:Yes,No',
+            'nursing_care'     => 'required|in:Yes,No',
             'nursing_place'    => 'nullable|in:Home,Hospital,Community-based',
             'nursing_improved' => 'nullable|in:Yes,No,Not assessed',
 
-            'rehabilitation_care'     => 'nullable|in:Yes,No',
+            'rehabilitation_care'     => 'required|in:Yes,No',
             'rehabilitation_place'    => 'nullable|in:Home,Hospital,Community-based',
             'rehabilitation_improved' => 'nullable|in:Yes,No,Not assessed',
 
-            'psychosocial_care'     => 'nullable|in:Yes,No',
+            'psychosocial_care'     => 'required|in:Yes,No',
             'psychosocial_place'    => 'nullable|in:Home,Hospital,Community-based',
             'psychosocial_improved' => 'nullable|in:Yes,No,Not assessed',
 
-            'spiritual_care'     => 'nullable|in:Yes,No',
+            'spiritual_care'     => 'required|in:Yes,No',
             'spiritual_place'    => 'nullable|in:Home,Hospital,Community-based',
             'spiritual_improved' => 'nullable|in:Yes,No,Not assessed',
 
-            'others_care'     => 'nullable|in:Yes,No',
+            'others_care'     => 'required|in:Yes,No',
             'others_specify'  => 'nullable|string|max:255',
             'others_place'    => 'nullable|in:Home,Hospital,Community-based',
             'others_improved' => 'nullable|in:Yes,No,Not assessed',
         ]);
+
+        foreach (['nutritional', 'nursing', 'rehabilitation', 'psychosocial', 'spiritual', 'others'] as $key) {
+
+            if ($validated[$key . '_care'] === "No") {
+                $validated[$key . '_place']    = null;
+                $validated[$key . '_improved'] = null;
+
+                if ($key === "others") {
+                    $validated['others_specify'] = null;
+                }
+            } else {
+                if (empty($validated[$key . '_place']) || empty($validated[$key . '_improved'])) {
+                    return back()->withErrors(["{$key}_place" => "Please occupy the fields in {$key} care section."])
+                                ->withInput();
+                }
+            }
+        }
 
         $validated['code'] = session('code');
 
@@ -176,11 +217,11 @@ class Form4Controller extends Controller
         $validated = $request->validate([
             'diagnosis_outcome'      => 'required|array',
             'diagnosis_outcome.*'    => 'string|max:255',
-            'diagnosis_outcome_date' => 'nullable|date',
-            'immediate_cause'        => 'nullable|string|max:255',
-            'antecedent_cause'       => 'nullable|string|max:255',
-            'underlying_cause'       => 'nullable|string|max:255',
-            'other_condition'        => 'nullable|string|max:255',
+            'diagnosis_outcome_date' => 'required|date',
+            'immediate_cause'        => 'required|string|max:255',
+            'antecedent_cause'       => 'required|string|max:255',
+            'underlying_cause'       => 'required|string|max:255',
+            'other_condition'        => 'required|string|max:255',
         ]);
         $validated['code'] = session('code');
 
@@ -195,15 +236,20 @@ class Form4Controller extends Controller
             'financial_type'    => 'nullable|array',
             'financial_type.*'  => 'nullable|string|max:255',
             'financial_other'   => 'nullable|string|max:255',
-            'cspmap_meds'       => 'nullable|array',
+            'cspmap_meds'       => 'required|array',
             'cspmap_meds.*'     => 'nullable|string|max:255',
             'cspmap_other'      => 'nullable|string|max:255',
-            'other_meds'        => 'nullable|array',
+            'other_meds'        => 'required|array',
             'other_meds.*'      => 'nullable|string|max:255',
             'other_med_other'   => 'nullable|string|max:255',
         ]);
 
         $validated['code'] = session('code');
+
+        if($validated['financial_support'] == "No"){
+            $validated["financial_type"] = null;
+            $validated["financial_other"] = null;
+        }
 
         F4financialsupportmechanism::updateOrCreate(
             ['code' => $validated['code']],
@@ -219,8 +265,8 @@ class Form4Controller extends Controller
                 ->where('status', 1)
                 ->first();
 
+        Session::forget(['code']);
         return redirect('admin/forms/'.$data->id)->with('success', 'Form 4 was saved successfully!');
-
     }
 
 }
