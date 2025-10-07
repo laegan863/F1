@@ -3999,16 +3999,16 @@
                     
                     <td class="s13" dir="ltr">115</td>
                     <td class="s14" colspan="11">Date of Diagnosis Outcome</td>
-                    <td class="s15" dir="ltr" style="color: black">{{ $dod[0] }}</td>
-                    <td class="s15" dir="ltr" style="color: black">{{ $dod[1] }}</td>
-                    <td class="s15" dir="ltr" style="color: black">{{ $dod[2] }}</td>
-                    <td class="s15" dir="ltr" style="color: black">{{ $dod[3] }}</td>
+                    <td class="s15" dir="ltr" style="color: black">{{ $dod[0] ?? '' }}</td>
+                    <td class="s15" dir="ltr" style="color: black">{{ $dod[1] ?? '' }}</td>
+                    <td class="s15" dir="ltr" style="color: black">{{ $dod[2] ?? '' }}</td>
+                    <td class="s15" dir="ltr" style="color: black">{{ $dod[3] ?? '' }}</td>
                     <td class="s16" dir="ltr">-</td>
-                    <td class="s15" dir="ltr" style="color: black">{{ $dod[4] }}</td>
-                    <td class="s15" dir="ltr" style="color: black">{{ $dod[5] }}</td>
+                    <td class="s15" dir="ltr" style="color: black">{{ $dod[4] ?? '' }}</td>
+                    <td class="s15" dir="ltr" style="color: black">{{ $dod[5] ?? '' }}</td>
                     <td class="s16" dir="ltr">-</td>
-                    <td class="s15" dir="ltr" style="color: black">{{ $dod[6] }}</td>
-                    <td class="s15" dir="ltr" style="color: black">{{ $dod[7] }}</td>
+                    <td class="s15" dir="ltr" style="color: black">{{ $dod[6] ?? '' }}</td>
+                    <td class="s15" dir="ltr" style="color: black">{{ $dod[7] ?? '' }}</td>
                     <td class="s89"></td>
                     <td class="s89"></td>
                     <td class="s89"></td>
@@ -4033,22 +4033,22 @@
                     <td class="s13" dir="ltr" rowspan="4">116</td>
                     <td class="s14" colspan="11" rowspan="4">Cause of Death</td>
                     <td class="s91" colspan="8">Immediate Cause</td>
-                    <td class="s74" colspan="20">{{ $f3cancerdiagnoseoutcomes['cause_immediate'] }}</td>
+                    <td class="s74" colspan="20">{{ $f3cancerdiagnoseoutcomes['cause_immediate'] ?? '' }}</td>
                 </tr>
                 <tr style="height: 24px">
                     
                     <td class="s91" colspan="8">Antecedent Cause</td>
-                    <td class="s74" colspan="20">{{ $f3cancerdiagnoseoutcomes['cause_antecedent'] }}</td>
+                    <td class="s74" colspan="20">{{ $f3cancerdiagnoseoutcomes['cause_antecedent'] ?? '' }}</td>
                 </tr>
                 <tr style="height: 24px">
                     
                     <td class="s91" colspan="8">Underlying Cause</td>
-                    <td class="s74" colspan="20">{{ $f3cancerdiagnoseoutcomes['cause_underlying'] }}</td>
+                    <td class="s74" colspan="20">{{ $f3cancerdiagnoseoutcomes['cause_underlying'] ?? '' }}</td>
                 </tr>
                 <tr style="height: 39px">
                     
                     <td class="s74" colspan="8">Other significant condition directly leading to death:</td>
-                    <td class="s74" colspan="20">{{ $f3cancerdiagnoseoutcomes['cause_other'] }}</td>
+                    <td class="s74" colspan="20">{{ $f3cancerdiagnoseoutcomes['cause_other'] ?? '' }}</td>
                 </tr>
                 <tr style="height: 29px">
                     
@@ -4149,7 +4149,7 @@
                     </td>
                     <td class="s19" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#{{ in_array('None', $f3cancertreatmenthistories['first_adverse_event'] ?? []) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $f3cancertreatmenthistories['first_adverse_event'] == "None" ? 'checked' : 'unchecked'}}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">1</td>
                     <td class="s20 softmerge">
@@ -4160,7 +4160,7 @@
                     <td class="s3"></td>
                     <td class="s19" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#{{ in_array('Major', $f3cancertreatmenthistories['first_adverse_event'] ?? []) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $f3cancertreatmenthistories['first_adverse_event'] == "Major" ? 'checked' : 'unchecked'}}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">3</td>
                     <td class="s20 softmerge">
@@ -4171,7 +4171,7 @@
                     <td class="s3"></td>
                     <td class="s19" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#{{ in_array('Unknown', $f3cancertreatmenthistories['first_adverse_event'] ?? []) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $f3cancertreatmenthistories['first_adverse_event'] == "Unknown" ? 'checked' : 'unchecked'}}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">5</td>
                     <td class="s20 softmerge">
@@ -4190,7 +4190,7 @@
                     <td class="s83"></td>
                     <td class="s51" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#{{ in_array('Minor', $f3cancertreatmenthistories['first_adverse_event'] ?? []) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $f3cancertreatmenthistories['first_adverse_event'] == "Minor" ? 'checked' : 'unchecked'}}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s52" dir="ltr">2</td>
                     <td class="s53 softmerge">
@@ -4201,7 +4201,7 @@
                     <td class="s95"></td>
                     <td class="s51" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#{{ in_array('Serious', $f3cancertreatmenthistories['first_adverse_event'] ?? []) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $f3cancertreatmenthistories['first_adverse_event'] == "Serious" ? 'checked' : 'unchecked'}}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s52" dir="ltr">4</td>
                     <td class="s53 softmerge">
@@ -4227,7 +4227,7 @@
 
                     $s2dateParts = str_split(str_replace('-', '', $f3['second_surgery_date'] ?? '')); // YYYYMMDD -> 8 chars
                     $s2goals = $f3['second_goal'] ?? []; // array: ['Diagnostic','Curative','Palliative']
-                    $s2adverse = (array) ($f3['second_adverse_event'] ?? []); // array any of: None, Minor, Major, Serious, Unknown
+                    $s2adverse = $f3['second_adverse_event'] ?? ''; // array any of: None, Minor, Major, Serious, Unknown
                 @endphp
 
                 <tr style="height: 24px">
@@ -4366,7 +4366,7 @@
                     {{-- None --}}
                     <td class="s19" dir="ltr">
                         <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ in_array('None', $s2adverse) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $s2adverse == 'None' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg>
                     </td>
                     <td class="s1" dir="ltr">1</td>
@@ -4380,7 +4380,7 @@
                     {{-- Major --}}
                     <td class="s19" dir="ltr">
                         <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ in_array('Major', $s2adverse) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $s2adverse == 'Major' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg>
                     </td>
                     <td class="s1" dir="ltr">3</td>
@@ -4394,7 +4394,7 @@
                     {{-- Unknown --}}
                     <td class="s19" dir="ltr">
                         <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ in_array('Unknown', $s2adverse) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $s2adverse == 'Unknown' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg>
                     </td>
                     <td class="s1" dir="ltr">5</td>
@@ -4417,7 +4417,7 @@
                     {{-- Minor --}}
                     <td class="s51" dir="ltr">
                         <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ in_array('Minor', $s2adverse) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $s2adverse == 'Minor' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg>
                     </td>
                     <td class="s52" dir="ltr">2</td>
@@ -4431,7 +4431,7 @@
                     {{-- Serious --}}
                     <td class="s51" dir="ltr">
                         <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ in_array('Serious', $s2adverse) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $s2adverse == 'Serious' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg>
                     </td>
                     <td class="s52" dir="ltr">4</td>
@@ -4600,7 +4600,7 @@
                     {{-- None --}}
                     <td class="s19" dir="ltr">
                         <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ in_array('None', $s3adverse) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $s3adverse == 'None' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg>
                     </td>
                     <td class="s1" dir="ltr">1</td>
@@ -4614,7 +4614,7 @@
                     {{-- Major --}}
                     <td class="s19" dir="ltr">
                         <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ in_array('Major', $s3adverse) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $s3adverse == 'Major' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg>
                     </td>
                     <td class="s1" dir="ltr">3</td>
@@ -4628,7 +4628,7 @@
                     {{-- Unknown --}}
                     <td class="s19" dir="ltr">
                         <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ in_array('Unknown', $s3adverse) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $s3adverse == 'Unknown' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg>
                     </td>
                     <td class="s1" dir="ltr">5</td>
@@ -4651,7 +4651,7 @@
                     {{-- Minor --}}
                     <td class="s51" dir="ltr">
                         <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ in_array('Minor', $s3adverse) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $s3adverse == 'Minor'  ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg>
                     </td>
                     <td class="s52" dir="ltr">2</td>
@@ -4665,7 +4665,7 @@
                     {{-- Serious --}}
                     <td class="s51" dir="ltr">
                         <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ in_array('Serious', $s3adverse) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $s3adverse == 'Serious' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg>
                     </td>
                     <td class="s52" dir="ltr">4</td>
@@ -4834,7 +4834,7 @@
                     {{-- None --}}
                     <td class="s19" dir="ltr">
                         <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ in_array('None', $s4adverse) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $s4adverse == 'None' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg>
                     </td>
                     <td class="s1" dir="ltr">1</td>
@@ -4848,7 +4848,7 @@
                     {{-- Major --}}
                     <td class="s19" dir="ltr">
                         <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ in_array('Major', $s4adverse) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $s4adverse == 'Major' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg>
                     </td>
                     <td class="s1" dir="ltr">3</td>
@@ -4862,7 +4862,7 @@
                     {{-- Unknown --}}
                     <td class="s19" dir="ltr">
                         <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ in_array('Unknown', $s4adverse) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $s4adverse == 'Unknown' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg>
                     </td>
                     <td class="s1" dir="ltr">5</td>
@@ -4885,7 +4885,7 @@
                     {{-- Minor (note: different classes here vs earlier rows; preserved) --}}
                     <td class="s101" dir="ltr">
                         <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ in_array('Minor', $s4adverse) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{  $s4adverse == 'Minor' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg>
                     </td>
                     <td class="s102" dir="ltr">2</td>
@@ -4899,7 +4899,7 @@
                     {{-- Serious --}}
                     <td class="s101" dir="ltr">
                         <svg width="16px" height="16px" viewBox="0 0 16 16" style="display:inline;">
-                            <use href="#{{ in_array('Serious', $s4adverse) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ $s4adverse == 'Serious' ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg>
                     </td>
                     <td class="s102" dir="ltr">4</td>
