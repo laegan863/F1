@@ -294,7 +294,7 @@ class Form3Controller extends Controller
 
     public function financial_support(Request $request)
     {
-        Session::put('code', 4);
+        // Session::put('code', 5);
         $validated = $request->validate([
             'financial_support'   => 'required|in:Yes,No',
             'financial_type'      => 'nullable|array',
@@ -326,6 +326,7 @@ class Form3Controller extends Controller
                 ->where('hospitalID', $user->hospitalID)
                 ->where('status', 1)
                 ->first();
+
         Session::forget(['code']);
         return redirect('admin/forms/'.$data->id)->with('success', 'Form 3 was saved successfully!');
     }
