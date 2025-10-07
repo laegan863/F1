@@ -80,6 +80,7 @@ Route::middleware(IsNotAuth::class)->group(function(){
     });
 
     Route::prefix("form3")->group(function(){
+        Route::view('form', 'forms.form3.form')->name('form3');
         Route::view("patient-surveillance-form", "forms.form3.patient-surveillance-form")->name('form3-firstpage');
         Route::view("cancer-diagnose-outome", "forms.form3.cancer-diagnose-outcome")->name('form3.secondpage');
         Route::view("cancer-treatment-history", "forms.form3.cancer-treatment-history")->name('form3.page3');

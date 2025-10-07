@@ -31,7 +31,22 @@ class F3patientsurveillanceform extends Model
         'other_staging' => 'array',
     ];
 
-    public function F3cancerdiagnoseoutcome(){
+    public function f3cancerdiagnoseoutcomes(){
         return $this->hasOne(F3cancerdiagnoseoutcome::class, 'code', 'id');
+    }
+
+    public function f3cancertreatmenthistories()
+    {
+        return $this->hasOne(F3cancertreatmenthistory::class, 'code', 'id');
+    }
+
+    public function f3financialsupports()
+    {
+        return $this->hasOne(F3financialsupport::class, 'code', 'id');
+    }
+
+    public function f3treatmenthistory2s()
+    {
+        return $this->hasOne(F3treatmenthistory2::class, 'code', 'id');
     }
 }

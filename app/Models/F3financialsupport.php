@@ -23,8 +23,7 @@ class F3financialsupport extends Model
         'other_meds' => 'array',
     ];
 
-    public function F3cancerdiagnoseoutcome()
-    {
-        return $this->belongsTo(F3cancerdiagnoseoutcome::class, 'code', 'id');
+    public function f3patientsurveillanceforms(){
+        return $this->belongsTo(F3patientsurveillanceform::class, 'code', 'id');
     }
 }

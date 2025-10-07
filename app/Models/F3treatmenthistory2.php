@@ -47,4 +47,8 @@ class F3treatmenthistory2 extends Model
         // other therapies
         'other_cancer_type' => 'array',
     ];
+
+    public function f3patientsurveillanceforms(){
+        return $this->belongsTo(F3patientsurveillanceform::class, 'code', 'id');
+    }
 }
