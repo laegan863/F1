@@ -207,58 +207,8 @@ class Form2Controller extends Controller
             $validated
         );
 
-        return to_route('form2.sixpage')
+        return to_route('form2.fifthpage')
                 ->with('success', 'Patient ECOG status saved successfully.');
-    }
-
-    public function store_cancer_diagnose(Request $request)
-    {
-        $validated = $request->validate([
-            'diagnosis_outcome'       => 'nullable|array',
-            'diagnosis_outcome.*'     => 'string|max:255',
-            'diagnosis_outcome_date'  => 'nullable|date',
-
-            'cause_immediate'   => 'nullable|string|max:255',
-            'cause_antecedent'  => 'nullable|string|max:255',
-            'cause_underlying'  => 'nullable|string|max:255',
-            'cause_other'       => 'nullable|string|max:255',
-
-            'financial_support' => 'required|in:Yes,No',
-            'financial_type'    => 'nullable|array',
-            'financial_type.*'  => 'string|max:255',
-            'financial_other'   => 'nullable|string|max:255',
-
-            'cspmap_meds'       => 'nullable|array',
-            'cspmap_meds.*'     => 'string|max:255',
-            'cspmap_other'      => 'nullable|string|max:255',
-
-            'other_meds'        => 'nullable|array',
-            'other_meds.*'      => 'string|max:255',
-            'other_med_other'   => 'nullable|string|max:255',
-        ]);
-
-        $validated['code'] = session('code');
-        if($validated['financial_support'] == "No"){
-            $validated['financial_type'] = null;
-        }
-
-        F2cancerdiagnoseoutcome::updateOrCreate(
-            ['code' => $validated['code']],
-            $validated
-        );
-
-        $user = F2followup::findOrFail($validated['code']);
-        $user->status = 1;
-        $user->save();
-
-        $data = DB::table('demographicprofiles')
-                ->where('hospitalID', $user->hospitalID)
-                ->where('status', 1)
-                ->first();
-        
-        return redirect('admin/forms/'.$data->id);
-
-        
     }
 
     public function change_treatment_plan(Request $request)
@@ -292,6 +242,7 @@ class Form2Controller extends Controller
 
             // Radiotherapy
             'radio_change'       => 'required|string',
+            'radio_treatment_plan' => 'nullable|string',
             'radio_reason'       => 'nullable|string',
             'radio_date_start'   => 'nullable|date',
             'radio_date_end'     => 'nullable|date',
@@ -303,18 +254,20 @@ class Form2Controller extends Controller
 
             // Theranostics
             'thera_change'       => 'required|string',
+            'thera_treatment_plan' => 'nullable|string',
             'thera_reason'       => 'nullable|string',
             'thera_type'         => 'nullable|array',
             'thera_type_other'   => 'nullable|string',
+            'thera_total_planned_dose' => 'nullable|string',
             'thera_total_fractions' => 'nullable|string',
             'thera_dose_fraction'=> 'nullable|string',
 
             // Palliative Care
             'palliative'         => 'required|string',
-            'palliative_reason'  => 'nullable|string',
 
             // Other Cancer Directed Therapies
             'other_cancer'       => 'required|string',
+            'other_cancer_treatment_plan' => 'nullable|string',
             'other_cancer_type'  => 'nullable|array',
             'other_cancer_other' => 'nullable|string',
             'other_cancer_reason'=> 'nullable|string',
@@ -352,6 +305,7 @@ class Form2Controller extends Controller
 
         if ($validated['radio_change'] === "No") {
             $validated['radio_reason'] = null;
+            $validated['radio_treatment_plan'] = null;
             $validated['radio_date_start'] = null;
             $validated['radio_date_end'] = null;
             $validated['radio_total_dose'] = null;
@@ -367,26 +321,77 @@ class Form2Controller extends Controller
             $validated['thera_type_other'] = null;
             $validated['thera_total_fractions'] = null;
             $validated['thera_dose_fraction'] = null;
-        }
-
-        if ($validated['palliative'] === "No") {
-            $validated['palliative_reason'] = null;
+            $validated['thera_treatment_plan'] = null;
+            $validated['thera_total_planned_dose'] = null;
         }
 
         if ($validated['other_cancer'] === "No") {
             $validated['other_cancer_type'] = null;
             $validated['other_cancer_other'] = null;
             $validated['other_cancer_reason'] = null;
+            $validated['other_cancer_treatment_plan'] = null;
         }
 
-        $validated['code'] = session('code');
+        
+        // $validated['code'] = session('code');
 
         F2changetreatmentplan::updateOrCreate(['code' => $validated['code']], $validated);
-        Session::forget(['code']);
+
         return to_route('form2.sixpage')->with('success', 'Change in treatment plan data, Saved successfully!');
-        return response()->json([
-            'data' => $validated
+
+    }
+
+    public function store_cancer_diagnose(Request $request)
+    {
+        $validated = $request->validate([
+            'diagnosis_outcome'       => 'nullable|array',
+            'diagnosis_outcome.*'     => 'string|max:255',
+            'diagnosis_outcome_date'  => 'nullable|date',
+
+            'cause_immediate'   => 'nullable|string|max:255',
+            'cause_antecedent'  => 'nullable|string|max:255',
+            'cause_underlying'  => 'nullable|string|max:255',
+            'cause_other'       => 'nullable|string|max:255',
+
+            'financial_support' => 'required|in:Yes,No',
+            'financial_type'    => 'nullable|array',
+            'financial_type.*'  => 'string|max:255',
+            'financial_other'   => 'nullable|string|max:255',
+
+            'cspmap_meds'       => 'nullable|array',
+            'cspmap_meds.*'     => 'string|max:255',
+            'cspmap_other'      => 'nullable|string|max:255',
+
+            'other_meds'        => 'nullable|array',
+            'other_meds.*'      => 'string|max:255',
+            'other_med_other'   => 'nullable|string|max:255',
         ]);
+
+        $validated['code'] = 10;
+        // $validated['code'] = session('code');
+        if($validated['financial_support'] == "No"){
+            $validated['financial_type'] = null;
+        }
+
+        F2cancerdiagnoseoutcome::updateOrCreate(
+            ['code' => $validated['code']],
+            $validated
+        );
+
+        $user = F2followup::findOrFail($validated['code']);
+        $user->status = 1;
+        $user->save();
+
+        $data = DB::table('demographicprofiles')
+                ->where('hospitalID', $user->hospitalID)
+                ->where('status', 1)
+                ->first();
+
+        Session::forget(['code']);
+        
+        return redirect('admin/forms/'.$data->id);
+
+        
     }
 
 }

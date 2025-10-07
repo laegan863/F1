@@ -4424,16 +4424,16 @@
                 <td class="s1" dir="ltr">2</td>
                 <td class="s43" colspan="2">No</td>
                 <td class="s15" colspan="9">Surgery Date</td>
-                <td class="s90" dir="ltr" style="color:#000000 !important">{{ $sdate[0] }}</td>
-                <td class="s90" dir="ltr" style="color:#000000 !important">{{ $sdate[1] }}</td>
-                <td class="s90" dir="ltr" style="color:#000000 !important">{{ $sdate[2] }}</td>
-                <td class="s90" dir="ltr" style="color:#000000 !important">{{ $sdate[3] }}</td>
+                <td class="s90" dir="ltr" style="color:#000000 !important">{{ $sdate[0] ?? '' }}</td>
+                <td class="s90" dir="ltr" style="color:#000000 !important">{{ $sdate[1] ?? '' }}</td>
+                <td class="s90" dir="ltr" style="color:#000000 !important">{{ $sdate[2] ?? '' }}</td>
+                <td class="s90" dir="ltr" style="color:#000000 !important">{{ $sdate[3] ?? '' }}</td>
                 <td class="s17" dir="ltr" style="color:#000000 !important">-</td>
-                <td class="s90" dir="ltr" style="color:#000000 !important">{{ $sdate[4] }}</td>
-                <td class="s90" dir="ltr" style="color:#000000 !important">{{ $sdate[5] }}</td>
+                <td class="s90" dir="ltr" style="color:#000000 !important">{{ $sdate[4] ?? '' }}</td>
+                <td class="s90" dir="ltr" style="color:#000000 !important">{{ $sdate[5] ?? '' }}</td>
                 <td class="s17" dir="ltr" style="color:#000000 !important">-</td>
-                <td class="s90" dir="ltr" style="color:#000000 !important">{{ $sdate[6] }}</td>
-                <td class="s90" dir="ltr" style="color:#000000 !important">{{ $sdate[7] }}</td>
+                <td class="s90" dir="ltr" style="color:#000000 !important">{{ $sdate[6] ?? '' }}</td>
+                <td class="s90" dir="ltr" style="color:#000000 !important">{{ $sdate[7] ?? '' }}</td>
                 <td class="s91" colspan="9"></td>
             </tr>
             @php
@@ -6951,16 +6951,16 @@
                 <td class="s137" dir="ltr"></td>
                 <td class="s142" dir="ltr"></td>
                 <td class="s69" dir="ltr" colspan="9">Next Chemotherapy Cycle Date</td>
-                <td class="s90" dir="ltr" style="color: black">{{ $new_next_cycle[0] }}</td>
-                <td class="s90" dir="ltr" style="color: black">{{ $new_next_cycle[1] }}</td>
-                <td class="s90" dir="ltr" style="color: black">{{ $new_next_cycle[2] }}</td>
-                <td class="s90" dir="ltr" style="color: black">{{ $new_next_cycle[3] }}</td>
+                <td class="s90" dir="ltr" style="color: black">{{ $new_next_cycle[0] ?? '' }}</td>
+                <td class="s90" dir="ltr" style="color: black">{{ $new_next_cycle[1] ?? '' }}</td>
+                <td class="s90" dir="ltr" style="color: black">{{ $new_next_cycle[2] ?? '' }}</td>
+                <td class="s90" dir="ltr" style="color: black">{{ $new_next_cycle[3] ?? '' }}</td>
                 <td class="s17" dir="ltr" style="color: black">-</td>
-                <td class="s90" dir="ltr" style="color: black">{{ $new_next_cycle[4] }}</td>
-                <td class="s90" dir="ltr" style="color: black">{{ $new_next_cycle[5] }}</td>
+                <td class="s90" dir="ltr" style="color: black">{{ $new_next_cycle[4] ?? '' }}</td>
+                <td class="s90" dir="ltr" style="color: black">{{ $new_next_cycle[5] ?? '' }}</td>
                 <td class="s17" dir="ltr" style="color: black">-</td>
-                <td class="s90" dir="ltr" style="color: black">{{ $new_next_cycle[6] }}</td>
-                <td class="s90" dir="ltr" style="color: black">{{ $new_next_cycle[7] }}</td>
+                <td class="s90" dir="ltr" style="color: black">{{ $new_next_cycle[6] ?? '' }}</td>
+                <td class="s90" dir="ltr" style="color: black">{{ $new_next_cycle[7] ?? '' }}</td>
             </tr>
             <tr style="height: 9px">
                 
@@ -7699,7 +7699,7 @@
                 <td class="s4"></td>
                 <td class="s43"></td>
                 <td class="s15" colspan="10">What change in treatment plan?</td>
-                <td class="s156" colspan="18"></td>
+                <td class="s156" colspan="18">{{ $theranostics['thera_treatment_plan'] ?? '' }}</td>
             </tr>
             <tr style="height: 21px">
                 
@@ -8203,7 +8203,7 @@
                     </svg></td>
                 <td class="s1" dir="ltr">7</td>
                 <td class="s5" dir="ltr" colspan="4">Others, specify:</td>
-                <td class="s163" colspan="9"></td>
+                <td class="s163" colspan="9">{{ $data->f2changetreatmentplans['other_cancer_other'] ?? '' }}</td>
                 <td class="s76"></td>
             </tr>
             <tr style="height: 23px">
@@ -8253,7 +8253,7 @@
                 <td></td>
                 <td class="s31"></td>
                 <td class="s15" colspan="10">What change in treatment plan?</td>
-                <td class="s156" colspan="18">wala pani attribute</td>
+                <td class="s156" colspan="18">{{ $theranostics['other_cancer_treatment_plan'] ?? '' }}</td>
             </tr>
             <tr style="height: 39px">
                 
@@ -9203,7 +9203,7 @@
                         style="font-weight:normal;font-style:italic;">(can be multiple)</span></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Asparaginase 10,000 IU vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Asparaginase 10,000 IU vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">1</td>
                 <td class="s108" colspan="12">Asparaginase 10,000 IU vial</td>
@@ -9211,7 +9211,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Idarubicin 5 mg vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Idarubicin 5 mg vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">32</td>
                 <td class="s108" colspan="13">Idarubicin 5 mg vial</td>
@@ -9221,7 +9221,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Bicalutamide 50 mg', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Bicalutamide 50 mg', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">2</td>
                 <td class="s108" colspan="12">Bicalutamide 50 mg</td>
@@ -9229,7 +9229,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Ifosfamide 1 g vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Ifosfamide 1 g vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">33</td>
                 <td class="s108" colspan="13">Ifosfamide 1 g vial</td>
@@ -9239,7 +9239,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Bleomycin (as Sulfate) 15 mg Vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Bleomycin (as Sulfate) 15 mg vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">3</td>
                 <td class="s108" colspan="12">Bleomycin (as Sulfate) 15 mg Vial</td>
@@ -9247,7 +9247,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Imatinib 400 mg tablet', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Imatinib 400 mg tablet', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">34</td>
                 <td class="s108" colspan="13">Imatinib 400 mg tablet</td>
@@ -9257,7 +9257,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Calcium Folinate (Leucovorin Calcium) 50 mg vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Calcium Folinate (Leucovorin Calcium) 50 mg vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">4</td>
                 <td class="s108" colspan="12">Calcium Folinate (Leucovorin Calcium) 50 mg vial</td>
@@ -9265,7 +9265,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Imatinib Mesilate 100 mg tablet', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Imatinib Mesilate 100 mg tablet', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">35</td>
                 <td class="s108" colspan="13">Imatinib Mesilate 100 mg tablet</td>
@@ -9275,7 +9275,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Capecitabine 500 mg Tablet', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Capecitabine 500 mg tablet', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">5</td>
                 <td class="s108" colspan="12">Capecitabine 500 mg Tablet</td>
@@ -9283,7 +9283,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Irinotecan 40 mg/2 mL vial concentrate vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Irinotecan 40 mg/2 mL vial concentrate vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">36</td>
                 <td class="s108" colspan="13">Irinotecan 40 mg/2 mL vial concentrate vial</td>
@@ -9293,7 +9293,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Carboplatin 150 mg vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Carboplatin 150 mg vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">6</td>
                 <td class="s108" colspan="12">Carboplatin 150 mg vial</td>
@@ -9301,7 +9301,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Letrozole 2.5 mg Tablet', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Letrozole 2.5 mg Tablet', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">37</td>
                 <td class="s108" colspan="13">Letrozole 2.5 mg Tablet</td>
@@ -9311,7 +9311,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Carboplatin 450 mg vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Carboplatin 450 mg vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">7</td>
                 <td class="s108" colspan="12">Carboplatin 450 mg vial</td>
@@ -9319,7 +9319,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Leuproreline Acetate 3.75 mg vial (PFS)', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Leuproreline Acetate 3.75 mg vial (PFS)', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">38</td>
                 <td class="s108" colspan="13">Leuproreline Acetate 3.75 mg vial (PFS)</td>
@@ -9329,7 +9329,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Cisplatin 1 mg/mL, 10 mL vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Cisplatin 1 mg/mL, 10 mL vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">8</td>
                 <td class="s108" colspan="12">Cisplatin 1 mg/mL, 10 mL vial</td>
@@ -9337,7 +9337,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Mercaptopurine 50 mg tablet', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Mercaptopurine 50 mg tablet', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">39</td>
                 <td class="s108" colspan="13">Mercaptopurine 50 mg tablet</td>
@@ -9347,7 +9347,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Cisplatin 1 mg/mL, 50 mL vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Cisplatin 1 mg/mL, 50 mL vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">9</td>
                 <td class="s108" colspan="12">Cisplatin 1 mg/mL, 50 mL vial</td>
@@ -9355,7 +9355,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Mesna 100 mg/mL, 4 mL Amp', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Mesna 100 mg/mL, 4 mL Amp', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">40</td>
                 <td class="s108" colspan="13">Mesna 100 mg/mL, 4 mL Amp</td>
@@ -9365,7 +9365,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Cyclophosphamide 500 mg powder vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Cyclophosphamide 500 mg powder vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">10</td>
                 <td class="s108" colspan="12">Cyclophosphamide 500 mg powder vial</td>
@@ -9373,7 +9373,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Methotrexate 2.5 mg tablet', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Methotrexate 2.5 mg tablet', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">41</td>
                 <td class="s108" colspan="13">Methotrexate 2.5 mg tablet</td>
@@ -9383,7 +9383,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Cytarabine 100 mg/mL 1 mL vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Cytarabine 100 mg/mL 1 mL vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">11</td>
                 <td class="s108" colspan="12">Cytarabine 100 mg/mL 1 mL vial</td>
@@ -9391,7 +9391,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Methotrexate 25 mg/mL, 2 mL vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Methotrexate 25 mg/mL, 2 mL vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">42</td>
                 <td class="s108" colspan="13">Methotrexate 25 mg/mL, 2 mL vial</td>
@@ -9401,7 +9401,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Cytarabine 100 mg/mL 5 mL vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Cytarabine 100 mg/mL 5 mL vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">12</td>
                 <td class="s108" colspan="12">Cytarabine 100 mg/mL 5 mL vial</td>
@@ -9409,7 +9409,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Metoclopramide 5 mg/mL, 2 mL Ampule', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Metoclopramide 5 mg/mL, 2 mL Ampule', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">43</td>
                 <td class="s108" colspan="13">Metoclopramide 5 mg/mL, 2 mL Ampule</td>
@@ -9419,7 +9419,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Dacarbazine 200 mg vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Dacarbazine 200 mg vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">13</td>
                 <td class="s108" colspan="12">Dacarbazine 200 mg vial</td>
@@ -9427,7 +9427,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Morphine (as Sulfate) 10 mg tablet', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Morphine (as Sulfate) 10 mg tablet', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">44</td>
                 <td class="s108" colspan="13">Morphine (as Sulfate) 10 mg tablet</td>
@@ -9437,7 +9437,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Dactinomycin (Actinomycin D) 500 mcg powder vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Dactinomycin (Actinomycin D) 500 mcg powder vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">14</td>
                 <td class="s108" colspan="12">Dactinomycin (Actinomycin D) 500 mcg powder vial</td>
@@ -9445,7 +9445,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Morphine (as Sulfate) 10 mg/mL, 1 mL Ampule', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Morphine (as Sulfate) 10 mg/mL, 1 mL Ampule', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">45</td>
                 <td class="s108" colspan="13">Morphine (as Sulfate) 10 mg/mL, 1 mL Ampule</td>
@@ -9455,7 +9455,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Diazepam 5mg/mL, 2 mL amp', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Diazepam 5mg/mL, 2 mL amp', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">15</td>
                 <td class="s108" colspan="12">Diazepam 5mg/mL, 2 mL amp</td>
@@ -9463,7 +9463,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Morphine (as Sulfate) 30 mg tablet', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Morphine (as Sulfate) 30 mg tablet', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">46</td>
                 <td class="s108" colspan="13">Morphine (as Sulfate) 30 mg tablet</td>
@@ -9473,7 +9473,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Diphenhydramine (as Hydrochloride)  50 mg/mL, 1 mL Amp', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Diphenhydramine (as Hydrochloride)  50 mg/mL, 1 mL Amp', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">16</td>
                 <td class="s108" colspan="12">Diphenhydramine (as Hydrochloride)  50 mg/mL, 1 mL Amp</td>
@@ -9481,7 +9481,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Omeprazole 40 mg powder vial + 10 mL solvent Ampule', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Omeprazole 40 mg powder vial + 10 mL solvent Ampule', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">47</td>
                 <td class="s108" colspan="13">Omeprazole 40 mg powder vial + 10 mL solvent Ampule</td>
@@ -9491,7 +9491,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Docetaxel 20 mg/mL, 1 mL vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Docetaxel 20 mg/mL, 1 mL vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">17</td>
                 <td class="s108" colspan="12">Docetaxel 20 mg/mL, 1 mL vial</td>
@@ -9499,7 +9499,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Ondansetron (as Hydrochloride) 2 mg/mL, 2 mL ampule', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Ondansetron (as Hydrochloride) 2 mg/mL, 2 mL ampule', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">48</td>
                 <td class="s108" colspan="13">Ondansetron (as Hydrochloride) 2 mg/mL, 2 mL ampule</td>
@@ -9509,7 +9509,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Ondansetron (as Hydrochloride) 2 mg/mL, 2 mL ampule', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Ondansetron (as Hydrochloride) 2 mg/mL, 2 mL ampule', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">18</td>
                 <td class="s108" colspan="12">Docetaxel 40 mg/mL, 2 mL vial</td>
@@ -9517,7 +9517,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Ondansetron (as Hydrochloride) 2 mg/mL, 2 mL ampule', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Ondansetron (as Hydrochloride) 2 mg/mL, 2 mL ampule', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">49</td>
                 <td class="s108" colspan="13">Ondansetron (as Hydrochloride) 2 mg/mL, 4 mL ampule</td>
@@ -9527,7 +9527,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Doxorubicin 10 mg vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Doxorubicin 10 mg vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">19</td>
                 <td class="s108" colspan="12">Doxorubicin 10 mg vial</td>
@@ -9535,7 +9535,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Oxaliplatin 5 mg/mL concentration solution, 10 mL Vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Oxaliplatin 5 mg/mL concentration solution, 10 mL Vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">50</td>
                 <td class="s108" colspan="13">Oxaliplatin 5 mg/mL concentration solution, 10 mL Vial</td>
@@ -9545,7 +9545,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Doxorubicin 50 mg vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Doxorubicin 50 mg vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">20</td>
                 <td class="s108" colspan="12">Doxorubicin 50 mg vial</td>
@@ -9553,7 +9553,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Paclitaxel 6 mg/mL, 16.7 mL Vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Paclitaxel 6 mg/mL, 16.7 mL Vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">51</td>
                 <td class="s108" colspan="13">Paclitaxel 6 mg/mL, 16.7 mL Vial</td>
@@ -9563,7 +9563,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Epirubicin 50 mg vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Epirubicin 50 mg vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">21</td>
                 <td class="s108" colspan="12">Epirubicin 50 mg vial</td>
@@ -9571,7 +9571,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Paclitaxel 6 mg/mL, 25 mL Vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Paclitaxel 6 mg/mL, 25 mL Vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">52</td>
                 <td class="s108" colspan="13">Paclitaxel 6 mg/mL, 25 mL Vial</td>
@@ -9581,7 +9581,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Etoposide 20 mg/mL, 5 mL amp/vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Etoposide 20 mg/mL, 5 mL amp/vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">22</td>
                 <td class="s108" colspan="12">Etoposide 20 mg/mL, 5 mL amp/vial</td>
@@ -9589,7 +9589,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Ranitidine (as Hydrochloride) 25 mg/mL, 2 mL ampule/vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Ranitidine (as Hydrochloride) 25 mg/mL, 2 mL ampule/vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">53</td>
                 <td class="s38 softmerge">
@@ -9614,7 +9614,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Fentanyl Citrate 50 mcg/mL, 2 mL amp', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Fentanyl Citrate 50 mcg/mL, 2 mL amp', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">23</td>
                 <td class="s108" colspan="12">Fentanyl Citrate 50 mcg/mL, 2 mL amp</td>
@@ -9622,7 +9622,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Rituximab 10 mg/mL, 10 mL Vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Rituximab 10 mg/mL, 10 mL Vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">54</td>
                 <td class="s108" colspan="13">Rituximab 10 mg/mL, 10 mL Vial</td>
@@ -9632,13 +9632,13 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Filgrastim (G-CSF) 300 mcg/0.5 mL Pre-filled syringe (PFS)', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Filgrastim (G-CSF) 300 mcg/0.5 mL Pre-filled syringe (PFS)', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">24</td>
                 <td class="s178" colspan="14">Filgrastim (G-CSF) 300 mcg/0.5 mL Pre-filled syringe (PFS)</td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Rituximab 10 mg/mL, 50 mL Vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Rituximab 10 mg/mL, 50 mL Vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">55</td>
                 <td class="s108" colspan="13">Rituximab 10 mg/mL, 50 mL Vial</td>
@@ -9648,7 +9648,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Fluorouracil 50 mg/mL, 10 mL vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Fluorouracil 50 mg/mL, 10 mL vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">25</td>
                 <td class="s108" colspan="12">Fluorouracil 50 mg/mL, 10 mL vial</td>
@@ -9656,7 +9656,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Tamoxifen 20 mg tablet', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Tamoxifen 20 mg tablet', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">56</td>
                 <td class="s108" colspan="13">Tamoxifen 20 mg tablet</td>
@@ -9666,7 +9666,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Gemcitabine 1 g vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Gemcitabine 1 g vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">26</td>
                 <td class="s108" colspan="12">Gemcitabine 1 g vial</td>
@@ -9674,7 +9674,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Trastuzumab 150 mg Lyophilized Powder', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Trastuzumab 150 mg Lyophilized Powder', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">57</td>
                 <td class="s108" colspan="13">Trastuzumab 150 mg Lyophilized Powder</td>
@@ -9684,7 +9684,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Gemcitabine 200 mg vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Gemcitabine 200 mg vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">27</td>
                 <td class="s108" colspan="12">Gemcitabine 200 mg vial</td>
@@ -9692,7 +9692,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Trastuzumab 600 mg/ 5ml (120mg/ml), 5ml Vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Trastuzumab 600 mg/ 5ml (120mg/ml), 5ml Vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">58</td>
                 <td class="s108" colspan="13">Trastuzumab 600 mg/ 5ml (120mg/ml), 5ml Vial</td>
@@ -9702,13 +9702,13 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Goserelin 3.6 mg depot solution Pre-filled syringe (PFS)', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Goserelin 3.6 mg depot solution Pre-filled syringe (PFS)', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">28</td>
                 <td class="s108" colspan="14">Goserelin 3.6 mg depot solution Pre-filled syringe (PFS)</td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Vinblastine Sulfate 1 mg/mL, 10 mL Vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Vinblastine Sulfate 1 mg/mL, 10 mL Vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">59</td>
                 <td class="s108" colspan="13">Vinblastine Sulfate 1 mg/mL, 10 mL Vial</td>
@@ -9718,7 +9718,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Haloperidol 5 mg/mL, 1 mL amp', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Haloperidol 5 mg/mL, 1 mL amp', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">29</td>
                 <td class="s108" colspan="12">Haloperidol 5 mg/mL, 1 mL amp</td>
@@ -9726,7 +9726,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Vincristine (as Sulfate) 1 mg/mL, 1 mL Vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Vincristine (as Sulfate) 1 mg/mL, 1 mL Vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">60</td>
                 <td class="s108" colspan="13">Vincristine (as Sulfate) 1 mg/mL, 1 mL Vial</td>
@@ -9736,7 +9736,7 @@
                 
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Hydroxyurea 500 mg capsule', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Hydroxyurea 500 mg capsule', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">30</td>
                 <td class="s108" colspan="12">Hydroxyurea 500 mg capsule</td>
@@ -9744,7 +9744,7 @@
                 <td class="s3"></td>
                 <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Vincristine (as sulfate) 1 mg/mL, 2 mL Vial', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Vincristine (as sulfate) 1 mg/mL, 2 mL Vial', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s1" dir="ltr">61</td>
                 <td class="s108" colspan="13">Vincristine (as sulfate) 1 mg/mL, 2 mL Vial</td>
@@ -9754,18 +9754,18 @@
                 
                 <td class="s50" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Hyoscine (as N-butyl bromide) 20 mg/mL. 1 mL amp', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Hyoscine (as N-butyl bromide) 20 mg/mL. 1 mL amp', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s51" dir="ltr">31</td>
                 <td class="s179" colspan="13">Hyoscine (as N-butyl bromide) 20 mg/mL. 1 mL amp</td>
                 <td class="s62"></td>
                 <td class="s50" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
-                        <use href="#{{ in_array('Others', $cspmap_meds) ? 'checked' : 'unchecked ' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ in_array('Others, specify:', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s51" dir="ltr">62</td>
                 <td class="s179" dir="ltr" colspan="4">Others, specify: </td>
-                <td class="s180" colspan="10"></td>
+                <td class="s180" colspan="10">{{ $data->f2cancerdiagnoseoutcomes['cspmap_other'] }}</td>
             </tr>
             @php
                 $other_meds = $data->f2cancerdiagnoseoutcomes['other_meds'] ?? [];

@@ -42,6 +42,7 @@ return new class extends Migration
             $table->text('deferred_reason')->nullable();
 
             $table->string('radio_change')->nullable();
+            $table->string('radio_treatment_plan')->nullable();
             $table->text('radio_reason')->nullable();
             $table->string('radio_date_start')->nullable();
             $table->string('radio_date_end')->nullable();
@@ -55,14 +56,16 @@ return new class extends Migration
             $table->text('thera_reason')->nullable();
             $table->json('thera_type')->nullable();
             $table->string('thera_type_other')->nullable();
+            $table->string('thera_treatment_plan')->nullable();
+            $table->string('thera_total_planned_dose')->nullable();
             $table->string('thera_total_fractions')->nullable();
             $table->string('thera_dose_fraction')->nullable();
 
             $table->string('palliative')->nullable();
-            $table->text('palliative_reason')->nullable();
 
             $table->string('other_cancer')->nullable();
             $table->json('other_cancer_type')->nullable();
+            $table->string('other_cancer_treatment_plan')->nullable();
             $table->string('other_cancer_other')->nullable();
             $table->text('other_cancer_reason')->nullable();
 

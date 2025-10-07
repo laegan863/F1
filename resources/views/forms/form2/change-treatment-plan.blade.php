@@ -272,10 +272,6 @@
                     <label class="form-check-label">No</label>
                 </div>
             </div>
-            <div id="palliativeDetails" class="{{ old('palliative') == 'Yes' ? '' : 'd-none' }}">
-                <label class="form-label">Reason</label>
-                <textarea name="palliative_reason" class="form-control">{{ old('palliative_reason') }}</textarea>
-            </div>
 
             <!-- Other Cancer Directed Therapies -->
             <h5 class="fw-bold mt-3">Other Cancer Directed Therapies</h5>
@@ -312,6 +308,11 @@
                                {{ in_array('Others', old('other_cancer_type', [])) ? '' : 'disabled' }}>
                     @endif
                 @endforeach
+
+                <div class="mb-3">
+                    <label class="form-label mt-2">What change in treatment plan?</label>
+                    <input type="text" name="other_cancer_treatment_plan" value="{{ old('other_cancer_treatment_plan') }}" class="form-control">
+                </div>
 
                 <label class="form-label mt-2">What change in treatment plan?</label>
                 <textarea name="other_cancer_reason" class="form-control">{{ old('other_cancer_reason') }}</textarea>

@@ -163,6 +163,10 @@
                         </div>
                     @endforeach
                 </div>
+                <div class="col-md-4">
+                    <label class="form-label">Remarks</label>
+                    <input type="date" name="surgery_date" class="form-control" value="{{ old('surgery_date') }}">
+                </div>
             </div>
         </div>
 
