@@ -30,6 +30,7 @@ return new class extends Migration
             $table->json('drug_regimen')->nullable();
             $table->json('chemo_cycle')->nullable();
             $table->string('drug_type_other')->nullable();
+            $table->string('remarks')->nullable();
         });
     }
 
