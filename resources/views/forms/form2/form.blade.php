@@ -3870,7 +3870,7 @@
                 <td class="s69" colspan="7">Histologic<span
                         style="font-size:8pt;font-family:Arial;font-weight:bold;color:#000000;"> </span><span
                         style="font-size:11pt;font-family:Arial;font-weight:bold;color:#000000;">Diagnosis</span></td>
-                <td class="s70" dir="ltr" colspan="32">INVASIVE LOBULAR CARCINOMA</td>
+                <td class="s70" dir="ltr" colspan="32">{{ $data->histologic_diagnosis ?? '' }}</td>
             </tr>
             <tr style="height: 24px">
                 

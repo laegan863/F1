@@ -36,4 +36,8 @@ class F3cancertreatmenthistory extends Model
         'third_drug_type' => 'array',
         'fourth_drug_type' => 'array'
     ];
+
+    public function f3patientsurveillanceforms(){
+        return $this->belongsTo(F3patientsurveillanceform::class, 'code', 'id');
+    }
 }
