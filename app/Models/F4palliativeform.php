@@ -12,6 +12,8 @@ class F4palliativeform extends Model
         'hospitalID',
         'date',
         'name',
+        'reason',
+        'setting',
         'primary_cancer_site',
         'primary_cancer_site_other',
         'laterality',
@@ -26,32 +28,34 @@ class F4palliativeform extends Model
 
     protected $casts = [
         'name' => 'array',
+        'reason' => 'array',
+        'setting' => 'array',
         'primary_cancer_site' => 'array',
         'stage' => 'array',
         'other_staging' => 'array',
     ];
 
-    public function F4esas()
+    public function f4esas()
     {
         return $this->hasOne(F4esas::class, 'code', 'id');
     }
 
-    public function F4painassessment()
+    public function f4painassessments()
     {
         return $this->hasOne(F4painassessment::class, "code", "id");
     }
 
-    public function F4palliativecare()
+    public function f4palliativecares()
     {
         return $this->hasOne(F4palliativecare::class, "code", "id");
     }
 
-    public function F4cancerdiagnoseoutcome()
+    public function f4cancerdiagnoseoutcomes()
     {
         return $this->hasOne(F4cancerdiagnoseoutcome::class, "code", "id");
     }
 
-    public function F4financialsupportmechanism()
+    public function f4financialsupportmechanisms()
     {
         return $this->hasOne(F4financialsupportmechanism::class, "code", "id");
     }

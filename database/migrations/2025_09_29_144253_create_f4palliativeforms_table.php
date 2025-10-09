@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('hospitalID');
             $table->string('date');
             $table->json('name');
+            $table->json('reason')->nullable();
+            $table->json('setting')->nullable();
             $table->json('primary_cancer_site');
             $table->string('primary_cancer_site_other')->nullable();
             $table->string('laterality');

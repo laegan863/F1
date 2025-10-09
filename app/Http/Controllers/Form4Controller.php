@@ -20,6 +20,8 @@ class Form4Controller extends Controller
             'name.firstname' => 'required',
             'name.middlename' => 'nullable',
             'name.lastname' => 'required',
+            'reason' => 'required',
+            'setting' => 'required',
             'primary_cancer_site' => 'required',
             'laterality' => 'required',
             'histologic_diagnosis' => 'required',
@@ -137,8 +139,7 @@ class Form4Controller extends Controller
             }
         }
 
-        // $code = session('code');
-        $code = 1;
+        $code = session('code');
 
         $validated['code'] = $code;
         F4painassessment::updateOrCreate(['code' => $code], $validated);

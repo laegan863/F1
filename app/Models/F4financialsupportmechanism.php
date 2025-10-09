@@ -23,7 +23,7 @@ class F4financialsupportmechanism extends Model
         'other_meds'     => 'array',
     ];
 
-    public function F4palliativeform()
+    public function f4palliativeforms()
     {
         return $this->belongsTo(F4palliativeform::class, "code", "id");
     }

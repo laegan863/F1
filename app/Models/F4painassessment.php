@@ -57,7 +57,7 @@ class F4painassessment extends Model
         'signs'               => 'array',
     ];
 
-    public function F4palliativeform()
+    public function f4palliativeforms()
     {
         return $this->belongsTo(F4palliativeform::class, "code", "id");
     }

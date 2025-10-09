@@ -95,6 +95,7 @@ Route::middleware(IsNotAuth::class)->group(function(){
     });
     
     Route::prefix("form4")->group(function(){
+        Route::view('form', 'forms.form4.form')->name('form4');
         Route::view("palliative-form", "forms.form4.palliative-form")->name('form4-firstpage');
         Route::view("esas-r", "forms.form4.esas-r")->name('form4.page2');
         Route::view("prqst", "forms.form4.pain-assessment")->name('form4.page3');

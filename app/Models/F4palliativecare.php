@@ -29,7 +29,7 @@ class F4palliativecare extends Model
         'others_improved',
     ];
 
-    public function F4palliativeform()
+    public function f4palliativeforms()
     {
         return $this->belongsTo(F4palliativeform::class, "code", "id");
     }

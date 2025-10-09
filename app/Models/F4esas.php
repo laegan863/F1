@@ -23,7 +23,7 @@ class F4esas extends Model
         'other_problem_score',
     ];
 
-    public function F4palliativeform()
+    public function f4palliativeforms()
     {
         return $this->belongsTo(F4palliativeform::class, 'code', 'id');
     }

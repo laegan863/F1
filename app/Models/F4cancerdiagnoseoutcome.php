@@ -22,7 +22,7 @@ class F4cancerdiagnoseoutcome extends Model
         'diagnosis_outcome_date' => 'date',
     ];
 
-    public function F4palliativeform()
+    public function f4palliativeforms()
     {
         return $this->belongsTo(F4palliativeform::class, "code", "id");
     }

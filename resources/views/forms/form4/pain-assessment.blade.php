@@ -96,7 +96,7 @@
             <div>
                 <img src="{{ asset("f4-img-1.png") }}" alt="" class="img-fluid">
                 <div class="ps-4" style="font-size: 12px">
-                    No hurt ... Hurts Worst
+                    No hurt &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hurts Little Bit &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hurts Little More &nbsp;&nbsp;&nbsp; Hurts Even More &nbsp;&nbsp; Hurts Whole Lot &nbsp;&nbsp;&nbsp;&nbsp; Hurts Worst
                 </div>
             </div>
 
