@@ -6051,11 +6051,9 @@
                     <td class="s119" colspan="7"></td>
                 </tr>
 
-
                 @php
                     $nsaids = isset($f4painassessments['nsaids']) && $f4painassessments['nsaids'] == "Yes";
                 @endphp
-
 
                 <tr style="height: 24px">
                     
