@@ -82,7 +82,7 @@
                                            name="other_problem_score" 
                                            value="{{ $i }}" 
                                            class="form-check-input rounded-circle"
-                                           {{ old('other_problem_score') == $i ? 'checked' : '' }}>
+                                           {{ old('other_problem_score', '') == $i ? 'checked' : '' }}>
                                     <label class="form-check-label">{{ $i }}</label>
                                 </div>
                             @endfor

@@ -95,7 +95,9 @@
             <h6 class="fw-bold">Pain Assessment for Pediatric Patients</h6>
             <div>
                 <img src="{{ asset("f4-img-1.png") }}" alt="" class="img-fluid">
-                <div class="ps-4" style="font-size: 12px">No hurt ... Hurts Worst</div>
+                <div class="ps-4" style="font-size: 12px">
+                    No hurt ... Hurts Worst
+                </div>
             </div>
 
             <table class="table table-bordered">

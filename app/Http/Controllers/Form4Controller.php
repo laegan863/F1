@@ -46,19 +46,19 @@ class Form4Controller extends Controller
         $code = session('code');
 
         $validated = $request->validate([
-            'gcs_score'            => 'required|integer|min:0|max:15',
-            'esasr_score'          => 'required|integer|min:0|max:10',
-            'pain'                 => 'nullable|integer|min:0|max:10',
-            'tiredness'            => 'nullable|integer|min:0|max:10',
-            'drowsiness'           => 'nullable|integer|min:0|max:10',
-            'nausea'               => 'nullable|integer|min:0|max:10',
-            'appetite'             => 'nullable|integer|min:0|max:10',
-            'breath'               => 'nullable|integer|min:0|max:10',
-            'depression'           => 'nullable|integer|min:0|max:10',
-            'anxiety'              => 'nullable|integer|min:0|max:10',
-            'wellbeing'            => 'nullable|integer|min:0|max:10',
-            'other_problem'        => 'nullable|string|max:255',
-            'other_problem_score'  => 'nullable|integer|min:0|max:10',
+            'gcs_score'            => 'required|integer|min:0',
+            'esasr_score'          => 'required|integer|min:0',
+            'pain'                 => 'nullable|integer|min:0',
+            'tiredness'            => 'nullable|integer|min:0',
+            'drowsiness'           => 'nullable|integer|min:0',
+            'nausea'               => 'nullable|integer|min:0',
+            'appetite'             => 'nullable|integer|min:0',
+            'breath'               => 'nullable|integer|min:0',
+            'depression'           => 'nullable|integer|min:0',
+            'anxiety'              => 'nullable|integer|min:0',
+            'wellbeing'            => 'nullable|integer|min:0',
+            'other_problem'        => 'nullable|string',
+            'other_problem_score'  => 'nullable|integer|min:0',
         ]);
 
         $validated['code'] = $code;

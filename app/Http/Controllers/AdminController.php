@@ -48,7 +48,7 @@ class AdminController extends Controller
 
     public function dashboard() {
         $totalRecords = Demographicprofile::where('status', 1)->count();
-        $totalUsers = User::count();
+        $totalUsers = User::where('role', 'user')->count();
         return view('admin.files.dashboard', compact('totalRecords', 'totalUsers'));
     }
 
