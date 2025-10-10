@@ -27,8 +27,7 @@
 
 <body class="gray-bg">
 
-    @yield(section: 'content')
-
+    @yield(section:'content')
     <script src="{{ asset(path: 'assets/js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset(path: 'assets/js/popper.min.js') }}"></script>
     <script src="{{ asset(path: 'assets/js/bootstrap.js') }}"></script>
