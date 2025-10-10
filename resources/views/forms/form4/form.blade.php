@@ -2235,7 +2235,6 @@
         ])->where('id', Request::query('id'))
         ->first();
     @endphp
-    <div style="padding: 20px">{{ json_encode($data) }}</div>
     <svg style="display:none;" width="16px" height="16px" viewBox="0 0 16 16" version="1.1"
         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
@@ -2248,7 +2247,7 @@
         </defs>
     </svg>
     <div class="ritz grid-container" dir="ltr">
-        <table class="waffle no-grid" cellspacing="0" cellpadding="0" style="width: 1100px; margin: 0 auto; border: 1px solid black">
+        <table class="waffle no-grid" cellspacing="0" cellpadding="0" style="width: 1100px; margin: 0 auto;border: 1px solid black">
             <tbody>
                 <tr style="height: 19px">
                     
@@ -3980,7 +3979,7 @@
                     <td class="s4"></td>
                     <td class="s4"></td>
                     <td class="s4"></td>
-                    <td class="s48"></td>
+                    {{-- <td class="s48"></td> --}}
                 </tr>
 
                 <tr style="height: 21px">
@@ -5534,7 +5533,6 @@
                 </tr>
                 @php
                     $facial = $f4painassessments->facial ?? [];
-                    echo json_encode([  '$facial'  => $facial]);
                 @endphp
                 <tr style="height: 21px">
                     
@@ -10192,13 +10190,16 @@
                     <td class="s118" dir="ltr" colspan="4">Others, specify: </td>
                     <td class="s144" colspan="10">{{ $data->f4financialsupportmechanisms['cspmap_other'] ?? '' }}</td>
                 </tr>
+                @php
+                    $other_meds = $data->f4financialsupportmechanisms['other_meds'] ?? [];
+                @endphp
                 <tr style="height: 21px">
                     
                     <td class="s145" dir="ltr" rowspan="8">193</td>
                     <td class="s20" colspan="7" rowspan="8">Other Medicines Availed</td>
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#unchecked-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('All-trans Retinoic Acid (ATRA)', $other_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">1</td>
                     <td class="s55 softmerge" dir="ltr">
@@ -10213,7 +10214,7 @@
                     <td class="s147"></td>
                     <td class="s28" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#unchecked-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Lenvatinib', $other_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">9</td>
                     <td class="s55 softmerge" dir="ltr">
@@ -10244,7 +10245,7 @@
                     
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#unchecked-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Arsenic', $other_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">2</td>
                     <td class="s55 softmerge" dir="ltr">
@@ -10258,7 +10259,7 @@
                     <td class="s148"></td>
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#unchecked-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Osimertinib', $other_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">10</td>
                     <td class="s55 softmerge" dir="ltr">
@@ -10289,7 +10290,7 @@
                     
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#unchecked-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Atezolizumab', $other_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">3</td>
                     <td class="s55 softmerge" dir="ltr">
@@ -10303,7 +10304,7 @@
                     <td class="s148"></td>
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#unchecked-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Pegylated Asparaginase', $other_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">11</td>
                     <td class="s55 softmerge" dir="ltr">
@@ -10334,7 +10335,7 @@
                     
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#unchecked-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Bevacizumab', $other_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">4</td>
                     <td class="s55 softmerge" dir="ltr">
@@ -10348,7 +10349,7 @@
                     <td class="s148"></td>
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#unchecked-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Pembrolizumab', $other_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">12</td>
                     <td class="s55 softmerge" dir="ltr">
@@ -10379,7 +10380,7 @@
                     
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#unchecked-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Blinatumab', $other_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">5</td>
                     <td class="s55 softmerge" dir="ltr">
@@ -10393,7 +10394,7 @@
                     <td class="s148"></td>
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#unchecked-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Procarbazine', $other_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">13</td>
                     <td class="s55 softmerge" dir="ltr">
@@ -10424,7 +10425,7 @@
                     
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#unchecked-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Bortezomib', $other_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">6</td>
                     <td class="s55 softmerge" dir="ltr">
@@ -10438,7 +10439,7 @@
                     <td class="s148"></td>
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#unchecked-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('None', $other_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">14</td>
                     <td class="s55 softmerge" dir="ltr">
@@ -10469,7 +10470,7 @@
                     
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#unchecked-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Dasatinib', $other_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">7</td>
                     <td class="s55 softmerge" dir="ltr">
@@ -10483,11 +10484,11 @@
                     <td class="s148"></td>
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#unchecked-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Others, specify:', $other_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">15</td>
                     <td class="s4" colspan="4">Others, specify:</td>
-                    <td class="s150" colspan="12"></td>
+                    <td class="s150" colspan="12">{{ $data->f4financialsupportmechanisms['other_med_other'] ?? '' }}</td>
                     <td class="s4"></td>
                     <td class="s4"></td>
                     <td class="s4"></td>
@@ -10498,7 +10499,7 @@
                     
                     <td class="s30" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#unchecked-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Erlotinib', $other_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s31" dir="ltr">8</td>
                     <td class="s151 softmerge" dir="ltr">

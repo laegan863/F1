@@ -302,7 +302,7 @@
                     @foreach ($tumors as $tumor => $t_value )
                         <div class="col-md-3">
                             <label class="form-label fw-bold">{{ $t_value }}<span class="text-muted">(Optional)</span></label>
-                            <input type="text" name="stage[{{ $tumor }}.'_stage']" class="form-control" value="{{ $data->cancerdiagnoses[$tumor.'_stage'] }}">
+                            <input type="text" name="stage[{{ $tumor }} _stage]" class="form-control" value="{{ $data->cancerdiagnoses[$tumor.'_stage'] }}">
                         </div>
                     @endforeach
                 </div>

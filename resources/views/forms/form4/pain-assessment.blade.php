@@ -142,7 +142,7 @@
                     <tr>
                         <td><strong>Facial</strong></td>
                         <td colspan="4">
-                            @foreach(['0 = Smiling','1 = Neutral shifting','2 = Frown, grimace','3 = Clenched teeth'] as $desc)
+                            @foreach(['0 = Smiling','1 = Neutral shifting','2 = Frowtn, grimace','3 = Clenched teeth'] as $desc)
                                 <div class="form-check">
                                     <input type="checkbox" name="facial[]" value="{{ $desc }}"
                                            class="form-check-input rounded-circle"
