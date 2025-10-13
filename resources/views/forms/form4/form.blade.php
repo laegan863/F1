@@ -2359,24 +2359,16 @@
                 <tr style="height: 24px">
                     <td class="s13" dir="ltr">139</td>
                     <td class="s14" colspan="7">Name of Patient</td>
-
-                    {{-- First Name --}}
-                    <td class="s18" dir="ltr" colspan="10">
+                    <td class="s18" dir="ltr" colspan="10" style="color: black">
                         {{ $data->name['firstname'] ?? '' }}
                     </td>
-
-                    {{-- Middle Name --}}
-                    <td class="s18" dir="ltr" colspan="10">
+                    <td class="s18" dir="ltr" colspan="10" style="color: black">
                         {{ $data->name['middlename'] ?? '' }}
                     </td>
-
-                    {{-- Last Name --}}
-                    <td class="s18" dir="ltr" colspan="9">
+                    <td class="s18" dir="ltr" colspan="9" style="color: black">
                         {{ $data->name['lastname'] ?? '' }}
                     </td>
-
-                    {{-- Suffix --}}
-                    <td class="s15" dir="ltr" colspan="3">
+                    <td class="s15" dir="ltr" colspan="3" style="color: black">
                         {{ $data->name['suffix'] ?? '' }}
                     </td>
                 </tr>
