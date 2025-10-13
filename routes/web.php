@@ -10,6 +10,15 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\Form2Controller;
 use App\Http\Controllers\Form3Controller;
 use App\Http\Controllers\Form4Controller;
+use Illuminate\Support\Facades\Crypt;
+
+Route::get("/encrypt/{value}", function ($value) {
+    $encrypted = Crypt::encryptString($value);
+    echo "<div style='padding: 10px; border: 1px solid #ccc;'>{$encrypted}</div>";
+    $decrypted = Crypt::decryptString($encrypted);
+    echo "<br>";
+    echo "<div style='padding: 10px; border: 1px solid #ccc;'>{$decrypted}</div>";
+});
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('verify-auth', 'verify_auth')->name('verify-auth');
