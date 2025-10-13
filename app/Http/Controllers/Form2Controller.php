@@ -333,7 +333,7 @@ class Form2Controller extends Controller
         }
 
         
-        // $validated['code'] = session('code');
+        $validated['code'] = session('code');
 
         F2changetreatmentplan::updateOrCreate(['code' => $validated['code']], $validated);
 
@@ -367,8 +367,8 @@ class Form2Controller extends Controller
             'other_med_other'   => 'nullable|string|max:255',
         ]);
 
-        $validated['code'] = 10;
-        // $validated['code'] = session('code');
+        // $validated['code'] = 10;
+        $validated['code'] = session('code');
         if($validated['financial_support'] == "No"){
             $validated['financial_type'] = null;
         }

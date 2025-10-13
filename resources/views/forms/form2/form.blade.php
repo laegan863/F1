@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Form 2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link type="text/css" rel="stylesheet" href="{{ asset('resources/sheet.css') }}">
     <style type="text/css">
@@ -2814,16 +2814,16 @@
                 @endphp
                 <td class="s14" dir="ltr">67</td>
                 <td class="s15" colspan="7">Date</td>
-                <td class="s16" dir="ltr">{{ $date[0] }}</td>
-                <td class="s16" dir="ltr">{{ $date[1] }}</td>
-                <td class="s16" dir="ltr">{{ $date[2] }}</td>
-                <td class="s16" dir="ltr">{{ $date[3] }}</td>
+                <td class="s16" dir="ltr">{{ $date[0] ?? '' }}</td>
+                <td class="s16" dir="ltr">{{ $date[1] ?? '' }}</td>
+                <td class="s16" dir="ltr">{{ $date[2] ?? '' }}</td>
+                <td class="s16" dir="ltr">{{ $date[3] ?? '' }}</td>
                 <td class="s17" dir="ltr">-</td>
-                <td class="s16" dir="ltr">{{ $date[4] }}</td>
-                <td class="s16" dir="ltr">{{ $date[5] }}</td>
+                <td class="s16" dir="ltr">{{ $date[4] ?? '' }}</td>
+                <td class="s16" dir="ltr">{{ $date[5] ?? '' }}</td>
                 <td class="s17" dir="ltr">-</td>
-                <td class="s16" dir="ltr">{{ $date[6] }}</td>
-                <td class="s16" dir="ltr">{{ $date[7] }}</td>
+                <td class="s16" dir="ltr">{{ $date[6] ?? '' }}</td>
+                <td class="s16" dir="ltr">{{ $date[7] ?? '' }}</td>
                 <td class="s18" colspan="22"></td>
             </tr>
             <tr style="height: 24px">

@@ -190,9 +190,16 @@
         }
     }
     function toggleFinancialOther(val) {
-        if (val === 'Others, specify:') {
-            const checked = document.querySelector('input[name="financial_type[]"][value="Others, specify:"]').checked;
-            document.getElementById('financialOther').disabled = !checked;
+        // alert(val)
+        if (val === 'Others') {
+            const checked = document.querySelector('input[name="financial_type[]"][value="Others"]').checked;
+            if(checked) {
+                document.getElementById('financialOther').disabled = !checked;
+            }else{
+                document.getElementById('financialOther').value = '';
+                document.getElementById('financialOther').disabled = !checked;
+            }
+            // alert(checked);
         }
     }
     function toggleCspmapOther(val) {
