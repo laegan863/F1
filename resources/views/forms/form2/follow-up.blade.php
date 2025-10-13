@@ -68,7 +68,7 @@
                             ] as $key => $label)
                                 <div class="form-check">
                                     <input type="checkbox" name="primary_cancer_site[]" value="{{ $label }}"
-                                        class="form-check-input rounded-circle" {{ in_array($label, $data->cancerdiagnoses['cancer_sites']) ? 'checked' : '' }}>
+                                        class="form-check-input rounded-circle" {{ in_array($label, $data->cancerdiagnoses['cancer_sites'] ?? []) ? 'checked' : '' }}>
                                     <label class="form-check-label">{{ $label }}</label>
                                 </div>
                             @endforeach
@@ -98,7 +98,7 @@
                             ] as $key => $label)
                                 <div class="form-check">
                                     <input type="checkbox" name="primary_cancer_site[]" value="{{ $label }}"
-                                        class="form-check-input rounded-circle" {{ in_array($label, $data->cancerdiagnoses['cancer_sites']) ? 'checked' : '' }}>
+                                        class="form-check-input rounded-circle" {{ in_array($label, $data->cancerdiagnoses['cancer_sites'] ?? []) ? 'checked' : '' }}>
                                     <label class="form-check-label">{{ $label }}</label>
                                 </div>
                             @endforeach
@@ -124,7 +124,7 @@
                             ] as $key => $label)
                                 <div class="form-check">
                                     <input type="checkbox" name="primary_cancer_site[]" value="{{ $key }}"
-                                        class="form-check-input rounded-circle" {{ in_array($label, $data->cancerdiagnoses['cancer_sites']) ? 'checked' : '' }}>
+                                        class="form-check-input rounded-circle" {{ in_array($label, $data->cancerdiagnoses['cancer_sites'] ?? []) ? 'checked' : '' }}>
                                     <label class="form-check-label">{{ $label }}</label>
                                 </div>
                             @endforeach

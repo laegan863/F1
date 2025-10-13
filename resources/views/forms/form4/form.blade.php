@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Form 4</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link type="text/css" rel="stylesheet" href="{{ asset('resources/sheet.css') }}">
     <style type="text/css">
@@ -4577,7 +4577,7 @@
                 <tr style="height: 24px">
                     <td class="s19" dir="ltr">163</td>
                     <td class="s92" dir="ltr" colspan="4">Other Problem:</td>
-                    <td class="s93" dir="ltr" colspan="9" style="text-align: right">{{ $f4esas->other_problem ?? '' }}</td>
+                    <td class="s93" dir="ltr" colspan="9" style="text-align: right">{{ $f4esas->other_problem_left_title ?? '' }}</td>
                     <td class="s36"></td>
 
                     @for ($i = 0; $i <= 10; $i++)
@@ -4590,7 +4590,7 @@
                     @endfor
 
                     <td class="s71"></td>
-                    <td class="s94" colspan="13"> {{ $f4esas->other_problem ? 'Worst'.$f4esas->other_problem : '' }}</td>
+                    <td class="s94" colspan="13"> {{ $f4esas->other_problem_left_title ? 'Worst '.$f4esas->other_problem_right_title : '' }}</td>
                 </tr>
 
 

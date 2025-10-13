@@ -20,6 +20,8 @@ class F4esas extends Model
         'anxiety',
         'wellbeing',
         'other_problem',
+        'other_problem_left_title',
+        'other_problem_right_title',
         'other_problem_score',
     ];
 

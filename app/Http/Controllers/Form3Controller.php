@@ -59,8 +59,8 @@ class Form3Controller extends Controller
             'cause_other.required' => 'The Other significant condition directly leading to death field is required',
         ]);
 
-        // $validated['code'] = session('code');
-        $validated['code'] = 4;
+        $validated['code'] = session('code');
+        // $validated['code'] = 4;
 
         F3cancerdiagnoseoutcome::updateOrCreate(
             ['code' => $validated['code']], 

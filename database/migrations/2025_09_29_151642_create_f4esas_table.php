@@ -27,6 +27,8 @@ return new class extends Migration
             $table->integer('anxiety')->nullable();
             $table->integer('wellbeing')->nullable();
             $table->string('other_problem')->nullable();
+            $table->string('other_problem_left_title')->nullable();
+            $table->string('other_problem_right_title')->nullable();
             $table->integer('other_problem_score')->nullable();
         });
     }

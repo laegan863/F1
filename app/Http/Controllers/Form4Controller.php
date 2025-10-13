@@ -60,6 +60,8 @@ class Form4Controller extends Controller
             'anxiety'              => 'nullable|integer|min:0',
             'wellbeing'            => 'nullable|integer|min:0',
             'other_problem'        => 'nullable|string',
+            'other_problem_left_title'  => 'nullable|string|max:255',
+            'other_problem_right_title' => 'nullable|string|max:255',
             'other_problem_score'  => 'nullable|integer|min:0',
         ]);
 
