@@ -93,7 +93,7 @@
     <script>
         Swal.fire({
             title: "Good job!",
-            text: "{{ Session::get('success') }}",
+            text: "Data has been saved successfully!",
             icon: "success"
         });
     </script>

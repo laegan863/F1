@@ -44,6 +44,10 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::get('connection', 'connection');
     });
 
+    Route::prefix('report')->group(function(){
+        Route::view('/', 'reports.app')->name('fr-1a');
+    });
+
     Route::prefix("form1")->group(function(){
         Route::view('demographic-profile', 'forms.demographic')->name('demographic-profile');
         Route::view("risk-factor", "forms.riskfactor")->name('risk-factor');
