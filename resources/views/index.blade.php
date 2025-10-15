@@ -93,7 +93,7 @@
     <script>
         Swal.fire({
             title: "Good job!",
-            text: "Data has been saved successfully!",
+            text: "Data has been saved successfully!  ",
             icon: "success"
         });
     </script>
