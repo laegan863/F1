@@ -66,6 +66,14 @@
                             </a>
                         </li>
                     @endif
+                    <li class="{{ request()->is('admin/reports') ? 'active' : '' }}">
+                        <a href="#">
+                            <i class="fa fa-book"></i>
+                            <span class="nav-label">
+                                Generate Reports
+                            </span>
+                        </a>
+                    </li>
                 </ul>
 
             </div>
@@ -117,7 +125,6 @@
         </div>
     </div>
 
-    <!-- Mainly scripts -->
     <script src="{{ asset(path: 'assets/js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset(path: 'assets/js/popper.min.js') }}"></script>
     <script src="{{ asset(path: 'assets/js/bootstrap.js') }}"></script>
@@ -125,8 +132,6 @@
     <script src="{{ asset(path: 'assets/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
     <script src="{{ asset(path: 'assets/js/plugins/dataTables/datatables.min.js') }}"></script>
-
-    <!-- Custom and plugin javascript -->
     <script src="{{ asset(path: 'assets/js/inspinia.js') }}"></script>
     <script src="{{ asset(path: 'assets/js/plugins/pace/pace.min.js') }}"></script>
     <script src="{{ asset('sweetalert.min.js') }}"></script>
@@ -148,10 +153,10 @@
                 responsive: true,
                 dom: '<"html5buttons"B>lTfgitp',
                 buttons: [
-                    { extend: 'copy' },
-                    { extend: 'csv' },
-                    { extend: 'excel', title: 'ExampleFile' },
-                    { extend: 'pdf', title: 'ExampleFile' },
+                    { extend: 'copy', title: 'CRCB' },
+                    { extend: 'csv', title: 'CRCB' },
+                    { extend: 'excel', title: 'CRCB' },
+                    { extend: 'pdf', title: 'CRCB' },
 
                     {
                         extend: 'print',

@@ -2493,6 +2493,7 @@
                     <td class="s25"></td>
                     <td class="s25"></td>
                     <td class="s4"></td>
+                    <td class="s4"></td>
                     <td class="s20" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                         style="display:inline;">
                         <use href="#{{ in_array('Small Bowel', $pcs) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
