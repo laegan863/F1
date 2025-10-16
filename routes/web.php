@@ -10,6 +10,7 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\Form2Controller;
 use App\Http\Controllers\Form3Controller;
 use App\Http\Controllers\Form4Controller;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Crypt;
 
 Route::get("/encrypt/{value}", function ($value) {
@@ -33,10 +34,13 @@ Route::middleware(IsNotAuth::class)->group(function(){
             Route::get('records','records')->name('admin.records');
             Route::get('forms/{id}', 'forms')->name('view.forms');
             Route::get('user-multiform/{hospitalID}/{form}', 'user_multiform')->name('user.multiform');
+            Route::get('report', 'report')->name('select-date-report');
+            Route::get('select-a-report', 'select_report')->name('select-report');
+            Route::get('generate-report', 'generate_report')->name('generate-report');
             Route::middleware(IsAdmin::class)->group(function() {
                 Route::get('users', 'users')->name('admin.users');
                 Route::post('add-user', 'add_user')->name('admin.add-user');
-                Route::get('delete/{id}/{table}', 'delete')->name('admin.delete');
+                Route::get('delete/{id}/{table}', 'delete')->   name('admin.delete');
                 Route::post('edit/{id}', 'edit')->name('admin.edit-user');
             });
         });
@@ -44,8 +48,23 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::get('connection', 'connection');
     });
 
+    Route::controller(ReportController::class)->group(function(){
+        Route::get('generate-pdf', 'generate_pdf')->name('generate-pdf');
+    });
+
     Route::prefix('report')->group(function(){
-        Route::view('/', 'reports.app')->name('fr-1a');
+        Route::view('/', 'reports.rf-1a')->name('rf-1a');
+        Route::view('rf-1b', 'reports.rf-1b')->name('rf-1b');
+        Route::view('rf-1c', 'reports.rf-1c')->name('rf-1c');
+        Route::view('rf-1d', 'reports.rf-1d')->name('rf-1d');
+        Route::view('rf-1e', 'reports.rf-1e')->name('rf-1e');
+        Route::view('rf-1f', 'reports.rf-1f')->name('rf-1f');
+        Route::view('rf-2a', 'reports.rf-2a')->name('rf-2a');
+        Route::view('rf-2b', 'reports.rf-2b')->name('rf-2b');
+        Route::view('rf-2c', 'reports.rf-2c')->name('rf-2c');
+        Route::view('rf-3a', 'reports.rf-3a')->name('rf-3a');
+        Route::view('rf-0a', 'reports.rf-0a')->name('rf-0a');
+        Route::view('rf-0b', 'reports.rf-0b')->name('rf-0b');
     });
 
     Route::prefix("form1")->group(function(){

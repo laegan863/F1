@@ -67,7 +67,7 @@
                         </li>
                     @endif
                     <li class="{{ request()->is('admin/reports') ? 'active' : '' }}">
-                        <a href="#">
+                        <a href="{{ route('select-report') }}">
                             <i class="fa fa-book"></i>
                             <span class="nav-label">
                                 Generate Reports
@@ -104,7 +104,7 @@
                             <a href="index.html">{{ ucwords(Request::segment(index: 1)) }}</a>
                         </li>
                         <li class="breadcrumb-item active">
-                            <strong>{{ ucwords(Request::segment(index: 2)) }}</strong>
+                            <strong>{{ str_replace("-", " ", ucwords(Request::segment(index: 2))) }}</strong>
                         </li>
                     </ol>
                 </div>

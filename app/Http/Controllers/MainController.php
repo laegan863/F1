@@ -275,11 +275,8 @@ class MainController extends Controller
         ]);
 
         $validate["code"] = Session::get(key: 'code');
-
         if($validate["multiple_sites"] == "no"){
-            $validate["primary_site_number"] = null;
-            $validate["cancer_sites"] = null;
-            $validate["cancer_site_other"] = null;
+            $validate["primary_site_number"] = 1;
         }
 
         $exist = Cancerdiagnose::where('code', $validate['code'])->exists();
