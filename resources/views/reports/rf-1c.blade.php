@@ -74,8 +74,6 @@
     } else {
         $rawData = $data ?? [];
     }
-
-    // Initialize infections array first (needed before processing)
     $infections = [
         "Hepatitis B (Hep B)",
         "Hepatitis C (Hep C)",
