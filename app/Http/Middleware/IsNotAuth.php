@@ -16,9 +16,9 @@ class IsNotAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!Auth::check()){
-            return to_route('login');
-        }
+        // if(!Auth::check()){
+        //     return to_route('login');
+        // }
 
         return $next($request);
     }

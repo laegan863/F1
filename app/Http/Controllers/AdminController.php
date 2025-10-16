@@ -133,4 +133,21 @@ class AdminController extends Controller
             'data' => $data
         ]);
     }
+
+    public function report()
+    {
+        return view('admin.files.report');
+    }
+
+    public function select_report()
+    {
+        return view('admin.files.select-report');
+    }
+
+    public function generate_report(Request $request)
+    {
+        return view('reports.' . strtolower($request->code),[
+            'data' => $request->all()
+        ]);
+    }
 }
