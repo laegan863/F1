@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\LaravelPdf\Facades\Pdf;
 use App\Models\Demographicprofile;
+use App\Models\F2followup;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -62,6 +63,22 @@ class ReportController extends Controller
 
         return $rawData;
     }
+
+    public function form2(Request $request)
+    {
+        $rawData = F2followup::with([
+            'f2othercancertherapies',
+            'f2patientstatuses', 
+            'f2radiotheraphies',
+            'f2cancerdiagnoseoutcomes',
+            'f2changetreatmentplans'
+        ])
+            ->whereBetween(DB::raw('YEAR(created_at)'), [$request->input('year_from'), $request->input('year_to')])
+            ->whereBetween(DB::raw('MONTH(created_at)'), [$request->input('month_from'), $request->input('month_to')])
+            ->get();
+
+        return $rawData;
+    }
     public function generate_pdf(Request $request)
     {
         $code = strtolower($request->input('code'));
@@ -79,6 +96,18 @@ class ReportController extends Controller
                 break;
             case 'rf-1d':
                 $data = $this->form1($request);
+                break;
+            case 'rf-1e':
+                $data = $this->form1($request);
+                break;
+            case 'rf-1f':
+                $data = $this->form1($request);
+                break;
+            case 'rf-2a':
+                $data = $this->form2($request);
+                break;
+            case 'rf-2b':
+                $data = $this->form2($request);
                 break;
             default:
                 return response()->json([

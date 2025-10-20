@@ -314,7 +314,7 @@
                     <input type="text" name="other_cancer_treatment_plan" value="{{ old('other_cancer_treatment_plan') }}" class="form-control">
                 </div>
 
-                <label class="form-label mt-2">What change in treatment plan?</label>
+                <label class="form-label mt-2">Reason</label>
                 <textarea name="other_cancer_reason" class="form-control">{{ old('other_cancer_reason') }}</textarea>
             </div>
 
