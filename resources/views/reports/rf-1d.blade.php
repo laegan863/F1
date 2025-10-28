@@ -12,12 +12,8 @@
             ->whereBetween(DB::raw('MONTH(created_at)'), [Request::query('month_from'), Request::query('month_to')])
             ->get();
     } else {
-        $rawData = collect([]);
+        $rawData = $data;
     }
-
-    // -----------------------
-    // INITIALIZE DATA ARRAYS
-    // -----------------------
 
     $tobaccoUse = [
         'Current Smoker' => ['Male' => 0, 'Female' => 0],
@@ -68,11 +64,6 @@
         'No' => ['Male' => 0, 'Female' => 0],
     ];
 
-    // -----------------------
-    // DATA PROCESSING
-    // -----------------------
-
-
     $sample = [];
     foreach ($rawData as $profile) {
 
@@ -122,7 +113,6 @@
                 $occupationalExposure['None'][$genderLabel]++;
             }
 
-            // Air Pollution
             if (isset($rf->air_pollution)) {
                 $key = ucfirst(strtolower($rf->air_pollution));
                 if (isset($airPollution[$key])) $airPollution[$key][$genderLabel]++;

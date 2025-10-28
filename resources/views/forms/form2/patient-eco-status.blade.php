@@ -9,7 +9,7 @@
             <!-- Patient ECOG Status -->
             <h5 class="fw-bold mt-3">PATIENT ECOG STATUS</h5>
             <div class="mb-3">
-                <label class="form-label fw-bold">Eastern Cooperative Oncology Group (ECOG)</label>
+                <label class="form-label fw-bold">Eastern Cooperative Oncology Group (ECOG) <small class="text-danger">*</small></label>
                 <div class="d-flex flex-wrap gap-3">
                     @foreach(['Yes','No','Not Applicable'] as $opt)
                         <div class="form-check">
@@ -40,7 +40,7 @@
 
             <!-- Other Functional Assessment -->
             <div class="mb-3">
-                <label class="form-label fw-bold">Other Functional Assessment (optional)</label>
+                <label class="form-label fw-bold">Other Functional Assessment <small class="text-danger">(optional)</small></label>
                 <input type="text" name="other_functional_assessment" class="form-control" 
                        value="{{ old('other_functional_assessment') }}">
             </div>
@@ -48,7 +48,7 @@
             <!-- Surgery -->
             <h5 class="fw-bold mt-3">SURGERY</h5>
             <div class="mb-3">
-                <label class="form-label fw-bold">Surgery Done?</label>
+                <label class="form-label fw-bold">Surgery Done? <small class="text-danger">*</small></label>
                 <div class="d-flex flex-wrap gap-3">
                     @foreach(['Yes','No'] as $opt)
                         <div class="form-check">
@@ -95,7 +95,7 @@
             <!-- Anti-Cancer Drug Therapy -->
             <h5 class="fw-bold mt-3">ANTI-CANCER DRUG THERAPY</h5>
             <div class="mb-3">
-                <label class="form-label fw-bold">Ongoing Anti-cancer Drug Therapy?</label>
+                <label class="form-label fw-bold">Ongoing Anti-cancer Drug Therapy? <small class="text-danger">*</small></label>
                 <div class="d-flex flex-wrap gap-3">
                     @foreach(['Yes','No'] as $opt)
                         <div class="form-check">

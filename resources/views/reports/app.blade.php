@@ -57,20 +57,20 @@
 
         <tr>
         <td class="border border-black px-2 py-1 font-medium">Health Facility Name</td>
-        <td colspan="5" class="border border-black px-2 py-1"></td>
+        <td colspan="5" class="border border-black px-2 py-1">CORAZON LOCSIN MONTELIBANO MEMORIAL REGIONAL HOSPITAL</td>
         </tr>
 
         <tr>
         <td class="border border-black px-2 py-1 font-medium">Health Facility Address</td>
-        <td class="border border-black px-2 py-1 text-gray-400 text-center">Region</td>
-        <td class="border border-black px-2 py-1 text-gray-400 text-center">Province</td>
-        <td class="border border-black px-2 py-1 text-gray-400 text-center">City/Municipality</td>
-        <td colspan="2" class="border border-black px-2 py-1 text-gray-400 text-center">Barangay</td>
+        <td class="border border-black px-2 py-1 text-center">NIR</td>
+        <td class="border border-black px-2 py-1 text-center" colspan="2">NEGROS OCCIDENTAL</td>
+        <td class="border border-black px-2 py-1 text-center">BACOLOD CITY</td>
+        <td colspan="1" class="border border-black px-2 py-1 text-center">BRGY. 18</td>
         </tr>
 
         <tr>
         <td class="border border-black px-2 py-1 font-medium">Health Facility Contact No.</td>
-        <td colspan="3" class="border border-black px-2 py-1"></td>
+        <td colspan="3" class="border border-black px-2 py-1 text-center">703 1350</td>
         <td class="border border-black px-2 py-1 font-medium">PhilHealth Accreditation No. (PAN)</td>
         <td class="border border-black px-2 py-1"></td>
         </tr>

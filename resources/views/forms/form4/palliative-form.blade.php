@@ -35,68 +35,72 @@
             <div class="card-body rounded-0">
                 <!-- Date -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Date</label>
+                    <label class="form-label fw-bold">Date <small class="text-danger">*</small></label>
                     <input type="date" name="date" class="form-control" value="{{ old('date', \Carbon\Carbon::now()->format('Y-m-d')) }}">
                 </div>
                 <!-- Name of Patient -->
                 <div class="mb-3">
                     <div class="row">
                         <div class="col-md-4">
-                            <label class="form-label fw-bold">First Name</label>
+                            <label class="form-label fw-bold">First Name <small class="text-danger">*</small></label>
                             <input type="text" name="name[firstname]" class="form-control" value="{{ $data->name['firstname'] }}">
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <label class="form-label fw-bold">Middle Name</label>
                             <input type="text" name="name[middlename]" class="form-control" value="{{ $data->name['middlename'] }}">
                         </div>
-                        <div class="col-md-4">
-                            <label class="form-label fw-bold">Last Name</label>
+                        <div class="col-md-3">
+                            <label class="form-label fw-bold">Last Name <small class="text-danger">*</small></label>
                             <input type="text" name="name[lastname]" class="form-control" value="{{ $data->name['lastname'] }}">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label fw-bold">Suffix</label>
+                            <input type="text" name="name[suffix]" class="form-control" value="{{ $data->name['suffix'] }}">
                         </div>
                     </div>
 
                 </div>
                 <div class="my-3">
                     <div class="form-section">
-                        <div class="section-label">Reason for Supportive-Palliative Care Consult</div>
+                        <div class="section-label">Reason for Supportive-Palliative Care Consult <small class="text-danger">*</small></div>
 
                         <div class="row g-2">
                             <div class="col-md-6">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="reason[]" id="curative" value="Palliative Care with Curative Intent" {{ in_array('Palliative Care with Curative Intent', old('reason', [])) ? 'checked' : '' }}>
+                                    <input class="form-check-input rounded-circle" type="checkbox" name="reason[]" id="curative" value="Palliative Care with Curative Intent" {{ in_array('Palliative Care with Curative Intent', old('reason', [])) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="curative">1. Palliative Care with Curative Intent</label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="reason[]" id="active" value="Palliative Care with Active Oncologic Management" {{ in_array('Palliative Care with Active Oncologic Management', old('reason', [])) ? 'checked' : '' }}>
+                                    <input class="form-check-input rounded-circle" type="checkbox" name="reason[]" id="active" value="Palliative Care with Active Oncologic Management" {{ in_array('Palliative Care with Active Oncologic Management', old('reason', [])) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="active">2. Palliative Care with Active Oncologic Management</label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="reason[]" id="supportive" value="Supportive Care" {{ in_array('Supportive Care', old('reason', [])) ? 'checked' : '' }}>
+                                    <input class="form-check-input rounded-circle" type="checkbox" name="reason[]" id="supportive" value="Supportive Care" {{ in_array('Supportive Care', old('reason', [])) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="supportive">3. Supportive Care</label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="reason[]" id="hospice" value="Hospice Care" {{ in_array('Hospice Care', old('reason', [])) ? 'checked' : '' }}>
+                                    <input class="form-check-input rounded-circle" type="checkbox" name="reason[]" id="hospice" value="Hospice Care" {{ in_array('Hospice Care', old('reason', [])) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="hospice">4. Hospice Care</label>
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="reason[]" id="endoflife" value="End of Life Care" {{ in_array('End of Life Care', old('reason', [])) ? 'checked' : '' }}>
+                                    <input class="form-check-input rounded-circle" type="checkbox" name="reason[]" id="endoflife" value="End of Life Care" {{ in_array('End of Life Care', old('reason', [])) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="endoflife">5. End of Life Care</label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="reason[]" id="survivorship" value="Survivorship Care" {{ in_array('Survivorship Care', old('reason', [])) ? 'checked' : '' }}>
+                                    <input class="form-check-input rounded-circle" type="checkbox" name="reason[]" id="survivorship" value="Survivorship Care" {{ in_array('Survivorship Care', old('reason', [])) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="survivorship">6. Survivorship Care</label>
                                 </div>
 
                                 <!-- Other checkbox + dynamic text field -->
                                 <div class="form-check d-flex align-items-center flex-wrap">
-                                    <input class="form-check-input me-2" type="checkbox" name="reason[]" id="others" value="Others" {{ in_array('Others', old('reason', [])) ? 'checked' : '' }}>
+                                    <input class="form-check-input me-2 rounded-circle" type="checkbox" name="reason[]" id="others" value="Others" {{ in_array('Others', old('reason', [])) ? 'checked' : '' }}>
                                     <label class="form-check-label me-2" for="others">7. Others, specify:</label>
                                     <input type="text" name="reason_others" id="othersInput" class="form-control form-control-sm w-auto {{ in_array('Others', old('reason', [])) ? '' : 'hidden' }}" placeholder="Specify here" value="{{ old('reason_others') }}">
                                 </div>
@@ -105,21 +109,21 @@
                     </div>
 
                     <div class="form-section">
-                        <div class="section-label">Palliative Care Setting</div>
+                        <div class="section-label">Palliative Care Setting <small class="text-danger">*</small></div>
 
                         <div class="d-flex flex-wrap gap-3">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="setting[]" id="home" value="Home" {{ in_array('Home', old('setting', [])) ? 'checked' : '' }}>
+                                <input class="form-check-input rounded-circle" type="checkbox" name="setting[]" id="home" value="Home" {{ in_array('Home', old('setting', [])) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="home">1. Home</label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="setting[]" id="hospital" value="Hospital" {{ in_array('Hospital', old('setting', [])) ? 'checked' : '' }}>
+                                <input class="form-check-input rounded-circle" type="checkbox" name="setting[]" id="hospital" value="Hospital" {{ in_array('Hospital', old('setting', [])) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="hospital">2. Hospital</label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="setting[]" id="community" value="Community-based" {{ in_array('Community-based', old('setting', [])) ? 'checked' : '' }}>
+                                <input class="form-check-input rounded-circle" type="checkbox" name="setting[]" id="community" value="Community-based" {{ in_array('Community-based', old('setting', [])) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="community">3. Community-based</label>
                             </div>
                         </div>
@@ -145,7 +149,7 @@
                 </script>
 
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Primary Cancer Site</label>
+                    <label class="form-label fw-bold">Primary Cancer Site <small class="text-danger">*</small></label>
                     <div class="row">
                         <div class="col-md-4">
                             @foreach([
@@ -239,7 +243,7 @@
 
                 <!-- Laterality -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Laterality</label>
+                    <label class="form-label fw-bold">Laterality <small class="text-danger">*</small></label>
                     <div class="d-flex flex-wrap gap-3">
                         @foreach([
                             '1' => 'Left',
@@ -259,18 +263,18 @@
 
                 <!-- Histologic Diagnosis -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Histologic Diagnosis</label>
+                    <label class="form-label fw-bold">Histologic Diagnosis <small class="text-danger">*</small></label>
                     <input type="text" name="histologic_diagnosis" class="form-control" value="{{ $data->cancerdiagnoses['histologic_diagnosis'] }}">
                 </div>
 
                 <!-- ICD-10 -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">ICD-10</label>
+                    <label class="form-label fw-bold">ICD-10 <small class="text-danger">*</small></label>
                     <input type="text" name="icd10" class="form-control" value="{{ $data->cancerdiagnoses['icd_10'] }}">
                 </div>
                         <!-- Group Clinical Stage -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Group Clinical Stage <span class="text-muted">(Optional)</span></label>
+                    <label class="form-label fw-bold">Group Clinical Stage <small class="text-danger">(Optional)</small></label>
                     <div class="d-flex flex-wrap gap-3">
                         @foreach([
                             '1' => 'Stage 0',
@@ -301,7 +305,7 @@
                 <div class="row">
                     @foreach ($tumors as $tumor => $t_value )
                         <div class="col-md-3">
-                            <label class="form-label fw-bold">{{ $t_value }}<span class="text-muted">(Optional)</span></label>
+                            <label class="form-label fw-bold">{{ $t_value }}<small class="text-danger">(Optional)</small></label>
                             <input type="text" name="stage[{{ $tumor }} _stage]" class="form-control" value="{{ $data->cancerdiagnoses[$tumor.'_stage'] }}">
                         </div>
                     @endforeach
@@ -309,7 +313,7 @@
 
                 <!-- Other Staging Used -->
                 <div class="mb-3 mt-3">
-                    <label class="form-label fw-bold">Other Staging Used <span class="text-muted">(Optional)</span></label>
+                    <label class="form-label fw-bold">Other Staging Used <small class="text-danger">(Optional)</small></label>
                     <div class="row">
                         <div class="col-md-6">
                             @foreach([
@@ -346,7 +350,7 @@
 
                 <!-- Other Remarks -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Other Remarks</label>
+                    <label class="form-label fw-bold">Other Remarks <small class="text-danger">*</small></label>
                     <textarea name="other_remarks" class="form-control" rows="2">{{ old('other_remarks', $data->cancerdiagnoses['other_remarks']) }}</textarea>
                 </div>
 

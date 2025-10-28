@@ -7,13 +7,13 @@
 
         <!-- Date + Pain -->
         <div class="mb-3">
-            <label class="form-label fw-bold">Date of Initial Assessment</label>
-            <input type="date" name="assessment_date" class="form-control w-auto d-inline-block"
+            <label class="form-label fw-bold">Date of Initial Assessment <small class="text-danger">*</small></label>
+            <input type="date" name="assessment_date" class="form-control w-full d-inline-block"
                    value="{{ old('assessment_date') }}">
         </div>
 
         <div class="mb-3">
-            <label class="form-label fw-bold">Is there Pain?</label><br>
+            <label class="form-label fw-bold">Is there Pain? <small class="text-danger">*</small></label><br>
             <div class="form-check form-check-inline">
                 <input type="radio" name="is_pain" value="Yes" class="form-check-input rounded-circle"
                        {{ old('is_pain') == 'Yes' ? 'checked' : '' }}>
@@ -28,18 +28,18 @@
 
         <!-- Pain Score Acceptable -->
         <div class="mb-3">
-            <label class="form-label fw-bold">Pain Score acceptable to Patient</label><br>
+            <label class="form-label fw-bold">Pain Score acceptable to Patient <small class="text-danger">*</small></label><br>
             <input type="text" name="pain_score" class="form-control" value="{{ old('pain_score') }}">
         </div>
 
         <div class="mb-3">
-            <label class="form-label fw-bold">Provocation</label><br>
+            <label class="form-label fw-bold">Provocation <small class="text-danger">*</small></label><br>
             <input type="text" name="provocation" class="form-control" value="{{ old('provocation') }}">
         </div>
 
         <!-- Quality -->
         <div class="mb-3">
-            <label class="form-label fw-bold">Quality</label><br>
+            <label class="form-label fw-bold">Quality <small class="text-danger">*</small></label><br>
             @foreach(['Sensory','Affective','Cognitive'] as $label)
                 <div class="form-check form-check-inline">
                     <input type="checkbox" name="provocation_quality[]" value="{{ $label }}"
@@ -56,7 +56,7 @@
                     <img src="{{ asset("f4-img-2.png") }}" alt="" class="img-fluid">
                 </div>
                 <div class="col-lg-9">
-                    <label class="form-label fw-bold">Region</label>
+                    <label class="form-label fw-bold">Region <small class="text-danger">*</small></label>
                     <textarea name="provocation_region" class="form-control" rows="3">{{ old('provocation_region') }}</textarea>
                     <input type="text" name="provocation_remarks" class="form-control mt-2"
                            placeholder="Remarks" value="{{ old('provocation_remarks') }}">
@@ -66,7 +66,7 @@
 
         <!-- Severity -->
         <div class="mb-3">
-            <label class="form-label fw-bold">Severity</label><br>
+            <label class="form-label fw-bold">Severity <small class="text-danger">*</small></label><br>
             <div class="d-flex flex-wrap gap-2">
                 @for($i=1;$i<=10;$i++)
                     <div class="form-check form-check-inline">
@@ -80,13 +80,13 @@
 
         <!-- Timing -->
         <div class="mb-3">
-            <label class="form-label fw-bold">Timing</label>
+            <label class="form-label fw-bold">Timing <small class="text-danger">*</small></label>
             <textarea name="timing" class="form-control" rows="2">{{ old('timing') }}</textarea>
         </div>
 
         <!-- Additional Findings -->
         <div class="mb-3">
-            <label class="form-label fw-bold">Additional Pertinent Findings</label>
+            <label class="form-label fw-bold">Additional Pertinent Findings <small class="text-danger">*</small></label>
             <textarea name="findings" class="form-control" rows="2">{{ old('findings') }}</textarea>
         </div>
 
@@ -110,7 +110,7 @@
                 <tbody>
                     <!-- Verbal/Vocal -->
                     <tr>
-                        <td><strong>Verbal/Vocal</strong></td>
+                        <td><strong>Verbal/Vocal</strong> <small class="text-danger">*</small></td>
                         <td colspan="4">
                             @foreach(['0 = Positive','1 = Other complaint, whimper','2 = Pain, crying'] as $desc)
                                 <div class="form-check">
@@ -125,7 +125,7 @@
 
                     <!-- Body Movement -->
                     <tr>
-                        <td><strong>Body Movement</strong></td>
+                        <td><strong>Body Movement</strong> <small class="text-danger">*</small></td>
                         <td colspan="4">
                             @foreach(['0 = Moves easily','1 = Neutral shifting','2 = Tense, failing arms/leg'] as $desc)
                                 <div class="form-check">
@@ -140,7 +140,7 @@
 
                     <!-- Facial -->
                     <tr>
-                        <td><strong>Facial</strong></td>
+                        <td><strong>Facial</strong> <small class="text-danger">*</small></td>
                         <td colspan="4">
                             @foreach(['0 = Smiling','1 = Neutral shifting','2 = Frowtn, grimace','3 = Clenched teeth'] as $desc)
                                 <div class="form-check">
@@ -155,7 +155,7 @@
 
                     <!-- Touching -->
                     <tr>
-                        <td><strong>Touching (localizing pain)</strong></td>
+                        <td><strong>Touching (localizing pain)</strong> <small class="text-danger">*</small></td>
                         <td colspan="4">
                             @foreach(['0 = No touching','1 = Reaching patting','2 = Grabbing'] as $desc)
                                 <div class="form-check">
@@ -173,13 +173,13 @@
 
         <!-- Associated Signs -->
         <div class="mb-3">
-            <h6 class="fw-bold">Associated Signs/Symptoms</h6>
+            <h6 class="fw-bold">Associated Signs/Symptoms <small class="text-danger">*</small></h6>
             <input type="text" name="associated_signs" class="form-control" value="{{ old('associated_signs') }}">
         </div>
 
         <!-- Pain Diagnosis -->
         <div class="mb-3">
-            <h6 class="fw-bold">Pain Diagnosis</h6>
+            <h6 class="fw-bold">Pain Diagnosis <small class="text-danger">*</small></h6>
             @foreach(['Acute Pain','Chronic Pain','Neuropathic Pain','Nociceptive Pain','Psychogenic Pain','Phantom Pain','Central Pain','Nociplastic Pain'] as $symptom)
                 <div class="form-check">
                     <input type="checkbox" name="signs[]" value="{{ $symptom }}" class="form-check-input rounded-circle"
@@ -191,7 +191,7 @@
 
         <!-- Pain Management -->
         <div class="mb-3">
-            <h6 class="fw-bold">Pain Management</h6>
+            <h6 class="fw-bold">Pain Management <small class="text-danger">*</small></h6>
             @foreach([
                 'paracetamol'=>'Paracetamol',
                 'nsaids'=>'NSAIDs (Nonsteroidal Anti-inflammatory Drugs)',
@@ -201,7 +201,7 @@
                 'non_pharma'=>'Other Non-pharmacologic Treatment'
             ] as $key=>$label)
                 <div class="border p-2 mb-2">
-                    <label class="form-label">{{ $label }}</label><br>
+                    <label class="form-label">{{ $label }} <small class="text-danger">*</small></label><br>
                     <div class="form-check form-check-inline">
                         <input type="radio" name="{{ $key }}" value="Yes" class="form-check-input rounded-circle"
                                onclick="toggleSection('{{ $key }}Details')"

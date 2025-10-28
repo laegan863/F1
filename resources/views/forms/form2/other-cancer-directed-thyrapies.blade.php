@@ -8,7 +8,7 @@
             <!-- Other Cancer-Directed Therapies -->
             <h5 class="fw-bold mt-3">OTHER CANCER-DIRECTED THERAPIES</h5>
             <div class="mb-3">
-                <label class="form-label fw-bold">Other Cancer Directed Therapies</label>
+                <label class="form-label fw-bold">Other Cancer Directed Therapies <small class="text-danger">*</small></label>
                 <div class="d-flex gap-3">
                     <div class="form-check">
                         <input type="radio" name="other_cancer_therapies" value="Yes"
@@ -29,7 +29,7 @@
 
             <!-- Cancer Therapies Details -->
             <div id="cancerTherapiesDetails" class="{{ old('other_cancer_therapies') == 'Yes' ? '' : 'd-none' }} mb-3">
-                <label class="form-label">If yes, specify other cancer-directed therapies:</label>
+                <label class="form-label">If yes, specify other cancer-directed therapies: <small class="text-danger">*</small></label>
                 <div class="row">
                     <div class="col-md-6">
                         @foreach(['Blood Transfusion','Cryoablation','Embolization','Radiofrequency ablation'] as $label)
@@ -66,7 +66,7 @@
 
             <!-- Pre-operative Scenario -->
             <div class="mb-3">
-                <label class="form-label fw-bold">Pre-operative Scenario</label>
+                <label class="form-label fw-bold">Pre-operative Scenario <small class="text-danger">*</small></label>
                 <div class="d-flex flex-wrap gap-3">
                     @foreach(['No evidence of disease','Progressive Disease','Not Applicable'] as $label)
                         <div class="form-check">
@@ -81,7 +81,7 @@
 
             <!-- Post-operative Scenario -->
             <div class="mb-3">
-                <label class="form-label fw-bold">Post-operative Scenario</label>
+                <label class="form-label fw-bold">Post-operative Scenario <small class="text-danger">*</small></label>
                 <div class="d-flex flex-wrap gap-3">
                     @foreach(['R0','R1','R2','R3','Unknown','Not Applicable'] as $label)
                         <div class="form-check">
@@ -96,7 +96,7 @@
 
             <!-- Patient Treatment Status -->
             <div class="mb-3">
-                <label class="form-label fw-bold">Patient Treatment Status</label>
+                <label class="form-label fw-bold">Patient Treatment Status <small class="text-danger">*</small></label>
                 <div class="d-flex flex-wrap gap-3">
                     @foreach(['Ongoing','Completed','Stopped/Interrupted','Undetermined','Not Initiated'] as $label)
                         <div class="form-check">

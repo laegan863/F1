@@ -15,7 +15,7 @@
         ] as $key => $label)
 
             <div class="mb-4 border p-2">
-                <label class="fw-bold">{{ $label }}</label><br>
+                <label class="fw-bold">{{ $label }} @if($label != 'Other/s') <small class="text-danger">*</small> @endif</label><br>
 
                 <!-- Yes/No -->
                 <div class="form-check form-check-inline">

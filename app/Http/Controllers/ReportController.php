@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\LaravelPdf\Facades\Pdf;
 use App\Models\Demographicprofile;
+use App\Models\F2followup;
+use App\Models\F4palliativeform;
+use App\Models\F4financialsupportmechanism;
+use App\Models\F3financialsupport;
+use App\Models\F2cancerdiagnoseoutcome;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -62,6 +67,48 @@ class ReportController extends Controller
 
         return $rawData;
     }
+
+    public function form2(Request $request)
+    {
+        $rawData = F2followup::with([
+            'f2othercancertherapies',
+            'f2patientstatuses', 
+            'f2radiotheraphies',
+            'f2cancerdiagnoseoutcomes',
+            'f2changetreatmentplans'
+        ])
+            ->whereBetween(DB::raw('YEAR(created_at)'), [$request->input('year_from'), $request->input('year_to')])
+            ->whereBetween(DB::raw('MONTH(created_at)'), [$request->input('month_from'), $request->input('month_to')])
+            ->get();
+
+        return $rawData;
+    }
+
+    public function form3(Request $request)
+    {
+        $rawData = F4palliativeform::whereBetween(DB::raw('YEAR(created_at)'), [$request->input('year_from'), $request->input('year_to')])
+            ->whereBetween(DB::raw('MONTH(created_at)'), [$request->input('month_from'), $request->input('month_to')])
+            ->get();
+
+        return $rawData;
+    }
+
+
+    public function form0(Request $request)
+    {
+        $rawData = [];
+        $rawData[] = F3financialsupport::whereBetween(DB::raw('YEAR(created_at)'), [$request->input('year_from'), $request->input('year_to')])
+            ->whereBetween(DB::raw('MONTH(created_at)'), [$request->input('month_from'), $request->input('month_to')])
+            ->get();
+        $rawData[] = F4financialsupportmechanism::whereBetween(DB::raw('YEAR(created_at)'), [$request->input('year_from'), $request->input('year_to')])
+            ->whereBetween(DB::raw('MONTH(created_at)'), [$request->input('month_from'), $request->input('month_to')])
+            ->get();
+        $rawData[] = F2cancerdiagnoseoutcome::whereBetween(DB::raw('YEAR(created_at)'), [$request->input('year_from'), $request->input('year_to')])
+            ->whereBetween(DB::raw('MONTH(created_at)'), [$request->input('month_from'), $request->input('month_to')])
+            ->get();
+        return $rawData;
+    }
+
     public function generate_pdf(Request $request)
     {
         $code = strtolower($request->input('code'));
@@ -80,6 +127,31 @@ class ReportController extends Controller
             case 'rf-1d':
                 $data = $this->form1($request);
                 break;
+            case 'rf-1e':
+                $data = $this->form1($request);
+                break;
+            case 'rf-1f':
+                $data = $this->form1($request);
+                break;
+            case 'rf-2a':
+                $data = $this->form2($request);
+                break;
+            case 'rf-2b':
+                $data = $this->form2($request);
+                break;
+            case 'rf-2c':
+                $data = $this->form2($request);
+                break;
+            case 'rf-3a':
+                $data = $this->form3($request);
+                break;
+            case 'rf-0a':
+                $data = $this->form0($request);
+                break;
+            case 'rf-0b':
+                $data = $this->form0($request);
+                break;
+            
             default:
                 return response()->json([
                     'error' => 'Invalid report code',

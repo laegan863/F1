@@ -7,7 +7,7 @@
 
         <!-- Diagnosis Outcome -->
         <div class="mb-3">
-            <label class="fw-bold">Diagnosis Outcome</label>
+            <label class="fw-bold">Diagnosis Outcome <small class="text-danger">*</small></label>
             <div class="row">
                 @foreach([
                     'Stable Disease',
@@ -41,7 +41,7 @@
 
         <!-- Date of Diagnosis Outcome -->
         <div class="mb-3">
-            <label class="fw-bold">Date of Diagnosis Outcome</label>
+            <label class="fw-bold">Date of Diagnosis Outcome <small class="text-danger">*</small></label>
             <input 
                 type="date" 
                 name="diagnosis_outcome_date" 
@@ -51,21 +51,21 @@
 
         <!-- Cause of Death -->
         <div class="mb-3">
-            <label class="fw-bold">Cause of Death</label>
+            <label class="fw-bold">Cause of Death <small class="text-danger">*</small></label>
             <div class="mb-2">
-                <label class="form-label">Immediate Cause</label>
+                <label class="form-label">Immediate Cause <small class="text-danger">*</small></label>
                 <input type="text" name="immediate_cause" class="form-control" value="{{ old('immediate_cause') }}">
             </div>
             <div class="mb-2">
-                <label class="form-label">Antecedent Cause</label>
+                <label class="form-label">Antecedent Cause <small class="text-danger">*</small></label>
                 <input type="text" name="antecedent_cause" class="form-control" value="{{ old('antecedent_cause') }}">
             </div>
             <div class="mb-2">
-                <label class="form-label">Underlying Cause</label>
+                <label class="form-label">Underlying Cause <small class="text-danger">*</small></label>
                 <input type="text" name="underlying_cause" class="form-control" value="{{ old('underlying_cause') }}">
             </div>
             <div class="mb-2">
-                <label class="form-label">Other significant condition directly leading to death</label>
+                <label class="form-label">Other significant condition directly leading to death <small class="text-danger">*</small></label>
                 <input type="text" name="other_condition" class="form-control" value="{{ old('other_condition') }}">
             </div>
         </div>

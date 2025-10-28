@@ -6,7 +6,7 @@
         @csrf
         <div class="card-body">
             <!-- Surgery -->
-            <h5 class="fw-bold mt-3">Surgery</h5>
+            <h5 class="fw-bold mt-3">Surgery <small class="text-danger">*</small></h5>
             <div class="mb-2">
                 <div class="form-check d-inline-block me-3">
                     <input type="radio" name="surgery_plan" value="Yes"
@@ -25,17 +25,17 @@
             </div>
             <div id="surgeryDetails" class="{{ old('surgery_plan') == 'Yes' ? '' : 'd-none' }} mb-3">
                 <div class="my-2">
-                    <label class="form-label">Treatment Plan</label>
+                    <label class="form-label">Treatment Plan <small class="text-danger">*</small></label>
                     <input type="text" name="treatment_plan" class="form-control" value="{{ old('treatment_plan') }}">
                 </div>
                 <div class="my-2">
-                    <label class="form-label">Reason</label>
+                    <label class="form-label">Reason <small class="text-danger">*</small></label>
                     <textarea name="surgery_reason" class="form-control" rows="2">{{ old('surgery_reason') }}</textarea>
                 </div>
             </div>
 
             <!-- Anti-Cancer Drug Therapy -->
-            <h5 class="fw-bold mt-3">Anti-Cancer Drug Therapy</h5>
+            <h5 class="fw-bold mt-3">Anti-Cancer Drug Therapy <small class="text-danger">*</small></h5>
             <div class="mb-2">
                 <div class="form-check d-inline-block me-3">
                     <input type="radio" name="anti_cancer_change" value="Yes"
@@ -129,7 +129,7 @@
             </div>
 
             <!-- Radiotherapy -->
-            <h5 class="fw-bold mt-3">Radiotherapy</h5>
+            <h5 class="fw-bold mt-3">Radiotherapy <small class="text-danger">*</small></h5>
             <div class="mb-2">
                 <div class="form-check d-inline-block me-3">
                     <input type="radio" name="radio_change" value="Yes"
@@ -148,32 +148,32 @@
             </div>
 
             <div id="radioDetails" class="{{ old('radio_change') == 'Yes' ? '' : 'd-none' }}">
-                <label class="form-label">What change in treatment plan?</label>
+                <label class="form-label">What change in treatment plan? <small class="text-danger">*</small></label>
                 <textarea name="radio_treatment_plan" class="form-control">{{ old('radio_treatment_plan') }}</textarea>
                 <div class="row">
                     <div class="col-md-6">
-                        <label class="form-label">Date Start</label>
+                        <label class="form-label">Date Start <small class="text-danger">*</small></label>
                         <input type="date" name="radio_date_start" class="form-control" value="{{ old('radio_date_start') }}">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Date Ended</label>
+                        <label class="form-label">Date Ended <small class="text-danger">*</small></label>
                         <input type="date" name="radio_date_end" class="form-control" value="{{ old('radio_date_end') }}">
                     </div>
                 </div>
                 <div class="row mt-2">
                     <div class="col-md-6">
-                        <label class="form-label">Total Planned Dose (cGy)</label>
+                        <label class="form-label">Total Planned Dose (cGy) <small class="text-danger">*</small></label>
                         <input type="text" name="radio_total_dose" class="form-control" value="{{ old('radio_total_dose') }}">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Dose per Fraction (cGy)</label>
+                        <label class="form-label">Dose per Fraction (cGy) <small class="text-danger">*</small></label>
                         <input type="text" name="radio_dose_fraction" class="form-control" value="{{ old('radio_dose_fraction') }}">
                     </div>
                 </div>
-                <label class="form-label mt-2">Total Planned Fractions</label>
+                <label class="form-label mt-2">Total Planned Fractions <small class="text-danger">*</small></label>
                 <input type="text" name="radio_total_fractions" class="form-control" value="{{ old('radio_total_fractions') }}">
 
-                <label class="form-label mt-2">Specific type of radiotherapy</label>
+                <label class="form-label mt-2">Specific type of radiotherapy <small class="text-danger">*</small></label>
                 @foreach([
                     '2D conventional','3DCRT','Brachytherapy','Electron Therapy','IMRT/IMAT/Helical',
                     'IORT','Heavy Particles','Proton Therapy','Stereotactic Radiosurgery','Others'
@@ -189,12 +189,12 @@
                                value="{{ old('radio_type_other') }}">
                     @endif
                 @endforeach
-                <label class="form-label">Reason</label>
+                <label class="form-label">Reason <small class="text-danger">*</small></label>
                 <textarea name="radio_reason" class="form-control mb-2">{{ old('radio_reason') }}</textarea>
             </div>
 
             <!-- Theranostics -->
-            <h5 class="fw-bold mt-3">Theranostics</h5>
+            <h5 class="fw-bold mt-3">Theranostics <small class="text-danger">*</small></h5>
             <div class="mb-2">
                 <div class="form-check d-inline-block me-3">
                     <input type="radio" name="thera_change" value="Yes"
@@ -213,10 +213,10 @@
             </div>
 
             <div id="theraDetails" class="{{ old('thera_change') == 'Yes' ? '' : 'd-none' }}">
-                <label class="form-label">What change in treatment plan?</label>
+                <label class="form-label">What change in treatment plan? <small class="text-danger">*</small></label>
                 <textarea name="thera_treatment_plan" class="form-control">{{ old('thera_treatment_plan') }}</textarea>
 
-                <label class="form-label mt-2">If yes, indicate type:</label>
+                <label class="form-label mt-2">If yes, indicate type: <small class="text-danger">*</small></label>
                 @foreach(['Radioactive Iodine Therapy (RAI)','PRRT','PRLT','SIRT','Others'] as $type)
                     <div class="form-check">
                         <input type="checkbox" name="thera_type[]" value="{{ $type }}"
@@ -235,27 +235,27 @@
 
                 <div class="row mt-2">
                     <div class="col-md-6">
-                        <label class="form-label">Total Planned Fractions</label>
+                        <label class="form-label">Total Planned Fractions <small class="text-danger">*</small></label>
                         <input type="text" name="thera_total_planned_dose" class="form-control"
                                value="{{ old('thera_total_planned_dose') }}">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Total Planned Fractions</label>
+                        <label class="form-label">Total Planned Fractions <small class="text-danger">*</small></label>
                         <input type="text" name="thera_total_fractions" class="form-control"
                                value="{{ old('thera_total_fractions') }}">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Dose per Fractions</label>
+                        <label class="form-label">Dose per Fractions <small class="text-danger">*</small></label>
                         <input type="text" name="thera_dose_fraction" class="form-control"
                                value="{{ old('thera_dose_fraction') }}">
                     </div>
                 </div>
-                <label class="form-label">Reason</label>
+                <label class="form-label">Reason <small class="text-danger">*</small></label>
                 <textarea name="thera_reason" class="form-control">{{ old('thera_reason') }}</textarea>
             </div>
 
             <!-- Palliative Care -->
-            <h5 class="fw-bold mt-3">Supportive Palliative Care Only</h5>
+            <h5 class="fw-bold mt-3">Supportive Palliative Care Only <small class="text-danger">*</small></h5>
             <div class="mb-2">
                 <div class="form-check d-inline-block me-3">
                     <input type="radio" name="palliative" value="Yes"
@@ -274,7 +274,7 @@
             </div>
 
             <!-- Other Cancer Directed Therapies -->
-            <h5 class="fw-bold mt-3">Other Cancer Directed Therapies</h5>
+            <h5 class="fw-bold mt-3">Other Cancer Directed Therapies <small class="text-danger">*</small></h5>
             <div class="mb-2">
                 <div class="form-check d-inline-block me-3">
                     <input type="radio" name="other_cancer" value="Yes"
@@ -310,16 +310,16 @@
                 @endforeach
 
                 <div class="mb-3">
-                    <label class="form-label mt-2">What change in treatment plan?</label>
+                    <label class="form-label mt-2">What change in treatment plan? <small class="text-danger">*</small></label>
                     <input type="text" name="other_cancer_treatment_plan" value="{{ old('other_cancer_treatment_plan') }}" class="form-control">
                 </div>
 
-                <label class="form-label mt-2">What change in treatment plan?</label>
+                <label class="form-label mt-2">Reason <small class="text-danger">*</small></label>
                 <textarea name="other_cancer_reason" class="form-control">{{ old('other_cancer_reason') }}</textarea>
             </div>
 
             <!-- Remarks -->
-            <h5 class="fw-bold mt-3">Remarks</h5>
+            <h5 class="fw-bold mt-3">Remarks <small class="text-danger">*</small></h5>
             <textarea name="remarks" class="form-control">{{ old('remarks') }}</textarea>
 
         </div>

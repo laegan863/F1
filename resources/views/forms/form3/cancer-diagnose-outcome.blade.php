@@ -9,7 +9,7 @@
             <div class="card-body">
 
                 <!-- Diagnosis Outcome -->
-                <h5 class="fw-bold">Diagnosis Outcome</h5>
+                <h5 class="fw-bold">Diagnosis Outcome <small class="text-danger">*</small></h5>
                 <div class="mb-3">
                     <div class="row">
                         @foreach([
@@ -45,7 +45,7 @@
 
                 <!-- Date of Diagnosis Outcome -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Date of Diagnosis Outcome</label>
+                    <label class="form-label fw-bold">Date of Diagnosis Outcome <small class="text-danger">*</small></label>
                     <input type="date" name="diagnosis_outcome_date" class="form-control" value="{{ old('diagnosis_outcome_date') }}">
                     @error('diagnosis_outcome_date')
                         <small class="text-danger">{{ $message }}</small>
@@ -53,7 +53,7 @@
                 </div>
 
                 <!-- Cause of Death -->
-                <h5 class="fw-bold mt-3">Cause of Death</h5>
+                <h5 class="fw-bold mt-3">Cause of Death <small class="text-danger">*</small></h5>
                 <div class="mb-2">
                     <label class="form-label">Immediate Cause</label>
                     <input type="text" name="cause_immediate" class="form-control" value="{{ old('cause_immediate') }}">
@@ -62,21 +62,21 @@
                     @enderror
                 </div>
                 <div class="mb-2">
-                    <label class="form-label">Antecedent Cause</label>
+                    <label class="form-label">Antecedent Cause <small class="text-danger">*</small></label>
                     <input type="text" name="cause_antecedent" class="form-control" value="{{ old('cause_antecedent') }}">
                     @error('cause_antecedent')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
                 <div class="mb-2">
-                    <label class="form-label">Underlying Cause</label>
+                    <label class="form-label">Underlying Cause <small class="text-danger">*</small></label>
                     <input type="text" name="cause_underlying" class="form-control" value="{{ old('cause_underlying') }}">
                     @error('cause_underlying')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
                 </div>
                 <div class="mb-2">
-                    <label class="form-label">Other significant condition directly leading to death</label>
+                    <label class="form-label">Other significant condition directly leading to death <small class="text-danger">*</small></label>
                     <input type="text" name="cause_other" class="form-control" value="{{ old('cause_other') }}">
                     @error('cause_other')
                         <small class="text-danger">{{ $message }}</small>

@@ -16,7 +16,7 @@
 
             <!-- Date -->
             <div class="mb-3">
-                <label class="form-label fw-bold">Date</label>
+                <label class="form-label fw-bold">Date <small class="text-danger">*</small></label>
                 <input type="date" name="date" class="form-control"
                        value="{{ old('date', \Carbon\Carbon::now()->format('Y-m-d')) }}">
             </div>
@@ -25,7 +25,7 @@
             <div class="mb-3">
                 <div class="row">
                     <div class="col-md-4">
-                        <label class="form-label fw-bold">First Name</label>
+                        <label class="form-label fw-bold">First Name <small class="text-danger">*</small></label>
                         <input type="text" name="name[firstname]" class="form-control"
                                value="{{ old('name.firstname', $data->name['firstname'] ?? '') }}">
                     </div>
@@ -35,16 +35,21 @@
                                value="{{ old('name.middlename', $data->name['middlename'] ?? '') }}">
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label fw-bold">Last Name</label>
+                        <label class="form-label fw-bold">Last Name <small class="text-danger">*</small></label>
                         <input type="text" name="name[lastname]" class="form-control"
                                value="{{ old('name.lastname', $data->name['lastname'] ?? '') }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label fw-bold">Suffix <small class="text-danger">*</small></label>
+                        <input type="text" name="name[suffix]" class="form-control"
+                               value="{{ old('name.suffix', $data->name['suffix'] ?? '') }}">
                     </div>
                 </div>
             </div>
 
             <!-- Primary Cancer Site -->
             <div class="mb-3">
-                <label class="form-label fw-bold">Primary Cancer Site</label>
+                <label class="form-label fw-bold">Primary Cancer Site <small class="text-danger">*</small></label>
                 <div class="row">
                     <div class="col-md-4">
                         @foreach([
@@ -101,7 +106,7 @@
 
             <!-- Laterality -->
             <div class="mb-3">
-                <label class="form-label fw-bold">Laterality</label>
+                <label class="form-label fw-bold">Laterality <small class="text-danger">*</small></label>
                 <div class="d-flex flex-wrap gap-3">
                     @foreach(['Left','Right','Bilateral','Not applicable','Unknown'] as $label)
                         <div class="form-check">
@@ -116,21 +121,21 @@
 
             <!-- Histologic Diagnosis -->
             <div class="mb-3">
-                <label class="form-label fw-bold">Histologic Diagnosis</label>
+                <label class="form-label fw-bold">Histologic Diagnosis <small class="text-danger">*</small></label>
                 <input type="text" name="histologic_diagnosis" class="form-control"
                        value="{{ old('histologic_diagnosis', $data->cancerdiagnoses['histologic_diagnosis'] ?? '') }}">
             </div>
 
             <!-- ICD-10 -->
             <div class="mb-3">
-                <label class="form-label fw-bold">ICD-10</label>
+                <label class="form-label fw-bold">ICD-10 <small class="text-danger">*</small></label>
                 <input type="text" name="icd10" class="form-control"
                        value="{{ old('icd10', $data->cancerdiagnoses['icd_10'] ?? '') }}">
             </div>
 
             <!-- Group Clinical Stage -->
             <div class="mb-3">
-                <label class="form-label fw-bold">Group Clinical Stage <span class="text-muted">(Optional)</span></label>
+                <label class="form-label fw-bold">Group Clinical Stage <small class="text-danger">(Optional)</small></label>
                 <div class="d-flex flex-wrap gap-3">
                     @foreach(['Stage 0','Stage I','Stage II','Stage III','Stage IV','Unknown'] as $label)
                         <div class="form-check">
@@ -159,7 +164,7 @@
 
             <!-- Other Staging Used -->
             <div class="mb-3 mt-3">
-                <label class="form-label fw-bold">Other Staging Used <span class="text-muted">(Optional)</span></label>
+                <label class="form-label fw-bold">Other Staging Used <small class="text-danger">(Optional)</small></label>
                 <div class="row">
                     <div class="col-md-6">
                         @foreach([

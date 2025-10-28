@@ -8,7 +8,7 @@
             <!-- Cancer Diagnosis Outcome -->
             <h5 class="fw-bold mt-3">Cancer Diagnosis Outcome</h5>
             <div class="mb-3">
-                <label class="form-label">Diagnosis Outcome</label>
+                <label class="form-label">Diagnosis Outcome <small class="text-danger">*</small></label>
                 <div class="row">
                     @foreach([
                         'Stable Disease', 'Complete Remission', 'Partial Response',
@@ -30,14 +30,14 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Date of Diagnosis Outcome</label>
+                <label class="form-label">Date of Diagnosis Outcome <small class="text-danger">*</small></label>
                 <input type="date" name="diagnosis_outcome_date" class="form-control"
                        value="{{ old('diagnosis_outcome_date') }}">
             </div>
 
             <!-- Cause of Death -->
             <div class="mb-3">
-                <label class="form-label">Cause of Death</label>
+                <label class="form-label">Cause of Death <small class="text-danger">*</small></label>
                 <input type="text" name="cause_immediate" class="form-control mb-2" placeholder="Immediate Cause" value="{{ old('cause_immediate') }}">
                 <input type="text" name="cause_antecedent" class="form-control mb-2" placeholder="Antecedent Cause" value="{{ old('cause_antecedent') }}">
                 <input type="text" name="cause_underlying" class="form-control mb-2" placeholder="Underlying Cause" value="{{ old('cause_underlying') }}">
@@ -47,7 +47,7 @@
             <!-- Financial Support Mechanism -->
             <h5 class="fw-bold mt-3">Financial Support Mechanism</h5>
             <div class="mb-2">
-                <label class="form-label">Did patient avail any financial support mechanism?</label>
+                <label class="form-label">Did patient avail any financial support mechanism? <small class="text-danger">*</small></label>
                 <div class="form-check d-inline-block me-3">
                     <input type="radio" name="financial_support" value="Yes"
                            class="form-check-input rounded-circle"
@@ -98,7 +98,7 @@
 
             <!-- CSPMAP Medicines -->
             <div class="mt-3">
-                <label class="form-label">If CSPMAP is checked, select the medicines availed:</label>
+                <label class="form-label">If CSPMAP is checked, select the medicines availed: <small class="text-danger">*</small></label>
                 <div class="row">
                     @foreach([
                         'Asparaginase 10,000 IU vial','Bicalutamide 50 mg','Bleomycin (as Sulfate) 15 mg vial',
@@ -146,7 +146,7 @@
 
             <!-- Other Medicines Availed -->
             <div class="mt-3">
-                <label class="form-label">Other Medicines Availed</label>
+                <label class="form-label">Other Medicines Availed <small class="text-danger">*</small></label>
                 <div class="row">
                     @foreach([
                         'All-trans Retinoic Acid (ATRA)','Arsenic','Atezolizumab','Bevacizumab','Blinatumomab',
