@@ -14,14 +14,14 @@
             <div class="card-body rounded-0">
                 <!-- Date -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Date</label>
+                    <label class="form-label fw-bold">Date <small class="text-danger">*</small></label>
                     <input type="date" name="date" class="form-control" value="{{ old('date', \Carbon\Carbon::now()->format('Y-m-d')) }}">
                 </div>
                 <!-- Name of Patient -->
                 <div class="mb-3">
                     <div class="row">
                         <div class="col-md-3">
-                            <label class="form-label fw-bold">First Name</label>
+                            <label class="form-label fw-bold">First Name <small class="text-danger">*</small></label>
                             <input type="text" name="name[firstname]" class="form-control" value="{{ $data->name['firstname'] }}">
                         </div>
                         <div class="col-md-3">
@@ -29,11 +29,11 @@
                             <input type="text" name="name[middlename]" class="form-control" value="{{ $data->name['middlename'] }}">
                         </div>
                         <div class="col-md-3">
-                            <label class="form-label fw-bold">Last Name</label>
+                            <label class="form-label fw-bold">Last Name <small class="text-danger">*</small></label>
                             <input type="text" name="name[lastname]" class="form-control" value="{{ $data->name['lastname'] }}">
                         </div>
                         <div class="col-md-3">
-                            <label class="form-label fw-bold">Suffix</label>
+                            <label class="form-label fw-bold">Suffix </label>
                             <input type="text" name="name[suffix]" class="form-control" value="{{ $data->name['suffix'] }}">
                         </div>
                     </div>
@@ -41,7 +41,7 @@
                 </div>
                 <!-- Primary Cancer Site -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Primary Cancer Site</label>
+                    <label class="form-label fw-bold">Primary Cancer Site <small class="text-danger">*</small></label>
                     <div class="row">
                         <div class="col-md-4">
                             @foreach([
@@ -135,7 +135,7 @@
 
                 <!-- Laterality -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Laterality</label>
+                    <label class="form-label fw-bold">Laterality <small class="text-danger">*</small></label>
                     <div class="d-flex flex-wrap gap-3">
                         @foreach([
                             '1' => 'Left',
@@ -155,18 +155,18 @@
 
                 <!-- Histologic Diagnosis -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Histologic Diagnosis</label>
+                    <label class="form-label fw-bold">Histologic Diagnosis <small class="text-danger">*</small></label>
                     <input type="text" name="histologic_diagnosis" class="form-control" value="{{ $data->cancerdiagnoses['histologic_diagnosis'] }}">
                 </div>
 
                 <!-- ICD-10 -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">ICD-10</label>
+                    <label class="form-label fw-bold">ICD-10 <small class="text-danger">*</small></label>
                     <input type="text" name="icd10" class="form-control" value="{{ $data->cancerdiagnoses['icd_10'] }}">
                 </div>
                         <!-- Group Clinical Stage -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Group Clinical Stage <span class="text-muted">(Optional)</span></label>
+                    <label class="form-label fw-bold">Group Clinical Stage <small class="text-danger">(Optional)</small></label>
                     <div class="d-flex flex-wrap gap-3">
                         @foreach([
                             '1' => 'Stage 0',
@@ -197,7 +197,7 @@
                 <div class="row">
                     @foreach ($tumors as $tumor => $t_value )
                         <div class="col-md-3">
-                            <label class="form-label fw-bold">{{ $t_value }}<span class="text-muted">(Optional)</span></label>
+                            <label class="form-label fw-bold">{{ $t_value }}<small class="text-danger">(Optional)</small></label>
                             <input type="text" name="stage[{{ $tumor }}_stage]" class="form-control" value="{{ $data->cancerdiagnoses[$tumor.'_stage'] }}">
                         </div>
                     @endforeach
@@ -205,7 +205,7 @@
 
                 <!-- Other Staging Used -->
                 <div class="mb-3 mt-3">
-                    <label class="form-label fw-bold">Other Staging Used <span class="text-muted">(Optional)</span></label>
+                    <label class="form-label fw-bold">Other Staging Used <small class="text-danger">(Optional)</small></label>
                     <div class="row">
                         <div class="col-md-6">
                             @foreach([
@@ -242,7 +242,7 @@
 
                 <!-- Other Remarks -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Other Remarks</label>
+                    <label class="form-label fw-bold">Other Remarks <small class="text-danger">*</small></label>
                     <textarea name="other_remarks" class="form-control" rows="2">{{ old('other_remarks', $data->cancerdiagnoses['other_remarks']) }}</textarea>
                 </div>
 

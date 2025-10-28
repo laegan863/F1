@@ -9,7 +9,7 @@
             <!-- Radiotherapy -->
             <h5 class="fw-bold mt-3">RADIOTHERAPY</h5>
             <div class="mb-3">
-                <label class="form-label fw-bold">Ongoing Radiotherapy?</label>
+                <label class="form-label fw-bold">Ongoing Radiotherapy? <small class="text-danger">*</small></label>
                 <div class="d-flex flex-wrap gap-3">
                     @foreach(['Yes','No'] as $opt)
                         <div class="form-check">
@@ -27,37 +27,37 @@
             <div id="radiotherapyDetails" class="{{ old('radiotherapy')=='Yes' ? '' : 'd-none' }}">
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label class="form-label">Date Start</label>
+                        <label class="form-label">Date Start <small class="text-danger">*</small></label>
                         <input type="date" name="radio_date_start" class="form-control" value="{{ old('radio_date_start') }}">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Date Ended</label>
+                        <label class="form-label">Date Ended <small class="text-danger">*</small></label>
                         <input type="date" name="radio_date_end" class="form-control" value="{{ old('radio_date_end') }}">
                     </div>
                 </div>
 
                 <div class="row mb-3">
                     <div class="col-md-3">
-                        <label class="form-label">Total planned dose (cGy)</label>
+                        <label class="form-label">Total planned dose (cGy) <small class="text-danger">*</small> </label>
                         <input type="text" name="radio_total_dose" class="form-control" value="{{ old('radio_total_dose') }}">
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Dose per fraction</label>
+                        <label class="form-label">Dose per fraction <small class="text-danger">*</small></label>
                         <input type="text" name="radio_dose_fraction" class="form-control" value="{{ old('radio_dose_fraction') }}">
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Total planned fractions</label>
+                        <label class="form-label">Total planned fractions <small class="text-danger">*</small></label>
                         <input type="text" name="radio_total_fractions" class="form-control" value="{{ old('radio_total_fractions') }}">
                     </div>
                     <div class="col-md-3">
-                        <label class="form-label">Total number of days</label>
+                        <label class="form-label">Total number of days <small class="text-danger">*</small></label>
                         <input type="text" name="radio_total_days" class="form-control" value="{{ old('radio_total_days') }}">
                     </div>
                 </div>
 
                 <!-- Body Site Target -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Body site target:</label>
+                    <label class="form-label fw-bold">Body site target: <small class="text-danger">*</small></label>
                     <div class="row">
                         @php
                             $bodySites1 = ['Adrenal','Anus','Biliary Tract','Blood - Acute Lymphocytic Leukemia',
@@ -100,7 +100,7 @@
 
                 <!-- Type of Radiotherapy -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Type of radiotherapy:</label>
+                    <label class="form-label fw-bold">Type of radiotherapy: <small class="text-danger">*</small></label>
                     <div class="row">
                         @foreach(['2D conventional','3DCRT','Brachytherapy','Electron Therapy','IMRT/IMAT/Helical',
                                   'IORT','Heavy Particles','Proton Therapy','Stereotactic Radiosurgery / Radiotherapy','Others'] as $label)
@@ -125,7 +125,7 @@
 
                 <!-- Goal -->
                 <div class="mb-3">
-                    <label class="form-label fw-bold">Goal of radiotherapy:</label>
+                    <label class="form-label fw-bold">Goal of radiotherapy: <small class="text-danger">*</small></label>
                     <div class="d-flex gap-3">
                         @foreach(['Curative','Palliative'] as $opt)
                             <div class="form-check">
@@ -142,7 +142,7 @@
             <!-- Theranostics -->
             <h5 class="fw-bold mt-3">THERANOSTICS</h5>
             <div class="mb-3">
-                <label class="form-label fw-bold">Theranostics?</label>
+                <label class="form-label fw-bold">Theranostics? <small class="text-danger">*</small></label>
                 <div class="d-flex flex-wrap gap-3">
                     @foreach(['Yes','No'] as $opt)
                         <div class="form-check">
@@ -159,7 +159,7 @@
             <!-- Theranostics Details -->
             <div id="theranosticsDetails" class="{{ old('theranostics')=='Yes' ? '' : 'd-none' }}">
                 <div class="mb-3">
-                    <label class="form-label">If yes, indicate type:</label>
+                    <label class="form-label">If yes, indicate type: <small class="text-danger">*</small></label>
                     @foreach(['Radioactive Iodine Therapy (RAI)','Peptide Receptor Radionuclide Therapy (PRRT)',
                               'PSMA Radioligand Therapy (PRLT)','Selective Internal Radiation Therapy (SIRT)','Others'] as $label)
                         <div class="form-check">
@@ -180,21 +180,21 @@
 
                 <div class="row mb-3">
                     <div class="col-md-4">
-                        <label class="form-label">Total Planned dose</label>
+                        <label class="form-label">Total Planned dose <small class="text-danger">*</small></label>
                         <input type="text" name="thera_total_planned" class="form-control" value="{{ old('thera_total_planned') }}">
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Total Dose received</label>
+                        <label class="form-label">Total Dose received <small class="text-danger">*</small></label>
                         <input type="text" name="thera_total_received" class="form-control" value="{{ old('thera_total_received') }}">
                     </div>
                     <div class="col-md-4">
-                        <label class="form-label">Number of sequences</label>
+                        <label class="form-label">Number of sequences <small class="text-danger">*</small></label>
                         <input type="text" name="thera_sequences" class="form-control" value="{{ old('thera_sequences') }}">
                     </div>
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Goal:</label>
+                    <label class="form-label">Goal: <small class="text-danger">*</small></label>
                     <div class="d-flex gap-3">
                         @foreach(['Definitive','Palliative'] as $opt)
                             <div class="form-check">

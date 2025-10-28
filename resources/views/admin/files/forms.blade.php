@@ -38,18 +38,18 @@
                                             </a>
                                         @endif
                                         @if($loop->iteration != 1)
-                                            <a href="{{ route('user.multiform', [ 'hospitalID' => $value->hospitalID, 'form' => $loop->iteration ]) }}" class="text-white" rel="noopener noreferrer">
-                                                <button type="button" class="btn btn-warning dim" type="button">
+                                            <a href="{{ route('user.multiform', [ 'hospitalID' => $value->hospitalID, 'form' => $loop->iteration ]) }}" class="text-white">
+                                                <button class="btn btn-warning dim">
                                                     <i class="fa fa-arrow-right"></i>
                                             </a>
-                                            <a href="{{ route($form.'-firstpage', [ 'hospitalID' => $hospitalID ]) }}" class="text-white" rel="noopener noreferrer">
+                                            <a href="{{ route($form.'-firstpage', [ 'hospitalID' => $hospitalID ]) }}" class="text-white">
                                                 <button type="button" class="btn btn-primary dim">
                                                     <i class="fa fa-plus"></i>
                                                 </button>
                                             </a>
                                         @endif
                                     @else
-                                        <a href="{{ route($form.'-firstpage', [ 'hospitalID' => $hospitalID ]) }}" class="text-white" rel="noopener noreferrer">
+                                        <a href="{{ route($form.'-firstpage', [ 'hospitalID' => $hospitalID ]) }}" class="text-white">
                                             <button type="button" class="btn btn-primary dim">
                                                 <i class="fa fa-plus"></i>
                                             </button>

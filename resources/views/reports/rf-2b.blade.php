@@ -42,7 +42,6 @@
 
     // Process each followup record
     foreach ($rawData as $followup) {
-        // Get patient gender from Demographicprofile using hospitalID
         $demographic = Demographicprofile::where('hospitalID', $followup->hospitalID)->first();
         $gender = $demographic ? strtolower($demographic->sex) : null;
 

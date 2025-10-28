@@ -10,13 +10,13 @@
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label class="form-label fw-bold">GCS Score of the Patient</label>
+                        <label class="form-label fw-bold">GCS Score of the Patient <small class="text-danger">*</small></label>
                         <input type="number" name="gcs_score" placeholder="Enter GCS Score of the Patient" 
                                class="form-control" min="0" max="15"
                                value="{{ old('gcs_score') }}">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label fw-bold">ESAS-r Score of the Patient <small>(Only if GCS Score ≥ 8)</small></label>
+                        <label class="form-label fw-bold">ESAS-r Score of the Patient <small>(Only if GCS Score ≥ 8)</small> <small class="text-danger">*</small></label>
                         <input type="number" name="esasr_score" placeholder="Enter ESAS-r Score of the Patient" 
                                class="form-control" min="0" max="100"
                                value="{{ old('esasr_score') }}">
@@ -28,7 +28,7 @@
         <!-- Symptom Scales -->
         <div class="card shadow-sm mb-3">
             <div class="card-body">
-                <h5 class="fw-bold">Please circle the number that best describes how the patient feels NOW:</h5>
+                <h5 class="fw-bold">Please circle the number that best describes how the patient feels NOW: <small class="text-danger">*</small></h5>
 
                 @foreach([
                     'pain'=>'No Pain|Worst Possible Pain',
@@ -45,7 +45,7 @@
                         [$left,$right] = explode('|',$labels);
                     @endphp
                     <div class="mb-3">
-                        <label class="form-label fw-bold text-uppercase">{{ ucfirst($key) }}</label>
+                        <label class="form-label fw-bold text-uppercase">{{ ucfirst($key) }} <small class="text-danger">*</small></label>
                         <div class="d-flex">
                             <span class="me-2">{{ $left }}</span>
                             <div class="d-flex flex-wrap">
@@ -68,8 +68,8 @@
                 <!-- Other Problem -->
                 <div class="mb-3">
                     <label class="form-label fw-bold">Other Problem</label>
-                    <input type="text" name="other_problem" class="form-control mb-2" placeholder="Describe problem"
-                           value="{{ old('other_problem') }}">
+                    {{-- <input type="text" name="other_problem" class="form-control mb-2" placeholder="Describe problem"
+                           value="{{ old('other_problem') }}"> --}}
                     <div class="d-flex align-items-center">
                         <span class="me-2">
                             <input type="text" name="other_problem_left_title" placeholder="title" class="form-control"

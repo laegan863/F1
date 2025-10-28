@@ -8,7 +8,7 @@
         <!-- ================= FINANCIAL SUPPORT ================= -->
         <div class="card shadow-sm mb-3">
             <div class="card-body">
-                <h5 class="fw-bold">Financial Support Mechanism</h5>
+                <h5 class="fw-bold">Financial Support Mechanism <small class="text-danger">*</small></h5>
 
                 <label class="form-label">Did patient avail any financial support mechanism?</label>
                 <div class="form-check form-check-inline">
@@ -29,7 +29,7 @@
 
                 <!-- Financial Mechanism Options -->
                 <div id="financialDetails" class="d-none mt-3">
-                    <label class="form-label">If yes, specify:</label>
+                    <label class="form-label">If yes, specify: <small class="text-danger">*</small></label>
                     <div class="row">
                         @foreach([
                             'Discounts under Law (e.g. Senior Citizen, PWD)',
@@ -74,7 +74,7 @@
         <!-- ================= CSPMAP MEDICINES ================= -->
         <div class="card shadow-sm mb-3">
             <div class="card-body">
-                <h5 class="fw-bold">CSPMAP Medicines</h5>
+                <h5 class="fw-bold">CSPMAP Medicines <small class="text-danger">*</small></h5>
                 <p class="small">If CSPMAP is checked, select the medicines availed under the CSPMAP program:</p>
                 <div class="row">
                     @foreach([
@@ -130,7 +130,7 @@
         <!-- ================= OTHER MEDICINES ================= -->
         <div class="card shadow-sm mb-3">
             <div class="card-body">
-                <h5 class="fw-bold">Other Medicines Availed</h5>
+                <h5 class="fw-bold">Other Medicines Availed <small class="text-danger">*</small></h5>
                 <div class="row">
                     @foreach([
                         'All-trans Retinoic Acid (ATRA)','Arsenic','Atezolizumab','Bevacizumab','Blinatumomab',

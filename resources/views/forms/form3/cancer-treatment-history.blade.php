@@ -8,7 +8,7 @@
         <!-- ================= SURGERY ================= -->
         <div class="card shadow-sm mb-3">
             <div class="card-body">
-                <h5 class="fw-bold">Surgery</h5>
+                <h5 class="fw-bold">Surgery <small class="text-danger">*</small></h5>
                 @foreach([
                     'first'=>'Surgery Done?',
                     'second'=>'Second Surgery',
@@ -40,7 +40,7 @@
                                 class="form-control mb-2"
                                 value="{{ old($key.'_surgery_date') }}">
 
-                            <label class="form-label">What surgery type (RVS Code / Description)</label>
+                            <label class="form-label">What surgery type (RVS Code / Description) <small class="text-danger">*</small></label>
                             <input type="text" name="{{ $key }}_surgery_code"
                                 class="form-control mb-2" placeholder="RVS Code"
                                 value="{{ old($key.'_surgery_code') }}">
@@ -48,7 +48,7 @@
                                 class="form-control mb-2" placeholder="Description"
                                 value="{{ old($key.'_surgery_desc') }}">
 
-                            <label class="form-label">Goal (can be multiple)</label>
+                            <label class="form-label">Goal (can be multiple) <small class="text-danger">*</small></label>
                             <div class="d-flex flex-wrap gap-3">
                                 @foreach(['Diagnostic','Curative','Palliative','Unknown'] as $val)
                                     <div class="form-check">
@@ -60,7 +60,7 @@
                                 @endforeach
                             </div>
 
-                            <label class="form-label mt-2">Is there medically confirmed adverse event?</label>
+                            <label class="form-label mt-2">Is there medically confirmed adverse event? <small class="text-danger">*</small></label>
                             <div class="d-flex flex-wrap gap-3">
                                 @foreach(['None','Minor','Major','Serious','Unknown'] as $val)
                                     <div class="form-check">
@@ -82,7 +82,7 @@
         <!-- ================= ANTI-CANCER DRUG ================= -->
         <div class="card shadow-sm mb-3">
             <div class="card-body">
-                <h5 class="fw-bold">Anti-Cancer Drug</h5>
+                <h5 class="fw-bold">Anti-Cancer Drug <small class="text-danger">*</small></h5>
                 @foreach([
                     'first'=>'First Line',
                     'second'=>'Second Line',
@@ -105,7 +105,7 @@
                         </div>
 
                         <div id="{{ $key }}DrugDetails" class="d-none mt-2">
-                            <label class="form-label">Purpose of Drug Administration</label>
+                            <label class="form-label">Purpose of Drug Administration <small class="text-danger">*</small></label>
                             <div class="d-flex flex-wrap gap-3">
                                 @foreach(['Neoadjuvant','Adjuvant','Palliative'] as $val)
                                     <div class="form-check">
@@ -116,7 +116,7 @@
                                 @endforeach
                             </div>
 
-                            <label class="form-label mt-2">Drug Type/s (can be multiple)</label>
+                            <label class="form-label mt-2">Drug Type/s (can be multiple) <small class="text-danger">*</small></label>
                             <div class="d-flex flex-wrap gap-3">
                                 @foreach(['Cytotoxic','Hormonal','Immunologic','Targeted'] as $val)
                                     <div class="form-check">
@@ -127,13 +127,13 @@
                                 @endforeach
                             </div>
 
-                            <label class="form-label mt-2">Drug Regimen</label>
+                            <label class="form-label mt-2">Drug Regimen <small class="text-danger">*</small></label>
                             <input type="text" name="{{ $key }}_drug_regimen" class="form-control" value="{{ old($key.'_drug_regimen') }}">
 
-                            <label class="form-label mt-2">Drug Response</label>
+                            <label class="form-label mt-2">Drug Response <small class="text-danger">*</small></label>
                             <input type="text" name="{{ $key }}_drug_response" class="form-control" value="{{ old($key.'_drug_response') }}">
 
-                            <label class="form-label mt-2">Is there medically confirmed adverse event?</label>
+                            <label class="form-label mt-2">Is there medically confirmed adverse event? <small class="text-danger">*</small></label>
                             <div class="d-flex flex-wrap gap-3">
                                 @foreach(['None','Minor','Major','Serious','Unknown'] as $val)
                                     <div class="form-check">
@@ -152,7 +152,7 @@
         <!-- ================= RADIOTHERAPY ================= -->
         <div class="card shadow-sm mb-3">
             <div class="card-body">
-                <h5 class="fw-bold">Radiotherapy</h5>
+                <h5 class="fw-bold">Radiotherapy <small class="text-danger">*</small></h5>
                 @foreach([
                     'first'=>'First Course',
                     'second'=>'Second Course',
@@ -175,7 +175,7 @@
                         </div>
 
                         <div id="{{ $key }}RadioDetails" class="d-none mt-2">
-                            <label class="form-label">If yes, indicate type</label>
+                            <label class="form-label">If yes, indicate type <small class="text-danger">*</small></label>
                             <div class="row">
                                 @foreach([
                                     '2D conventional','3DCRT','IMRT/VMAT','IORT',
@@ -195,27 +195,27 @@
                                 </div>
                             </div>
 
-                            <label class="form-label mt-2">Specify Sequence:</label>
+                            <label class="form-label mt-2">Specify Sequence: <small class="text-danger">*</small></label>
                             <div class="d-flex flex-wrap gap-3">
                                 <div class="form-check">
                                     <input type="radio" name="{{ $key }}_sequence" value="Concurrent ChemoRT" class="form-check-input rounded-circle"
                                            {{ old($key.'_sequence') == 'Concurrent ChemoRT' ? 'checked' : '' }}>
-                                    <label class="form-check-label">Concurrent ChemoRT</label>
+                                    <label class="form-check-label">Concurrent ChemoRT  <small class="text-danger">*</small></label>
                                 </div>
                                 <div class="form-check">
                                     <input type="radio" name="{{ $key }}_sequence" value="Sequential" class="form-check-input rounded-circle"
                                            {{ old($key.'_sequence') == 'Sequential' ? 'checked' : '' }}>
-                                    <label class="form-check-label">Sequential</label>
+                                    <label class="form-check-label">Sequential <small class="text-danger">*</small></label>
                                 </div>
                             </div>
 
-                            <label class="form-label mt-2">Specify Treatment Goal:</label>
+                            <label class="form-label mt-2">Specify Treatment Goal: <small class="text-danger">*</small></label>
                             <div class="d-flex flex-wrap gap-3">
                                 <div class="form-check"><input type="radio" name="{{ $key }}_treatment_goal" value="Definitive" class="form-check-input rounded-circle" {{ old($key.'_treatment_goal') == 'Definitive' ? 'checked' : '' }}><label class="form-check-label">Definitive</label></div>
                                 <div class="form-check"><input type="radio" name="{{ $key }}_treatment_goal" value="Palliative" class="form-check-input rounded-circle" {{ old($key.'_treatment_goal') == 'Palliative' ? 'checked' : '' }}><label class="form-check-label">Palliative</label></div>
                             </div>
 
-                            <label class="form-label mt-2">Is there medically confirmed adverse event?</label>
+                            <label class="form-label mt-2">Is there medically confirmed adverse event? <small class="text-danger">*</small></label>
                             <div class="d-flex flex-wrap gap-3">
                                 @foreach(['None','Minor','Major','Serious','Unknown'] as $val)
                                     <div class="form-check">
@@ -234,7 +234,7 @@
         <!-- ================= THERANOSTICS ================= -->
         <div class="card shadow-sm mb-3">
             <div class="card-body">
-                <h5 class="fw-bold">Theranostics</h5>
+                <h5 class="fw-bold">Theranostics <small class="text-danger">*</small></h5>
                 @foreach([
                     'first'=>'First Line',
                     'second'=>'Second Line',
@@ -276,13 +276,13 @@
                                 </div>
                             </div>
 
-                            <label class="form-label mt-2">Specify the goal</label>
+                            <label class="form-label mt-2">Specify the goal <small class="text-danger">*</small></label>
                             <div class="d-flex flex-wrap gap-3">
                                 <div class="form-check"><input type="radio" name="{{ $key }}_thera_goal" value="Definitive" class="form-check-input rounded-circle" {{ old($key.'_thera_goal') == 'Definitive' ? 'checked' : '' }}><label class="form-check-label">Definitive</label></div>
                                 <div class="form-check"><input type="radio" name="{{ $key }}_thera_goal" value="Palliative" class="form-check-input rounded-circle" {{ old($key.'_thera_goal') == 'Palliative' ? 'checked' : '' }}><label class="form-check-label">Palliative</label></div>
                             </div>
 
-                            <label class="form-label mt-2">Is there medically confirmed adverse event?</label>
+                            <label class="form-label mt-2">Is there medically confirmed adverse event? <small class="text-danger">*</small></label>
                             <div class="d-flex flex-wrap gap-3">
                                 @foreach(['None','Minor','Major','Serious','Unknown'] as $val)
                                     <div class="form-check">
@@ -297,12 +297,10 @@
                 @endforeach
             </div>
         </div>
-
-        <!-- ================= OTHER CANCER DIRECTED THERAPIES ================= -->
-        <!-- ================= OTHER CANCER DIRECTED THERAPIES ================= -->
+        
         <div class="card shadow-sm mb-3">
             <div class="card-body">
-                <h5 class="fw-bold">Other Cancer Directed Therapies</h5>
+                <h5 class="fw-bold">Other Cancer Directed Therapies <small class="text-danger">*</small></h5>
 
                 <div class="form-check form-check-inline">
                     <input type="radio" name="other_cancer" value="Yes" class="form-check-input rounded-circle"
@@ -338,7 +336,7 @@
         <!-- ================= REMARKS ================= -->
         <div class="card shadow-sm mb-3">
             <div class="card-body">
-                <h5 class="fw-bold">Remarks</h5>
+                <h5 class="fw-bold">Remarks <small class="text-danger">*</small></h5>
                 <textarea name="remarks" class="form-control">{{ old('remarks') }}</textarea>
             </div>
         </div>
