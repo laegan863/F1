@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-md-4 mb-3">
                     <label class="form-label">Patient’s Health Facility ID No.<small class="text-danger">*</small></label>
-                    <input minlength="12" maxlength="12"  type="text" class="form-control" value="{{ old('patient_health_facility_id') }}" name="patient_health_facility_id" id="" placeholder="Enter Patient’s Health Facility ID No.">
+                    <input type="text" class="form-control" value="{{ old('patient_health_facility_id', Session::get('patient')->HospitalID ?? '') }}" name="patient_health_facility_id" id="" placeholder="Enter Patient’s Health Facility ID No.">
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="lastName" class="form-label">PhilHealth Identification No. (PIN)<small class="text-danger">*</small></label>

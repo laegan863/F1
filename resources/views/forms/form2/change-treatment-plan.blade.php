@@ -319,7 +319,7 @@
             </div>
 
             <!-- Remarks -->
-            <h5 class="fw-bold mt-3">Remarks <small class="text-danger">*</small></h5>
+            <h5 class="fw-bold mt-3">Remarks</h5>
             <textarea name="remarks" class="form-control">{{ old('remarks') }}</textarea>
 
         </div>

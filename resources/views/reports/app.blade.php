@@ -79,12 +79,16 @@
     <div class="w-full mt-6 grid grid-cols-2 gap-4">
         <div class="text-left">
             <p class="font-medium text-sm">Prepared by:</p>
-            <div class="pt-10 border-b border-black w-2/3 mx-0 text-center"></div>
+            <div class="pt-4 border-b border-black w-2/3 mx-0 text-[16px] text-center">
+                {{ ucwords(Request::query('prepared_by')) ?? '' }}
+            </div>
             <p class="text-gray-500 italic mt-1 text-xs w-2/3">Position</p>
         </div>
         <div class="text-left">
             <p class="font-medium text-sm">Noted by:</p>
-            <div class="pt-10 border-b border-black w-2/3 mx-0 text-center"></div>
+            <div class="pt-4 border-b border-black w-2/3 mx-0 text-[16px] text-center">
+                {{ ucwords(Request::query('noted_by')) ?? '' }}
+            </div>
             <p class="text-gray-500 italic mt-1 text-xs w-2/3">Cancer Coordinator / Cancer Center Head</p>
         </div>
     </div>

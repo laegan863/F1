@@ -273,7 +273,7 @@ class Form2Controller extends Controller
             'other_cancer_reason'=> 'nullable|string',
 
             // Remarks
-            'remarks'            => 'required|string',
+            'remarks'            => 'nullable|string',
         ]);
 
         if ($validated['surgery_plan'] === "No") {

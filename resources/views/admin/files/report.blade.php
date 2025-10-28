@@ -21,6 +21,14 @@
                                 <label for="" class="form-label fw-bold">Report Type</label>
                                 <input type="" name="code" class="form-control mb-3" value="{{ Request::query('code') }}">
                             </div>
+                            <div class="col-md-12 mb-1">
+                                <label for="" class="form-label fw-bold">Prepared By:</label>
+                                <input type="" name="prepared_by" class="form-control mb-3" value="" required>
+                            </div>
+                            <div class="col-md-12 mb-1">
+                                <label for="" class="form-label fw-bold">Noted By:</label>
+                                <input type="" name="noted_by" class="form-control mb-3" value="" required>
+                            </div>
                             <div class="col-md-6">
                                 <label for="year_from" class="form-label fw-bold">Year From</label>
                                 <select name="year_from" id="year_from" class="form-control" required>
