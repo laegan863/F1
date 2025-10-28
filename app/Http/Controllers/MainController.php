@@ -30,6 +30,11 @@ class MainController extends Controller
                 ->where('HospitalID', $hospitalID)
                 ->first();
 
+        // return response()->json([
+        //     'data' => $data,
+        //     'hospitalID' => $hospitalID
+        // ]);
+
         if(!empty($data)) {
             Session::put('patient', $data);
             return to_route("demographic-profile")->with('success','User exists in the database!');
@@ -71,7 +76,7 @@ class MainController extends Controller
     {
         $validate = $request->validate([
             'patient_first_encounter' => 'required|date',
-            "patient_health_facility_id" => "required|min:12",
+            "patient_health_facility_id" => "required|string|min:10",
             "philhealth_id"   => "required|string|min:13",
             "name.firstname"   => "required|string",
             "name.middlename"  => "nullable|string",
