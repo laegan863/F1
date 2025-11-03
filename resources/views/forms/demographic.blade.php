@@ -5,7 +5,7 @@
     <form id="form" method="POST" action="{{ route('submit-demograpic-profile') }}">
         @csrf
         <div class="card-body p-5">
-            {{ Session::get('hospitalID') }}
+            {{-- {{ Session::get('hospitalID') }} --}}
             @php
                 $session = Session::get('patient');
             @endphp
