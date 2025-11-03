@@ -180,7 +180,7 @@ class MainController extends Controller
         $validate["relative"] = $relative;
         $validate["hospitalID"] = Session::has('patient') ? Session::get("patient")->HospitalID : Session::get("hospitalID");
 
-        $data = Demographicprofile::create($validate);
+        $data = Demographicprofile::createOrUpdate(['hospitalID' => $validate["hospitalID"]], $validate);
 
         Session::put(key: 'code', value: $data->id);
         return to_route(route: 'risk-factor')->with('success', 'Data has been successfully saved, Please take the next step!');
@@ -284,13 +284,15 @@ class MainController extends Controller
             $validate["primary_site_number"] = 1;
         }
 
-        $exist = Cancerdiagnose::where('code', $validate['code'])->exists();
+        Cancerdiagnose::createOrUpdate(['code' => $validate['code']], $validate);
 
-        if($exist){
-            Cancerdiagnose::where(column: 'code', operator: $validate["code"])->update($validate);
-        }else{
-            Cancerdiagnose::create($validate);
-        }
+        // $exist = Cancerdiagnose::where('code', $validate['code'])->exists();
+
+        // if($exist){
+        //     Cancerdiagnose::where(column: 'code', operator: $validate["code"])->update($validate);
+        // }else{
+        //     Cancerdiagnose::create($validate);
+        // }
 
         return to_route(route: 'treatment-diagnose')->with('success', 'Data has been successfully saved, Please take the next step!');
 
@@ -386,13 +388,15 @@ class MainController extends Controller
             }
         }
 
-        $exist = Treatment::where('code', $validate['code'])->exists();
+        Treatment::createOrUpdate(['code' => $validate['code']], $validate);
 
-        if($exist){
-            Treatment::where(column: 'code', operator: $validate["code"])->update($validate);
-        }else{
-            Treatment::create($validate);
-        }
+        // $exist = Treatment::where('code', $validate['code'])->exists();
+
+        // if($exist){
+        //     Treatment::where(column: 'code', operator: $validate["code"])->update($validate);
+        // }else{
+        //     Treatment::create($validate);
+        // }
 
         Demographicprofile::find($validate["code"])->update([
             'status' => 1
