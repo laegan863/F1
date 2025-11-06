@@ -10,9 +10,11 @@ use App\Models\F2radiotheraphy;
 use App\Models\F2othercancertherapy;
 use App\Models\F2cancerdiagnoseoutcome;
 use App\Models\F2changetreatmentplan;
+use App\Traits\LogsActivity;
 
 class Form2Controller extends Controller
 {
+    use LogsActivity;
 
     public function form2($id){
         
@@ -44,6 +46,9 @@ class Form2Controller extends Controller
         $validate['other_remarks'] = isset($validate['other_remarks']) ? $validate['other_remarks'] : "N/A";
 
         $data = F2followup::create($validate);
+
+        // Log activity
+        $this->logCreate($data, "Created Form 2 Follow-up for Hospital ID: {$hospitalID}");
 
         Session::put([
             'code' => $data->id

@@ -10,9 +10,11 @@ use App\Models\Demographicprofile;
 use App\Models\Riskfactor;
 use App\Models\Cancerdiagnose;
 use App\Models\Treatment;
+use App\Traits\LogsActivity;
 
 class MainController extends Controller
 {
+    use LogsActivity;
 
     public function hospital_number(Request $request)
     {
@@ -181,6 +183,13 @@ class MainController extends Controller
         $validate["hospitalID"] = Session::has('patient') ? Session::get("patient")->HospitalID : Session::get("hospitalID");
 
         $data = Demographicprofile::createOrUpdate(['hospitalID' => $validate["hospitalID"]], $validate);
+
+        // Log activity
+        $action = $data->wasRecentlyCreated ? 'create' : 'update';
+        $description = $action === 'create' 
+            ? "Created demographic profile for Hospital ID: {$validate['hospitalID']}"
+            : "Updated demographic profile for Hospital ID: {$validate['hospitalID']}";
+        $this->logActivity($action, $description, $data);
 
         Session::put(key: 'code', value: $data->id);
         return to_route(route: 'risk-factor')->with('success', 'Data has been successfully saved, Please take the next step!');
@@ -423,5 +432,82 @@ class MainController extends Controller
             'data' => $data,
         ]);
 
+    }
+
+    public function edit_demographic_profile($hospitalID)
+    {
+        // Fetch the demographic profile data by hospitalID
+        $demographic = Demographicprofile::where('hospitalID', $hospitalID)->firstOrFail();
+
+        // Return the update view with the data
+        return view('forms.update.form1.demographic', [
+            'data' => $demographic,
+            'demographic' => $demographic
+        ]);
+    }
+
+    public function update_demographic_profile(Request $request, $hospitalID)
+    {
+        $validate = $request->validate([
+            'patient_first_encounter' => 'required|date',
+            "patient_health_facility_id" => "required|string|min:10",
+            "philhealth_id"   => "required|string|min:13",
+            "name.firstname"   => "required|string",
+            "name.middlename"  => "nullable|string",
+            "name.lastname"    => "required|string",
+            "name.suffix"      => "required|string",
+            "married_maiden_name" => "nullable|string",
+            "date_of_birth" => "required|date",
+            "sex" => "required|in:male,female",
+            "civil_status" => "required",
+            "nationality" => "required",
+            "permanent.province" => "required",
+            "permanent.city" => "required",
+            "permanent.barangay" => "required",
+            "current.province" => $request->same_as_address == "on" ? "nullable" : "required",
+            "current.city" => $request->same_as_address == "on" ? "nullable" : "required",
+            "current.barangay" => $request->same_as_address == "on" ? "nullable" : "required",
+            "same_as_address" => "nullable",
+            "mobile_number" => "required",
+            "email_address" => "required",
+            "relative.province" => "required",
+            "relative.city" => "required",
+            "relative.barangay" => "required",
+            "relative_phone_number" => "required",
+            "relative_email" => "nullable|email",
+            "highest_education" => "required",
+            "occupation" => "required",
+            "number_of_years_in_occupation" => "required"
+
+        ],[
+            'philhealth_facilty_id_number.min' => 'The philhealth facilty id number field must be 12 numbers.',
+            "name.firstname.required" => "The first name field is required!",
+            "name.middlename.required"   => "The middle name field is required.",
+            "name.lastname.required"  => "The lastname field is required.",
+            "name.suffix.required" => "The suffix field is required.",
+            "permanent.province.required" => "The permanent province field is required",
+            "permanent.city.required" => "The permanent city field is required",
+            "permanent.barangay.required" => "The permanent barangay field is required",
+            "current.province.required" => "The current province field is required",
+            "current.city.required" => "The current city field is required",
+            "current.barangay.required" => "The current barangay field is required",
+            "relative.province.required" => "The relative province field is required",
+            "relative.city.required" => "The relative city field is required",
+            "relative.barangay.required" => "The relative barangay field is required",
+        ]);
+
+        // Handle same as permanent address logic
+        if(!empty($validate["same_as_address"])){
+            $validate["current"] = $validate["permanent"];
+        }else{
+            $validate["same_as_address"] = "off";
+        }
+
+        // Update the demographic profile
+        $demographic = Demographicprofile::where('hospitalID', $hospitalID)->firstOrFail();
+        $demographic->update($validate);
+
+        return redirect()->route('view.forms', ['id' => $demographic->id])
+            ->with('success', 'Demographic profile has been successfully updated!');
     }
 }

@@ -46,4 +46,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the support messages for the user.
+     */
+    public function supportMessages()
+    {
+        return $this->hasMany(SupportMessage::class);
+    }
+
+    /**
+     * Get the activity logs for the user.
+     */
+    public function activityLogs()
+    {
+        return $this->hasMany(ActivityLog::class);
+    }
 }

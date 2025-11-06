@@ -10,9 +10,11 @@ use App\Models\F4painassessment;
 use App\Models\F4palliativecare;
 use App\Models\F4cancerdiagnoseoutcome;
 use App\Models\F4financialsupportmechanism;
+use App\Traits\LogsActivity;
 
 class Form4Controller extends Controller
 {
+    use LogsActivity;
     public function palliative_form(Request $request, $hospitalID)
     {
         $validate = $request->validate([

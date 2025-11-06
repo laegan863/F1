@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Traits\LogsActivity;
+
 class AuthController extends Controller
 {
+    use LogsActivity;
     public function verify_auth(Request $request){
         $validated = $request->validate([
             'email' => 'required|email',
@@ -13,6 +16,9 @@ class AuthController extends Controller
         ]);
 
         if(Auth::attempt(credentials: $validated)){
+            // Log successful login
+            $this->logLogin(Auth::user());
+            
             return to_route('admin.dashboard');
         }else{
             return back()->withErrors([
@@ -36,6 +42,11 @@ class AuthController extends Controller
 
         if($user){
             Auth::login($user);
+            
+            // Log registration and login
+            $this->logActivity('register', "New user {$user->name} registered", $user);
+            $this->logLogin($user);
+            
             return to_route('admin.dashboard');
         }else{
             return back()->withErrors([
@@ -45,6 +56,9 @@ class AuthController extends Controller
     }
 
     public function logout(Request $request){
+        // Log logout before logging out
+        $this->logLogout();
+        
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

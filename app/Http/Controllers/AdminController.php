@@ -9,9 +9,12 @@ use App\Models\Demographicprofile;
 use App\Models\F2followup;
 use App\Models\F3patientsurveillanceform;
 use App\Models\F4palliativeform;
+use App\Models\SupportMessage;
+use App\Traits\LogsActivity;
 
 class AdminController extends Controller
 {
+    use LogsActivity;
     public function connection(){
         $data = DB::connection('sqlsrv')->table('Patient')
                 ->where('HospitalID', '0000000001')
@@ -42,14 +45,34 @@ class AdminController extends Controller
     }
     public function delete($id, $table)
     {
+        $record = DB::table($table)->where('id', $id)->first();
         DB::table($table)->where('id', $id)->delete();
+        
+        // Log deletion
+        $this->logActivity('delete', "Deleted record from {$table} (ID: {$id})", null, [
+            'table' => $table,
+            'record_id' => $id
+        ]);
+        
         return redirect()->back()->with('success', 'Record deleted successfully.');
     }
 
     public function dashboard() {
         $totalRecords = Demographicprofile::where('status', 1)->count();
         $totalUsers = User::where('role', 'user')->count();
-        return view('admin.files.dashboard', compact('totalRecords', 'totalUsers'));
+        $pendingSupportMessages = SupportMessage::where('status', 'pending')->count();
+        $totalSupportMessages = SupportMessage::count();
+        $todayActivities = \App\Models\ActivityLog::whereDate('created_at', today())->count();
+        $totalActivities = \App\Models\ActivityLog::count();
+        
+        return view('admin.files.dashboard', compact(
+            'totalRecords', 
+            'totalUsers', 
+            'pendingSupportMessages', 
+            'totalSupportMessages',
+            'todayActivities',
+            'totalActivities'
+        ));
     }
 
     public function records(){
@@ -72,12 +95,15 @@ class AdminController extends Controller
             'role' => 'required|string|in:admin,user',
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
             'role' => $request->role,
         ]);
+
+        // Log user creation
+        $this->logCreate($user, "Created new user: {$user->name} ({$user->role})");
 
         return redirect()->route('admin.users')->with('success', 'User added successfully.');
     }
@@ -91,6 +117,8 @@ class AdminController extends Controller
         ]);
 
         $user = User::findOrFail($id);
+        $oldData = $user->toArray();
+        
         $user->name = $request->name;
         $user->email = $request->email;
 
@@ -100,6 +128,12 @@ class AdminController extends Controller
 
         $user->role = $request->role;
         $user->save();
+
+        // Log user update
+        $this->logUpdate($user, "Updated user: {$user->name}", [
+            'old' => $oldData,
+            'new' => $user->toArray()
+        ]);
 
         return to_route('admin.users')->with('success', 'User updated successfully.');
     }

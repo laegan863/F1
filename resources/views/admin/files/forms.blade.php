@@ -31,7 +31,7 @@
                                                 <button type="button" class="btn btn-primary dim" type="button">
                                                     <i class="fa fa-eye"></i>
                                             </a>
-                                            <a href="{{ route('demographic-profile', [ 'hospitalID' => $value->hospitalID ]) }}" class="text-white" rel="noopener noreferrer">
+                                            <a href="{{ route('edit-demographic-profile', [ 'hospitalID' => $value->hospitalID ]) }}" class="text-white" rel="noopener noreferrer">
                                                 <button type="button" class="btn btn-success dim">
                                                     <i class="fa fa-edit"></i>
                                                 </button>
