@@ -83,6 +83,10 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::post('hospital-number', 'hospital_number')->name('admin.validate-hospital-number');
         Route::get('view/{id}', 'result')->name('view');
 
+        // Update routes for Form 1
+        Route::get('edit-demographic-profile/{hospitalID}', 'edit_demographic_profile')->name('edit-demographic-profile');
+        Route::post('update-demographic-profile/{hospitalID}', 'update_demographic_profile')->name('update-demographic-profile-data');
+
         Route::prefix('form1')->group(function(){
             Route::get('result/{id}', 'result')->name('result.form1');
             Route::get('result1/{id}', 'result')->name('result.form2');
