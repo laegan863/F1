@@ -10,9 +10,11 @@ use App\Models\Demographicprofile;
 use App\Models\Riskfactor;
 use App\Models\Cancerdiagnose;
 use App\Models\Treatment;
+use App\Traits\LogsActivity;
 
 class MainController extends Controller
 {
+    use LogsActivity;
 
     public function hospital_number(Request $request)
     {
@@ -181,6 +183,13 @@ class MainController extends Controller
         $validate["hospitalID"] = Session::has('patient') ? Session::get("patient")->HospitalID : Session::get("hospitalID");
 
         $data = Demographicprofile::createOrUpdate(['hospitalID' => $validate["hospitalID"]], $validate);
+
+        // Log activity
+        $action = $data->wasRecentlyCreated ? 'create' : 'update';
+        $description = $action === 'create' 
+            ? "Created demographic profile for Hospital ID: {$validate['hospitalID']}"
+            : "Updated demographic profile for Hospital ID: {$validate['hospitalID']}";
+        $this->logActivity($action, $description, $data);
 
         Session::put(key: 'code', value: $data->id);
         return to_route(route: 'risk-factor')->with('success', 'Data has been successfully saved, Please take the next step!');

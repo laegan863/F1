@@ -9,9 +9,11 @@ use App\Models\F3cancerdiagnoseoutcome;
 use App\Models\F3cancertreatmenthistory;
 use App\Models\F3treatmenthistory2;
 use App\Models\F3financialsupport;
+use App\Traits\LogsActivity;
 
 class Form3Controller extends Controller
 {
+    use LogsActivity;
     public function f3patientsurveillanceforms(Request $request, $hospitalID)
     {
         $validate = $request->validate([

@@ -11,6 +11,8 @@ use App\Http\Controllers\Form2Controller;
 use App\Http\Controllers\Form3Controller;
 use App\Http\Controllers\Form4Controller;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SupportMessageController;
+use App\Http\Controllers\ActivityLogController;
 use Illuminate\Support\Facades\Crypt;
 
 Route::get("/encrypt/{value}", function ($value) {
@@ -46,6 +48,34 @@ Route::middleware(IsNotAuth::class)->group(function(){
         });
 
         Route::get('connection', 'connection');
+    });
+
+    // Support Messages Routes
+    Route::controller(SupportMessageController::class)->group(function(){
+        Route::prefix('support')->group(function(){
+            // User routes
+            Route::get('/', 'create')->name('support.create');
+            Route::post('/', 'store')->name('support.store');
+            Route::get('my-messages', 'myMessages')->name('support.my-messages');
+        });
+
+        // Admin routes
+        Route::prefix('admin')->middleware(IsAdmin::class)->group(function(){
+            Route::get('support-messages', 'index')->name('admin.support-messages');
+            Route::get('support-messages/{id}', 'show')->name('admin.support-messages.show');
+            Route::post('support-messages/{id}/respond', 'respond')->name('admin.support-messages.respond');
+            Route::delete('support-messages/{id}', 'destroy')->name('admin.support-messages.delete');
+        });
+    });
+
+    // Activity Logs Routes (Admin only)
+    Route::controller(ActivityLogController::class)->group(function(){
+        Route::prefix('admin')->middleware(IsAdmin::class)->group(function(){
+            Route::get('activity-logs', 'index')->name('admin.activity-logs');
+            Route::get('activity-logs/{id}', 'show')->name('admin.activity-logs.show');
+            Route::post('activity-logs/cleanup', 'cleanup')->name('admin.activity-logs.cleanup');
+            Route::get('activity-logs-export', 'export')->name('admin.activity-logs.export');
+        });
     });
 
     Route::controller(ReportController::class)->group(function(){

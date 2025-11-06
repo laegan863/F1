@@ -295,8 +295,22 @@
             });
         }
 
-        @if(!$isUpdate)
         document.addEventListener("DOMContentLoaded", function() {
+            // Handle same as permanent address checkbox for both create and update modes
+            const sameAddressCheckbox = document.getElementById("sameAddress");
+            const currentAddressDiv = document.getElementById('current_address');
+            
+            if (sameAddressCheckbox) {
+                sameAddressCheckbox.addEventListener("change", function () {
+                    if (this.checked) {
+                        currentAddressDiv.classList.add('d-none');
+                    } else {
+                        currentAddressDiv.classList.remove('d-none');
+                    }
+                });
+            }
+
+            @if(!$isUpdate)
             const permanent = () => {
                 const province = document.getElementById("province");
                 const city = document.getElementById("city");
@@ -341,15 +355,6 @@
                                 });
                                 barangay.disabled = false;
                             });
-                    }
-                });
-
-                document.getElementById("sameAddress").addEventListener("change", function () {
-                    let current_address = document.getElementById('current_address');
-                    if (this.checked) {
-                        current_address.classList.add('d-none');
-                    } else {
-                        current_address.classList.remove('d-none');
                     }
                 });
             }
@@ -453,7 +458,9 @@
             permanent();
             current();
             relative();
+            @endif
         });
+        @if($isUpdate)
         @endif
     </script>
 @endsection

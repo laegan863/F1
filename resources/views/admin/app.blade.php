@@ -65,7 +65,46 @@
                                 </span>
                             </a>
                         </li>
+                        <li class="{{ request()->is('admin/support-messages*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.support-messages') }}">
+                                <i class="fa fa-life-ring"></i>
+                                <span class="nav-label">
+                                    Support Messages
+                                </span>
+                                @php
+                                    $pendingCount = \App\Models\SupportMessage::where('status', 'pending')->count();
+                                @endphp
+                                @if($pendingCount > 0)
+                                    <span class="label label-warning float-right">{{ $pendingCount }}</span>
+                                @endif
+                            </a>
+                        </li>
+                        <li class="{{ request()->is('admin/activity-logs*') ? 'active' : '' }}">
+                            <a href="{{ route('admin.activity-logs') }}">
+                                <i class="fa fa-history"></i>
+                                <span class="nav-label">
+                                    Activity Logs
+                                </span>
+                            </a>
+                        </li>
                     @endif
+                    <li class="{{ request()->is('support*') && !request()->is('admin/support*') ? 'active' : '' }}">
+                        <a href="#"><i class="fa fa-life-ring"></i><span class="nav-label">Support</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li class="{{ request()->is('support') && !request()->is('support/my-messages') ? 'active' : '' }}">
+                                <a href="{{ route('support.create') }}">
+                                    <i class="fa fa-paper-plane"></i>
+                                    Contact Support
+                                </a>
+                            </li>
+                            <li class="{{ request()->is('support/my-messages') ? 'active' : '' }}">
+                                <a href="{{ route('support.my-messages') }}">
+                                    <i class="fa fa-list"></i>
+                                    My Messages
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                     <li class="{{ request()->is('admin/reports') ? 'active' : '' }}">
                         <a href="{{ route('select-report') }}">
                             <i class="fa fa-book"></i>
@@ -87,6 +126,19 @@
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
+                    @if(Auth::user()->role === 'admin')
+                        @php
+                            $pendingSupport = \App\Models\SupportMessage::where('status', 'pending')->count();
+                        @endphp
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" href="{{ route('admin.support-messages') }}">
+                                <i class="fa fa-life-ring"></i>
+                                @if($pendingSupport > 0)
+                                    <span class="label label-warning">{{ $pendingSupport }}</span>
+                                @endif
+                            </a>
+                        </li>
+                    @endif
                     <li>
                         <a href="{{ route('logout') }}">
                             <i class="fa fa-sign-out"></i> Log out
