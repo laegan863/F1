@@ -3,7 +3,7 @@
     <div class="max-width-400 text-center loginscreen animated fadeInDown mt-5">
         <div class="card pb-4 px-4">
             <div>
-                <h3 class="logo-name">CBCR</h3>
+                <h3 class="logo-name">HBCR</h3>
             </div>
             @error('error')
                <div class="alert alert-danger fw-semibold">
