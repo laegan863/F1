@@ -145,44 +145,44 @@ class MainController extends Controller
 
         if(!empty($validate["same_as_address"])){
 
-            $response = $this->convert_code_to_name(
-                province_code: $request->permanent['province'],
-                city_code: $request->permanent['city'],
-                barangay_code: $request->permanent['barangay']
-            );
+            // $response = $this->convert_code_to_name(
+            //     province_code: $request->permanent['province'],
+            //     city_code: $request->permanent['city'],
+            //     barangay_code: $request->permanent['barangay']
+            // );
 
-            $validate["permanent"] = $response;
-            $validate["current"] = $response;
+            // $validate["permanent"] = $response;
+            $validate["current"] = $validate['permanent'];
 
         }else{
 
-            $current = $this->convert_code_to_name(
-                province_code: $request->current['province'],
-                city_code: $request->current['city'],
-                barangay_code: $request->current['barangay']
-            );
+            // $current = $this->convert_code_to_name(
+            //     province_code: $request->current['province'],
+            //     city_code: $request->current['city'],
+            //     barangay_code: $request->current['barangay']
+            // );
 
-            $permanent = $this->convert_code_to_name(
-                province_code: $request->permanent['province'],
-                city_code: $request->permanent['city'],
-                barangay_code: $request->permanent['barangay']
-            );
+            // $permanent = $this->convert_code_to_name(
+            //     province_code: $request->permanent['province'],
+            //     city_code: $request->permanent['city'],
+            //     barangay_code: $request->permanent['barangay']
+            // );
 
-            $validate["current"] = $current;
-            $validate["permanent"] = $permanent;
+            // $validate["current"] = $current;
+            // $validate["permanent"] = $permanent;
             $validate["same_as_address"] = "off";
         }
 
-        $relative = $this->convert_code_to_name(
-            province_code: $request->relative['province'],
-            city_code: $request->relative['city'],
-            barangay_code: $request->relative['barangay']
-        );
+        // $relative = $this->convert_code_to_name(
+        //     province_code: $request->relative['province'],
+        //     city_code: $request->relative['city'],
+        //     barangay_code: $request->relative['barangay']
+        // );
 
-        $validate["relative"] = $relative;
+        // $validate["relative"] = $relative;
         $validate["hospitalID"] = Session::has('patient') ? Session::get("patient")->HospitalID : Session::get("hospitalID");
 
-        $data = Demographicprofile::createOrUpdate(['hospitalID' => $validate["hospitalID"]], $validate);
+        $data = Demographicprofile::updateOrCreate(['hospitalID' => $validate["hospitalID"]], $validate);
 
         // Log activity
         $action = $data->wasRecentlyCreated ? 'create' : 'update';
