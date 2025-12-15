@@ -279,50 +279,164 @@
                 }
             });
         }
-
         document.addEventListener("DOMContentLoaded", function() {
-            const sameAddressCheckbox = document.getElementById("sameAddress");
-            const currentAddressSection = document.getElementById('current_address');
-            
-            // Function to copy permanent address to current address
-            function copyPermanentToCurrent() {
-                document.querySelector('input[name="current[province]"]').value = document.querySelector('input[name="permanent[province]"]').value;
-                document.querySelector('input[name="current[city]"]').value = document.querySelector('input[name="permanent[city]"]').value;
-                document.querySelector('input[name="current[barangay]"]').value = document.querySelector('input[name="permanent[barangay]"]').value;
-            }
+            const permanent = () => {
+                const province = document.getElementById("province");
+                const city = document.getElementById("city");
+                const barangay = document.getElementById("barangay");
 
-            // Function to clear current address fields
-            function clearCurrentAddress() {
-                document.querySelector('input[name="current[province]"]').value = '';
-                document.querySelector('input[name="current[city]"]').value = '';
-                document.querySelector('input[name="current[barangay]"]').value = '';
-            }
+                    fetch("https://psgc.gitlab.io/api/provinces/")
+                    .then(res => res.json())
+                    .then(data => {
+                    data.forEach(prov => {
+                        province.add(new Option(prov.name, prov.code));
+                    });
+                    });
 
-            // Handle checkbox change
-            sameAddressCheckbox.addEventListener("change", function () {
-                if (this.checked) {
-                    currentAddressSection.classList.add('d-none');
-                    copyPermanentToCurrent();
-                } else {
-                    currentAddressSection.classList.remove('d-none');
-                    clearCurrentAddress();
-                }
-            });
+                province.addEventListener("change", function () {
+                    city.innerHTML = "<option value=''>Select City</option>";
+                    barangay.innerHTML = "<option value=''>Select Barangay</option>";
+                    city.disabled = true;
+                    barangay.disabled = true;
 
-            // Update current address when permanent address changes (if checkbox is checked)
-            const permanentFields = document.querySelectorAll('input[name^="permanent["]');
-            permanentFields.forEach(field => {
-                field.addEventListener('input', function() {
-                    if (sameAddressCheckbox.checked) {
-                        copyPermanentToCurrent();
+                    if (this.value) {
+                    fetch(`https://psgc.gitlab.io/api/provinces/${this.value}/cities-municipalities/`)
+                        .then(res => res.json())
+                        .then(data => {
+                        data.forEach(ct => {
+                            city.add(new Option(ct.name, ct.code));
+                        });
+                        city.disabled = false;
+                        });
                     }
                 });
-            });
 
-            // If checkbox is already checked on page load, copy the values
-            if (sameAddressCheckbox.checked) {
-                copyPermanentToCurrent();
+                city.addEventListener("change", function () {
+
+                    barangay.innerHTML = "<option value=''>Select Barangay</option>";
+                    barangay.disabled = true;
+
+                    if (this.value) {
+                    fetch(`https://psgc.gitlab.io/api/cities-municipalities/${this.value}/barangays/`)
+                        .then(res => res.json())
+                        .then(data => {
+                        data.forEach(brgy => {
+                            barangay.add(new Option(brgy.name, brgy.code));
+                        });
+                        barangay.disabled = false;
+                        });
+                    }
+                });
+
+                document.getElementById("sameAddress").addEventListener("change", function () {
+                    let current_address = document.getElementById('current_address');
+
+                    if (this.checked) {
+                        current_address.classList.add('d-none');
+                    } else {
+                        current_address.classList.remove('d-none');
+                    }
+                });
             }
+
+            const current = () => {
+                const currentprovince = document.getElementById("currentprovince");
+                const currentcity = document.getElementById("currentcity");
+                const currentbarangay = document.getElementById("currentbarangay");
+
+                fetch("https://psgc.gitlab.io/api/provinces/")
+                    .then(res => res.json())
+                    .then(data => {
+                    data.forEach(prov => {
+                        currentprovince.add(new Option(prov.name, prov.code));
+                    });
+                    });
+
+                currentprovince.addEventListener("change", function () {
+                    currentcity.innerHTML = "<option value=''>Select City</option>";
+                    currentbarangay.innerHTML = "<option value=''>Select Barangay</option>";
+                    currentcity.disabled = true;
+                    currentbarangay.disabled = true;
+
+                    if (this.value) {
+                    fetch(`https://psgc.gitlab.io/api/provinces/${this.value}/cities-municipalities/`)
+                        .then(res => res.json())
+                        .then(data => {
+                        data.forEach(ct => {
+                            currentcity.add(new Option(ct.name, ct.code));
+                        });
+                        currentcity.disabled = false;
+                        });
+                    }
+                });
+
+                currentcity.addEventListener("change", function () {
+                    currentbarangay.innerHTML = "<option value=''>Select Barangay</option>";
+                    currentbarangay.disabled = true;
+
+                    if (this.value) {
+                    fetch(`https://psgc.gitlab.io/api/cities-municipalities/${this.value}/barangays/`)
+                        .then(res => res.json())
+                        .then(data => {
+                        data.forEach(brgy => {
+                        currentbarangay.add(new Option(brgy.name, brgy.code));
+                        });
+                        currentbarangay.disabled = false;
+                        });
+                    }
+                });
+            }
+
+            const relative = () => {
+                const relativeprovince = document.getElementById("relativeprovince");
+                const relativecity = document.getElementById("relativecity");
+                const relativebarangay = document.getElementById("relativebarangay");
+
+                fetch("https://psgc.gitlab.io/api/provinces/")
+                    .then(res => res.json())
+                    .then(data => {
+                    data.forEach(prov => {
+                        relativeprovince.add(new Option(prov.name, prov.code));
+                    });
+                    });
+
+                relativeprovince.addEventListener("change", function () {
+                    relativecity.innerHTML = "<option value=''>Select City</option>";
+                    relativebarangay.innerHTML = "<option value=''>Select Barangay</option>";
+                    relativecity.disabled = true;
+                    relativebarangay.disabled = true;
+
+                    if (this.value) {
+                    fetch(`https://psgc.gitlab.io/api/provinces/${this.value}/cities-municipalities/`)
+                        .then(res => res.json())
+                        .then(data => {
+                        data.forEach(ct => {
+                            relativecity.add(new Option(ct.name, ct.code));
+                        });
+                        relativecity.disabled = false;
+                        });
+                    }
+                });
+
+                relativecity.addEventListener("change", function () {
+                    relativebarangay.innerHTML = "<option value=''>Select Barangay</option>";
+                    relativebarangay.disabled = true;
+
+                    if (this.value) {
+                    fetch(`https://psgc.gitlab.io/api/cities-municipalities/${this.value}/barangays/`)
+                        .then(res => res.json())
+                        .then(data => {
+                        data.forEach(brgy => {
+                        relativebarangay.add(new Option(brgy.name, brgy.code));
+                        });
+                        relativebarangay.disabled = false;
+                        });
+                    }
+                });
+            }
+            permanent();
+            current();
+            relative();
         });
     </script>
 @endsection
