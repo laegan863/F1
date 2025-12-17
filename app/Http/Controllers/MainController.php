@@ -79,7 +79,7 @@ class MainController extends Controller
         $validate = $request->validate([
             'patient_first_encounter' => 'required|date',
             "patient_health_facility_id" => "required|string|min:10",
-            "philhealth_id"   => "required|string|min:13",
+            "philhealth_id"   => "required|string|min:12",
             "name.firstname"   => "required|string",
             "name.middlename"  => "nullable|string",
             "name.lastname"    => "required|string",
@@ -293,7 +293,7 @@ class MainController extends Controller
             $validate["primary_site_number"] = 1;
         }
 
-        Cancerdiagnose::createOrUpdate(['code' => $validate['code']], $validate);
+        Cancerdiagnose::updateOrCreate(['code' => $validate['code']], $validate);
 
         // $exist = Cancerdiagnose::where('code', $validate['code'])->exists();
 
@@ -397,7 +397,7 @@ class MainController extends Controller
             }
         }
 
-        Treatment::createOrUpdate(['code' => $validate['code']], $validate);
+        Treatment::updateOrCreate(['code' => $validate['code']], $validate);
 
         // $exist = Treatment::where('code', $validate['code'])->exists();
 
@@ -469,7 +469,7 @@ class MainController extends Controller
             "current.barangay" => $request->same_as_address == "on" ? "nullable" : "required",
             "same_as_address" => "nullable",
             "mobile_number" => "required",
-            "email_address" => "required",
+            "email_address" => "nullable|email",
             "relative.province" => "required",
             "relative.city" => "required",
             "relative.barangay" => "required",
