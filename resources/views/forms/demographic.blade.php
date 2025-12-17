@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-md-4 mb-3">
                     <label for="lastName" class="form-label">PhilHealth Identification No. (PIN)<small class="text-danger">*</small></label>
-                    <input minlength="13" maxlength="13" type="text" class="form-control" value="{{ old('philhealth_id') }}" name="philhealth_id" id="" placeholder="Enter PhilHealth Identification No. (PIN)">
+                    <input minlength="12" maxlength="13" type="text" class="form-control" value="{{ old('philhealth_id') }}" name="philhealth_id" id="" placeholder="Enter PhilHealth Identification No. (PIN)">
                 </div>
                 <div class="col-md-3">
                     <label for="firstName" class="form-label">First Name<small class="text-danger">*</small></label>
