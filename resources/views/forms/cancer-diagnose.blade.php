@@ -188,6 +188,7 @@
             @php
                 $statuses = [
                     "Newly diagnosed",
+                    "Old case, continuing treatment",
                     "Old case, not treated",
                     "Old case, completed 1st treatment, now recurrent",
                     "Old case, incomplete treatment, now progressive",
