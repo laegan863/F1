@@ -2947,7 +2947,9 @@
                 <td class="s26" dir="ltr">{{ $data->philhealth_id[10] }}</td>
                 <td class="s26" dir="ltr">{{ $data->philhealth_id[11] }}</td>
                 <td class="s30">-</td>
-                <td class="s26" dir="ltr">{{ $data->philhealth_id[12] }}</td>
+                <td class="s26" dir="ltr">
+                    {{-- {{ $data->philhealth_id[12] }} --}}
+                </td>
                 <td class="s31" colspan="14"></td>
             </tr>
             <tr style="height: 24px">
