@@ -12,46 +12,21 @@ class AuthController extends Controller
     public function verify_auth(Request $request){
         $validated = $request->validate([
             'email' => 'required|email',
-            'password' => 'required|min:8'
+            'password' => 'required'
         ]);
 
-        if(Auth::attempt(credentials: $validated)){
+        if(Auth::attempt(credentials: $validated, remember: $request->boolean('remember'))){
+            // Prevent session fixation
+            $request->session()->regenerate();
+
             // Log successful login
             $this->logLogin(Auth::user());
-            
-            return to_route('admin.dashboard');
+
+            return redirect()->intended(route('admin.dashboard'));
         }else{
             return back()->withErrors([
-                'error' => 'Incorrect Username Or Password'
-            ])->withInput();
-        }
-    }
-
-    public function register(Request $request){
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8'
-        ]);
-
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => bcrypt($validated['password'])
-        ]);
-
-        if($user){
-            Auth::login($user);
-            
-            // Log registration and login
-            $this->logActivity('register', "New user {$user->name} registered", $user);
-            $this->logLogin($user);
-            
-            return to_route('admin.dashboard');
-        }else{
-            return back()->withErrors([
-                'error' => 'Registration Failed, Please Try Again'
-            ])->withInput();
+                'error' => 'Incorrect email or password. Please try again.'
+            ])->withInput($request->only('email', 'remember'));
         }
     }
 

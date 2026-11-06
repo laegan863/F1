@@ -2711,16 +2711,7 @@
             transform="translate(-3.000000, -2.000000)"></path>
     </defs>
 </svg>
-@php
-    $data = \App\Models\F2followup::with([
-        'f2othercancertherapies',
-        'f2patientstatuses', 
-        'f2radiotheraphies',
-        'f2cancerdiagnoseoutcomes',
-        'f2changetreatmentplans'
-        ])->where('id', Request::segment(3))->first();
-    
-@endphp
+{{-- $data is loaded by FollowUpFormController@print (404 if missing; unsaved pages are empty models) --}}
 <div class="ritz grid-container" dir="ltr">
     <table class="waffle no-grid" cellspacing="0" cellpadding="0" style="width: 1050px;">
         <thead>

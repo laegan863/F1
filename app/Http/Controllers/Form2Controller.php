@@ -1,126 +1,122 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\DB;
-use App\Models\F2followup;
-use App\Models\F2patientstatus;
-use App\Models\F2radiotheraphy;
-use App\Models\F2othercancertherapy;
+
+use App\Http\Controllers\Concerns\FollowUpWizard;
 use App\Models\F2cancerdiagnoseoutcome;
 use App\Models\F2changetreatmentplan;
+use App\Models\F2othercancertherapy;
+use App\Models\F2patientstatus;
+use App\Models\F2radiotheraphy;
 use App\Traits\LogsActivity;
+use Illuminate\Http\Request;
 
+/** Form 2 - Patient Follow-up (6 pages). Page rendering lives in FollowUpFormController. */
 class Form2Controller extends Controller
 {
-    use LogsActivity;
+    use LogsActivity, FollowUpWizard;
 
-    public function form2($id){
-        
-        $data = F2followup::with(['f2othercancertherapies', 'f2patientstatuses', 'f2radiotheraphies'])->where('id', $id)->first();
-        
-        return response()->json([
-            'data' => $data
-        ]);
+    private const FORM = 'form2';
+
+    /** Shared rules for the first page of Forms 2-4. */
+    public static function firstPageRules(): array
+    {
+        return [
+            'date'                      => 'required|date|before_or_equal:today',
+            'name.firstname'            => 'required|string|max:100',
+            'name.middlename'           => 'nullable|string|max:100',
+            'name.lastname'             => 'required|string|max:100',
+            'name.suffix'               => 'nullable|string|max:20',
+            'primary_cancer_site'       => 'required_without:primary_cancer_site_other|nullable|array',
+            'primary_cancer_site.*'     => 'string|max:255',
+            'primary_cancer_site_other' => 'nullable|string|max:255',
+            'laterality'                => 'required|string',
+            'histologic_diagnosis'      => 'required|string|max:255',
+            'icd10'                     => 'required|string|max:20',
+            'clinical_stage'            => 'nullable|string',
+            'stage'                     => 'nullable|array',
+            'other_staging'             => 'nullable|array',
+            'other_remarks'             => 'nullable|string|max:1000',
+        ];
+    }
+
+    public static function firstPageMessages(): array
+    {
+        return [
+            'name.firstname.required' => 'The first name field is required.',
+            'name.lastname.required'  => 'The last name field is required.',
+            'primary_cancer_site.required_without' => 'Please select at least one primary cancer site (or specify one under Others).',
+        ];
+    }
+
+    /** "If a death outcome is selected, the cause-of-death fields are required." */
+    public static function isDeathOutcome(Request $request, string $field = 'diagnosis_outcome'): bool
+    {
+        return collect((array) $request->input($field))->contains(fn ($o) => str_starts_with((string) $o, 'Death'));
     }
 
     public function submit_follow_up(Request $request, $hospitalID)
     {
-        $validate = $request->validate([
-            'date' => 'required|date',
-            'name.firstname' => 'required',
-            'name.middlename' => 'nullable',
-            'name.lastname' => 'required',
-            'primary_cancer_site' => 'required',
-            'laterality' => 'required',
-            'histologic_diagnosis' => 'required',
-            'icd10' => 'required',
-            'clinical_stage' => 'nullable',
-            'stage' => 'nullable',
-            'other_staging' => 'nullable',
-            'other_remarks' => 'nullable'
-        ]);
-
-        $validate['hospitalID'] = $hospitalID;
-        $validate['other_remarks'] = isset($validate['other_remarks']) ? $validate['other_remarks'] : "N/A";
-
-        $data = F2followup::create($validate);
-
-        // Log activity
-        $this->logCreate($data, "Created Form 2 Follow-up for Hospital ID: {$hospitalID}");
-
-        Session::put([
-            'code' => $data->id
-        ]);
-        
-        return to_route('form2-secondpage')->with('success', 'PATIENT FOLLOW-UP FORM Data successfully Saved!');
-
+        $data = $request->validate(self::firstPageRules(), self::firstPageMessages());
+        $data['other_remarks'] = $data['other_remarks'] ?? 'N/A';   // f2followups.other_remarks is NOT NULL
+        return $this->fuSaveFirstPage(self::FORM, $hospitalID, $data);
     }
 
     public function store_patient_eco_status(Request $request)
     {
+        $this->fuRequireEntry(self::FORM);
+
         $validated = $request->validate([
             'ecog_status'                 => 'required|in:Yes,No',
-            'ecog_grade'                  => 'nullable|string|max:255',
+            'ecog_grade'                  => 'nullable|required_if:ecog_status,Yes|string|max:255',
             'other_functional_assessment' => 'nullable|string|max:255',
             'surgery_done'                => 'required|in:Yes,No',
             'surgery_rvs'                 => 'nullable|string|max:255',
-            'surgery_description'         => 'nullable|string|max:255',
-            'surgery_date'                => 'nullable|date',
-            'surgery_goal'                => 'nullable|array',
+            'surgery_description'         => 'nullable|required_if:surgery_done,Yes|string|max:255',
+            'surgery_date'                => 'nullable|required_if:surgery_done,Yes|date|before_or_equal:today',
+            'surgery_goal'                => 'nullable|required_if:surgery_done,Yes|array',
             'ongoing_drug_therapy'        => 'required|in:Yes,No',
-            'therapy_date_start'          => 'nullable|date',
-            'drug_purpose'                => 'nullable|string|max:255',
-            'drug_types'                  => 'nullable|array',
+            'therapy_date_start'          => 'nullable|required_if:ongoing_drug_therapy,Yes|date',
+            'drug_purpose'                => 'nullable|required_if:ongoing_drug_therapy,Yes|string|max:255',
+            'drug_types'                  => 'nullable|required_if:ongoing_drug_therapy,Yes|array',
             'drug_regimen'                => 'nullable|array',
             'chemo_cycle'                 => 'nullable|array',
             'drug_type_other'             => 'nullable|string|max:255',
+            'remarks'                     => 'nullable|string|max:255',
+        ], [
+            'ecog_grade.required_if'         => 'Please select the ECOG grade.',
+            'surgery_description.required_if' => 'Please describe the surgery done.',
+            'surgery_date.required_if'       => 'Please enter the surgery date.',
+            'surgery_goal.required_if'       => 'Please select the goal of surgery.',
+            'therapy_date_start.required_if' => 'Please enter the drug therapy start date.',
+            'drug_purpose.required_if'       => 'Please select the purpose of the drug therapy.',
+            'drug_types.required_if'         => 'Please select the drug type(s).',
         ]);
 
-        $data = [
-            'ecog_status' => [
-                'ecog_grade',
-                'other_functional_assessment'
-            ], 
-            'surgery_done' => [
-                'surgery_rvs',
-                'surgery_description',
-                'surgery_date',
-                'surgery_goal'
-            ], 
-            'ongoing_drug_therapy' => [
-                'therapy_date_start',
-                'drug_purpose',
-                'drug_types',
-                'drug_regimen',
-                'chemo_cycle',
-                'drug_type_other'
-            ]
+        $dependents = [
+            'ecog_status'          => ['ecog_grade', 'other_functional_assessment'],
+            'surgery_done'         => ['surgery_rvs', 'surgery_description', 'surgery_date', 'surgery_goal'],
+            'ongoing_drug_therapy' => ['therapy_date_start', 'drug_purpose', 'drug_types', 'drug_regimen', 'chemo_cycle', 'drug_type_other'],
         ];
 
-        foreach($data as $key => $value){
-            if($validated[$key] == "No"){
-                foreach($value as $newValue){
-                    $NewValidate[$newValue] = null;
+        foreach ($dependents as $parent => $fields) {
+            if ($validated[$parent] === "No") {
+                foreach ($fields as $field) {
+                    $validated[$field] = null;   // previously written to a misspelled variable, so nothing was cleared
                 }
             }
         }
 
-        $validated['code'] = Session::get('code');
-
-        F2patientstatus::updateOrCreate(['code' => $validated['code']], $validated);
-
-        return redirect()
-            ->route('form2-thirdpage')
-            ->with('success', 'Patient ECOG status saved successfully.');
+        return $this->fuSavePage(self::FORM, 2, F2patientstatus::class, $validated, 'Patient ECOG status saved.');
     }
 
     public function store_radiotheraphy(Request $request)
     {
+        $this->fuRequireEntry(self::FORM);
+
         $validated = $request->validate([
             'radiotherapy'            => 'required|in:Yes,No',
-            'radio_date_start'        => 'nullable|date',
+            'radio_date_start'        => 'nullable|required_if:radiotherapy,Yes|date',
             'radio_date_end'          => 'nullable|date|after_or_equal:radio_date_start',
             'radio_total_dose'        => 'nullable|string|max:255',
             'radio_dose_fraction'     => 'nullable|string|max:255',
@@ -129,75 +125,57 @@ class Form2Controller extends Controller
             'radio_body_site'         => 'nullable|array',
             'radio_body_site.*'       => 'nullable|string|max:255',
             'radio_body_site_other'   => 'nullable|string|max:255',
-            'radio_type'              => 'nullable|array',
+            'radio_type'              => 'nullable|required_if:radiotherapy,Yes|array',
             'radio_type.*'            => 'nullable|string|max:255',
             'radio_type_other'        => 'nullable|string|max:255',
-            'radio_goal'              => 'nullable|in:Curative,Palliative',
+            'radio_goal'              => 'nullable|required_if:radiotherapy,Yes|in:Curative,Palliative',
 
             'theranostics'            => 'required|in:Yes,No',
-            'theranostics_type'       => 'nullable|array',
+            'theranostics_type'       => 'nullable|required_if:theranostics,Yes|array',
             'theranostics_type.*'     => 'nullable|string|max:255',
             'theranostics_type_other' => 'nullable|string|max:255',
             'thera_total_planned'     => 'nullable|string|max:255',
             'thera_total_received'    => 'nullable|string|max:255',
             'thera_sequences'         => 'nullable|string|max:255',
-            'thera_goal'              => 'nullable|in:Definitive,Palliative',
+            'thera_goal'              => 'nullable|required_if:theranostics,Yes|in:Definitive,Palliative',
+        ], [
+            'radio_date_start.required_if'   => 'Please enter the radiotherapy start date.',
+            'radio_type.required_if'         => 'Please select the radiotherapy type(s).',
+            'radio_goal.required_if'         => 'Please select the radiotherapy goal.',
+            'theranostics_type.required_if'  => 'Please select the theranostics type(s).',
+            'thera_goal.required_if'         => 'Please select the theranostics goal.',
         ]);
 
         $groups = [
-            'radiotherapy' => [
-                'radio_date_start',
-                'radio_date_end',
-                'radio_total_dose',
-                'radio_dose_fraction',
-                'radio_total_fractions',
-                'radio_total_days',
-                'radio_body_site',
-                'radio_body_site_other',
-                'radio_type',
-                'radio_type_other',
-                'radio_goal',
-            ],
-            'theranostics' => [
-                'theranostics_type',
-                'theranostics_type_other',
-                'thera_total_planned',
-                'thera_total_received',
-                'thera_sequences',
-                'thera_goal',
-            ],
+            'radiotherapy' => ['radio_date_start', 'radio_date_end', 'radio_total_dose', 'radio_dose_fraction', 'radio_total_fractions',
+                               'radio_total_days', 'radio_body_site', 'radio_body_site_other', 'radio_type', 'radio_type_other', 'radio_goal'],
+            'theranostics' => ['theranostics_type', 'theranostics_type_other', 'thera_total_planned', 'thera_total_received', 'thera_sequences', 'thera_goal'],
         ];
 
         foreach ($groups as $parent => $fields) {
-            if (($validated[$parent] ?? null) === "No") {
+            if ($validated[$parent] === "No") {
                 foreach ($fields as $field) {
                     $validated[$field] = null;
                 }
             }
         }
 
-        $validated['code'] = Session::get('code');
-
-        F2radiotheraphy::updateOrCreate(
-            ['code' => $validated['code']],
-            $validated
-        );
-
-        return redirect()
-            ->route('form2.fourthpage')
-            ->with('success', 'Patient ECOG status saved successfully.');
+        return $this->fuSavePage(self::FORM, 3, F2radiotheraphy::class, $validated, 'Radiotherapy and theranostics saved.');
     }
 
     public function store_other_theraphy(Request $request)
     {
+        $this->fuRequireEntry(self::FORM);
+
         $validated = $request->validate([
             'other_cancer_therapies'   => 'required|in:Yes,No',
-            'cancer_therapies'         => 'nullable|array',
+            'cancer_therapies'         => 'nullable|required_if:other_cancer_therapies,Yes|array',
             'cancer_therapies_other'   => 'nullable|string|max:255',
-
             'pre_op_scenario'          => 'required|string',
             'post_op_scenario'         => 'required|string',
             'treatment_status'         => 'required|string',
+        ], [
+            'cancer_therapies.required_if' => 'Please select the other cancer directed therapies.',
         ]);
 
         if ($validated["other_cancer_therapies"] === "No") {
@@ -205,19 +183,13 @@ class Form2Controller extends Controller
             $validated["cancer_therapies_other"] = null;
         }
 
-        $validated["code"] = Session::get("code");
-
-        F2othercancertherapy::updateOrCreate(
-            ['code' => $validated["code"]],
-            $validated
-        );
-
-        return to_route('form2.fifthpage')
-                ->with('success', 'Patient ECOG status saved successfully.');
+        return $this->fuSavePage(self::FORM, 4, F2othercancertherapy::class, $validated, 'Other cancer directed therapies saved.');
     }
 
     public function change_treatment_plan(Request $request)
     {
+        $this->fuRequireEntry(self::FORM);
+
         $validated = $request->validate([
             'surgery_plan'       => 'required|string',
             'treatment_plan'     => 'nullable|string',
@@ -250,7 +222,7 @@ class Form2Controller extends Controller
             'radio_treatment_plan' => 'nullable|string',
             'radio_reason'       => 'nullable|string',
             'radio_date_start'   => 'nullable|date',
-            'radio_date_end'     => 'nullable|date',
+            'radio_date_end'     => 'nullable|date|after_or_equal:radio_date_start',
             'radio_total_dose'   => 'nullable|string',
             'radio_dose_fraction'=> 'nullable|string',
             'radio_total_fractions' => 'nullable|string',
@@ -277,89 +249,50 @@ class Form2Controller extends Controller
             'other_cancer_other' => 'nullable|string',
             'other_cancer_reason'=> 'nullable|string',
 
-            // Remarks
             'remarks'            => 'nullable|string',
         ]);
 
-        if ($validated['surgery_plan'] === "No") {
-            $validated['treatment_plan'] = null;
-            $validated['surgery_reason'] = null;
+        $dependents = [
+            'surgery_plan'       => ['treatment_plan', 'surgery_reason'],
+            'anti_cancer_change' => ['new_regimen', 'same_regimen', 'deferred_regimen', 'new_drug_type', 'same_drug_type', 'deferred_drug_type',
+                                     'new_drug_regimen', 'same_drug_regimen', 'deferred_drug_regimen', 'new_chemo_cycle', 'same_chemo_cycle',
+                                     'deferred_chemo_cycle', 'new_drug_other', 'same_drug_other', 'deferred_drug_other', 'new_next_cycle',
+                                     'same_next_cycle', 'deferred_next_cycle', 'deferred_reason'],
+            'radio_change'       => ['radio_reason', 'radio_treatment_plan', 'radio_date_start', 'radio_date_end', 'radio_total_dose',
+                                     'radio_dose_fraction', 'radio_total_fractions', 'radio_type', 'radio_type_other'],
+            'thera_change'       => ['thera_reason', 'thera_type', 'thera_type_other', 'thera_total_fractions', 'thera_dose_fraction',
+                                     'thera_treatment_plan', 'thera_total_planned_dose'],
+            'other_cancer'       => ['other_cancer_type', 'other_cancer_other', 'other_cancer_reason', 'other_cancer_treatment_plan'],
+        ];
+
+        foreach ($dependents as $parent => $fields) {
+            if ($validated[$parent] === "No") {
+                foreach ($fields as $field) {
+                    $validated[$field] = null;
+                }
+            }
         }
 
-        if ($validated['anti_cancer_change'] === "No") {
-            $validated['new_regimen'] = null;
-            $validated['same_regimen'] = null;
-            $validated['deferred_regimen'] = null;
-            $validated['new_drug_type'] = null;
-            $validated['same_drug_type'] = null;
-            $validated['deferred_drug_type'] = null;
-            $validated['new_drug_regimen'] = null;
-            $validated['same_drug_regimen'] = null;
-            $validated['deferred_drug_regimen'] = null;
-            $validated['new_chemo_cycle'] = null;
-            $validated['same_chemo_cycle'] = null;
-            $validated['deferred_chemo_cycle'] = null;
-            $validated['new_drug_other'] = null;
-            $validated['same_drug_other'] = null;
-            $validated['deferred_drug_other'] = null;
-            $validated['new_next_cycle'] = null;
-            $validated['same_next_cycle'] = null;
-            $validated['deferred_next_cycle'] = null;
-            $validated['deferred_reason'] = null;
-        }
-
-        if ($validated['radio_change'] === "No") {
-            $validated['radio_reason'] = null;
-            $validated['radio_treatment_plan'] = null;
-            $validated['radio_date_start'] = null;
-            $validated['radio_date_end'] = null;
-            $validated['radio_total_dose'] = null;
-            $validated['radio_dose_fraction'] = null;
-            $validated['radio_total_fractions'] = null;
-            $validated['radio_type'] = null;
-            $validated['radio_type_other'] = null;
-        }
-
-        if ($validated['thera_change'] === "No") {
-            $validated['thera_reason'] = null;
-            $validated['thera_type'] = null;
-            $validated['thera_type_other'] = null;
-            $validated['thera_total_fractions'] = null;
-            $validated['thera_dose_fraction'] = null;
-            $validated['thera_treatment_plan'] = null;
-            $validated['thera_total_planned_dose'] = null;
-        }
-
-        if ($validated['other_cancer'] === "No") {
-            $validated['other_cancer_type'] = null;
-            $validated['other_cancer_other'] = null;
-            $validated['other_cancer_reason'] = null;
-            $validated['other_cancer_treatment_plan'] = null;
-        }
-
-        
-        $validated['code'] = session('code');
-
-        F2changetreatmentplan::updateOrCreate(['code' => $validated['code']], $validated);
-
-        return to_route('form2.sixpage')->with('success', 'Change in treatment plan data, Saved successfully!');
-
+        return $this->fuSavePage(self::FORM, 5, F2changetreatmentplan::class, $validated, 'Change in treatment plan saved.');
     }
 
     public function store_cancer_diagnose(Request $request)
     {
+        $this->fuRequireEntry(self::FORM);
+        $death = self::isDeathOutcome($request) ? 'required' : 'nullable';
+
         $validated = $request->validate([
             'diagnosis_outcome'       => 'nullable|array',
             'diagnosis_outcome.*'     => 'string|max:255',
-            'diagnosis_outcome_date'  => 'nullable|date',
+            'diagnosis_outcome_date'  => 'nullable|required_with:diagnosis_outcome|date',
 
-            'cause_immediate'   => 'nullable|string|max:255',
+            'cause_immediate'   => $death . '|nullable|string|max:255',
             'cause_antecedent'  => 'nullable|string|max:255',
-            'cause_underlying'  => 'nullable|string|max:255',
+            'cause_underlying'  => $death . '|nullable|string|max:255',
             'cause_other'       => 'nullable|string|max:255',
 
             'financial_support' => 'required|in:Yes,No',
-            'financial_type'    => 'nullable|array',
+            'financial_type'    => 'nullable|required_if:financial_support,Yes|array',
             'financial_type.*'  => 'string|max:255',
             'financial_other'   => 'nullable|string|max:255',
 
@@ -370,34 +303,17 @@ class Form2Controller extends Controller
             'other_meds'        => 'nullable|array',
             'other_meds.*'      => 'string|max:255',
             'other_med_other'   => 'nullable|string|max:255',
+        ], [
+            'cause_immediate.required'  => 'The immediate cause of death is required when a death outcome is selected.',
+            'cause_underlying.required' => 'The underlying cause of death is required when a death outcome is selected.',
+            'financial_type.required_if' => 'Please select the type of financial support.',
         ]);
 
-        // $validated['code'] = 10;
-        $validated['code'] = session('code');
-        if($validated['financial_support'] == "No"){
+        if ($validated['financial_support'] === "No") {
             $validated['financial_type'] = null;
+            $validated['financial_other'] = null;
         }
 
-        F2cancerdiagnoseoutcome::updateOrCreate(
-            ['code' => $validated['code']],
-            $validated
-        );
-
-        $user = F2followup::findOrFail($validated['code']);
-        $user->status = 1;
-        $user->save();
-
-        $data = DB::table('demographicprofiles')
-                ->where('hospitalID', $user->hospitalID)
-                ->where('status', 1)
-                ->first();
-
-        Session::forget(['code']);
-        
-        return redirect('admin/forms/'.$data->id);
-
-        
+        return $this->fuSavePage(self::FORM, 6, F2cancerdiagnoseoutcome::class, $validated, 'Cancer diagnosis outcome saved.');
     }
-
 }
- 

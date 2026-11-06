@@ -1,10 +1,12 @@
 @extends('index')
 @section("title", "Cancer Diagnosis Profile")
-@section("nav_title", "PROFILE OF CANCER DIAGNOSIS OF PATIENT FORM")
+@section("nav_title", "Profile of Cancer Diagnosis of Patient")
+@section("wizard_step", "4")
 @section("content")
-<form id="form" method="POST" action="{{ route('submit-cancer-diagnose-data') }}">
+<form id="form" method="POST" action="{{ $formAction ?? route('submit-cancer-diagnose-data') }}">
     @csrf
     <div class="card-body p-5">
+        <div class="wizard-section" data-title="Primary Cancer Site">
 
         {{-- ================= Q43: More than 1 active Primary Cancer Sites ================= --}}
         <div class="mb-3">
@@ -96,6 +98,9 @@
             @endforeach
         </div>
 
+        </div>
+
+        <div class="wizard-section" data-title="Diagnosis &amp; Staging">
         {{-- ================= Q47: ICD-10 ================= --}}
         <div class="mb-3">
             <label class="form-label fw-bold">ICD-10 <small class="text-danger">*</small></label>
@@ -204,13 +209,11 @@
                 </div>
             @endforeach
         </div>
+        </div>
 
     </div>
 
-    <div class="card-footer text-end">
-        <button type="reset" class="btn btn-secondary rounded-0">Reset</button>
-        <button type="button" onclick="handleSubmit()" class="btn btn-primary rounded-0">Submit</button>
-    </div>
+    @include('forms.partials.wizard-footer')
 </form>
 @endsection
 

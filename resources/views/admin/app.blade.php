@@ -13,6 +13,7 @@
     <link href="{{ asset(path: 'assets/css/plugins/dataTables/datatables.min.css') }}" rel="stylesheet">
     <link href="{{ asset(path: 'assets/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset(path: 'assets/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/cbcr-ui.css') }}?v={{ filemtime(public_path('assets/css/cbcr-ui.css')) }}" rel="stylesheet">
 
 </head>
 <body class="">
@@ -25,7 +26,14 @@
                             <img alt="image" class="rounded-circle" src="{{ asset(path: 'assets/img/profile.png') }}"/>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="block m-t-xs font-bold">{{ Auth::user()->name }}</span>
+                                <span class="text-muted text-xs block">{{ ucfirst(Auth::user()->role) }} <b class="caret"></b></span>
                             </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a class="dropdown-item" href="{{ route('profile.show') }}"><i class="fa fa-user fa-fw"></i> My profile</a></li>
+                                <li><a class="dropdown-item" href="{{ route('profile.show') }}#change-password"><i class="fa fa-key fa-fw"></i> Change password</a></li>
+                                <li class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="{{ route('logout') }}"><i class="fa fa-sign-out fa-fw"></i> Log out</a></li>
+                            </ul>
                         </div>
                         <div class="logo-element">
                             <b>CBCR</b>
@@ -105,6 +113,12 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="{{ request()->is('admin/profile*') ? 'active' : '' }}">
+                        <a href="{{ route('profile.show') }}">
+                            <i class="fa fa-user-circle-o"></i>
+                            <span class="nav-label">My Profile</span>
+                        </a>
+                    </li>
                     <li class="{{ request()->is('admin/reports') ? 'active' : '' }}">
                         <a href="{{ route('select-report') }}">
                             <i class="fa fa-book"></i>
@@ -139,6 +153,11 @@
                             </a>
                         </li>
                     @endif
+                    <li class="{{ request()->is('admin/profile*') ? 'active' : '' }}">
+                        <a href="{{ route('profile.show') }}" title="My profile">
+                            <i class="fa fa-user-circle-o"></i> My profile
+                        </a>
+                    </li>
                     <li>
                         <a href="{{ route('logout') }}">
                             <i class="fa fa-sign-out"></i> Log out
@@ -203,7 +222,7 @@
             $('.dataTables-example').DataTable({
                 pageLength: 25,
                 responsive: true,
-                dom: '<"html5buttons"B>lTfgitp',
+                dom: '<"html5buttons"B>lTfgtip',
                 buttons: [
                     { extend: 'copy', title: 'CRCB' },
                     { extend: 'csv', title: 'CRCB' },

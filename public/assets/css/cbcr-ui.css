@@ -1,0 +1,313 @@
+/*
+ * CBCR admin UI refinements (tables, buttons, dropdowns).
+ * Loaded after the Inspinia theme in resources/views/admin/app.blade.php.
+ * Adjust the sizes in :root to change them everywhere.
+ */
+:root {
+    --ui-brand: #1c84c6;
+    --ui-brand-dark: #1670aa;
+    --ui-ink: #2f4050;
+    --ui-text: #4a5a6c;
+    --ui-muted: #8a95a3;
+    --ui-line: #e7ecf1;
+    --ui-soft: #f6f8fb;
+    --ui-radius: 6px;
+
+    --table-font: 10pt;        /* table body text */
+    --table-head-font: 9pt;    /* table header labels */
+    --btn-font: 9.5pt;
+    --btn-sm-font: 9pt;
+    --btn-xs-font: 9pt;
+    --dropdown-font: 10pt;
+}
+
+/* ===================================================================
+   Tables
+   =================================================================== */
+.ibox-content .table,
+.wrapper-content .table {
+    font-size: var(--table-font);
+    color: var(--ui-text);
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+.wrapper-content .table > thead > tr > th {
+    font-size: var(--table-head-font);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    color: var(--ui-muted);
+    background: var(--ui-soft);
+    border-top: 0;
+    border-bottom: 1px solid var(--ui-line) !important;
+    padding: 11px 12px;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+.wrapper-content .table > thead > tr > th:first-child { border-top-left-radius: var(--ui-radius); }
+.wrapper-content .table > thead > tr > th:last-child { border-top-right-radius: var(--ui-radius); }
+.wrapper-content .table > tbody > tr > td {
+    padding: 11px 12px;
+    border-top: 1px solid var(--ui-line);
+    vertical-align: middle;
+    line-height: 1.45;
+}
+.wrapper-content .table > tbody > tr:first-child > td { border-top: 0; }
+.wrapper-content .table-striped > tbody > tr:nth-of-type(odd) { background-color: #fbfcfd; }
+.wrapper-content .table-hover > tbody > tr { transition: background-color .12s; }
+.wrapper-content .table-hover > tbody > tr:hover { background-color: #eef6fc; }
+
+/* Soften the heavy bordered look */
+.wrapper-content .table-bordered,
+.wrapper-content .table-bordered > thead > tr > th,
+.wrapper-content .table-bordered > tbody > tr > td { border-left: 0; border-right: 0; }
+.wrapper-content .table-bordered { border: 1px solid var(--ui-line); border-radius: var(--ui-radius); }
+
+/* Small helper text inside cells */
+.wrapper-content .table small,
+.wrapper-content .table .rec-sub { font-size: 9pt; }
+.wrapper-content .table .pill { font-size: 9pt; padding: 3px 10px; white-space: nowrap; }
+.wrapper-content .table .label,
+.wrapper-content .table .badge { font-size: 8.5pt; font-weight: 600; padding: 4px 9px; border-radius: 999px; white-space: nowrap; }
+
+/* Sort indicators */
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc { cursor: pointer; }
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc { color: var(--ui-brand); }
+
+/* ===================================================================
+   DataTables controls (length, search, export buttons, paging)
+   =================================================================== */
+.dataTables_wrapper { font-size: var(--table-font); color: var(--ui-text); }
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter { margin-bottom: 14px; }
+.dataTables_wrapper .dataTables_length label,
+.dataTables_wrapper .dataTables_filter label { font-weight: 500; color: var(--ui-muted); margin: 0; }
+.dataTables_wrapper .dataTables_length select {
+    display: inline-block;
+    width: auto !important;
+    min-width: 72px;
+    margin: 0 6px;
+}
+.dataTables_wrapper .dataTables_filter input {
+    display: inline-block;
+    width: 240px !important;
+    margin-left: 8px;
+    padding-left: 32px !important;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238a95a3' stroke-width='2.5' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat 11px center;
+}
+.dataTables_wrapper .dataTables_info { color: var(--ui-muted); padding-top: 14px !important; font-size: 9.5pt; }
+.dataTables_wrapper .dataTables_paginate { padding-top: 10px; }
+
+.html5buttons { float: right; margin-left: 10px; margin-bottom: 14px; }
+.html5buttons .dt-buttons { display: inline-flex; border-radius: var(--ui-radius); overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+.html5buttons .dt-buttons .btn,
+.html5buttons .dt-buttons a.dt-button,
+.html5buttons .dt-buttons button.dt-button {
+    border-radius: 0 !important;
+    margin: 0 !important;
+    border-right-width: 0 !important;
+    font-size: var(--btn-sm-font) !important;
+    font-weight: 600;
+    padding: 6px 12px !important;
+    color: var(--ui-text) !important;
+    background: #fff !important;
+    border: 1px solid var(--ui-line) !important;
+}
+.html5buttons .dt-buttons > :last-child { border-right-width: 1px !important; }
+.html5buttons .dt-buttons > *:hover { background: var(--ui-soft) !important; color: var(--ui-brand) !important; }
+
+.pagination { margin: 0; gap: 4px; }
+.pagination .page-item .page-link {
+    border-radius: var(--ui-radius) !important;
+    border: 1px solid var(--ui-line);
+    color: var(--ui-text);
+    font-size: 9.5pt;
+    font-weight: 600;
+    min-width: 34px;
+    text-align: center;
+    padding: 6px 10px;
+    margin-left: 0;
+}
+.pagination .page-item .page-link:hover { background: var(--ui-soft); color: var(--ui-brand); }
+.pagination .page-item.active .page-link { background: var(--ui-brand); border-color: var(--ui-brand); color: #fff; box-shadow: 0 2px 6px rgba(28,132,198,.3); }
+.pagination .page-item.disabled .page-link { color: #c1c8d1; background: #fff; }
+
+/* ===================================================================
+   Buttons
+   =================================================================== */
+.wrapper-content .btn,
+.modal .btn,
+.navbar .btn {
+    font-size: var(--btn-font);
+    font-weight: 600;
+    border-radius: var(--ui-radius);
+    padding: 7px 14px;
+    line-height: 1.35;
+    letter-spacing: .1px;
+    transition: background-color .15s, border-color .15s, color .15s, box-shadow .15s, transform .08s;
+}
+.wrapper-content .btn i.fa,
+.modal .btn i.fa { margin-right: 2px; }
+.wrapper-content .btn:active,
+.modal .btn:active { transform: translateY(1px); }
+.wrapper-content .btn:focus,
+.modal .btn:focus { box-shadow: 0 0 0 3px rgba(28,132,198,.2) !important; outline: 0; }
+
+.wrapper-content .btn-sm, .modal .btn-sm { font-size: var(--btn-sm-font); padding: 5px 11px; }
+.wrapper-content .btn-xs, .modal .btn-xs {
+    font-size: var(--btn-xs-font);
+    padding: 4px 9px;
+    border-radius: 5px;
+    line-height: 1.4;
+}
+.wrapper-content .btn-block { padding-top: 8px; padding-bottom: 8px; }
+
+/* Solid variants: flat with a soft shadow on hover */
+.wrapper-content .btn-primary, .modal .btn-primary { background: var(--ui-brand); border-color: var(--ui-brand); color: #fff; }
+.wrapper-content .btn-primary:hover, .modal .btn-primary:hover { background: var(--ui-brand-dark); border-color: var(--ui-brand-dark); box-shadow: 0 3px 8px rgba(28,132,198,.3); }
+.wrapper-content .btn-danger:hover, .modal .btn-danger:hover { box-shadow: 0 3px 8px rgba(237,85,101,.3); }
+.wrapper-content .btn-warning:hover { box-shadow: 0 3px 8px rgba(248,172,89,.35); }
+.wrapper-content .btn-success:hover { box-shadow: 0 3px 8px rgba(28,179,148,.3); }
+
+/* Outline-style white button */
+.wrapper-content .btn-white, .modal .btn-white {
+    background: #fff;
+    border: 1px solid #dfe5ec;
+    color: var(--ui-text);
+}
+.wrapper-content .btn-white:hover, .wrapper-content .btn-white:focus,
+.modal .btn-white:hover, .modal .btn-white:focus,
+.wrapper-content .btn-white.active, .wrapper-content .open .dropdown-toggle.btn-white,
+.wrapper-content .show > .dropdown-toggle.btn-white {
+    background: var(--ui-soft);
+    border-color: #cdd6e0;
+    color: var(--ui-brand);
+}
+
+/* Inspinia's 3D "dim" buttons -> flat */
+.btn.dim { box-shadow: none !important; margin: 0 2px !important; }
+.btn.dim:active { box-shadow: none !important; top: 0 !important; }
+
+/* Grouped buttons (e.g. dashboard period filter) */
+.wrapper-content .btn-group > .btn { border-radius: 0; }
+.wrapper-content .btn-group > .btn:first-child { border-top-left-radius: var(--ui-radius); border-bottom-left-radius: var(--ui-radius); }
+.wrapper-content .btn-group > .btn:last-child,
+.wrapper-content .btn-group > .dropdown-toggle { border-top-right-radius: var(--ui-radius); border-bottom-right-radius: var(--ui-radius); }
+.wrapper-content .btn-group > .btn:only-child { border-radius: var(--ui-radius); }
+
+/* Action cells: consistent gaps between buttons */
+.rec-actions, td.text-center:last-child { white-space: nowrap; }
+.wrapper-content td .btn + .btn,
+.wrapper-content td .btn + .btn-group,
+.wrapper-content td .btn-group + .btn,
+.wrapper-content td a + .btn,
+.wrapper-content td .btn + a,
+.wrapper-content td form.d-inline + .btn { margin-left: 4px; }
+
+/* ===================================================================
+   Dropdown menus
+   =================================================================== */
+.dropdown-menu {
+    font-size: var(--dropdown-font);
+    border: 1px solid var(--ui-line);
+    border-radius: 8px;
+    box-shadow: 0 10px 28px rgba(31, 45, 61, .14), 0 2px 6px rgba(31, 45, 61, .06);
+    padding: 6px;
+    min-width: 200px;
+    margin-top: 6px;
+}
+.dropdown-menu > li > a,
+.dropdown-menu .dropdown-item {
+    border-radius: 5px;
+    padding: 8px 12px;
+    margin: 0;
+    color: var(--ui-text);
+    font-weight: 500;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+.dropdown-menu .dropdown-item i.fa { color: var(--ui-muted); width: 16px; text-align: center; }
+.dropdown-menu > li > a:hover,
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+    background: #eef6fc;
+    color: var(--ui-brand);
+}
+.dropdown-menu .dropdown-item:hover i.fa { color: var(--ui-brand); }
+.dropdown-menu .dropdown-header {
+    font-size: 8.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .7px;
+    color: var(--ui-muted);
+    padding: 6px 12px 4px;
+}
+.dropdown-menu .dropdown-divider { margin: 5px 4px; border-top-color: var(--ui-line); }
+.dropdown-toggle::after { vertical-align: .15em; margin-left: .4em; }
+
+/* Sidebar profile dropdown keeps its compact look */
+.nav-header .dropdown-menu { min-width: 180px; }
+
+/* ===================================================================
+   Select boxes (filters, DataTables length, modal forms)
+   =================================================================== */
+.wrapper-content select.form-control,
+.modal select.form-control,
+.dataTables_wrapper select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 32px !important;
+    background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a95a3' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 10px center;
+    cursor: pointer;
+}
+.wrapper-content .form-control,
+.modal .form-control,
+.dataTables_wrapper .form-control,
+.dataTables_wrapper select,
+.dataTables_wrapper input {
+    font-size: 10pt;
+    border: 1px solid #dfe5ec;
+    border-radius: var(--ui-radius);
+    height: auto;
+    min-height: 36px;
+    padding: 6px 12px;
+    color: var(--ui-ink);
+    transition: border-color .15s, box-shadow .15s;
+}
+.wrapper-content .form-control:focus,
+.modal .form-control:focus,
+.dataTables_wrapper select:focus,
+.dataTables_wrapper input:focus {
+    border-color: var(--ui-brand);
+    box-shadow: 0 0 0 3px rgba(28,132,198,.15);
+    outline: 0;
+}
+.dataTables_wrapper .form-control-sm,
+.dataTables_wrapper .input-sm { min-height: 34px; }
+
+/* ===================================================================
+   Table cards
+   =================================================================== */
+.wrapper-content .ibox-content { border-radius: 0 0 8px 8px; padding: 20px; }
+.wrapper-content > .ibox-content,
+.wrapper-content .ibox-content:only-child { border-radius: 8px; }
+.wrapper-content .ibox-title { border-radius: 8px 8px 0 0; }
+.wrapper-content .table-responsive { border-radius: var(--ui-radius); }
+
+/* Nav tabs above tables (records page) */
+.wrapper-content .nav-tabs .nav-link { font-size: 10pt; font-weight: 600; color: var(--ui-muted); border-radius: 6px 6px 0 0; padding: 9px 16px; }
+.wrapper-content .nav-tabs .nav-link.active { color: var(--ui-brand); }
+.wrapper-content .nav-tabs .badge { font-size: 8.5pt; border-radius: 999px; padding: 3px 8px; }
+
+@media (max-width: 767.98px) {
+    .html5buttons { float: none; margin-left: 0; }
+    .dataTables_wrapper .dataTables_filter input { width: 100% !important; margin-left: 0; }
+}

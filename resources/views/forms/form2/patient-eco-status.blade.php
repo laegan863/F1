@@ -165,16 +165,12 @@
                 </div>
                 <div class="col-md-4">
                     <label class="form-label">Remarks</label>
-                    <input type="date" name="surgery_date" class="form-control" value="{{ old('surgery_date') }}">
+                    <input type="text" name="remarks" class="form-control" value="{{ old('remarks') }}" placeholder="Remarks">
                 </div>
             </div>
         </div>
 
-        <!-- Submit -->
-        <div class="card-footer text-end">
-            <button type="reset" class="btn btn-secondary rounded-0">Reset</button>
-            <button type="button" onclick="handleSubmit()" class="btn btn-primary rounded-0">Submit</button>
-        </div>
+        @include('forms.partials.wizard-footer')
     </form>
 @endsection
 

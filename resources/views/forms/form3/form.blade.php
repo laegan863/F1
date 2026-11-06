@@ -2180,13 +2180,7 @@
                 transform="translate(-3.000000, -2.000000)"></path>
         </defs>
     </svg>
-    @php
-        $data = \App\Models\F3patientsurveillanceform::with([
-            'f3cancerdiagnoseoutcomes', 
-            'f3cancertreatmenthistories', 
-            'f3treatmenthistory2s', 
-            'f3financialsupports'])->where('id', Request::query('id'))->first();
-    @endphp
+    {{-- $data is loaded by FollowUpFormController@print (404 if missing; unsaved pages are empty models) --}}
     {{-- <div style="padding: 20px">{{ json_encode([ 'data' => $data ]) }}</div> --}}
     <div class="ritz grid-container" dir="ltr">
         <table class="waffle no-grid" cellspacing="0" cellpadding="0" style="width: 1050px; margin: 0 auto; border: 1px solid black">

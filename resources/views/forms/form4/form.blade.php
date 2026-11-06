@@ -2225,16 +2225,7 @@
     </style>
 </head>
 <body>
-    @php
-        $data = \App\Models\F4palliativeform::with([
-            'f4esas',
-            'f4painassessments',
-            'f4palliativecares',
-            'f4cancerdiagnoseoutcomes',
-            'f4financialsupportmechanisms'
-        ])->where('id', Request::query('id'))
-        ->first();
-    @endphp
+    {{-- $data is loaded by FollowUpFormController@print (404 if missing; unsaved pages are empty models) --}}
     <svg style="display:none;" width="16px" height="16px" viewBox="0 0 16 16" version="1.1"
         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <defs>
