@@ -88,7 +88,7 @@
         {{-- ================= Q46: Laterality ================= --}}
         <div class="mb-3">
             <label class="form-label fw-bold">Laterality <small class="text-danger">*</small></label><br>
-            @foreach(['Left','Right','Bilateral','Not Applicable'] as $lat)
+            @foreach(['Left','Right','Bilateral','Not Applicable','Unknown'] as $lat)
                 <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input rounded-circle"
                            name="laterality" value="{{ $lat }}"
@@ -196,7 +196,8 @@
                     "Old case, not treated",
                     "Old case, completed 1st treatment, now recurrent",
                     "Old case, incomplete treatment, now progressive",
-                    "Old case, unknown treatment"
+                    "Old case, unknown treatment",
+                    "Old case, continuing treatment"
                 ];
             @endphp
             @foreach($statuses as $i => $status)

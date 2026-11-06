@@ -2485,11 +2485,11 @@
                     <td class="s25"></td>
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#{{ in_array('Others, specify:', $reasons) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Others', $reasons) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">7</td>
                     <td class="s25" dir="ltr" colspan="4">Others, specify: </td>
-                    <td class="s29" colspan="9">{{ $data->reason_other ?? '' }}</td>
+                    <td class="s29" colspan="9">{{ $data->reason_others ?? '' }}</td>
                     <td class="s26"></td>
                 </tr>
                 <tr style="height: 24px">
@@ -3013,12 +3013,12 @@
                     
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#{{ in_array('Blood - Myelodysplastiv Syndromes', $pcs) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Blood - Myelodysplastic Syndromes', $pcs) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">8</td>
                     <td class="s55 softmerge" dir="ltr">
                         <div class="softmerge-inner" style="width:232px;left:-1px"><span
-                                style="font-size:11pt;">Blood</span> - Myelodysplastiv Syndromes</div>
+                                style="font-size:11pt;">Blood</span> - Myelodysplastic Syndromes</div>
                     </td>
                     <td class="s23"></td>
                     <td class="s23"></td>
@@ -3436,7 +3436,7 @@
                     <td class="s4"></td>
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#{{ in_array('Others, specify:', $pcs) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ !empty($data->primary_cancer_site_other) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">56</td>
                     <td class="s25" dir="ltr" colspan="5">Others, specify:</td>
@@ -3481,7 +3481,7 @@
                     <td class="s42"></td>
                     <td class="s21" dir="ltr"></td>
                     <td></td>
-                    <td class="s63" colspan="8" rowspan="2"></td>
+                    <td class="s63" colspan="8" rowspan="2">{{ $data->primary_cancer_site_other }}</td>
                 </tr>
                 <tr style="height: 21px">
                     
@@ -4627,7 +4627,7 @@
                     <td class="s68" colspan="2">Yes</td>
                     <td class="s30" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#{{ !$is_pain ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ (($f4painassessments['is_pain']) ?? null) === "No" ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s31" dir="ltr">2</td>
                     <td class="s68" colspan="2">No</td>
@@ -5061,7 +5061,7 @@
                 <tr style="height: 29px">
                     
                     <td class="s20" dir="ltr" colspan="4">Remarks</td>
-                    <td class="s79" dir="ltr" colspan="25">{{ $f4painassessments->provocation_region ?? '' }}</td>
+                    <td class="s79" dir="ltr" colspan="25">{{ $f4painassessments->provocation_region ?? '' }}@if(!empty($f4painassessments->provocation_remarks)) &mdash; {{ $f4painassessments->provocation_remarks }}@endif</td>
                 </tr>
                 <tr style="height: 20px">
                     
@@ -6068,7 +6068,7 @@
                     
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#{{ !$nsaids ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ (($f4painassessments['nsaids']) ?? null) === "No" ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">2</td>
                     <td class="s59" colspan="2">No</td>
@@ -9146,7 +9146,7 @@
                     <td class="s134"></td>
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#{{ in_array('Philippine Charity Sweepstakes', $fsm) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Philippine Charity Sweepstakes Office (PCSO)', $fsm) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">4</td>
                     <td class="s22 softmerge">
@@ -9228,7 +9228,7 @@
                     <td class="s134"></td>
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#{{ in_array('Medical Assistance for Indigent and Financially-Incapacitated Patients (MAIFIP)', $fsm) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Medical Assistance for Indigent & Financially-Incapacitated Patients (MAIP/DOH)', $fsm) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">7</td>
                     <td class="s135 softmerge">
@@ -9307,7 +9307,7 @@
                     
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#{{ !$fs ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ (($data->f4financialsupportmechanisms['financial_support']) ?? null) === "No" ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">2</td>
                     <td class="s59" colspan="2">No</td>
@@ -9395,7 +9395,7 @@
                     <td class="s134"></td>
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#{{ in_array('Non-Government Org. / Civil Society Org.', $fsm) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Non-Government Org./Civil Society Org.', $fsm) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">11</td>
                     <td class="s22 softmerge">
@@ -9878,10 +9878,10 @@
                     
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#{{ in_array('Diphenhydramine (as Hydrochloride)  50 mg/mL, 1 mL Amp', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Diphenhydramine (as Hydrochloride) 50 mg/mL, 1 mL Amp', $cspmap_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">16</td>
-                    <td class="s3" colspan="12">Diphenhydramine (as Hydrochloride)  50 mg/mL, 1 mL Amp</td>
+                    <td class="s3" colspan="12">Diphenhydramine (as Hydrochloride) 50 mg/mL, 1 mL Amp</td>
                     <td class="s4"></td>
                     <td class="s4"></td>
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
@@ -10363,11 +10363,11 @@
                     
                     <td class="s21" dir="ltr"><svg width="16px" height="16px" viewBox="0 0 16 16"
                             style="display:inline;">
-                            <use href="#{{ in_array('Blinatumab', $other_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                            <use href="#{{ in_array('Blinatumomab', $other_meds) ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                         </svg></td>
                     <td class="s1" dir="ltr">5</td>
                     <td class="s55 softmerge" dir="ltr">
-                        <div class="softmerge-inner" style="width:76px;left:-1px">Blinatumab</div>
+                        <div class="softmerge-inner" style="width:76px;left:-1px">Blinatumomab</div>
                     </td>
                     <td class="s141"></td>
                     <td class="s147"></td>

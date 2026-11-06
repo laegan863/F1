@@ -102,7 +102,7 @@
                 <div class="mb-3">
                     <label class="form-label fw-bold">Type of radiotherapy: <small class="text-danger">*</small></label>
                     <div class="row">
-                        @foreach(['2D conventional','3DCRT','Brachytherapy','Electron Therapy','IMRT/IMAT/Helical',
+                        @foreach(['2D conventional','3DCRT','Brachytherapy','Electron Therapy','IMRT/VMAT/Helical',
                                   'IORT','Heavy Particles','Proton Therapy','Stereotactic Radiosurgery / Radiotherapy','Others'] as $label)
                             <div class="col-md-6 mb-1">
                                 <div class="form-check">

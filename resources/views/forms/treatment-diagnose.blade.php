@@ -290,7 +290,7 @@
             @php
                 $other_therapies = [
                     "Blood Transfusion","Cryoablation","Transplant","Radiofrequency ablation",
-                    "Transarterial chemoembolization","Others"
+                    "Transarterial chemoembolization","Embolization","Others"
                 ];
             @endphp
             <div class="row">

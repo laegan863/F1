@@ -15,21 +15,25 @@
         $rawData = $data;
     }
     // echo json_encode($rawData);
+    // Keys are the exact values saved by the Form 1 diagnosis step (matched case-insensitively)
     $cancer_status_counts = [
         'Newly diagnosed' => ['male' => 0, 'female' => 0],
         'Old case, not treated' => ['male' => 0, 'female' => 0],
-        'Old case, completed 1st treatment, now' => ['male' => 0, 'female' => 0],
-        'Old case, incomplete treatment, now' => ['male' => 0, 'female' => 0],
+        'Old case, completed 1st treatment, now recurrent' => ['male' => 0, 'female' => 0],
+        'Old case, incomplete treatment, now progressive' => ['male' => 0, 'female' => 0],
         'Old case, unknown treatment' => ['male' => 0, 'female' => 0],
+        'Old case, continuing treatment' => ['male' => 0, 'female' => 0],
     ];
+    $status_keys = collect(array_keys($cancer_status_counts))->mapWithKeys(fn ($k) => [mb_strtolower($k) => $k]);
 
     foreach ($rawData as $record) {
         $sex = strtolower($record->sex ?? '');
         if ($sex !== 'male' && $sex !== 'female') continue;
 
         if ($record->cancerdiagnoses && $record->cancerdiagnoses->cancer_status) {
-            if (isset($cancer_status_counts[$record->cancerdiagnoses->cancer_status])) {
-                $cancer_status_counts[$record->cancerdiagnoses->cancer_status][$sex]++;
+            $key = $status_keys[mb_strtolower(trim($record->cancerdiagnoses->cancer_status))] ?? null;
+            if ($key) {
+                $cancer_status_counts[$key][$sex]++;
             }
         }
     }
@@ -48,13 +52,7 @@
         </thead>
         <tbody>
             @php
-                $status_list = [
-                    'Newly diagnosed',
-                    'Old case, not treated',
-                    'Old case, completed 1st treatment, now',
-                    'Old case, incomplete treatment, now',
-                    'Old case, unknown treatment'
-                ];
+                $status_list = array_keys($cancer_status_counts);
                 $total_male = 0;
                 $total_female = 0;
             @endphp

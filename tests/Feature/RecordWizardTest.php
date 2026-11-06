@@ -18,82 +18,9 @@ beforeEach(function () {
     $this->user = User::factory()->create(['role' => 'user', 'email' => 'user@example.test', 'password' => bcrypt('password')]);
 });
 
-function demographicPayload(array $overrides = []): array
-{
-    return array_replace_recursive([
-        'patient_first_encounter' => now()->toDateString(),
-        'patient_health_facility_id' => '0000012345',
-        'philhealth_id' => '1234567890123',
-        'name' => ['firstname' => 'Maria', 'middlename' => 'Santos', 'lastname' => 'Cruz', 'suffix' => 'N/A'],
-        'date_of_birth' => '1970-05-01',
-        'sex' => 'female',
-        'civil_status' => 'Married',
-        'nationality' => 'Filipino',
-        'permanent' => ['province' => 'Negros Occidental', 'city' => 'City of Bacolod', 'barangay' => 'Barangay 1'],
-        'same_as_address' => 'on',
-        'mobile_number' => '09123456789',
-        'email_address' => 'maria@example.com',
-        'relative' => ['province' => 'Negros Occidental', 'city' => 'City of Bacolod', 'barangay' => 'Barangay 2'],
-        'relative_phone_number' => '09987654321',
-        'highest_education' => 'Tertiary',
-        'occupation' => 'Professionals',
-        'number_of_years_in_occupation' => 10,
-    ], $overrides);
-}
 
-function riskPayload(array $overrides = []): array
-{
-    return array_merge([
-        'tobacco_use' => 'Current Smoker',
-        'second_hand_smoke' => 'No',
-        'alcohol_use' => 'No history of harmful use of alcohol',
-        'physical_activity' => 'Usually Inactive',
-        'healtydiet' => ['fatmeat' => 'high', 'vegetables' => 'low', 'sodium_salt' => 'moderate', 'sugar' => 'low'],
-        'occupational_exposure' => 'no',
-        'air_pollution' => 'yes',
-        'family_history' => 'no',
-        'infections' => ['None'],
-        'comorbidities' => ['Hypertension'],
-        'has_cancer' => 'no',
-        'sexual_partners' => 1,
-        'age_first_intercourse' => 20,
-        'contraceptives_use' => 'No',
-        'cancer_screening' => ['Mammography'],
-        'vaccine_hpv' => 'No',
-        'vaccine_hepb' => 'Unknown',
-    ], $overrides);
-}
 
-function diagnosisPayload(array $overrides = []): array
-{
-    return array_merge([
-        'multiple_sites' => 'no',
-        'cancer_sites' => ['Breast'],
-        'laterality' => 'Left',
-        'histologic_diagnosis' => 'Invasive ductal carcinoma',
-        'icd_10' => 'C50.9',
-        'clinical_stage' => 'Stage II',
-        'cancer_status' => 'Newly diagnosed',
-    ], $overrides);
-}
 
-function treatmentPayload(array $overrides = []): array
-{
-    return array_merge([
-        'date_of_diagnosis' => now()->subMonth()->toDateString(),
-        'team_approach' => 'No',
-        'surgery' => 'Yes',
-        'surgery_goal' => ['Curative'],
-        'anticancer_drug' => 'No',
-        'first_line_drug' => 'No',
-        'second_line_drug' => 'No',
-        'third_line_drug' => 'No',
-        'other_subsequent_line_drug' => 'No',
-        'radiotherapy' => 'No',
-        'theranostics' => 'No',
-        'other_therapies' => 'No',
-    ], $overrides);
-}
 
 it('renders the login page and signs in', function () {
     $this->get('/')->assertOk()->assertSee('Welcome back')->assertDontSee('name="password" value=', false);
@@ -189,14 +116,6 @@ it('resumes an unfinished draft', function () {
     $this->get(route('demographic-profile'))->assertOk()->assertSee('value="Maria"', false);
 });
 
-function completedRecord(): Demographicprofile
-{
-    $p = Demographicprofile::create(demographicPayload() + ['hospitalID' => '0000000042', 'status' => 1, 'current' => ['province' => 'X', 'city' => 'Y', 'barangay' => 'Z']]);
-    Riskfactor::create(riskPayload() + ['code' => $p->id]);
-    Cancerdiagnose::create(diagnosisPayload() + ['code' => $p->id, 'primary_site_number' => 1]);
-    Treatment::create(treatmentPayload() + ['code' => $p->id]);
-    return $p;
-}
 
 it('edits and updates each step of a saved record', function () {
     $this->actingAs($this->user);
@@ -268,4 +187,64 @@ it('does not allow public self-registration', function () {
 it('does not expose debug routes', function () {
     $this->get('/encrypt/secret')->assertNotFound();
     $this->actingAs($this->admin)->get('/connection')->assertNotFound();
+});
+
+it('treats the patient email address as optional', function () {
+    $this->actingAs($this->user);
+    $this->post(route('admin.validate-hospital-number'), ['HospitalID' => '4321']);
+
+    $this->get(route('demographic-profile'))->assertSee('Email Address <small class="text-muted">(optional)</small>', false);
+
+    $this->post(route('submit-demograpic-profile'), demographicPayload(['email_address' => 'not-an-email']))
+        ->assertSessionHasErrors('email_address');
+
+    $this->post(route('submit-demograpic-profile'), demographicPayload(['email_address' => '']))
+        ->assertSessionHasNoErrors()->assertRedirect(route('risk-factor'));
+
+    expect(Demographicprofile::where('hospitalID', '0000004321')->value('email_address'))->toBeNull();
+});
+
+it('offers the "Old case, continuing treatment" cancer status', function () {
+    $this->actingAs($this->user);
+    $p = completedRecord();
+
+    $this->get(route('records.edit', ['id' => $p->id, 'step' => 'cancer-diagnose']))->assertSee('Old case, continuing treatment');
+
+    $this->post(route('records.update', ['id' => $p->id, 'step' => 'cancer-diagnose']), diagnosisPayload(['cancer_status' => 'Old case, continuing treatment']))
+        ->assertSessionHasNoErrors();
+    expect(Cancerdiagnose::where('code', $p->id)->value('cancer_status'))->toBe('Old case, continuing treatment');
+
+    expect($this->get(route('records.edit', ['id' => $p->id, 'step' => 'cancer-diagnose']))->getContent())
+        ->toMatch('/value="Old case, continuing treatment"\s+id="status5"\s+checked/');
+
+    $print = $this->get(route('result.form1', ['id' => $p->id]))->assertOk()->getContent();
+    expect($print)->toContain('Old case, continuing treatment')
+        ->and(substr_count($print, '#checked-checkbox-id'))->toBeGreaterThan(0);
+});
+
+it('accepts a 12- or 13-digit PhilHealth PIN', function () {
+    $this->actingAs($this->user);
+    $this->post(route('admin.validate-hospital-number'), ['HospitalID' => '1212']);
+
+    $this->get(route('demographic-profile'))->assertSee('placeholder="12-345678901-2"', false)->assertSee('maxlength="15"', false);
+
+    foreach (['12345678901', '12345678901234', '12-34567890A-2', ''] as $bad) {
+        $this->post(route('submit-demograpic-profile'), demographicPayload(['philhealth_id' => $bad]))
+            ->assertSessionHasErrors('philhealth_id');
+    }
+
+    // Both lengths are accepted (dashed or not) and stored as digits only
+    foreach (['12-345678901-2' => '123456789012', '12-3456789012-3' => '1234567890123', '1234567890123' => '1234567890123'] as $typed => $stored) {
+        $this->post(route('submit-demograpic-profile'), demographicPayload(['philhealth_id' => $typed]))
+            ->assertSessionHasNoErrors()->assertRedirect(route('risk-factor'));
+        expect(Demographicprofile::where('hospitalID', '0000001212')->value('philhealth_id'))->toBe($stored);
+    }
+
+    // The printout groups the boxes by length: 2-9-1 for 12 digits, 2-10-1 for 13
+    $full = completedRecord();
+    $text = fn () => preg_replace('/\s+/', '', strip_tags($this->get(route('result.form1', ['id' => $full->id]))->assertOk()->getContent()));
+    $full->update(['philhealth_id' => '123456789012']);
+    expect($text())->toContain('12-345678901-2');
+    $full->update(['philhealth_id' => '1234567890123']);
+    expect($text())->toContain('12-3456789012-3');
 });

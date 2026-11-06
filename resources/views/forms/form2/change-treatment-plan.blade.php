@@ -175,7 +175,7 @@
 
                 <label class="form-label mt-2">Specific type of radiotherapy <small class="text-danger">*</small></label>
                 @foreach([
-                    '2D conventional','3DCRT','Brachytherapy','Electron Therapy','IMRT/IMAT/Helical',
+                    '2D conventional','3DCRT','Brachytherapy','Electron Therapy','IMRT/VMAT/Helical',
                     'IORT','Heavy Particles','Proton Therapy','Stereotactic Radiosurgery','Others'
                 ] as $type)
                     <div class="form-check">

@@ -22,7 +22,7 @@ beforeEach(function () {
 
     $this->patient = Demographicprofile::create([
         'hospitalID' => HID, 'patient_first_encounter' => '2026-01-01', 'patient_health_facility_id' => '0000000042',
-        'philhealth_id' => '1234567890123', 'name' => ['firstname' => 'Maria', 'middlename' => 'S', 'lastname' => 'Cruz', 'suffix' => 'N/A'],
+        'philhealth_id' => '123456789012', 'name' => ['firstname' => 'Maria', 'middlename' => 'S', 'lastname' => 'Cruz', 'suffix' => 'N/A'],
         'date_of_birth' => '1970-01-01', 'sex' => 'female', 'civil_status' => 'Married', 'nationality' => 'Filipino',
         'permanent' => ['province' => 'P', 'city' => 'C', 'barangay' => 'B'], 'same_as_address' => 'on',
         'mobile_number' => '09123456789', 'email_address' => 'm@example.com', 'relative' => ['province' => 'P', 'city' => 'C', 'barangay' => 'B'],

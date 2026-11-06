@@ -77,35 +77,7 @@
                 <h5 class="fw-bold">CSPMAP Medicines <small class="text-danger">*</small></h5>
                 <p class="small">If CSPMAP is checked, select the medicines availed under the CSPMAP program:</p>
                 <div class="row">
-                    @foreach([
-                        'Asparaginase 10,000 IU vial','Bicalutamide 50 mg','Bleomycin (as Sulfate) 15 mg Vial',
-                        'Calcium Folinate (Leucovorin Calcium) 50 mg vial','Capecitabine 500 mg Tablet',
-                        'Carboplatin 150 mg vial','Carboplatin 450 mg vial','Cisplatin 1 mg/mL, 10 mL vial',
-                        'Cisplatin 1 mg/mL, 50 mL vial','Cyclophosphamide 500 mg powder vial',
-                        'Cytarabine 100 mg/mL 1 mL vial','Cytarabine 100 mg/mL 5 mL vial',
-                        'Dacarbazine 200 mg vial','Dactinomycin (Actinomycin D) 500 mcg powder vial',
-                        'Diazepam 5mg/mL, 2 mL amp','Diphenhydramine (Hydrochloride) 50 mg/mL, 1 mL',
-                        'Docetaxel 20 mg/mL vial','Docetaxel 80 mg/mL 2 mL vial',
-                        'Doxorubicin 10 mg vial','Doxorubicin 50 mg vial','Epirubicin 50 mg vial',
-                        'Etoposide 20 mg/mL 5 mL amp','Fentanyl Citrate 50 mcg/mL, 2 mL amp',
-                        'Filgrastim (G-CSF) 300 mcg/mL 0.5 mL PFS','Fluorouracil 50 mg/mL 10 mL vial',
-                        'Gemcitabine 1 g vial','Gemcitabine 200 mg vial','Goserelin 3.6 mg PFS',
-                        'Haloperidol 5 mg/mL 1 mL amp','Hydroxyurea 500 mg capsule','Hyoscine 20 mg/mL 1 mL amp',
-                        'Idarubicin 5 mg vial','Ifosfamide 1 g vial','Imatinib 400 mg tablet',
-                        'Irinotecan 40 mg/2 mL vial','Irinotecan 100 mg/5 mL vial',
-                        'Letrozole 2.5 mg tablet','Leuprolide 3.75 mg vial',
-                        'Mercaptopurine 50 mg tablet','Mesna 100 mg/mL 4 mL amp',
-                        'Methotrexate 2.5 mg tablet','Methotrexate 25 mg/mL 2 mL amp',
-                        'Metoclopramide 5 mg/mL 2 mL amp','Morphine 10 mg/mL 1 mL amp',
-                        'Morphine 30 mg/mL 1 mL amp','Morphine oral solution 10 mg/5 mL',
-                        'Omeprazole 40 mg vial + solvent','Ondansetron 2 mg/mL 2 mL amp',
-                        'Ondansetron 2 mg/mL 4 mL amp','Oxaliplatin 5 mg/mL solution',
-                        'Paclitaxel 6 mg/mL 17 mL vial','Paclitaxel 6 mg/mL 25 mL vial',
-                        'Paclitaxel 30 mg/5 mL vial','Rituximab 10 mg/mL 10 mL vial',
-                        'Tamoxifen 20 mg tablet','Trastuzumab 150 mg vial','Trastuzumab 600 mg/5 mL vial',
-                        'Vinblastine 1 mg/mL 10 mL vial','Vincristine 1 mg/mL 1 mL vial',
-                        'Vincristine 1 mg/mL 2 mL vial','None','Others, specify:'
-                    ] as $label)
+                    @foreach(config('cbcr_options.cspmap_medicines') as $label)
                         <div class="col-md-6">
                             <div class="form-check">
                                 <input type="checkbox" name="cspmap_meds[]" value="{{ $label }}"
@@ -132,11 +104,7 @@
             <div class="card-body">
                 <h5 class="fw-bold">Other Medicines Availed <small class="text-danger">*</small></h5>
                 <div class="row">
-                    @foreach([
-                        'All-trans Retinoic Acid (ATRA)','Arsenic','Atezolizumab','Bevacizumab','Blinatumomab',
-                        'Bortezomib','Dasatinib','Ivosidenib','Lenvatinib','Osimertinib',
-                        'Pegylated Asparaginase','Pembrolizumab','Procarbazine','Ruxolitinib','Others, specify:'
-                    ] as $label)
+                    @foreach(config('cbcr_options.other_medicines') as $label)
                         <div class="col-md-4">
                             <div class="form-check">
                                 <input type="checkbox" name="other_meds[]" value="{{ $label }}"

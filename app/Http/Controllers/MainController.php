@@ -295,13 +295,18 @@ class MainController extends Controller
 
     private function validateDemographic(Request $request): array
     {
+        // PhilHealth PIN: accept "12-345678901-2" or "123456789012", store digits only
+        if ($request->filled('philhealth_id')) {
+            $request->merge(['philhealth_id' => preg_replace('/[\s-]/', '', (string) $request->input('philhealth_id'))]);
+        }
+
         $same = $request->same_as_address === "on";
         $currentRule = $same ? "nullable" : "required";
 
         $data = $request->validate([
             'patient_first_encounter'       => 'required|date|before_or_equal:today',
             "patient_health_facility_id"    => "required|string|min:10",
-            "philhealth_id"                 => "required|string|min:13|max:13",
+            "philhealth_id"                 => ["required", "regex:/^\d{12,13}$/"],
             "name.firstname"                => "required|string|max:100",
             "name.middlename"               => "nullable|string|max:100",
             "name.lastname"                 => "required|string|max:100",
@@ -319,7 +324,7 @@ class MainController extends Controller
             "current.barangay"              => $currentRule . "|string",
             "same_as_address"               => "nullable",
             "mobile_number"                 => "required|string|max:20",
-            "email_address"                 => "required|email",
+            "email_address"                 => "nullable|email|max:255",
             "relative.province"             => "required|string",
             "relative.city"                 => "required|string",
             "relative.barangay"             => "required|string",
@@ -330,8 +335,7 @@ class MainController extends Controller
             "number_of_years_in_occupation" => "required|integer|min:0|max:100",
         ], [
             'patient_health_facility_id.min' => 'The health facility ID must be at least 10 characters.',
-            'philhealth_id.min'              => 'The PhilHealth PIN must be exactly 13 characters.',
-            'philhealth_id.max'              => 'The PhilHealth PIN must be exactly 13 characters.',
+            'philhealth_id.regex'            => 'The PhilHealth PIN must be 12 or 13 digits (e.g. 12-345678901-2).',
             "name.firstname.required"        => "The first name field is required.",
             "name.lastname.required"         => "The last name field is required.",
             "name.suffix.required"           => "Please choose a suffix (choose N/A if none).",
@@ -440,7 +444,7 @@ class MainController extends Controller
             'primary_site_number'  => $request->multiple_sites == "yes" ? "required|integer|min:1" : 'nullable|integer|min:1',
             'cancer_sites'         => 'required_without:cancer_site_other|nullable|array',
             'cancer_site_other'    => 'nullable|string|max:255',
-            'laterality'           => 'required|in:Left,Right,Bilateral,Not Applicable',
+            'laterality'           => 'required|in:Left,Right,Bilateral,Not Applicable,Unknown',
             'histologic_diagnosis' => 'required|string|max:255',
             'icd_10'               => 'required|string|max:20',
             'clinical_stage'       => 'nullable',

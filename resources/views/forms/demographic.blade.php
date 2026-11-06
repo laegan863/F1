@@ -44,8 +44,9 @@
                     </div>
                     <div class="col-md-4">
                         <label for="philhealth" class="form-label">PhilHealth Identification No. (PIN) <small class="text-danger">*</small></label>
-                        <input type="text" class="form-control" id="philhealth" name="philhealth_id" minlength="13" maxlength="13"
-                               value="{{ old('philhealth_id') }}" placeholder="13 characters">
+                        <input type="text" class="form-control" id="philhealth" name="philhealth_id" inputmode="numeric" maxlength="15"
+                               autocomplete="off" value="{{ old('philhealth_id') }}" placeholder="12-345678901-2">
+                        <div class="form-text" id="philhealthHint">12 or 13 digits</div>
                     </div>
                 </div>
 
@@ -133,7 +134,7 @@
                         <input type="tel" class="form-control" id="mobile" name="mobile_number" value="{{ old('mobile_number') }}" placeholder="09123456789" maxlength="13">
                     </div>
                     <div class="col-md-6">
-                        <label for="email" class="form-label">Email Address <small class="text-danger">*</small></label>
+                        <label for="email" class="form-label">Email Address <small class="text-muted">(optional)</small></label>
                         <input type="email" class="form-control" id="email" name="email_address" value="{{ old('email_address') }}" placeholder="example@email.com">
                     </div>
                 </div>
@@ -199,6 +200,20 @@
             same.addEventListener("change", function () {
                 current.classList.toggle('d-none', this.checked);
             });
+
+            // PhilHealth PIN: digits only, 12 or 13; shown as XX-XXXXXXXXX-X (12) or XX-XXXXXXXXXX-X (13)
+            const pin = document.getElementById('philhealth');
+            const pinHint = document.getElementById('philhealthHint');
+            const formatPin = () => {
+                const d = pin.value.replace(/\D/g, '').slice(0, 13);
+                const mid = d.length === 13 ? 12 : 11;
+                pin.value = [d.slice(0, 2), d.slice(2, mid), d.slice(mid)].filter(Boolean).join('-');
+                const ok = d.length === 12 || d.length === 13;
+                pinHint.textContent = ok ? `\u2713 ${d.length} digits` : `${d.length} digits (12 or 13 needed)`;
+                pinHint.className = 'form-text ' + (ok ? 'text-success' : (d.length ? 'text-warning' : ''));
+            };
+            pin.addEventListener('input', formatPin);
+            formatPin();
 
             const dob = document.getElementById('dob');
             const agePreview = document.getElementById('agePreview');

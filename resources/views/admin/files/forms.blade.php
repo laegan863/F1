@@ -111,7 +111,8 @@
                                     <div class="actions">
                                         @if($has)
                                             <a href="{{ route('user.multiform', ['hospitalID' => $hospitalID, 'form' => substr($key, -1)]) }}" class="btn btn-white btn-sm">
-                                                <i class="fa fa-list"></i> Entries
+                                                <i class="fa fa-list"></i>
+                                                View Entries
                                             </a>
                                         @endif
                                         <a href="{{ route($key . '-firstpage', ['hospitalID' => $hospitalID, 'new' => 1]) }}" class="btn btn-primary btn-sm">
