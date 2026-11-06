@@ -18,6 +18,7 @@ class F2patientstatus extends Model
         'surgery_goal',
         'ongoing_drug_therapy',
         'therapy_date_start',
+        'remarks',
         'drug_purpose',
         'drug_types',
         'drug_regimen',

@@ -175,7 +175,7 @@
 
                 <label class="form-label mt-2">Specific type of radiotherapy <small class="text-danger">*</small></label>
                 @foreach([
-                    '2D conventional','3DCRT','Brachytherapy','Electron Therapy','IMRT/IMAT/Helical',
+                    '2D conventional','3DCRT','Brachytherapy','Electron Therapy','IMRT/VMAT/Helical',
                     'IORT','Heavy Particles','Proton Therapy','Stereotactic Radiosurgery','Others'
                 ] as $type)
                     <div class="form-check">
@@ -323,11 +323,7 @@
             <textarea name="remarks" class="form-control">{{ old('remarks') }}</textarea>
 
         </div>
-        <!-- Submit -->
-        <div class="card-footer text-end mt-3">
-            <button type="reset" class="btn btn-secondary rounded-0">Reset</button>
-            <button type="button" onclick="handleSubmit()" class="btn btn-primary rounded-0">Submit</button>
-        </div>
+        @include('forms.partials.wizard-footer')
     </form>
 @endsection
 

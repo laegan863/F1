@@ -14,6 +14,7 @@ class F4palliativeform extends Model
         'name',
         'reason',
         'setting',
+        'reason_others',
         'primary_cancer_site',
         'primary_cancer_site_other',
         'laterality',

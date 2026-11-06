@@ -1,82 +1,55 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Controllers\Concerns\FollowUpWizard;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\DB;
-use App\Models\F3patientsurveillanceform;
 use App\Models\F3cancerdiagnoseoutcome;
 use App\Models\F3cancertreatmenthistory;
 use App\Models\F3treatmenthistory2;
 use App\Models\F3financialsupport;
 use App\Traits\LogsActivity;
 
+/** Form 3 - Patient Surveillance (4 pages). Page rendering lives in FollowUpFormController. */
 class Form3Controller extends Controller
 {
-    use LogsActivity;
+    use LogsActivity, FollowUpWizard;
+
+    private const FORM = 'form3';
     public function f3patientsurveillanceforms(Request $request, $hospitalID)
     {
-        $validate = $request->validate([
-            'date' => 'required|date',
-            'name.firstname' => 'required',
-            'name.middlename' => 'nullable',
-            'name.lastname' => 'required',
-            'primary_cancer_site' => 'required',
-            'laterality' => 'required',
-            'histologic_diagnosis' => 'required',
-            'icd10' => 'required',
-            'clinical_stage' => 'nullable',
-            'stage' => 'nullable',
-            'other_staging' => 'nullable',
-            'other_remarks' => 'nullable',
-        ]);
-
-        $validate['hospitalID'] = $hospitalID;
-
-        $data = F3patientsurveillanceform::create($validate);
-
-        Session::put([
-            'code' => $data->id
-        ]);
-        
-        return to_route('form3.secondpage')->with('success', 'PATIENT SURVEILLANCE FORM Saved Successfully!');
-
+        $data = $request->validate(Form2Controller::firstPageRules(), Form2Controller::firstPageMessages());
+        return $this->fuSaveFirstPage(self::FORM, $hospitalID, $data);
     }
 
     public function cancerdiagnoseoutcome(Request $request)
     {
-         $validated = $request->validate([
+        $this->fuRequireEntry(self::FORM);
+        // Cause-of-death fields only apply when a death outcome is selected
+        $death = Form2Controller::isDeathOutcome($request) ? 'required' : 'nullable';
+
+        $validated = $request->validate([
             'diagnosis_outcome'      => 'required|array',
             'diagnosis_outcome.*'    => 'string|max:255',
-            'diagnosis_outcome_date' => 'required|date',
-
-            'cause_immediate'        => 'required|string|max:255',
-            'cause_antecedent'       => 'required|string|max:255',
-            'cause_underlying'       => 'required|string|max:255',
-            'cause_other'            => 'required|string|max:255',
-        ],[
-            'cause_immediate.required' => 'The Immediate Cause field is required',
-            'cause_antecedent.required' => 'The Antecedent Cause field is required',
-            'cause_underlying.required' => 'The Underlying Cause field is required',
-            'cause_other.required' => 'The Other significant condition directly leading to death field is required',
+            'diagnosis_outcome_date' => 'required|date|before_or_equal:today',
+            'cause_immediate'        => $death . '|nullable|string|max:255',
+            'cause_antecedent'       => 'nullable|string|max:255',
+            'cause_underlying'       => $death . '|nullable|string|max:255',
+            'cause_other'            => 'nullable|string|max:255',
+        ], [
+            'cause_immediate.required'  => 'The immediate cause of death is required when a death outcome is selected.',
+            'cause_underlying.required' => 'The underlying cause of death is required when a death outcome is selected.',
         ]);
 
-        $validated['code'] = session('code');
-        // $validated['code'] = 4;
+        if ($death === 'nullable') {
+            $validated['cause_immediate'] = $validated['cause_antecedent'] = $validated['cause_underlying'] = $validated['cause_other'] = null;
+        }
 
-        F3cancerdiagnoseoutcome::updateOrCreate(
-            ['code' => $validated['code']], 
-            $validated
-        );
-
-        return to_route('form3.page3')
-                ->with('success', 'Cancer Diagnosis Outcome saved successfully.');
-
+        return $this->fuSavePage(self::FORM, 2, F3cancerdiagnoseoutcome::class, $validated, 'Cancer diagnosis outcome saved.');
     }
 
     public function treatment_history(Request $request)
     {
-        $code = Session::get('code');
+        $code = $this->fuRequireEntry(self::FORM)->getKey();
 
         $validatedSurgeryDrug = $request->validate([
             // === SURGERIES ===
@@ -276,60 +249,35 @@ class Form3Controller extends Controller
 
         $validatedRadioOthers['code'] = $code;
 
-        $table1 = F3cancertreatmenthistory::updateOrCreate(
-            ['code' => $code],
-            $validatedSurgeryDrug
-        );
+        F3cancertreatmenthistory::updateOrCreate(['code' => $code], $validatedSurgeryDrug);
+        F3treatmenthistory2::updateOrCreate(['code' => $code], $validatedRadioOthers);
 
-        $table2 = F3treatmenthistory2::updateOrCreate(
-            ['code' => $code],
-            $validatedRadioOthers
-        );
-
-        return to_route('form3.page4')->with('success', 'Cancer Treatment History Data saved successfully.');
-
-        return response()->json([
-            'surgery_drug'      => $table1,
-            'radio_thera_other' => $table2
-        ]);
+        return $this->fuAfterSave(self::FORM, 3, $this->fuEntry(self::FORM), 'Cancer treatment history saved.');
     }
 
     public function financial_support(Request $request)
     {
-        // Session::put('code', 4);
+        $this->fuRequireEntry(self::FORM);
+
         $validated = $request->validate([
             'financial_support'   => 'required|in:Yes,No',
-            'financial_type'      => 'nullable|array',
+            'financial_type'      => 'nullable|required_if:financial_support,Yes|array',
             'financial_other'     => 'nullable|string|max:255',
             'cspmap_meds'         => 'nullable|array',
             'cspmap_other'        => 'nullable|string|max:255',
             'other_meds'          => 'nullable|array',
             'other_med_other'     => 'nullable|string|max:255',
+        ], [
+            'financial_type.required_if' => 'Please select the type of financial support.',
         ]);
 
-        if($validated['financial_support'] == "No"){
+        if ($validated['financial_support'] === "No") {
             $validated['financial_type'] = null;
+            $validated['financial_other'] = null;
         }
-
-        $validated['code'] = session('code');
         $validated['status'] = 1;
-        F3financialsupport::updateOrCreate(
-            ['code' => $validated['code']],
-            $validated
-        );
 
-        
-
-        $user = F3patientsurveillanceform::find($validated['code']);
-        $user->status = 1;
-        $user->save();
-
-        $data = DB::table('demographicprofiles')
-                ->where('hospitalID', $user->hospitalID)
-                ->where('status', 1)
-                ->first();
-        Session::forget(['code']);
-        return redirect('admin/forms/'.$data->id)->with('success', 'Form 3 was saved successfully!');
+        return $this->fuSavePage(self::FORM, 4, F3financialsupport::class, $validated, 'Financial support saved.');
     }
 }
  

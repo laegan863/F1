@@ -1,10 +1,12 @@
 @extends('index')
 @section("title", "Riskfactor Profile")
-@section("nav_title", "RISK FACTOR PROFILE OF PATIENT")
+@section("nav_title", "Risk Factor Profile of Patient")
+@section("wizard_step", "3")
 @section("content")
-    <form id="form" method="POST" action="{{ route("submit-riskfactor-data") }}">
+    <form id="form" method="POST" action="{{ $formAction ?? route('submit-riskfactor-data') }}">
         @csrf
         <div class="card-body">
+            <div class="wizard-section" data-title="Lifestyle &amp; Exposures">
             <div class="mb-3">
                 <label class="form-label fw-bold">Tobacco use <small class="text-danger">*</small> </label><br>
 
@@ -34,7 +36,7 @@
                         class="form-check-input rounded-circle"
                         name="tobacco_use"
                         value="Non-smoker"
-                        {{ old('tobacco_use') == 'Non-smoker' ? 'checked' : '' }} checked>
+                        {{ old('tobacco_use', 'Non-smoker') == 'Non-smoker' ? 'checked' : '' }}>
                     <label for="non" class="form-check-label">Non-smoker</label>
                 </div>
             </div>
@@ -49,7 +51,7 @@
                 <div class="form-check form-check-inline">
                     <input id="no" type="radio" class="form-check-input rounded-circle"
                         name="second_hand_smoke" value="No"
-                        {{ old('second_hand_smoke') == 'No' ? 'checked' : '' }} checked>
+                        {{ old('second_hand_smoke', 'No') == 'No' ? 'checked' : '' }}>
                     <label for="no" class="form-check-label">No</label>
                 </div>
             </div>
@@ -71,7 +73,7 @@
                 <div class="form-check">
                     <input id="no_history" type="radio" class="form-check-input rounded-circle"
                         name="alcohol_use" value="No history of harmful use of alcohol"
-                        {{ old('alcohol_use') == 'No history of harmful use of alcohol' ? 'checked' : '' }} checked>
+                        {{ old('alcohol_use', 'No history of harmful use of alcohol') == 'No history of harmful use of alcohol' ? 'checked' : '' }}>
                     <label for="no_history" class="form-check-label">No history of harmful use of alcohol</label>
                 </div>
             </div>
@@ -81,7 +83,7 @@
                 <div class="form-check form-check-inline">
                     <input id="Inactive" type="radio" class="form-check-input rounded-circle"
                         name="physical_activity" value="Usually Inactive"
-                        {{ old('physical_activity') == 'Usually Inactive' ? 'checked' : '' }} checked>
+                        {{ old('physical_activity', 'Usually Inactive') == 'Usually Inactive' ? 'checked' : '' }}>
                     <label for="Inactive" class="form-check-label">Usually Inactive</label>
                 </div>
                 <div class="form-check form-check-inline">
@@ -161,7 +163,7 @@
                     <label class="form-check-label">No</label>
                 </div>
                 <div class="mt-2" id="occupational_exposure_yes">
-                    @if(old('occupational_exposure'))
+                    @if(old('occupational_exposure') == 'yes')
                         @include('forms.includes.exposure')
                     @endif
                 </div>
@@ -223,8 +225,10 @@
                     @endif
                 </div>
             </div>
-            <div class="mt-4">
-                <h5 class="fw-bold">Medical History</h5>
+            </div>
+            <div class="wizard-section" data-title="Medical History">
+            <div>
+
 
                 {{-- Infections --}}
                 <div class="mb-3">
@@ -476,11 +480,14 @@
                 @endif
             </div>
             <div class="mb-3">
-                <label class="form-label">Other SignificantMedical History:</label><br>
+                <label class="form-label">Other Significant Medical History:</label><br>
                 <input type="text" class="form-control" value="{{ old('other_significant_medical_history') }}" name="other_significant_medical_history" placeholder="">
             </div>
-            <div class="mt-4">
-            <h5 class="fw-bold">Sexual History</h5>
+            </div>
+            </div>
+            <div class="wizard-section" data-title="Sexual History">
+            <div class="mt-2">
+
 
             <div class="mb-3">
                 <label class="form-label">37. Sexual Orientation <small class="text-danger">(optional)</small></label>
@@ -584,7 +591,9 @@
                 </div>
             </div>
 
-            <h5 class="fw-bold mt-4">Cancer Screening and Vaccination History of Patient</h5>
+            </div>
+            </div>
+            <div class="wizard-section" data-title="Screening &amp; Vaccination">
 
             <div class="mb-3">
                 <label class="form-label">41. Types of Cancer Screening Received <small class="text-danger">*</small></label>
@@ -768,12 +777,8 @@
 
         </div>
 
-            </div>
         </div>
-        <div class="card-footer text-end">
-            <button type="reset" class="btn btn-secondary rounded-0">Reset</button>
-            <button type="button" onclick="handleSubmit()" class="btn btn-primary rounded-0">Submit</button>
-        </div>
+        @include('forms.partials.wizard-footer')
     </form>
 @endsection
 

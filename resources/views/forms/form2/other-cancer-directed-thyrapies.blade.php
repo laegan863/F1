@@ -110,11 +110,7 @@
             </div>
         </div>
 
-        <!-- Submit -->
-        <div class="card-footer text-end">
-            <button type="reset" class="btn btn-secondary rounded-0">Reset</button>
-            <button type="button" onclick="handleSubmit()" class="btn btn-primary rounded-0">Submit</button>
-        </div>
+        @include('forms.partials.wizard-footer')
     </form>
 @endsection
 

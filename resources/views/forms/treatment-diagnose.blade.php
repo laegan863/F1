@@ -1,10 +1,12 @@
 @extends('index')
 @section("title", "Treatment Plan and Diagnosis")
-@section("nav_title", "TREATMENT PLAN AND DIAGNOSIS FORM")
+@section("nav_title", "Treatment Plan and Diagnosis")
+@section("wizard_step", "5")
 @section("content")
-<form id="form" method="POST" action="{{ route('submit-treatment-data') }}">
+<form id="form" method="POST" action="{{ $formAction ?? route('submit-treatment-data') }}">
     @csrf
     <div class="card-body p-4">
+        <div class="wizard-section" data-title="Diagnosis &amp; Surgery">
 
         {{-- Q56: Date of Diagnosis --}}
         <div class="mb-3">
@@ -23,7 +25,7 @@
                 </div>
             @endforeach
         </div>
-        <div id="team_disciplines" class="{{ old('team_approach') == 'Yes' ? '' : 'd-none' }}">
+        <div id="team_disciplines" class="mb-3 {{ old('team_approach') == 'Yes' ? '' : 'd-none' }}">
             <label class="form-label fw-bold">If yes, specify all disciplines involved: <small class="text-danger">*</small></label>
             @php
                 $disciplines = [
@@ -60,7 +62,7 @@
                 </div>
             @endforeach
         </div>
-        <div id="surgery_details" class="{{ old('surgery') == 'Yes' ? '' : 'd-none' }}">
+        <div id="surgery_details" class="mb-3 {{ old('surgery') == 'Yes' ? '' : 'd-none' }}">
             <label class="form-label fw-bold">If yes, specify the goal: <small class="text-danger">*</small></label><br>
             @foreach(['Diagnostic','Curative','Palliative'] as $goal)
                 <div class="form-check form-check-inline">
@@ -71,6 +73,9 @@
             @endforeach
         </div>
 
+        </div>
+
+        <div class="wizard-section" data-title="Anti-cancer Drugs">
         {{-- Q59: Anti-cancer Drug --}}
         <div class="mb-3">
             <label class="form-label fw-bold">Anti-cancer Drug <small class="text-danger">*</small></label><br>
@@ -82,7 +87,7 @@
                 </div>
             @endforeach
         </div>
-        <div id="anticancer_details" class="{{ old('anticancer_drug') == 'Yes' ? '' : 'd-none' }}">
+        <div id="anticancer_details" class="mb-3 {{ old('anticancer_drug') == 'Yes' ? '' : 'd-none' }}">
 
             <label class="form-label fw-bold">Purpose of Drug Administration <small class="text-danger">*</small></label><br>
             @foreach(['Neoadjuvant','Adjuvant','Palliative'] as $purpose)
@@ -168,6 +173,9 @@
         </div>
         @endforeach
 
+        </div>
+
+        <div class="wizard-section" data-title="Radiotherapy &amp; Other Therapies">
         {{-- Q64: Radiotherapy --}}
         <div class="mb-3">
             <label class="form-label fw-bold">Radiotherapy <small class="text-danger">*</small></label><br>
@@ -179,7 +187,7 @@
                 </div>
             @endforeach
         </div>
-        <div id="radiotherapy_details" class="{{ old('radiotherapy') == 'Yes' ? '' : 'd-none' }}">
+        <div id="radiotherapy_details" class="mb-3 {{ old('radiotherapy') == 'Yes' ? '' : 'd-none' }}">
             <label class="form-label">If yes, indicate type: <small class="text-danger">*</small></label>
             @php
                 $radio_types = ["2D conventional","3DCRT","Brachytherapy","Electron Therapy","IMRT/VMAT/Helical",
@@ -233,7 +241,7 @@
                 </div>
             @endforeach
         </div>
-        <div id="theranostics_details" class="{{ old('theranostics') == 'Yes' ? '' : 'd-none' }}">
+        <div id="theranostics_details" class="mb-3 {{ old('theranostics') == 'Yes' ? '' : 'd-none' }}">
             <label class="form-label">If yes, indicate type: <small class="text-danger">*</small></label>
             @php
                 $thera_types = ["RAI","PRRT","PRLT","SIRT"];
@@ -251,7 +259,7 @@
                 <div class="col-md-6">
                     <div class="my-2 d-flex gap-2 align-items-center">
                         <label class="form-check-label">Others</label>
-                        <input type="text" class="form-control" value="{{ old('theranostics_types_others') }}" name="theranostics_types_others" placeholder="Please specify" value="">
+                        <input type="text" class="form-control" value="{{ old('theranostics_types_others') }}" name="theranostics_types_others" placeholder="Please specify">
                     </div>
                 </div>
             </div>
@@ -282,7 +290,7 @@
             @php
                 $other_therapies = [
                     "Blood Transfusion","Cryoablation","Transplant","Radiofrequency ablation",
-                    "Transarterial chemoembolization","Transplant","Others"
+                    "Transarterial chemoembolization","Embolization","Others"
                 ];
             @endphp
             <div class="row">
@@ -301,13 +309,11 @@
                 </div>
             </div>
         </div>
+        </div>
 
     </div>
 
-    <div class="card-footer text-end">
-        <button type="reset" class="btn btn-secondary rounded-0">Reset</button>
-        <button type="button" onclick="handleSubmit()" class="btn btn-primary rounded-0">Submit</button>
-    </div>
+    @include('forms.partials.wizard-footer', ['finalStep' => true])
 </form>
 @endsection
 

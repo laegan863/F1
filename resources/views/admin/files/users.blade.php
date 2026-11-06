@@ -50,7 +50,7 @@
         </div>
         <div class="ibox-content">
             <div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover dataTables-example">
+                <table class="table table-striped table-hover dataTables-example">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -66,12 +66,12 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->email }}</td>
-                                <td style="color: green">
-                                    <b>{{ ucwords($item->role) }}</b>
+                                <td>
+                                    <span class="label {{ $item->role === 'admin' ? 'label-primary' : 'label-info' }}">{{ ucwords($item->role) }}</span>
                                 </td>
                                 <td class="text-center">
-                                    <button type="button" class="btn btn-primary dim" data-toggle="modal" data-target="#myModal5{{ $item->id }}">
-                                        <i class="fa fa-edit"></i>
+                                    <button type="button" class="btn btn-white btn-xs" data-toggle="modal" data-target="#myModal5{{ $item->id }}" title="Edit user">
+                                        <i class="fa fa-pencil"></i> Edit
                                     </button>
                                     <div class="modal inmodal fade" id="myModal5{{ $item->id }}" tabindex="-1" role="dialog"  aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
@@ -116,8 +116,8 @@
                                         </div>
                                     </div>
                                     @if($item->role === "user")
-                                        <button onclick="confirmDelete('{{ $item->id }}')" type="button" class="btn btn-danger dim" type="button">
-                                            <i class="fa fa-trash"></i>
+                                        <button onclick="confirmDelete('{{ $item->id }}')" type="button" class="btn btn-danger btn-xs" title="Delete user">
+                                            <i class="fa fa-trash"></i> Delete
                                         </button>
                                     @endif
                                 </td>
@@ -128,11 +128,15 @@
             </div>
         </div>
     </div>
+    <form id="deleteUserForm" method="POST" class="d-none">
+        @csrf
+        @method('DELETE')
+    </form>
     <script>
         function confirmDelete(userId) {
             Swal.fire({
                 title: 'Are you sure?',
-                text: "You won't be able to delete this user?",
+                text: "This user will be permanently deleted.",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -140,9 +144,9 @@
                 confirmButtonText: 'Yes, delete it!'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let url = "{{ route('admin.delete', ['id' => ':id', 'table' => 'users']) }}";
-                    url = url.replace(':id', userId);
-                    window.location.href = url;
+                    const form = document.getElementById('deleteUserForm');
+                    form.action = "{{ route('admin.delete', ['id' => '__ID__', 'table' => 'users']) }}".replace('__ID__', userId);
+                    form.submit();
                 }
             });
         }

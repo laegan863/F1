@@ -10,22 +10,14 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\Form2Controller;
 use App\Http\Controllers\Form3Controller;
 use App\Http\Controllers\Form4Controller;
+use App\Http\Controllers\FollowUpFormController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SupportMessageController;
 use App\Http\Controllers\ActivityLogController;
-use Illuminate\Support\Facades\Crypt;
-
-Route::get("/encrypt/{value}", function ($value) {
-    $encrypted = Crypt::encryptString($value);
-    echo "<div style='padding: 10px; border: 1px solid #ccc;'>{$encrypted}</div>";
-    $decrypted = Crypt::decryptString($encrypted);
-    echo "<br>";
-    echo "<div style='padding: 10px; border: 1px solid #ccc;'>{$decrypted}</div>";
-});
 
 Route::controller(AuthController::class)->group(function(){
     Route::post('verify-auth', 'verify_auth')->name('verify-auth');
-    Route::post('register', 'register')->name('register');
     Route::get("logout", "logout")->name('logout');
 });
 
@@ -42,12 +34,19 @@ Route::middleware(IsNotAuth::class)->group(function(){
             Route::middleware(IsAdmin::class)->group(function() {
                 Route::get('users', 'users')->name('admin.users');
                 Route::post('add-user', 'add_user')->name('admin.add-user');
-                Route::get('delete/{id}/{table}', 'delete')->   name('admin.delete');
+                Route::delete('delete/{id}/{table}', 'delete')->whereNumber('id')->name('admin.delete');
+                Route::delete('records/{id}', 'delete_record')->whereNumber('id')->name('admin.records.delete');
                 Route::post('edit/{id}', 'edit')->name('admin.edit-user');
             });
         });
 
-        Route::get('connection', 'connection');
+    });
+
+    // The signed-in user's own profile and password
+    Route::controller(ProfileController::class)->prefix('admin/profile')->group(function(){
+        Route::get('/', 'show')->name('profile.show');
+        Route::put('/', 'update')->name('profile.update');
+        Route::put('password', 'updatePassword')->middleware('throttle:6,1')->name('profile.password');
     });
 
     // Support Messages Routes
@@ -97,12 +96,13 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::view('rf-0b', 'reports.rf-0b')->name('rf-0b');
     });
 
-    Route::prefix("form1")->group(function(){
-        Route::view('demographic-profile', 'forms.demographic')->name('demographic-profile');
-        Route::view("risk-factor", "forms.riskfactor")->name('risk-factor');
-        Route::view('cancer-diagnose', 'forms.cancer-diagnose')->name('cancer-diagnose');
-        Route::view('treatment-diagnose', 'forms.treatment-diagnose')->name('treatment-diagnose');
+    // Form 1 "Add Record" wizard (step pages are guarded and pre-filled by MainController)
+    Route::prefix("form1")->controller(MainController::class)->group(function(){
         Route::view('validate-hospital-number', 'forms.check-user-info')->name('first-page');
+        Route::get('demographic-profile', 'demographic_page')->name('demographic-profile');
+        Route::get("risk-factor", 'riskfactor_page')->name('risk-factor');
+        Route::get('cancer-diagnose', 'cancer_diagnose_page')->name('cancer-diagnose');
+        Route::get('treatment-diagnose', 'treatment_page')->name('treatment-diagnose');
     });
 
     Route::controller(MainController::class)->group(function() {
@@ -113,9 +113,11 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::post('hospital-number', 'hospital_number')->name('admin.validate-hospital-number');
         Route::get('view/{id}', 'result')->name('view');
 
-        // Update routes for Form 1
+        // Edit / update a saved Form 1 record, one step at a time
+        $steps = 'demographic|riskfactor|cancer-diagnose|treatment';
+        Route::get('records/{id}/edit/{step}', 'edit_step')->whereNumber('id')->where('step', $steps)->name('records.edit');
+        Route::post('records/{id}/update/{step}', 'update_step')->whereNumber('id')->where('step', $steps)->name('records.update');
         Route::get('edit-demographic-profile/{hospitalID}', 'edit_demographic_profile')->name('edit-demographic-profile');
-        Route::post('update-demographic-profile/{hospitalID}', 'update_demographic_profile')->name('update-demographic-profile-data');
 
         Route::prefix('form1')->group(function(){
             Route::get('result/{id}', 'result')->name('result.form1');
@@ -126,14 +128,14 @@ Route::middleware(IsNotAuth::class)->group(function(){
 
     });
 
-    Route::prefix("form2")->group(function(){
-        Route::view('form/{id}', 'forms.form2.form')->name('form2');
-        Route::view("follow-up", "forms.form2.follow-up")->name('form2-firstpage');
-        Route::view("patient-eco-status", "forms.form2.patient-eco-status")->name('form2-secondpage');
-        Route::view("radio-theranotics","forms.form2.radio-theranotics")->name('form2-thirdpage');
-        Route::view("other-cancer", "forms.form2.other-cancer-directed-thyrapies")->name('form2.fourthpage');
-        Route::view("change-treatment-plan", "forms.form2.change-treatment-plan")->name('form2.fifthpage');
-        Route::view("cancer-diagnose-outome", "forms.form2.cancer-diagnose-outcome")->name('form2.sixpage');
+    Route::prefix("form2")->controller(FollowUpFormController::class)->group(function(){
+        Route::get('form/{id}', 'print')->whereNumber('id')->defaults('form', 'form2')->name('form2');
+        Route::get("follow-up", 'page')->defaults('form', 'form2')->defaults('page', 1)->name('form2-firstpage');
+        Route::get("patient-eco-status", 'page')->defaults('form', 'form2')->defaults('page', 2)->name('form2-secondpage');
+        Route::get("radio-theranotics", 'page')->defaults('form', 'form2')->defaults('page', 3)->name('form2-thirdpage');
+        Route::get("other-cancer", 'page')->defaults('form', 'form2')->defaults('page', 4)->name('form2.fourthpage');
+        Route::get("change-treatment-plan", 'page')->defaults('form', 'form2')->defaults('page', 5)->name('form2.fifthpage');
+        Route::get("cancer-diagnose-outome", 'page')->defaults('form', 'form2')->defaults('page', 6)->name('form2.sixpage');
     });
 
     Route::controller(Form2Controller::class)->group(function(){
@@ -145,12 +147,12 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::post('form2-store-cancer-diagnose-outcome', 'store_cancer_diagnose')->name('store-cancer-diagnose-outcome');
     });
 
-    Route::prefix("form3")->group(function(){
-        Route::view('form', 'forms.form3.form')->name('form3');
-        Route::view("patient-surveillance-form", "forms.form3.patient-surveillance-form")->name('form3-firstpage');
-        Route::view("cancer-diagnose-outome", "forms.form3.cancer-diagnose-outcome")->name('form3.secondpage');
-        Route::view("cancer-treatment-history", "forms.form3.cancer-treatment-history")->name('form3.page3');
-        Route::view("financial-support-mechanism", "forms.form3.financial-support-mechanism")->name('form3.page4');
+    Route::prefix("form3")->controller(FollowUpFormController::class)->group(function(){
+        Route::get('form', 'print')->defaults('form', 'form3')->name('form3');
+        Route::get("patient-surveillance-form", 'page')->defaults('form', 'form3')->defaults('page', 1)->name('form3-firstpage');
+        Route::get("cancer-diagnose-outome", 'page')->defaults('form', 'form3')->defaults('page', 2)->name('form3.secondpage');
+        Route::get("cancer-treatment-history", 'page')->defaults('form', 'form3')->defaults('page', 3)->name('form3.page3');
+        Route::get("financial-support-mechanism", 'page')->defaults('form', 'form3')->defaults('page', 4)->name('form3.page4');
     });
 
     Route::controller(Form3Controller::class)->group(function(){
@@ -160,14 +162,20 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::post('store.financial-support', 'financial_support')->name('store.financial-support');
     });
     
-    Route::prefix("form4")->group(function(){
-        Route::view('form', 'forms.form4.form')->name('form4');
-        Route::view("palliative-form", "forms.form4.palliative-form")->name('form4-firstpage');
-        Route::view("esas-r", "forms.form4.esas-r")->name('form4.page2');
-        Route::view("prqst", "forms.form4.pain-assessment")->name('form4.page3');
-        Route::view("palliative-care-intervention", "forms.form4.palliative-care-intervention")->name('form4.page4');
-        Route::view("cancer-diagnose-outcome", "forms.form4.cancer-diagnose-outcome")->name('form4.page5');
-        Route::view("financial-support-mechanism", "forms.form4.financial-support-mechanism")->name('form4.page6');
+    Route::prefix("form4")->controller(FollowUpFormController::class)->group(function(){
+        Route::get('form', 'print')->defaults('form', 'form4')->name('form4');
+        Route::get("palliative-form", 'page')->defaults('form', 'form4')->defaults('page', 1)->name('form4-firstpage');
+        Route::get("esas-r", 'page')->defaults('form', 'form4')->defaults('page', 2)->name('form4.page2');
+        Route::get("prqst", 'page')->defaults('form', 'form4')->defaults('page', 3)->name('form4.page3');
+        Route::get("palliative-care-intervention", 'page')->defaults('form', 'form4')->defaults('page', 4)->name('form4.page4');
+        Route::get("cancer-diagnose-outcome", 'page')->defaults('form', 'form4')->defaults('page', 5)->name('form4.page5');
+        Route::get("financial-support-mechanism", 'page')->defaults('form', 'form4')->defaults('page', 6)->name('form4.page6');
+    });
+
+    // Edit / delete saved Form 2-4 entries
+    Route::controller(FollowUpFormController::class)->prefix('followup/{form}')->where(['form' => 'form[234]'])->group(function(){
+        Route::get('{id}/edit/{page?}', 'edit')->whereNumber(['id', 'page'])->name('followup.edit');
+        Route::delete('{id}', 'destroy')->whereNumber('id')->middleware(IsAdmin::class)->name('followup.destroy');
     });
 
     Route::controller(Form4Controller::class)->group(function(){
@@ -183,6 +191,6 @@ Route::middleware(IsNotAuth::class)->group(function(){
 
 Route::middleware(IsAuthenticated::class)->group(function () {
     Route::view(uri: '/', view: 'login')->name( name: 'login');
-    Route::view(uri: 'register', view: 'register')->name(name: 'register');
+    // Public self-registration is disabled: accounts are created by an admin under User Management.
     Route::view(uri: 'forgot-password', view: 'forgot')->name(name: 'forgot');
 });
