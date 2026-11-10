@@ -248,3 +248,17 @@ it('accepts a 12- or 13-digit PhilHealth PIN', function () {
     $full->update(['philhealth_id' => '1234567890123']);
     expect($text())->toContain('12-3456789012-3');
 });
+
+it('saves a patient with no mobile number and no email', function () {
+    $this->actingAs($this->user);
+    $this->post(route('admin.validate-hospital-number'), ['HospitalID' => '6543']);
+
+    $this->get(route('demographic-profile'))->assertSee('Mobile No. <small class="text-muted">(optional)</small>', false)
+        ->assertSee('Relative / Guardian Mobile No. <small class="text-muted">(optional)</small>', false);
+
+    $this->post(route('submit-demograpic-profile'), demographicPayload(['mobile_number' => '', 'email_address' => '', 'relative_phone_number' => '']))
+        ->assertSessionHasNoErrors()->assertRedirect(route('risk-factor'));
+
+    $p = Demographicprofile::where('hospitalID', '0000006543')->firstOrFail();
+    expect($p->mobile_number)->toBeNull()->and($p->email_address)->toBeNull()->and($p->relative_phone_number)->toBeNull();
+});

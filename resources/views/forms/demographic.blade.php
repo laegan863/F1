@@ -130,7 +130,7 @@
 
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label for="mobile" class="form-label">Mobile No. <small class="text-danger">*</small></label>
+                        <label for="mobile" class="form-label">Mobile No. <small class="text-muted">(optional)</small></label>
                         <input type="tel" class="form-control" id="mobile" name="mobile_number" value="{{ old('mobile_number') }}" placeholder="09123456789" maxlength="13">
                     </div>
                     <div class="col-md-6">
@@ -148,7 +148,7 @@
                 </div>
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label for="relative_mobile" class="form-label">Relative / Guardian Mobile No. <small class="text-danger">*</small></label>
+                        <label for="relative_mobile" class="form-label">Relative / Guardian Mobile No. <small class="text-muted">(optional)</small></label>
                         <input type="tel" class="form-control" id="relative_mobile" name="relative_phone_number" value="{{ old('relative_phone_number') }}" placeholder="09123456789" maxlength="13">
                     </div>
                     <div class="col-md-6">
