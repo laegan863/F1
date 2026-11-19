@@ -4464,7 +4464,7 @@
             </tr>
             @php
                 $odt = $data->f2patientstatuses['ongoing_drug_therapy'] == "Yes" ? true : false;
-                $dtdate = isset($data->f2patientstatuses['therapy_date_start']) ? str_plit(str_replace("-", "", $data->f2patientstatuses['therapy_date_start'])) : null;
+                $dtdate = isset($data->f2patientstatuses['therapy_date_start']) ? str_split(str_replace("-", "", $data->f2patientstatuses['therapy_date_start'])) : null;
                 $dpurpose = $data->f2patientstatuses['drug_purpose'] ?? null;   // was isset(...) ?? ..., which stored true/false instead of the value
                 $drug_types = $data->f2patientstatuses['drug_types'] ?? [];
                 $drug_regimen = $data->f2patientstatuses['drug_regimen'];
@@ -4478,16 +4478,16 @@
                 <td class="s3"></td>
                 <td class="s31"></td>
                 <td class="s69" colspan="9">Date Start</td>
-                <td class="s16" dir="ltr">{{ isset($dtdate) ?? $dtdate[0] }}</td>
-                <td class="s16" dir="ltr">{{ isset($dtdate) ?? $dtdate[1] }}</td>
-                <td class="s16" dir="ltr">{{ isset($dtdate) ?? $dtdate[2] }}</td>
-                <td class="s16" dir="ltr">{{ isset($dtdate) ?? $dtdate[3] }}</td>
+                <td class="s16" dir="ltr">{{ $dtdate[0] ?? "" }}</td>
+                <td class="s16" dir="ltr">{{ $dtdate[1] ?? "" }}</td>
+                <td class="s16" dir="ltr">{{ $dtdate[2] ?? "" }}</td>
+                <td class="s16" dir="ltr">{{ $dtdate[3] ?? "" }}</td>
                 <td class="s17" dir="ltr">-</td>
-                <td class="s16" dir="ltr">{{ isset($dtdate) ?? $dtdate[4] }}</td>
-                <td class="s16" dir="ltr">{{ isset($dtdate) ?? $dtdate[5] }}</td>
+                <td class="s16" dir="ltr">{{ $dtdate[4] ?? "" }}</td>
+                <td class="s16" dir="ltr">{{ $dtdate[5] ?? "" }}</td>
                 <td class="s17" dir="ltr">-</td>
-                <td class="s16" dir="ltr">{{ isset($dtdate) ?? $dtdate[6] }}</td>
-                <td class="s16" dir="ltr">{{ isset($dtdate) ?? $dtdate[7] }}</td>
+                <td class="s16" dir="ltr">{{ $dtdate[6] ?? "" }}</td>
+                <td class="s16" dir="ltr">{{ $dtdate[7] ?? "" }}</td>
                 <td class="s92" colspan="9"></td>
             </tr>
             <tr style="height: 23px">
