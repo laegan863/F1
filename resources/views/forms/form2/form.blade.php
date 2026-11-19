@@ -4463,12 +4463,13 @@
                 <td class="s80" colspan="40">A N T I - C A N C E R D R U G T H E R A P Y</td>
             </tr>
             @php
-                $odt = $data->f2patientstatuses['ongoing_drug_therapy'] == "Yes" ? true : false;
+                $odt = ($data->f2patientstatuses['ongoing_drug_therapy'] ?? null) == "Yes" ? true : false;
                 $dtdate = isset($data->f2patientstatuses['therapy_date_start']) ? str_split(str_replace("-", "", $data->f2patientstatuses['therapy_date_start'])) : null;
                 $dpurpose = $data->f2patientstatuses['drug_purpose'] ?? null;   // was isset(...) ?? ..., which stored true/false instead of the value
                 $drug_types = $data->f2patientstatuses['drug_types'] ?? [];
-                $drug_regimen = $data->f2patientstatuses['drug_regimen'];
-                $chemo_cycle = $data->f2patientstatuses['chemo_cycle'];
+                $drug_regimen = $data->f2patientstatuses['drug_regimen'] ?? [];   // array keyed by drug type
+                $chemo_cycle = $data->f2patientstatuses['chemo_cycle'] ?? [];     // array keyed by drug type
+                $Others = $odt && in_array('Others', $drug_types);
             @endphp
             <tr style="height: 25px">
                 <td class="s14" dir="ltr" rowspan="12">82</td>
@@ -4539,7 +4540,7 @@
                 <td class="s78" colspan="6" rowspan="2">Cytotoxic</td>
                 <td class="s15" colspan="5">Drug Regimen</td>
                 <td class="s19" dir="ltr" colspan="11">
-                    {{ $Cytotoxic ? $drug_regimen : ''}}
+                    {{ $Cytotoxic ? ($drug_regimen['Cytotoxic'] ?? '') : '' }}
                 </td>
             </tr>
             <tr style="height: 25px">
@@ -4549,7 +4550,7 @@
                 <td class="s4"></td>
                 <td class="s43"></td>
                 <td class="s15" colspan="5">Chemo Cycle No.</td>
-                <td class="s16" dir="ltr" colspan="11">{{ $Cytotoxic ? $chemo_cycle : '' }}</td>
+                <td class="s16" dir="ltr" colspan="11">{{ $Cytotoxic ? ($chemo_cycle['Cytotoxic'] ?? '') : '' }}</td>
             </tr>
             <tr style="height: 34px">
                 
@@ -4559,12 +4560,12 @@
                 <td class="s94"></td>
                 <td class="s50" dir="ltr" rowspan="2"><svg width="16px" height="16px"
                         viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $Hormonal = $odt && in_array('Cytotoxic', $drug_types) ? 'checked' : 'unchecked'  }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $Hormonal = $odt && in_array('Hormonal', $drug_types) ? 'checked' : 'unchecked'  }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s51" dir="ltr" rowspan="2">2</td>
                 <td class="s78" colspan="6" rowspan="2">Hormonal</td>
                 <td class="s15" colspan="5">Drug Regimen</td>
-                <td class="s19" dir="ltr" colspan="11">{{ $Hormonal ? $drug_regimen : '' }}</td>
+                <td class="s19" dir="ltr" colspan="11">{{ $Hormonal ? ($drug_regimen['Hormonal'] ?? '') : '' }}</td>
             </tr>
             <tr style="height: 25px">
                 
@@ -4575,7 +4576,7 @@
                 <td class="s1" dir="ltr">1</td>
                 <td class="s43" colspan="2">Yes</td>
                 <td class="s15" colspan="5">Chemo Cycle No.</td>
-                <td class="s16" dir="ltr" colspan="11">{{ $Hormonal ? $chemo_cycle : ''}}</td>
+                <td class="s16" dir="ltr" colspan="11">{{ $Hormonal ? ($chemo_cycle['Hormonal'] ?? '') : '' }}</td>
             </tr>
             <tr style="height: 34px">
                 
@@ -4587,12 +4588,12 @@
                 <td class="s43" colspan="2">No</td>
                 <td class="s50" dir="ltr" rowspan="2"><svg width="16px" height="16px"
                         viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $Immunologic =  $odt && in_array('Cytotoxic', $drug_types) ? 'checked' : 'unchecked'  }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $Immunologic =  $odt && in_array('Immunologic', $drug_types) ? 'checked' : 'unchecked'  }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s51" dir="ltr" rowspan="2">3</td>
                 <td class="s78" colspan="6" rowspan="2">Immunologic</td>
                 <td class="s15" colspan="5">Drug Regimen</td>
-                <td class="s95" colspan="11">{{ $Immunologic ? $drug_regimen : ''}}</td>
+                <td class="s95" colspan="11">{{ $Immunologic ? ($drug_regimen['Immunologic'] ?? '') : '' }}</td>
             </tr>
             <tr style="height: 25px">
                 
@@ -4601,7 +4602,7 @@
                 <td class="s93"></td>
                 <td class="s94"></td>
                 <td class="s15" colspan="5">Chemo Cycle No.</td>
-                <td class="s95" colspan="11">{{ $Immunologic ? $chemo_cycle : ''}}</td>
+                <td class="s95" colspan="11">{{ $Immunologic ? ($chemo_cycle['Immunologic'] ?? '') : '' }}</td>
             </tr>
             <tr style="height: 34px">
                 
@@ -4611,12 +4612,12 @@
                 <td class="s94"></td>
                 <td class="s50" dir="ltr" rowspan="2"><svg width="16px" height="16px"
                         viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $Targeted = $odt && in_array('Cytotoxic', $drug_types) ? 'checked' : 'unchecked'  }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $Targeted = $odt && in_array('Targeted', $drug_types) ? 'checked' : 'unchecked'  }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s51" dir="ltr" rowspan="2">4</td>
                 <td class="s78" colspan="6" rowspan="2">Targeted</td>
                 <td class="s15" colspan="5">Drug Regimen</td>
-                <td class="s95" colspan="11">{{ $Targeted ? $drug_regimen : ''}}</td>
+                <td class="s95" colspan="11">{{ $Targeted ? ($drug_regimen['Targeted'] ?? '') : '' }}</td>
             </tr>
             <tr style="height: 25px">
                 
@@ -4625,7 +4626,7 @@
                 <td class="s93"></td>
                 <td class="s94"></td>
                 <td class="s15" colspan="5">Chemo Cycle No.</td>
-                <td class="s95" colspan="11">{{ $Targeted ? $chemo_cycle : '' }}</td>
+                <td class="s95" colspan="11">{{ $Targeted ? ($chemo_cycle['Targeted'] ?? '') : '' }}</td>
             </tr>
             <tr style="height: 34px">
                 
@@ -4635,13 +4636,13 @@
                 <td class="s94"></td>
                 <td class="s50" dir="ltr" rowspan="2"><svg width="16px" height="16px"
                         viewBox="0 0 16 16" style="display:inline;">
-                        <use href="#{{ $data->f2patientstatuses['drug_type_other'] ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
+                        <use href="#{{ $Others ? 'checked' : 'unchecked' }}-checkbox-id" fill="#000000" />
                     </svg></td>
                 <td class="s51" dir="ltr" rowspan="2">5</td>
                 <td class="s5" colspan="5">Others, specify:</td>
                 <td class="s31"></td>
                 <td class="s15" colspan="5">Drug Regimen</td>
-                <td class="s95" colspan="11">{{ $data->f2patientstatuses['drug_type_other'] ? $drug_regimen : '' }}</td>
+                <td class="s95" colspan="11">{{ $Others ? ($drug_regimen['Others'] ?? '') : '' }}</td>
             </tr>
             <tr style="height: 25px">
                 
@@ -4656,7 +4657,7 @@
                 <td class="s96"></td>
                 <td class="s97"></td>
                 <td class="s15" colspan="5">Chemo Cycle No.</td>
-                <td class="s95" colspan="11">{{ $data->f2patientstatuses['drug_type_other'] ? $chemo_cycle : '' }}</td>
+                <td class="s95" colspan="11">{{ $Others ? ($chemo_cycle['Others'] ?? '') : '' }}</td>
             </tr>
             <tr style="height: 29px">
                 
