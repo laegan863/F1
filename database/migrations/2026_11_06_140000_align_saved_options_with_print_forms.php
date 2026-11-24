@@ -17,7 +17,7 @@ return new class extends Migration
         DB::table($table)->select('id', $column)->whereNotNull($column)->orderBy('id')
             ->each(function ($row) use ($table, $column, $map) {
                 $values = json_decode((string) $row->{$column}, true);
-                if (!is_array($values)) {
+                if (! is_array($values)) {
                     return;
                 }
                 $fixed = array_values(array_unique(array_map(fn ($v) => is_string($v) ? ($map[$v] ?? $v) : $v, $values)));

@@ -40,6 +40,7 @@ class ActivityLog extends Model
         if ($this->model_type && $this->model_id) {
             return $this->morphTo('model', 'model_type', 'model_id');
         }
+
         return null;
     }
 

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     private const COLUMNS = [
-        'f2patientstatuses'      => ['remarks' => 'drug_type_other'],
+        'f2patientstatuses' => ['remarks' => 'drug_type_other'],
         'f2changetreatmentplans' => ['palliative_reason' => 'palliative'],
     ];
 
@@ -22,7 +22,7 @@ return new class extends Migration
     {
         foreach (self::COLUMNS as $table => $columns) {
             foreach ($columns as $column => $after) {
-                if (!Schema::hasColumn($table, $column)) {
+                if (! Schema::hasColumn($table, $column)) {
                     Schema::table($table, function (Blueprint $t) use ($table, $column, $after) {
                         $col = $t->string($column)->nullable();
                         if (Schema::hasColumn($table, $after)) {

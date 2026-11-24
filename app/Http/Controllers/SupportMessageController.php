@@ -62,7 +62,7 @@ class SupportMessageController extends Controller
     public function show($id)
     {
         $message = SupportMessage::with('user')->findOrFail($id);
-        
+
         // Mark as read if it's pending
         if ($message->status === 'pending') {
             $message->update(['status' => 'read']);

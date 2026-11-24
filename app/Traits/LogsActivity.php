@@ -9,11 +9,11 @@ trait LogsActivity
 {
     /**
      * Log an activity
-     * 
-     * @param string $action
-     * @param string $description
-     * @param mixed $model
-     * @param array $properties
+     *
+     * @param  string  $action
+     * @param  string  $description
+     * @param  mixed  $model
+     * @param  array  $properties
      * @return ActivityLog
      */
     protected function logActivity($action, $description, $model = null, $properties = [])
@@ -73,7 +73,7 @@ trait LogsActivity
     {
         $modelName = class_basename($model);
         $desc = $description ?? "Created {$modelName} record";
-        
+
         return $this->logActivity('create', $desc, $model, [
             'model_name' => $modelName,
             'model_data' => $model->toArray(),
@@ -87,7 +87,7 @@ trait LogsActivity
     {
         $modelName = class_basename($model);
         $desc = $description ?? "Updated {$modelName} record";
-        
+
         return $this->logActivity('update', $desc, $model, [
             'model_name' => $modelName,
             'changes' => $changes,
@@ -101,7 +101,7 @@ trait LogsActivity
     {
         $modelName = class_basename($model);
         $desc = $description ?? "Deleted {$modelName} record";
-        
+
         return $this->logActivity('delete', $desc, $model, [
             'model_name' => $modelName,
             'model_data' => $model->toArray(),
@@ -115,7 +115,7 @@ trait LogsActivity
     {
         $modelName = class_basename($model);
         $desc = $description ?? "Viewed {$modelName} record";
-        
+
         return $this->logActivity('view', $desc, $model, [
             'model_name' => $modelName,
         ]);

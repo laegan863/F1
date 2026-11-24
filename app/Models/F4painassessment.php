@@ -50,15 +50,15 @@ class F4painassessment extends Model
 
     protected $casts = [
         'provocation_quality' => 'array',
-        'verbal_vocal'        => 'array',
-        'body_movement'       => 'array',
-        'touching'            => 'array',
-        'facial'              => 'array',
-        'signs'               => 'array',
+        'verbal_vocal' => 'array',
+        'body_movement' => 'array',
+        'touching' => 'array',
+        'facial' => 'array',
+        'signs' => 'array',
     ];
 
     public function f4palliativeforms()
     {
-        return $this->belongsTo(F4palliativeform::class, "code", "id");
+        return $this->belongsTo(F4palliativeform::class, 'code', 'id');
     }
 }

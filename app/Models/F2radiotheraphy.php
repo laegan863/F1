@@ -30,9 +30,9 @@ class F2radiotheraphy extends Model
     ];
 
     protected $casts = [
-        'radio_body_site'     => 'array',
-        'radio_type'          => 'array',
-        'theranostics_type'   => 'array',
+        'radio_body_site' => 'array',
+        'radio_type' => 'array',
+        'theranostics_type' => 'array',
     ];
 
     public function f2followup()

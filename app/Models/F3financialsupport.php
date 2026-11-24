@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class F3financialsupport extends Model
 {
-        protected $fillable = [
+    protected $fillable = [
         'code',
         'financial_support',
         'financial_type',
@@ -23,7 +23,8 @@ class F3financialsupport extends Model
         'other_meds' => 'array',
     ];
 
-    public function f3patientsurveillanceforms(){
+    public function f3patientsurveillanceforms()
+    {
         return $this->belongsTo(F3patientsurveillanceform::class, 'code', 'id');
     }
 }

@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class F4palliativeform extends Model
 {
     public $timestamp = true;
-    protected $table = "f4palliativeforms";
+
+    protected $table = 'f4palliativeforms';
+
     protected $fillable = [
         'hospitalID',
         'date',
@@ -24,7 +26,7 @@ class F4palliativeform extends Model
         'stage',
         'other_staging',
         'other_remarks',
-        'status'
+        'status',
     ];
 
     protected $casts = [
@@ -43,21 +45,21 @@ class F4palliativeform extends Model
 
     public function f4painassessments()
     {
-        return $this->hasOne(F4painassessment::class, "code", "id");
+        return $this->hasOne(F4painassessment::class, 'code', 'id');
     }
 
     public function f4palliativecares()
     {
-        return $this->hasOne(F4palliativecare::class, "code", "id");
+        return $this->hasOne(F4palliativecare::class, 'code', 'id');
     }
 
     public function f4cancerdiagnoseoutcomes()
     {
-        return $this->hasOne(F4cancerdiagnoseoutcome::class, "code", "id");
+        return $this->hasOne(F4cancerdiagnoseoutcome::class, 'code', 'id');
     }
 
     public function f4financialsupportmechanisms()
     {
-        return $this->hasOne(F4financialsupportmechanism::class, "code", "id");
+        return $this->hasOne(F4financialsupportmechanism::class, 'code', 'id');
     }
 }

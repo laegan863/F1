@@ -33,7 +33,7 @@ it('rejects report codes that are not on the list', function (string $code) {
 
 it('accepts every listed report code', function () {
     foreach (\App\Http\Controllers\AdminController::REPORT_CODES as $code) {
-        expect(view()->exists('reports.' . strtolower($code)))->toBeTrue("Missing view for {$code}");
+        expect(view()->exists('reports.'.strtolower($code)))->toBeTrue("Missing view for {$code}");
     }
 
     $this->actingAs($this->user)
@@ -47,7 +47,7 @@ it('forwards the old misspelled page URLs to the corrected ones', function (stri
     $this->actingAs($this->user)
         ->get("{$old}?hospitalID=H-1")
         ->assertStatus(301)
-        ->assertRedirect(route($route) . '?hospitalID=H-1');
+        ->assertRedirect(route($route).'?hospitalID=H-1');
 })->with([
     ['/form2/cancer-diagnose-outome', 'form2.sixpage'],
     ['/form3/cancer-diagnose-outome', 'form3.secondpage'],

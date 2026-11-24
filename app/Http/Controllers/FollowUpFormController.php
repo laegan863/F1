@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Session;
  */
 class FollowUpFormController extends Controller
 {
-    use LogsActivity, FollowUpWizard;
+    use FollowUpWizard, LogsActivity;
 
     public const CANCER_SITES = [
         'Adrenal', 'Anus', 'Biliary Tract',
@@ -45,14 +45,14 @@ class FollowUpFormController extends Controller
 
             if ($request->boolean('new')) {
                 // "New" from the patient's record: stop editing, and resume an unfinished draft instead of creating a duplicate.
-                Session::forget([$cfg['session'], $cfg['session'] . '_edit']);
+                Session::forget([$cfg['session'], $cfg['session'].'_edit']);
                 $entry = $cfg['parent']::where('hospitalID', $patient->hospitalID)->where('status', 0)->latest('id')->first();
                 if ($entry) {
                     Session::put($cfg['session'], $entry->getKey());
                     Session::now('info', "An unfinished {$cfg['label']} entry for this patient was found and has been reopened.");
                 }
             } elseif ($entry && $entry->hospitalID !== $patient->hospitalID) {
-                Session::forget([$cfg['session'], $cfg['session'] . '_edit']);
+                Session::forget([$cfg['session'], $cfg['session'].'_edit']);
                 $entry = null;
             }
 
@@ -70,12 +70,12 @@ class FollowUpFormController extends Controller
         $editing = $this->fuIsEditing($form, $entry);
 
         return view($cfg['pages'][$page]['view'], [
-            'mode'       => $editing ? 'edit' : 'create',
-            'record'     => $patient,
-            'entry'      => $entry,
+            'mode' => $editing ? 'edit' : 'create',
+            'record' => $patient,
+            'entry' => $entry,
             'formAction' => $page === 1 ? route($this->storeRoute($form), ['hospitalID' => $patient->hospitalID]) : null,
-            'wizard'     => $this->wizardFor($form, $page, $entry, $patient),
-            'exitUrl'    => $patient ? route('view.forms', ['id' => $patient->id]) : route('admin.records'),
+            'wizard' => $this->wizardFor($form, $page, $entry, $patient),
+            'exitUrl' => $patient ? route('view.forms', ['id' => $patient->id]) : route('admin.records'),
         ]);
     }
 
@@ -86,7 +86,7 @@ class FollowUpFormController extends Controller
         $entry = $cfg['parent']::findOrFail($id);
 
         Session::put($cfg['session'], $entry->getKey());
-        Session::put($cfg['session'] . '_edit', $entry->getKey());
+        Session::put($cfg['session'].'_edit', $entry->getKey());
 
         return redirect()->to($this->pageUrl($form, $page, $entry->hospitalID));
     }
@@ -106,7 +106,7 @@ class FollowUpFormController extends Controller
         });
 
         if ((int) Session::get($cfg['session']) === (int) $id) {
-            Session::forget([$cfg['session'], $cfg['session'] . '_edit']);
+            Session::forget([$cfg['session'], $cfg['session'].'_edit']);
         }
 
         $this->logActivity('delete', "Deleted {$cfg['label']} entry #{$id} for Hospital ID: {$entry->hospitalID}", null, [
@@ -155,6 +155,7 @@ class FollowUpFormController extends Controller
     private function pageUrl(string $form, int $page, string $hospitalID): string
     {
         $route = $this->fuConfig($form)['pages'][$page]['route'];
+
         return $page === 1 ? route($route, ['hospitalID' => $hospitalID]) : route($route);
     }
 
@@ -169,15 +170,15 @@ class FollowUpFormController extends Controller
                 'label' => $p['label'],
                 'saved' => $saved,
                 // Saved pages (and page 1) can be revisited once an entry exists
-                'url'   => ($entry && ($saved || $n < $page) && $n !== $page && $patient)
+                'url' => ($entry && ($saved || $n < $page) && $n !== $page && $patient)
                     ? $this->pageUrl($form, $n, $patient->hospitalID) : null,
             ];
         }
 
         return [
-            'title'   => "{$cfg['label']} · {$cfg['title']}",
+            'title' => "{$cfg['label']} · {$cfg['title']}",
             'current' => $page,
-            'steps'   => $steps,
+            'steps' => $steps,
         ];
     }
 
@@ -189,32 +190,32 @@ class FollowUpFormController extends Controller
         return [
             'date' => now()->toDateString(),
             'name' => [
-                'firstname'  => $patient->name['firstname'] ?? null,
+                'firstname' => $patient->name['firstname'] ?? null,
                 'middlename' => $patient->name['middlename'] ?? null,
-                'lastname'   => $patient->name['lastname'] ?? null,
-                'suffix'     => $patient->name['suffix'] ?? null,
+                'lastname' => $patient->name['lastname'] ?? null,
+                'suffix' => $patient->name['suffix'] ?? null,
             ],
-            'primary_cancer_site'       => $dx->cancer_sites ?? [],
+            'primary_cancer_site' => $dx->cancer_sites ?? [],
             'primary_cancer_site_other' => $dx->cancer_site_other ?? null,
-            'laterality'                => $dx->laterality ?? null,
-            'histologic_diagnosis'      => $dx->histologic_diagnosis ?? null,
-            'icd10'                     => $dx->icd_10 ?? null,
-            'clinical_stage'            => $dx->clinical_stage ?? null,
+            'laterality' => $dx->laterality ?? null,
+            'histologic_diagnosis' => $dx->histologic_diagnosis ?? null,
+            'icd10' => $dx->icd_10 ?? null,
+            'clinical_stage' => $dx->clinical_stage ?? null,
             'stage' => [
                 't_stage' => $dx->t_stage ?? null,
                 'n_stage' => $dx->n_stage ?? null,
                 'm_stage' => $dx->m_stage ?? null,
                 's_stage' => $dx->s_stage ?? null,
             ],
-            'other_staging'             => $dx->other_staging ?? [],
-            'other_remarks'             => $dx->other_remarks ?? null,
+            'other_staging' => $dx->other_staging ?? [],
+            'other_remarks' => $dx->other_remarks ?? null,
         ];
     }
 
     /** Expose saved values as "old input" for this request only (real old input wins). */
     private function prefill(array $values): void
     {
-        if (!Session::hasOldInput()) {
+        if (! Session::hasOldInput()) {
             $clean = array_filter($values, fn ($v) => $v !== null);
             unset($clean['id'], $clean['code'], $clean['created_at'], $clean['updated_at'], $clean['status']);
             Session::now('_old_input', $clean);

@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class F2followup extends Model
 {
     public $timestamp = true;
-    protected $table = "f2followups";
+
+    protected $table = 'f2followups';
+
     protected $fillable = [
         'hospitalID',
         'date',
@@ -21,7 +23,7 @@ class F2followup extends Model
         'stage',
         'other_staging',
         'other_remarks',
-        'status'
+        'status',
     ];
 
     protected $casts = [
@@ -33,7 +35,7 @@ class F2followup extends Model
 
     public function f2cancerdiagnoseoutcomes()
     {
-        return $this->hasOne(F2cancerdiagnoseoutcome::class, "code", "id");
+        return $this->hasOne(F2cancerdiagnoseoutcome::class, 'code', 'id');
     }
 
     public function f2patientstatuses()
@@ -55,6 +57,4 @@ class F2followup extends Model
     {
         return $this->hasOne(F2changetreatmentplan::class, 'code', 'id');
     }
-
-
 }

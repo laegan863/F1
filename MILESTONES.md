@@ -39,7 +39,7 @@ Goal: make the codebase safe to build on before adding features.
 - [x] Audit every POST/PUT/DELETE endpoint for validation. All input-taking endpoints already validate inline with `$request->validate()`. The unused, empty `DemographicsRequest` stub was removed
 - [x] Close the audit-trail gaps: support messages (send / respond / delete) and activity-log cleanup are now logged
 - [x] Feature tests for all of the above (`tests/Feature/FoundationTest.php`)
-- [ ] Run `pint` once over the whole codebase to set the code style (separate commit, so the style diff doesn't hide real changes)
+- [x] Run `pint` once over the whole codebase to set the code style (separate commit, so the style diff doesn't hide real changes)
 
 **Exit check:** `php artisan test` passes, the repo clone is under 20 MB, and every POST route has validation.
 

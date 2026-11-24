@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('f3cancertreatmenthistories', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            
+
             $table->foreignId('code')->constrained('f3patientsurveillanceforms')->onDelete('cascade');
 
-            foreach (['first','second','third','fourth'] as $key) {
+            foreach (['first', 'second', 'third', 'fourth'] as $key) {
                 $table->string("{$key}_surgery")->nullable();
                 $table->string("{$key}_surgery_date")->nullable();
                 $table->string("{$key}_surgery_code")->nullable();
@@ -26,7 +26,7 @@ return new class extends Migration
                 $table->string("{$key}_adverse_event")->nullable();
             }
 
-            foreach (['first','second','third','fourth'] as $key) {
+            foreach (['first', 'second', 'third', 'fourth'] as $key) {
                 $table->string("{$key}_drug")->nullable();
                 $table->string("{$key}_purpose_administration")->nullable();
                 $table->json("{$key}_drug_type")->nullable();

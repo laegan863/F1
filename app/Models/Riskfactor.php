@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Riskfactor extends Model
 {
-    protected $table = "riskfactors";
+    protected $table = 'riskfactors';
+
     public $timestamps = true;
+
     protected $fillable = [
         'code',
         'tobacco_use',
@@ -45,6 +47,7 @@ class Riskfactor extends Model
         'vaccine_hepb',
         'other_vaccines',
     ];
+
     protected $casts = [
         'healtydiet' => 'array',
         'occupation_specify' => 'array',
@@ -53,7 +56,7 @@ class Riskfactor extends Model
         'comorbidities' => 'array',
         'patient_diagnosed_w_cancer' => 'array',
         'cancer_screening' => 'array',
-        'contraceptive_types' => 'array'
+        'contraceptive_types' => 'array',
     ];
 
     public function demographicprofile()

@@ -1,33 +1,36 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
-use App\Models\User;
+
 use App\Models\Demographicprofile;
 use App\Models\F2followup;
 use App\Models\F3patientsurveillanceform;
 use App\Models\F4palliativeform;
 use App\Models\SupportMessage;
+use App\Models\User;
 use App\Traits\LogsActivity;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
     use LogsActivity;
+
     public function forms($id)
     {
         $form1 = Demographicprofile::with(['riskfactors', 'cancerdiagnoses', 'treatments'])->findOrFail($id);
         $form2 = F2followup::where('hospitalID', $form1->hospitalID)->where('status', 1)->first();
         $form3 = F3patientsurveillanceform::where('hospitalID', $form1->hospitalID)->where('status', 1)->first();
-        $form4 = F4palliativeform::where('hospitalID', $form1->hospitalID)->where('status', 1)->first();        
-        return view('admin.files.forms',[
+        $form4 = F4palliativeform::where('hospitalID', $form1->hospitalID)->where('status', 1)->first();
+
+        return view('admin.files.forms', [
             'forms' => [
                 'form1' => $form1 ?? [],
                 'form2' => $form2 ?? [],
                 'form3' => $form3 ?? [],
-                'form4' => $form4 ?? []
+                'form4' => $form4 ?? [],
             ],
             'hospitalID' => $form1->hospitalID,
             'drafts' => [
@@ -37,6 +40,7 @@ class AdminController extends Controller
             ],
         ]);
     }
+
     /**
      * Tables that may be deleted from via the generic admin delete route.
      * Anything else is rejected (previously any table name in the URL was accepted).
@@ -58,7 +62,7 @@ class AdminController extends Controller
 
         $this->logActivity('delete', "Deleted record from {$table} (ID: {$id})", null, [
             'table' => $table,
-            'record_id' => $id
+            'record_id' => $id,
         ]);
 
         return redirect()->back()->with('success', 'Record deleted successfully.');
@@ -68,7 +72,7 @@ class AdminController extends Controller
     public function delete_record($id)
     {
         $record = Demographicprofile::findOrFail($id);
-        $name = trim(($record->name['firstname'] ?? '') . ' ' . ($record->name['lastname'] ?? ''));
+        $name = trim(($record->name['firstname'] ?? '').' '.($record->name['lastname'] ?? ''));
 
         DB::transaction(function () use ($record) {
             $record->riskfactors()->delete();
@@ -93,11 +97,12 @@ class AdminController extends Controller
         return to_route('admin.records')->with('success', "The record of {$name} has been deleted.");
     }
 
-    public function dashboard(Request $request) {
+    public function dashboard(Request $request)
+    {
         $period = in_array($request->query('period'), ['30d', '12m', 'year', 'all'], true) ? $request->query('period') : 'all';
         $from = match ($period) {
-            '30d'  => now()->subDays(30)->startOfDay(),
-            '12m'  => now()->subMonths(12)->startOfDay(),
+            '30d' => now()->subDays(30)->startOfDay(),
+            '12m' => now()->subMonths(12)->startOfDay(),
             'year' => now()->startOfYear(),
             default => null,
         };
@@ -113,23 +118,24 @@ class AdminController extends Controller
         $ages = $records->map(fn ($r) => $r->date_of_birth ? \Carbon\Carbon::parse($r->date_of_birth)->age : null)->filter(fn ($a) => $a !== null);
 
         $kpis = [
-            'records'     => $records->count(),
-            'thisMonth'   => $thisMonth,
+            'records' => $records->count(),
+            'thisMonth' => $thisMonth,
             'monthChange' => $lastMonth > 0 ? round(($thisMonth - $lastMonth) / $lastMonth * 100) : null,
-            'drafts'      => Demographicprofile::where('status', 0)->count(),
-            'avgAge'      => $ages->count() ? round($ages->avg(), 1) : null,
-            'newlyDx'     => $records->filter(fn ($r) => optional($r->cancerdiagnoses)->cancer_status === 'Newly diagnosed')->count(),
+            'drafts' => Demographicprofile::where('status', 0)->count(),
+            'avgAge' => $ages->count() ? round($ages->avg(), 1) : null,
+            'newlyDx' => $records->filter(fn ($r) => optional($r->cancerdiagnoses)->cancer_status === 'Newly diagnosed')->count(),
         ];
 
         // ---------- Monthly trend (last 12 months, always) ----------
         $trend = collect(range(11, 0))->mapWithKeys(function ($i) use ($allCompleted) {
             $month = now()->startOfMonth()->subMonths($i);
+
             return [$month->format('M Y') => $allCompleted->filter(fn ($r) => $r->created_at && $r->created_at->isSameMonth($month))->count()];
         });
 
         // ---------- Demographics ----------
         $sex = [
-            'Male'   => $records->where('sex', 'male')->count(),
+            'Male' => $records->where('sex', 'male')->count(),
             'Female' => $records->where('sex', 'female')->count(),
         ];
         $ageBands = ['0-14' => [0, 14], '15-29' => [15, 29], '30-44' => [30, 44], '45-59' => [45, 59], '60-74' => [60, 74], '75+' => [75, 200]];
@@ -151,11 +157,11 @@ class AdminController extends Controller
         // ---------- Treatment modalities ----------
         $tx = $records->pluck('treatments')->filter();
         $modalities = collect([
-            'Surgery'          => 'surgery',
+            'Surgery' => 'surgery',
             'Anti-cancer drug' => 'anticancer_drug',
-            'Radiotherapy'     => 'radiotherapy',
-            'Theranostics'     => 'theranostics',
-            'Other therapies'  => 'other_therapies',
+            'Radiotherapy' => 'radiotherapy',
+            'Theranostics' => 'theranostics',
+            'Other therapies' => 'other_therapies',
             'Multidisciplinary team' => 'team_approach',
         ])->map(fn ($field) => $tx->where($field, 'Yes')->count());
 
@@ -164,16 +170,16 @@ class AdminController extends Controller
         $rfTotal = max($rf->count(), 1);
         $riskFactors = collect([
             'Current / previous smoker' => $rf->filter(fn ($r) => in_array($r->tobacco_use, ['Current Smoker', 'Previous Smoker']))->count(),
-            'Second-hand smoke'         => $rf->where('second_hand_smoke', 'Yes')->count(),
-            'Harmful alcohol use'       => $rf->filter(fn ($r) => str_starts_with((string) $r->alcohol_use, 'With'))->count(),
-            'Physically inactive'       => $rf->where('physical_activity', 'Usually Inactive')->count(),
-            'Family history of cancer'  => $rf->where('family_history', 'yes')->count(),
-            'Occupational exposure'     => $rf->where('occupational_exposure', 'yes')->count(),
+            'Second-hand smoke' => $rf->where('second_hand_smoke', 'Yes')->count(),
+            'Harmful alcohol use' => $rf->filter(fn ($r) => str_starts_with((string) $r->alcohol_use, 'With'))->count(),
+            'Physically inactive' => $rf->where('physical_activity', 'Usually Inactive')->count(),
+            'Family history of cancer' => $rf->where('family_history', 'yes')->count(),
+            'Occupational exposure' => $rf->where('occupational_exposure', 'yes')->count(),
         ])->map(fn ($n) => ['count' => $n, 'pct' => round($n / $rfTotal * 100)]);
         $rfCount = $rf->count();
 
         // ---------- Geography ----------
-        $places = $records->map(fn ($r) => trim(($r->permanent['city'] ?? '') . (isset($r->permanent['province']) ? ', ' . $r->permanent['province'] : ''), ', '))
+        $places = $records->map(fn ($r) => trim(($r->permanent['city'] ?? '').(isset($r->permanent['province']) ? ', '.$r->permanent['province'] : ''), ', '))
             ->filter()->countBy()->sortDesc()->take(6);
 
         $recent = $allCompleted->sortByDesc('created_at')->take(6)->values();
@@ -194,34 +200,38 @@ class AdminController extends Controller
         ));
     }
 
-    public function records(){
+    public function records()
+    {
         $data = Demographicprofile::with(['cancerdiagnoses', 'treatments'])
-                ->where('status', 1)
-                ->orderBy('id', 'desc')
-                ->get();
+            ->where('status', 1)
+            ->orderBy('id', 'desc')
+            ->get();
 
         $drafts = Demographicprofile::with(['riskfactors', 'cancerdiagnoses'])
-                ->where('status', 0)
-                ->orderBy('updated_at', 'desc')
-                ->get();
+            ->where('status', 0)
+            ->orderBy('updated_at', 'desc')
+            ->get();
 
         $stats = [
-            'total'     => $data->count(),
+            'total' => $data->count(),
             'thisMonth' => $data->filter(fn ($r) => $r->created_at && $r->created_at->isCurrentMonth())->count(),
-            'male'      => $data->where('sex', 'male')->count(),
-            'female'    => $data->where('sex', 'female')->count(),
-            'drafts'    => $drafts->count(),
+            'male' => $data->where('sex', 'male')->count(),
+            'female' => $data->where('sex', 'female')->count(),
+            'drafts' => $drafts->count(),
         ];
 
         return view('admin.files.records', compact('data', 'drafts', 'stats'));
     }
 
-    public function users() {
+    public function users()
+    {
         $data = User::orderBy('id', 'desc')->get();
+
         return view('admin.files.users', compact('data'));
     }
 
-    public function add_user(Request $request) {
+    public function add_user(Request $request)
+    {
         $request->validate([
             'name' => 'required|string|max:255|unique:users,name',
             'email' => 'required|string|email|max:255|unique:users,email',
@@ -242,17 +252,18 @@ class AdminController extends Controller
         return redirect()->route('admin.users')->with('success', 'User added successfully.');
     }
 
-    public function edit(Request $request, $id) {
+    public function edit(Request $request, $id)
+    {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
+            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
             'password' => 'nullable|string|min:8',
             'role' => 'required|string|in:admin,user',
         ]);
 
         $user = User::findOrFail($id);
         $oldData = $user->toArray();
-        
+
         $user->name = $request->name;
         $user->email = $request->email;
 
@@ -266,7 +277,7 @@ class AdminController extends Controller
         // Log user update
         $this->logUpdate($user, "Updated user: {$user->name}", [
             'old' => $oldData,
-            'new' => $user->toArray()
+            'new' => $user->toArray(),
         ]);
 
         return to_route('admin.users')->with('success', 'User updated successfully.');
@@ -285,7 +296,7 @@ class AdminController extends Controller
                 $data = F3patientsurveillanceform::where('status', 1)->where('hospitalID', $hospitalID)->get();
                 $route = 'form3';
                 break;
-            
+
             case 4:
                 $data = F4palliativeform::where('status', 1)->where('hospitalID', $hospitalID)->get();
                 $route = 'form4';
@@ -296,7 +307,7 @@ class AdminController extends Controller
 
         return view('admin.files.user-form', [
             'data' => $data,
-            'route' => $route
+            'route' => $route,
         ]);
     }
 
@@ -328,7 +339,7 @@ class AdminController extends Controller
             'code.in' => 'Unknown report type. Please choose a report from the list.',
         ]);
 
-        return view('reports.' . strtolower($request->code), [
+        return view('reports.'.strtolower($request->code), [
             'data' => $request->all(),
         ]);
     }

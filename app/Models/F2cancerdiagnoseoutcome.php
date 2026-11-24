@@ -32,12 +32,13 @@ class F2cancerdiagnoseoutcome extends Model
 
     protected $casts = [
         'diagnosis_outcome' => 'array',
-        'financial_type'    => 'array',
-        'cspmap_meds'       => 'array',
-        'other_meds'        => 'array',
+        'financial_type' => 'array',
+        'cspmap_meds' => 'array',
+        'other_meds' => 'array',
     ];
 
-    public function F2followup(){
+    public function F2followup()
+    {
         return $this->belongsTo(F2followup::class, 'code', 'id');
     }
 }

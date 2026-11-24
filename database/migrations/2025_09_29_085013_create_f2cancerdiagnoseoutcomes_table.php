@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('f2cancerdiagnoseoutcomes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('code')->constrained('f2followups')->onDelete('cascade'); 
+            $table->foreignId('code')->constrained('f2followups')->onDelete('cascade');
 
             $table->json('diagnosis_outcome')->nullable();
             $table->date('diagnosis_outcome_date')->nullable();

@@ -1,16 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use Spatie\LaravelPdf\Facades\Pdf;
+
 use App\Models\Demographicprofile;
-use App\Models\F2followup;
-use App\Models\F4palliativeform;
-use App\Models\F4financialsupportmechanism;
-use App\Models\F3financialsupport;
 use App\Models\F2cancerdiagnoseoutcome;
-use Illuminate\Support\Facades\DB;
+use App\Models\F2followup;
+use App\Models\F3financialsupport;
+use App\Models\F4financialsupportmechanism;
+use App\Models\F4palliativeform;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Spatie\LaravelPdf\Facades\Pdf;
 
 class ReportController extends Controller
 {
@@ -25,10 +26,10 @@ class ReportController extends Controller
             )
             ->whereBetween(DB::raw('YEAR(demographicprofiles.created_at)'), [
                 $request->input('year_from'),
-                $request->input('year_to')
+                $request->input('year_to'),
             ])->whereBetween(DB::raw('MONTH(demographicprofiles.created_at)'), [
                 $request->input('month_from'),
-                $request->input('month_to')
+                $request->input('month_to'),
             ])
             ->groupBy('cancerdiagnoses.cancer_sites', 'cancerdiagnoses.clinical_stage', 'demographicprofiles.sex')
             ->get();
@@ -40,11 +41,11 @@ class ReportController extends Controller
             $stage = $item->clinical_stage ?: 'Unstaged';
             $sex = strtoupper($item->sex);
 
-            if (!isset($data[$site])) {
+            if (! isset($data[$site])) {
                 $data[$site] = [];
             }
 
-            if (!isset($data[$site][$stage])) {
+            if (! isset($data[$site][$stage])) {
                 $data[$site][$stage] = ['MALE' => 0, 'FEMALE' => 0];
             }
 
@@ -59,10 +60,10 @@ class ReportController extends Controller
         $rawData = Demographicprofile::with(['riskfactors', 'cancerdiagnoses', 'treatments'])
             ->whereBetween(DB::raw('YEAR(demographicprofiles.created_at)'), [
                 $request->input('year_from'),
-                $request->input('year_to')
+                $request->input('year_to'),
             ])->whereBetween(DB::raw('MONTH(demographicprofiles.created_at)'), [
                 $request->input('month_from'),
-                $request->input('month_to')
+                $request->input('month_to'),
             ])->get();
 
         return $rawData;
@@ -72,10 +73,10 @@ class ReportController extends Controller
     {
         $rawData = F2followup::with([
             'f2othercancertherapies',
-            'f2patientstatuses', 
+            'f2patientstatuses',
             'f2radiotheraphies',
             'f2cancerdiagnoseoutcomes',
-            'f2changetreatmentplans'
+            'f2changetreatmentplans',
         ])
             ->whereBetween(DB::raw('YEAR(created_at)'), [$request->input('year_from'), $request->input('year_to')])
             ->whereBetween(DB::raw('MONTH(created_at)'), [$request->input('month_from'), $request->input('month_to')])
@@ -93,7 +94,6 @@ class ReportController extends Controller
         return $rawData;
     }
 
-
     public function form0(Request $request)
     {
         $rawData = [];
@@ -106,6 +106,7 @@ class ReportController extends Controller
         $rawData[] = F2cancerdiagnoseoutcome::whereBetween(DB::raw('YEAR(created_at)'), [$request->input('year_from'), $request->input('year_to')])
             ->whereBetween(DB::raw('MONTH(created_at)'), [$request->input('month_from'), $request->input('month_to')])
             ->get();
+
         return $rawData;
     }
 
@@ -151,20 +152,20 @@ class ReportController extends Controller
             case 'rf-0b':
                 $data = $this->form0($request);
                 break;
-            
+
             default:
                 return response()->json([
                     'error' => 'Invalid report code',
-                    'code' => $request->input('code')
+                    'code' => $request->input('code'),
                 ], 400);
         }
 
         $pdf = Pdf::view('reports.'.$code, [
-            'data' => $data
+            'data' => $data,
         ])->margins(5, 5, 5, 5)
             ->format('A4')
             ->orientation('landscape');
 
-        return $pdf->download($request->input('code').'-'.Carbon::now()->format('Y-m-d H:i:s') . '-report.pdf');
+        return $pdf->download($request->input('code').'-'.Carbon::now()->format('Y-m-d H:i:s').'-report.pdf');
     }
 }

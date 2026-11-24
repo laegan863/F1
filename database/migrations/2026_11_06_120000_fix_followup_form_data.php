@@ -22,7 +22,7 @@ return new class extends Migration
 
     public function up(): void
     {
-        if (!Schema::hasColumn('f4palliativeforms', 'reason_others')) {
+        if (! Schema::hasColumn('f4palliativeforms', 'reason_others')) {
             Schema::table('f4palliativeforms', function (Blueprint $table) {
                 $table->string('reason_others')->nullable()->after('reason');
             });
@@ -31,7 +31,7 @@ return new class extends Migration
         foreach (['f2followups', 'f4palliativeforms'] as $table) {
             DB::table($table)->select('id', 'primary_cancer_site')->orderBy('id')->each(function ($row) use ($table) {
                 $sites = json_decode((string) $row->primary_cancer_site, true);
-                if (!is_array($sites)) {
+                if (! is_array($sites)) {
                     return;
                 }
                 $fixed = array_map(fn ($s) => self::NUMERIC_SITES[(string) $s] ?? $s, $sites);

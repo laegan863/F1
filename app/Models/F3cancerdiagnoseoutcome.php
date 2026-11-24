@@ -21,8 +21,8 @@ class F3cancerdiagnoseoutcome extends Model
         'diagnosis_outcome_date' => 'date',
     ];
 
-    public function f3patientsurveillanceforms(){
+    public function f3patientsurveillanceforms()
+    {
         return $this->belongsTo(F3patientsurveillanceform::class, 'code', 'id');
     }
-
 }

@@ -27,10 +27,10 @@ class F2patientstatus extends Model
     ];
 
     protected $casts = [
-        'surgery_goal'   => 'array',
-        'drug_types'     => 'array',
-        'drug_regimen'   => 'array',
-        'chemo_cycle'    => 'array',
+        'surgery_goal' => 'array',
+        'drug_types' => 'array',
+        'drug_regimen' => 'array',
+        'chemo_cycle' => 'array',
     ];
 
     /**

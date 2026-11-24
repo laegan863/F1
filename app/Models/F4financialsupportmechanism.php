@@ -19,12 +19,12 @@ class F4financialsupportmechanism extends Model
 
     protected $casts = [
         'financial_type' => 'array',
-        'cspmap_meds'    => 'array',
-        'other_meds'     => 'array',
+        'cspmap_meds' => 'array',
+        'other_meds' => 'array',
     ];
 
     public function f4palliativeforms()
     {
-        return $this->belongsTo(F4palliativeform::class, "code", "id");
+        return $this->belongsTo(F4palliativeform::class, 'code', 'id');
     }
 }

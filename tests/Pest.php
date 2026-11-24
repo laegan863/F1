@@ -11,7 +11,7 @@
 |
 */
 
-require_once __DIR__ . '/Support/payloads.php';
+require_once __DIR__.'/Support/payloads.php';
 
 pest()->extend(Tests\TestCase::class)
  // ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)

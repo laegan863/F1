@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('f2othercancertherapies', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('code')->constrained('f2followups')->onDelete('cascade'); 
+            $table->foreignId('code')->constrained('f2followups')->onDelete('cascade');
 
             $table->string('other_cancer_therapies')->nullable(); // Yes / No
             $table->json('cancer_therapies')->nullable(); // multiple checkboxes

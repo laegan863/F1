@@ -31,6 +31,6 @@ class F4palliativecare extends Model
 
     public function f4palliativeforms()
     {
-        return $this->belongsTo(F4palliativeform::class, "code", "id");
+        return $this->belongsTo(F4palliativeform::class, 'code', 'id');
     }
 }

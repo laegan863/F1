@@ -18,10 +18,6 @@ beforeEach(function () {
     $this->user = User::factory()->create(['role' => 'user', 'email' => 'user@example.test', 'password' => bcrypt('password')]);
 });
 
-
-
-
-
 it('renders the login page and signs in', function () {
     $this->get('/')->assertOk()->assertSee('Welcome back')->assertDontSee('name="password" value=', false);
 
@@ -116,7 +112,6 @@ it('resumes an unfinished draft', function () {
     $this->get(route('demographic-profile'))->assertOk()->assertSee('value="Maria"', false);
 });
 
-
 it('edits and updates each step of a saved record', function () {
     $this->actingAs($this->user);
     $p = completedRecord();
@@ -163,7 +158,7 @@ it('deletes records safely', function () {
     $this->actingAs($this->admin);
     // Arbitrary tables are rejected, and GET no longer deletes
     $this->delete(route('admin.delete', ['id' => $p->id, 'table' => 'demographicprofiles']))->assertNotFound();
-    $this->get('/admin/delete/' . $this->user->id . '/users')->assertStatus(405);
+    $this->get('/admin/delete/'.$this->user->id.'/users')->assertStatus(405);
     expect(Demographicprofile::count())->toBe(1);
 
     $this->delete(route('admin.records.delete', ['id' => $p->id]))->assertRedirect(route('admin.records'));

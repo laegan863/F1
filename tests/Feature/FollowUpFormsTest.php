@@ -10,7 +10,6 @@ use App\Models\F4painassessment;
 use App\Models\F4palliativeform;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\DB;
 
 uses(RefreshDatabase::class);
 

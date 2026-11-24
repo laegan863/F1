@@ -61,6 +61,7 @@ trait FollowUpWizard
     {
         $forms = static::followUpForms();
         abort_unless(isset($forms[$form]), 404);
+
         return $forms[$form];
     }
 
@@ -69,6 +70,7 @@ trait FollowUpWizard
     {
         $cfg = $this->fuConfig($form);
         $id = Session::get($cfg['session']);
+
         return $id ? $cfg['parent']::find($id) : null;
     }
 
@@ -76,12 +78,13 @@ trait FollowUpWizard
     protected function fuRequireEntry(string $form): Model
     {
         $entry = $this->fuEntry($form);
-        if (!$entry) {
+        if (! $entry) {
             $cfg = $this->fuConfig($form);
             throw new HttpResponseException(
                 redirect()->route('admin.records')->with('error', "There is no {$cfg['label']} in progress (it may have expired). Open the patient's record and start again.")
             );
         }
+
         return $entry;
     }
 
@@ -92,19 +95,21 @@ trait FollowUpWizard
             ? Demographicprofile::with('cancerdiagnoses')->where('hospitalID', $hospitalID)->where('status', 1)->first()
             : null;
 
-        if (!$patient) {
+        if (! $patient) {
             throw new HttpResponseException(
                 redirect()->route('admin.records')->with('error', 'Patient not found, or their Form 1 record is not completed yet.')
             );
         }
+
         return $patient;
     }
 
     protected function fuIsEditing(string $form, ?Model $entry = null): bool
     {
         $cfg = $this->fuConfig($form);
-        $editing = Session::get($cfg['session'] . '_edit');
-        return $editing && (!$entry || (int) $editing === (int) $entry->getKey());
+        $editing = Session::get($cfg['session'].'_edit');
+
+        return $editing && (! $entry || (int) $editing === (int) $entry->getKey());
     }
 
     /** Save page 1 (creates the entry, or updates the open draft for the same patient). */
@@ -126,7 +131,7 @@ trait FollowUpWizard
             $this->logUpdate($entry, "Updated {$cfg['label']} ({$cfg['title']}) page 1 for Hospital ID: {$patient->hospitalID}");
         } else {
             $entry = $cfg['parent']::create($data);
-            Session::forget($cfg['session'] . '_edit');
+            Session::forget($cfg['session'].'_edit');
             $this->logCreate($entry, "Started {$cfg['label']} ({$cfg['title']}) for Hospital ID: {$patient->hospitalID}");
         }
 
@@ -140,6 +145,7 @@ trait FollowUpWizard
     {
         $entry = $this->fuRequireEntry($form);
         $modelClass::updateOrCreate(['code' => $entry->getKey()], $data + ['code' => $entry->getKey()]);
+
         return $this->fuAfterSave($form, $page, $entry, $message);
     }
 
@@ -173,7 +179,7 @@ trait FollowUpWizard
 
         $this->logActivity('create', "Completed {$cfg['label']} ({$cfg['title']}) for Hospital ID: {$entry->hospitalID}", $entry);
 
-        Session::forget([$cfg['session'], $cfg['session'] . '_edit']);
+        Session::forget([$cfg['session'], $cfg['session'].'_edit']);
 
         $patient = Demographicprofile::where('hospitalID', $entry->hospitalID)->where('status', 1)->first();
         $target = $patient ? route('view.forms', ['id' => $patient->id]) : route('admin.records');

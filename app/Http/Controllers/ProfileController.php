@@ -32,13 +32,13 @@ class ProfileController extends Controller
         $user = $request->user();
 
         $data = $request->validateWithBag('profile', [
-            'name'  => ['required', 'string', 'max:255', Rule::unique('users', 'name')->ignore($user->id)],
+            'name' => ['required', 'string', 'max:255', Rule::unique('users', 'name')->ignore($user->id)],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
         ]);
 
         $user->fill($data);
 
-        if (!$user->isDirty()) {
+        if (! $user->isDirty()) {
             return to_route('profile.show')->with('success', 'No changes to save.');
         }
 
@@ -54,10 +54,10 @@ class ProfileController extends Controller
     {
         $request->validateWithBag('password', [
             'current_password' => ['required', 'current_password'],
-            'password'         => ['required', 'confirmed', 'different:current_password', Password::min(8)->letters()->numbers()],
+            'password' => ['required', 'confirmed', 'different:current_password', Password::min(8)->letters()->numbers()],
         ], [
             'current_password.current_password' => 'Your current password is incorrect.',
-            'password.different'                 => 'The new password must be different from your current password.',
+            'password.different' => 'The new password must be different from your current password.',
         ]);
 
         $user = $request->user();

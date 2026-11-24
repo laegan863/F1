@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cancerdiagnose;
+use App\Models\Demographicprofile;
+use App\Models\Riskfactor;
+use App\Models\Treatment;
+use App\Traits\LogsActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
-use App\Models\Demographicprofile;
-use App\Models\Riskfactor;
-use App\Models\Cancerdiagnose;
-use App\Models\Treatment;
-use App\Traits\LogsActivity;
 
 /**
  * Form 1 ("Add Record") wizard.
@@ -33,10 +33,10 @@ class MainController extends Controller
 
     /** step key => [view, model class, relation on Demographicprofile, label] */
     private const STEPS = [
-        'demographic'     => ['forms.demographic',        null,                  null,              'Demographic Profile', 2],
-        'riskfactor'      => ['forms.riskfactor',         Riskfactor::class,     'riskfactors',     'Risk Factors',        3],
+        'demographic' => ['forms.demographic',        null,                  null,              'Demographic Profile', 2],
+        'riskfactor' => ['forms.riskfactor',         Riskfactor::class,     'riskfactors',     'Risk Factors',        3],
         'cancer-diagnose' => ['forms.cancer-diagnose',    Cancerdiagnose::class, 'cancerdiagnoses', 'Cancer Diagnosis',    4],
-        'treatment'       => ['forms.treatment-diagnose', Treatment::class,      'treatments',      'Treatment',           5],
+        'treatment' => ['forms.treatment-diagnose', Treatment::class,      'treatments',      'Treatment',           5],
     ];
 
     /* ===================================================================
@@ -49,15 +49,15 @@ class MainController extends Controller
             'HospitalID' => ['required', 'regex:/^\d{1,10}$/'],
         ], [
             'HospitalID.required' => 'Please enter the hospital number.',
-            'HospitalID.regex'    => 'The hospital number must contain digits only (up to 10).',
+            'HospitalID.regex' => 'The hospital number must contain digits only (up to 10).',
         ]);
 
-        $hospitalID = str_pad($request->HospitalID, 10, "0", STR_PAD_LEFT);
+        $hospitalID = str_pad($request->HospitalID, 10, '0', STR_PAD_LEFT);
 
-        $completed = Demographicprofile::where("hospitalID", $hospitalID)->where('status', 1)->first();
+        $completed = Demographicprofile::where('hospitalID', $hospitalID)->where('status', 1)->first();
         if ($completed) {
             return back()->withInput()->with(
-                "error",
+                'error',
                 "A completed record for hospital number {$hospitalID} already exists. Open it from Manage Records to view or edit it."
             );
         }
@@ -70,6 +70,7 @@ class MainController extends Controller
         $draft = Demographicprofile::where('hospitalID', $hospitalID)->where('status', 0)->first();
         if ($draft) {
             Session::put('code', $draft->id);
+
             return to_route('demographic-profile')
                 ->with('info', "An unfinished record for {$hospitalID} was found. Your saved answers have been restored.");
         }
@@ -78,13 +79,15 @@ class MainController extends Controller
             $patient = DB::connection('sqlsrv')->table('Patient')->where('HospitalID', $hospitalID)->first();
         } catch (\Throwable $e) {
             Log::warning('Hospital information system lookup failed', ['error' => $e->getMessage()]);
+
             return to_route('demographic-profile')
                 ->with('info', "The hospital information system could not be reached. Please enter the patient's details manually.");
         }
 
         if ($patient) {
             Session::put('patient', $patient);
-            return to_route("demographic-profile")
+
+            return to_route('demographic-profile')
                 ->with('success', 'Patient found in hospital records. Details have been pre-filled.');
         }
 
@@ -94,7 +97,7 @@ class MainController extends Controller
 
     public function demographic_page()
     {
-        if (!Session::has('hospitalID')) {
+        if (! Session::has('hospitalID')) {
             return to_route('first-page')->with('error', 'Please enter the hospital number first.');
         }
 
@@ -127,7 +130,7 @@ class MainController extends Controller
     private function stepPage(string $step)
     {
         $draft = Session::has('code') ? Demographicprofile::find(Session::get('code')) : null;
-        if (!$draft) {
+        if (! $draft) {
             return to_route('first-page')->with('error', 'Your session has expired. Please start again from the hospital number.');
         }
 
@@ -146,7 +149,7 @@ class MainController extends Controller
     public function submit_demographic_profile(Request $request)
     {
         $hospitalID = Session::get('hospitalID');
-        if (!$hospitalID) {
+        if (! $hospitalID) {
             return to_route('first-page')->with('error', 'Your session has expired. Please start again from the hospital number.');
         }
 
@@ -156,9 +159,10 @@ class MainController extends Controller
         $profile = Demographicprofile::updateOrCreate(['hospitalID' => $hospitalID], $data);
 
         $action = $profile->wasRecentlyCreated ? 'create' : 'update';
-        $this->logActivity($action, ucfirst($action) . "d demographic profile for Hospital ID: {$hospitalID}", $profile);
+        $this->logActivity($action, ucfirst($action)."d demographic profile for Hospital ID: {$hospitalID}", $profile);
 
         Session::put('code', $profile->id);
+
         return to_route('risk-factor')->with('success', 'Demographic profile saved.');
     }
 
@@ -175,13 +179,13 @@ class MainController extends Controller
     public function submit_treatment_data(Request $request)
     {
         $profile = Session::has('code') ? Demographicprofile::find(Session::get('code')) : null;
-        if (!$profile) {
+        if (! $profile) {
             return to_route('first-page')->with('error', 'Your session has expired. Please start again from the hospital number.');
         }
 
         // Every earlier step must exist before the record can be completed.
         foreach (['riskfactors' => 'risk-factor', 'cancerdiagnoses' => 'cancer-diagnose'] as $relation => $route) {
-            if (!$profile->{$relation}) {
+            if (! $profile->{$relation}) {
                 return to_route($route)->with('error', 'Please complete this step before finishing the record.');
             }
         }
@@ -194,7 +198,8 @@ class MainController extends Controller
 
         Session::forget(['code', 'hospitalID', 'patient']);
 
-        $name = trim(($profile->name['firstname'] ?? '') . ' ' . ($profile->name['lastname'] ?? ''));
+        $name = trim(($profile->name['firstname'] ?? '').' '.($profile->name['lastname'] ?? ''));
+
         return to_route('view.forms', ['id' => $profile->id])
             ->with('success', "Record for {$name} has been saved successfully!");
     }
@@ -202,7 +207,7 @@ class MainController extends Controller
     private function submitStep(string $step, Request $request, string $nextRoute, string $message)
     {
         $profile = Session::has('code') ? Demographicprofile::find(Session::get('code')) : null;
-        if (!$profile) {
+        if (! $profile) {
             return to_route('first-page')->with('error', 'Your session has expired. Please start again from the hospital number.');
         }
 
@@ -229,10 +234,10 @@ class MainController extends Controller
         }
 
         return view($view, [
-            'mode'       => 'edit',
-            'record'     => $record,
+            'mode' => 'edit',
+            'record' => $record,
             'formAction' => route('records.update', ['id' => $record->id, 'step' => $step]),
-            'stepLabel'  => $label,
+            'stepLabel' => $label,
         ]);
     }
 
@@ -261,6 +266,7 @@ class MainController extends Controller
     public function edit_demographic_profile($hospitalID)
     {
         $record = Demographicprofile::where('hospitalID', $hospitalID)->firstOrFail();
+
         return to_route('records.edit', ['id' => $record->id, 'step' => 'demographic']);
     }
 
@@ -272,9 +278,9 @@ class MainController extends Controller
     {
         $data = Demographicprofile::with(['riskfactors', 'cancerdiagnoses', 'treatments'])->findOrFail($id);
 
-        $data['date_of_birth'] = str_split(str_replace("-", "", (string) $data->date_of_birth));
+        $data['date_of_birth'] = str_split(str_replace('-', '', (string) $data->date_of_birth));
         $data['philhealth_id'] = str_split((string) $data->philhealth_id);
-        $data['patient_first_encounter'] = str_split(str_replace("-", "", (string) $data->patient_first_encounter));
+        $data['patient_first_encounter'] = str_split(str_replace('-', '', (string) $data->patient_first_encounter));
 
         return view('forms.form', ['data' => $data]);
     }
@@ -286,10 +292,10 @@ class MainController extends Controller
     private function validateStep(string $step, Request $request): array
     {
         return match ($step) {
-            'demographic'     => $this->validateDemographic($request),
-            'riskfactor'      => $this->validateRiskfactor($request),
+            'demographic' => $this->validateDemographic($request),
+            'riskfactor' => $this->validateRiskfactor($request),
             'cancer-diagnose' => $this->validateCancerDiagnose($request),
-            'treatment'       => $this->validateTreatment($request),
+            'treatment' => $this->validateTreatment($request),
         };
     }
 
@@ -300,54 +306,54 @@ class MainController extends Controller
             $request->merge(['philhealth_id' => preg_replace('/[\s-]/', '', (string) $request->input('philhealth_id'))]);
         }
 
-        $same = $request->same_as_address === "on";
-        $currentRule = $same ? "nullable" : "required";
+        $same = $request->same_as_address === 'on';
+        $currentRule = $same ? 'nullable' : 'required';
 
         $data = $request->validate([
-            'patient_first_encounter'       => 'required|date|before_or_equal:today',
-            "patient_health_facility_id"    => "required|string|min:10",
-            "philhealth_id"                 => ["required", "regex:/^\d{12,13}$/"],
-            "name.firstname"                => "required|string|max:100",
-            "name.middlename"               => "nullable|string|max:100",
-            "name.lastname"                 => "required|string|max:100",
-            "name.suffix"                   => "required|string",
-            "married_maiden_name"           => "nullable|string|max:100",
-            "date_of_birth"                 => "required|date|before_or_equal:today",
-            "sex"                           => "required|in:male,female",
-            "civil_status"                  => "required",
-            "nationality"                   => "required",
-            "permanent.province"            => "required|string",
-            "permanent.city"                => "required|string",
-            "permanent.barangay"            => "required|string",
-            "current.province"              => $currentRule . "|string",
-            "current.city"                  => $currentRule . "|string",
-            "current.barangay"              => $currentRule . "|string",
-            "same_as_address"               => "nullable",
-            "mobile_number"                 => "nullable|string|max:20",
-            "email_address"                 => "nullable|email|max:255",
-            "relative.province"             => "required|string",
-            "relative.city"                 => "required|string",
-            "relative.barangay"             => "required|string",
-            "relative_phone_number"         => "nullable|string|max:20",
-            "relative_email"                => "nullable|email",
-            "highest_education"             => "required",
-            "occupation"                    => "required",
-            "number_of_years_in_occupation" => "required|integer|min:0|max:100",
+            'patient_first_encounter' => 'required|date|before_or_equal:today',
+            'patient_health_facility_id' => 'required|string|min:10',
+            'philhealth_id' => ['required', "regex:/^\d{12,13}$/"],
+            'name.firstname' => 'required|string|max:100',
+            'name.middlename' => 'nullable|string|max:100',
+            'name.lastname' => 'required|string|max:100',
+            'name.suffix' => 'required|string',
+            'married_maiden_name' => 'nullable|string|max:100',
+            'date_of_birth' => 'required|date|before_or_equal:today',
+            'sex' => 'required|in:male,female',
+            'civil_status' => 'required',
+            'nationality' => 'required',
+            'permanent.province' => 'required|string',
+            'permanent.city' => 'required|string',
+            'permanent.barangay' => 'required|string',
+            'current.province' => $currentRule.'|string',
+            'current.city' => $currentRule.'|string',
+            'current.barangay' => $currentRule.'|string',
+            'same_as_address' => 'nullable',
+            'mobile_number' => 'nullable|string|max:20',
+            'email_address' => 'nullable|email|max:255',
+            'relative.province' => 'required|string',
+            'relative.city' => 'required|string',
+            'relative.barangay' => 'required|string',
+            'relative_phone_number' => 'nullable|string|max:20',
+            'relative_email' => 'nullable|email',
+            'highest_education' => 'required',
+            'occupation' => 'required',
+            'number_of_years_in_occupation' => 'required|integer|min:0|max:100',
         ], [
             'patient_health_facility_id.min' => 'The health facility ID must be at least 10 characters.',
-            'philhealth_id.regex'            => 'The PhilHealth PIN must be 12 or 13 digits (e.g. 12-345678901-2).',
-            "name.firstname.required"        => "The first name field is required.",
-            "name.lastname.required"         => "The last name field is required.",
-            "name.suffix.required"           => "Please choose a suffix (choose N/A if none).",
-            "permanent.province.required"    => "The permanent address province is required.",
-            "permanent.city.required"        => "The permanent address city is required.",
-            "permanent.barangay.required"    => "The permanent address barangay is required.",
-            "current.province.required"      => "The current address province is required.",
-            "current.city.required"          => "The current address city is required.",
-            "current.barangay.required"      => "The current address barangay is required.",
-            "relative.province.required"     => "The relative's address province is required.",
-            "relative.city.required"         => "The relative's address city is required.",
-            "relative.barangay.required"     => "The relative's address barangay is required.",
+            'philhealth_id.regex' => 'The PhilHealth PIN must be 12 or 13 digits (e.g. 12-345678901-2).',
+            'name.firstname.required' => 'The first name field is required.',
+            'name.lastname.required' => 'The last name field is required.',
+            'name.suffix.required' => 'Please choose a suffix (choose N/A if none).',
+            'permanent.province.required' => 'The permanent address province is required.',
+            'permanent.city.required' => 'The permanent address city is required.',
+            'permanent.barangay.required' => 'The permanent address barangay is required.',
+            'current.province.required' => 'The current address province is required.',
+            'current.city.required' => 'The current address city is required.',
+            'current.barangay.required' => 'The current address barangay is required.',
+            'relative.province.required' => "The relative's address province is required.",
+            'relative.city.required' => "The relative's address city is required.",
+            'relative.barangay.required' => "The relative's address barangay is required.",
         ]);
 
         // The address selects submit place names directly (no server-side PSGC lookups needed).
@@ -377,7 +383,7 @@ class MainController extends Controller
             'occupation_specify_others' => 'nullable',
             'air_pollution' => 'required',
             'family_history' => 'required',
-            'cancer_sites' => $request->family_history == "yes" ? 'required' : 'nullable',
+            'cancer_sites' => $request->family_history == 'yes' ? 'required' : 'nullable',
             'cancer_sites_other' => 'nullable',
             'cancer_sites_other_value' => 'nullable',
             'infections' => 'required|array',
@@ -387,20 +393,20 @@ class MainController extends Controller
             'comorbidities_others' => 'nullable',
             'comorbidities_others_content' => 'nullable',
             'has_cancer' => 'required',
-            'patient_diagnosed_w_cancer' => $request->has_cancer == "yes" ? "required|array" : "nullable",
+            'patient_diagnosed_w_cancer' => $request->has_cancer == 'yes' ? 'required|array' : 'nullable',
             'other_significant_medical_history' => 'nullable',
             'sexual_orientation' => 'nullable',
             'sexual_orientation_other' => 'nullable',
             'sexual_partners' => 'required|integer|min:0',
             'age_first_intercourse' => 'required|integer|min:0|max:120',
             'contraceptives_use' => 'required',
-            'contraceptive_types' => $request->contraceptives_use == "Yes" ? "required" : "nullable",
+            'contraceptive_types' => $request->contraceptives_use == 'Yes' ? 'required' : 'nullable',
             'contraceptive_types_other' => 'nullable',
             'cancer_screening' => 'required|array',
             'cancer_screening_other' => 'nullable',
             'vaccine_hpv' => 'required',
             'vaccine_hepb' => 'required',
-            'other_vaccines' => 'nullable'
+            'other_vaccines' => 'nullable',
         ], [
             'alcohol_use.required' => 'The harmful use of alcohol field is required.',
             'healtydiet.fatmeat.required' => 'The fat-meat field is required.',
@@ -413,7 +419,7 @@ class MainController extends Controller
             'infections.required' => 'Please select the infections (choose None or Unknown if not applicable).',
             'comorbidities.required' => 'Please select the comorbidities (choose None or Unknown if not applicable).',
             'cancer_screening.required' => 'Please select the cancer screening received (choose None or Unknown if not applicable).',
-            "contraceptive_types.required" => "Please specify the type of contraceptives used.",
+            'contraceptive_types.required' => 'Please specify the type of contraceptives used.',
         ]);
 
         // Clear dependent answers that no longer apply
@@ -440,28 +446,28 @@ class MainController extends Controller
     private function validateCancerDiagnose(Request $request): array
     {
         $data = $request->validate([
-            'multiple_sites'       => 'required|in:yes,no',
-            'primary_site_number'  => $request->multiple_sites == "yes" ? "required|integer|min:1" : 'nullable|integer|min:1',
-            'cancer_sites'         => 'required_without:cancer_site_other|nullable|array',
-            'cancer_site_other'    => 'nullable|string|max:255',
-            'laterality'           => 'required|in:Left,Right,Bilateral,Not Applicable,Unknown',
+            'multiple_sites' => 'required|in:yes,no',
+            'primary_site_number' => $request->multiple_sites == 'yes' ? 'required|integer|min:1' : 'nullable|integer|min:1',
+            'cancer_sites' => 'required_without:cancer_site_other|nullable|array',
+            'cancer_site_other' => 'nullable|string|max:255',
+            'laterality' => 'required|in:Left,Right,Bilateral,Not Applicable,Unknown',
             'histologic_diagnosis' => 'required|string|max:255',
-            'icd_10'               => 'required|string|max:20',
-            'clinical_stage'       => 'nullable',
-            't_stage'              => 'nullable',
-            'n_stage'              => 'nullable',
-            'm_stage'              => 'nullable',
-            's_stage'              => 'nullable',
-            'other_staging'        => 'nullable|array',
-            'other_remarks'        => 'nullable',
-            'cancer_status'        => 'required'
+            'icd_10' => 'required|string|max:20',
+            'clinical_stage' => 'nullable',
+            't_stage' => 'nullable',
+            'n_stage' => 'nullable',
+            'm_stage' => 'nullable',
+            's_stage' => 'nullable',
+            'other_staging' => 'nullable|array',
+            'other_remarks' => 'nullable',
+            'cancer_status' => 'required',
         ], [
-            'multiple_sites.required'       => 'Please answer whether there is more than 1 active primary cancer site.',
+            'multiple_sites.required' => 'Please answer whether there is more than 1 active primary cancer site.',
             'cancer_sites.required_without' => 'Please select at least one primary cancer site (or specify one under Others).',
         ]);
 
-        if ($data["multiple_sites"] == "no") {
-            $data["primary_site_number"] = 1;
+        if ($data['multiple_sites'] == 'no') {
+            $data['primary_site_number'] = 1;
         }
 
         return $data;
@@ -469,62 +475,62 @@ class MainController extends Controller
 
     private function validateTreatment(Request $request): array
     {
-        $ifYes = fn (string $field, string $rule = 'required') => $request->input($field) === "Yes" ? $rule : "nullable";
+        $ifYes = fn (string $field, string $rule = 'required') => $request->input($field) === 'Yes' ? $rule : 'nullable';
 
         $data = $request->validate([
             'date_of_diagnosis' => 'required|date|before_or_equal:today',
             'team_approach' => 'required|in:Yes,No',
             'disciplines' => $ifYes('team_approach', 'required|array'),
-            'discipline_other' => "nullable",
+            'discipline_other' => 'nullable',
 
             'surgery' => 'required|in:Yes,No',
             'surgery_goal' => $ifYes('surgery', 'required|array'),
 
             'anticancer_drug' => 'required|in:Yes,No',
             'drug_purpose' => $ifYes('anticancer_drug', 'required|array'),
-            'drug_types' => $request->anticancer_drug === "Yes" ? "required_without:drug_types_others|nullable|array" : "nullable",
+            'drug_types' => $request->anticancer_drug === 'Yes' ? 'required_without:drug_types_others|nullable|array' : 'nullable',
             'drug_types_others' => 'nullable',
 
             'first_line_drug' => 'required|in:Yes,No',
-            "first_drug_regimen" => $ifYes('first_line_drug'),
-            "first_cycles" => $ifYes('first_line_drug', 'required|integer|min:1'),
-            "first_treatment_goal" => $ifYes('first_line_drug'),
-            "first_time" => $ifYes('first_line_drug'),
+            'first_drug_regimen' => $ifYes('first_line_drug'),
+            'first_cycles' => $ifYes('first_line_drug', 'required|integer|min:1'),
+            'first_treatment_goal' => $ifYes('first_line_drug'),
+            'first_time' => $ifYes('first_line_drug'),
 
             'second_line_drug' => 'required|in:Yes,No',
-            "second_drug_regimen" => $ifYes('second_line_drug'),
-            "second_cycles" => $ifYes('second_line_drug', 'required|integer|min:1'),
-            "second_treatment_goal" => $ifYes('second_line_drug'),
-            "second_time" => $ifYes('second_line_drug'),
+            'second_drug_regimen' => $ifYes('second_line_drug'),
+            'second_cycles' => $ifYes('second_line_drug', 'required|integer|min:1'),
+            'second_treatment_goal' => $ifYes('second_line_drug'),
+            'second_time' => $ifYes('second_line_drug'),
 
             'third_line_drug' => 'required|in:Yes,No',
-            "third_drug_regimen" => $ifYes('third_line_drug'),
-            "third_cycles" => $ifYes('third_line_drug', 'required|integer|min:1'),
-            "third_treatment_goal" => $ifYes('third_line_drug'),
-            "third_time" => $ifYes('third_line_drug'),
+            'third_drug_regimen' => $ifYes('third_line_drug'),
+            'third_cycles' => $ifYes('third_line_drug', 'required|integer|min:1'),
+            'third_treatment_goal' => $ifYes('third_line_drug'),
+            'third_time' => $ifYes('third_line_drug'),
 
             'other_subsequent_line_drug' => 'required|in:Yes,No',
             'indicate_line' => $ifYes('other_subsequent_line_drug'),
-            "other_subsequent_drug_regimen" => $ifYes('other_subsequent_line_drug'),
-            "other_subsequent_cycles" => $ifYes('other_subsequent_line_drug', 'required|integer|min:1'),
-            "other_subsequent_treatment_goal" => $ifYes('other_subsequent_line_drug'),
-            "other_subsequent_time" => $ifYes('other_subsequent_line_drug'),
+            'other_subsequent_drug_regimen' => $ifYes('other_subsequent_line_drug'),
+            'other_subsequent_cycles' => $ifYes('other_subsequent_line_drug', 'required|integer|min:1'),
+            'other_subsequent_treatment_goal' => $ifYes('other_subsequent_line_drug'),
+            'other_subsequent_time' => $ifYes('other_subsequent_line_drug'),
 
             // NOTE: these previously (wrongly) depended on other_subsequent_line_drug
             'radiotherapy' => 'required|in:Yes,No',
-            'radiotherapy_types' => $request->radiotherapy === "Yes" ? "required_without:radiotherapy_types_others|nullable|array" : "nullable",
+            'radiotherapy_types' => $request->radiotherapy === 'Yes' ? 'required_without:radiotherapy_types_others|nullable|array' : 'nullable',
             'radiotherapy_types_others' => 'nullable',
             'radiotherapy_sequence' => $ifYes('radiotherapy'),
             'radiotherapy_goal' => $ifYes('radiotherapy'),
 
             'theranostics' => 'required|in:Yes,No',
-            'theranostics_types' => $request->theranostics === "Yes" ? "required_without:theranostics_types_others|nullable|array" : "nullable",
-            'theranostics_types_others' => "nullable",
+            'theranostics_types' => $request->theranostics === 'Yes' ? 'required_without:theranostics_types_others|nullable|array' : 'nullable',
+            'theranostics_types_others' => 'nullable',
             'theranostics_goal' => $ifYes('theranostics'),
 
             'other_therapies' => 'required|in:Yes,No',
             'other_therapies_types' => $ifYes('other_therapies', 'required|array'),
-            'other_therapies_other' => "nullable",
+            'other_therapies_other' => 'nullable',
         ], [
             'team_approach.required' => 'Please answer whether a multidisciplinary cancer team approach was practiced.',
             'other_therapies.required' => 'The other cancer directed therapies field is required.',
@@ -550,7 +556,7 @@ class MainController extends Controller
         ];
 
         foreach ($dependents as $condition => $fields) {
-            if ($data[$condition] === "No") {
+            if ($data[$condition] === 'No') {
                 foreach ($fields as $field) {
                     $data[$field] = null;
                 }
@@ -570,7 +576,7 @@ class MainController extends Controller
      */
     private function prefill(array $values): void
     {
-        if (!Session::hasOldInput()) {
+        if (! Session::hasOldInput()) {
             // Drop nulls so old('field', []) falls back to its default instead of returning null.
             $clean = array_filter($values, fn ($v) => $v !== null);
             unset($clean['id'], $clean['code'], $clean['created_at'], $clean['updated_at']);
@@ -587,15 +593,15 @@ class MainController extends Controller
         return array_filter([
             'patient_health_facility_id' => $p->HospitalID ?? null,
             'name' => [
-                'firstname'  => $p->FirstName ?? null,
+                'firstname' => $p->FirstName ?? null,
                 'middlename' => $p->MiddleName ?? null,
-                'lastname'   => $p->LastName ?? null,
-                'suffix'     => !empty($p->Suffix) ? $p->Suffix : 'N/A',
+                'lastname' => $p->LastName ?? null,
+                'suffix' => ! empty($p->Suffix) ? $p->Suffix : 'N/A',
             ],
-            'date_of_birth' => !empty($p->Birthdate) ? \Carbon\Carbon::parse($p->Birthdate)->toDateString() : null,
-            'sex'           => !empty($p->Gender) ? strtolower($p->Gender) : null,
-            'civil_status'  => $civil,
-            'nationality'   => $p->Nationality ?? null,
+            'date_of_birth' => ! empty($p->Birthdate) ? \Carbon\Carbon::parse($p->Birthdate)->toDateString() : null,
+            'sex' => ! empty($p->Gender) ? strtolower($p->Gender) : null,
+            'civil_status' => $civil,
+            'nationality' => $p->Nationality ?? null,
             'mobile_number' => $p->ContactNo ?? null,
             'email_address' => $p->Email ?? null,
         ], fn ($v) => $v !== null && $v !== '');

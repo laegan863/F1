@@ -83,7 +83,7 @@ function renderInputPages($test): array
 
     $hid = '0000000042';
     $first = ['date' => now()->toDateString(), 'name' => ['firstname' => 'A', 'lastname' => 'B'], 'primary_cancer_site' => ['Breast'],
-              'laterality' => 'Left', 'histologic_diagnosis' => 'x', 'icd10' => 'C50'];
+        'laterality' => 'Left', 'histologic_diagnosis' => 'x', 'icd10' => 'C50'];
     $forms = [
         'f2' => ['submit.follow-up', [], ['form2-firstpage', 'form2-secondpage', 'form2-thirdpage', 'form2.fourthpage', 'form2.fifthpage', 'form2.sixpage']],
         'f3' => ['store.f3patientsurveillanceforms', [], ['form3-firstpage', 'form3.secondpage', 'form3.page3', 'form3.page4']],
@@ -92,9 +92,10 @@ function renderInputPages($test): array
     foreach ($forms as $prefix => [$store, $extra, $routes]) {
         $test->post(route($store, ['hospitalID' => $hid]), $first + $extra);
         foreach ($routes as $i => $route) {
-            $get("{$prefix}_p" . ($i + 1), $i === 0 ? route($route, ['hospitalID' => $hid]) : route($route));
+            $get("{$prefix}_p".($i + 1), $i === 0 ? route($route, ['hospitalID' => $hid]) : route($route));
         }
     }
+
     return $pages;
 }
 
@@ -105,9 +106,15 @@ function submittableValues(array $htmls): array
     foreach ($htmls as $html) {
         preg_match_all('/<input\b[^>]*>/is', $html, $inputs);
         foreach ($inputs[0] as $tag) {
-            if (!preg_match('/name\s*=\s*["\']([^"\']+)["\']/i', $tag, $n)) continue;
-            if (!preg_match('/type\s*=\s*["\'](radio|checkbox)["\']/i', $tag)) continue;
-            if (!preg_match('/value\s*=\s*["\']([^"\']*)["\']/i', $tag, $v)) continue;
+            if (! preg_match('/name\s*=\s*["\']([^"\']+)["\']/i', $tag, $n)) {
+                continue;
+            }
+            if (! preg_match('/type\s*=\s*["\'](radio|checkbox)["\']/i', $tag)) {
+                continue;
+            }
+            if (! preg_match('/value\s*=\s*["\']([^"\']*)["\']/i', $tag, $v)) {
+                continue;
+            }
             preg_match_all('/[^\[\]]+/', str_replace('[]', '', $n[1]), $segs);
             foreach ([$segs[0][0], end($segs[0])] as $seg) {
                 $vals[$seg][html_entity_decode($v[1], ENT_QUOTES)] = true;
@@ -122,12 +129,14 @@ function submittableValues(array $htmls): array
             }
         }
     }
+
     return $vals;
 }
 
 function refTokens(string $ref): array
 {
     preg_match_all('/->\s*(\w+)|\[\s*["\']?([\w\s]+?)["\']?\s*\]/', $ref, $m, PREG_SET_ORDER);
+
     return array_map(fn ($x) => ($x[1] ?? '') !== '' ? $x[1] : trim($x[2]), $m);
 }
 
@@ -139,6 +148,7 @@ function resolveRef(string $ref, array $aliases, int $depth = 0): array
     if ($depth < 5 && isset($aliases[$base[1]])) {
         return array_merge(resolveRef($aliases[$base[1]], $aliases, $depth + 1), $tokens);
     }
+
     return $tokens;
 }
 
@@ -148,8 +158,10 @@ function printConditions(string $source): array
     $aliases = [];
     preg_match_all('/^\s*\$(\w+)\s*=\s*(.+?);/m', $source, $defs, PREG_SET_ORDER);
     foreach ($defs as [$all, $alias, $rhs]) {
-        if (preg_match('/^\[\s*\$' . $alias . '\s*\]$/', trim($rhs))) continue;
-        if (preg_match('/' . PC_REF . '/', $rhs, $r) && refTokens($r[1]) && !str_starts_with(trim($rhs), 'isset(')) {
+        if (preg_match('/^\[\s*\$'.$alias.'\s*\]$/', trim($rhs))) {
+            continue;
+        }
+        if (preg_match('/'.PC_REF.'/', $rhs, $r) && refTokens($r[1]) && ! str_starts_with(trim($rhs), 'isset(')) {
             $aliases[$alias] = $r[1];
         }
     }
@@ -159,15 +171,24 @@ function printConditions(string $source): array
     foreach (explode("\n", $source) as $i => $line) {
         preg_match_all('/\{\{(.*?)\}\}/', $line, $blocks);
         foreach ($blocks[1] as $blk) {
-            if (!str_contains($blk, 'checked') && !str_contains($blk, '$cb(')) continue;
-            preg_match_all('/' . PC_REF . '\s*' . $opt . '\s*(?:===?|!==?)\s*' . PC_LIT . '/', $blk, $a, PREG_SET_ORDER);
-            foreach ($a as $m) $conds[] = [$i + 1, $m[1], $m[2]];
-            preg_match_all('/' . PC_LIT . '\s*===?\s*' . PC_REF . '/', $blk, $b, PREG_SET_ORDER);
-            foreach ($b as $m) $conds[] = [$i + 1, $m[2], $m[1]];
-            preg_match_all('/in_array\(\s*' . PC_LIT . '\s*,\s*(?:\(array\)\s*)?\(?' . PC_REF . '/', $blk, $c, PREG_SET_ORDER);
-            foreach ($c as $m) $conds[] = [$i + 1, $m[2], $m[1]];
+            if (! str_contains($blk, 'checked') && ! str_contains($blk, '$cb(')) {
+                continue;
+            }
+            preg_match_all('/'.PC_REF.'\s*'.$opt.'\s*(?:===?|!==?)\s*'.PC_LIT.'/', $blk, $a, PREG_SET_ORDER);
+            foreach ($a as $m) {
+                $conds[] = [$i + 1, $m[1], $m[2]];
+            }
+            preg_match_all('/'.PC_LIT.'\s*===?\s*'.PC_REF.'/', $blk, $b, PREG_SET_ORDER);
+            foreach ($b as $m) {
+                $conds[] = [$i + 1, $m[2], $m[1]];
+            }
+            preg_match_all('/in_array\(\s*'.PC_LIT.'\s*,\s*(?:\(array\)\s*)?\(?'.PC_REF.'/', $blk, $c, PREG_SET_ORDER);
+            foreach ($c as $m) {
+                $conds[] = [$i + 1, $m[2], $m[1]];
+            }
         }
     }
+
     return [$conds, $aliases];
 }
 
@@ -177,7 +198,7 @@ it('only tests values on the prints that the input forms can save', function () 
     $checked = 0;
 
     foreach (PRINT_SOURCES as $form => $cfg) {
-        $source = file_get_contents(resource_path('views/' . $cfg['view']));
+        $source = file_get_contents(resource_path('views/'.$cfg['view']));
         [$conds, $aliases] = printConditions($source);
 
         // An empty-key lookup such as $data->relation[''] is always null, so every box that uses it stays blank
@@ -189,22 +210,26 @@ it('only tests values on the prints that the input forms can save', function () 
 
         foreach ($conds as [$line, $ref, $literal]) {
             $tokens = resolveRef($ref, $aliases);
-            if (!$tokens) continue;                      // plain local flag, not a field
+            if (! $tokens) {
+                continue;
+            }                      // plain local flag, not a field
             $field = end($tokens);
             $relation = collect($tokens)->first(fn ($t) => isset($cfg['relations'][$t]));
             $sourcePages = $relation ? $cfg['relations'][$relation] : $cfg['default'];
             $values = submittableValues(array_intersect_key($pages, array_flip($sourcePages)));
 
-            if (!isset($values[$field])) continue;       // free-text / computed field
+            if (! isset($values[$field])) {
+                continue;
+            }       // free-text / computed field
             $checked++;
-            if (!isset($values[$field][$literal])) {
+            if (! isset($values[$field][$literal])) {
                 $problems[] = sprintf('%s L%d: %s == "%s" (input %s never submits this)', $form, $line, $field, $literal, implode(',', $sourcePages));
             }
         }
     }
 
     expect($checked)->toBeGreaterThan(900);
-    expect($problems)->toBe([], "Print conditions that can never be ticked:\n" . implode("\n", $problems));
+    expect($problems)->toBe([], "Print conditions that can never be ticked:\n".implode("\n", $problems));
 });
 
 /** State of the checkbox drawn just before the n-th occurrence of $label in a print. */
@@ -223,6 +248,7 @@ function boxBefore(string $html, string $label, int $nth = 1): string
     if ($c === false && $u === false) {
         return 'no box';
     }
+
     return ($c !== false && ($u === false || $c > $u)) ? 'checked' : 'unchecked';
 }
 

@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Demographicprofile extends Model
 {
-    protected $table = "demographicprofiles";
+    protected $table = 'demographicprofiles';
+
     public $timestamps = true;
+
     protected $fillable = [
         'hospitalID',
         'code',
@@ -31,7 +33,7 @@ class Demographicprofile extends Model
         'highest_education',
         'occupation',
         'number_of_years_in_occupation',
-        'status'
+        'status',
     ];
 
     protected $casts = [

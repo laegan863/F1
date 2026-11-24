@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\ActivityLog;
 use App\Models\User;
+use App\Traits\LogsActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Traits\LogsActivity;
 
 class ActivityLogController extends Controller
 {
@@ -39,7 +39,7 @@ class ActivityLogController extends Controller
 
         // Filter by search term
         if ($request->filled('search')) {
-            $query->where('description', 'like', '%' . $request->search . '%');
+            $query->where('description', 'like', '%'.$request->search.'%');
         }
 
         $logs = $query->paginate(10);
@@ -54,7 +54,7 @@ class ActivityLogController extends Controller
             'by_action' => ActivityLog::select('action', DB::raw('count(*) as count'))
                 ->groupBy('action')
                 ->get()
-                ->pluck('count', 'action')
+                ->pluck('count', 'action'),
         ];
 
         return view('admin.files.activity-logs', compact('logs', 'users', 'actions', 'stats'));
@@ -66,6 +66,7 @@ class ActivityLogController extends Controller
     public function show($id)
     {
         $log = ActivityLog::with('user')->findOrFail($id);
+
         return view('admin.files.activity-log-detail', compact('log'));
     }
 
@@ -75,7 +76,7 @@ class ActivityLogController extends Controller
     public function cleanup(Request $request)
     {
         $request->validate([
-            'days' => 'required|integer|min:1|max:365'
+            'days' => 'required|integer|min:1|max:365',
         ]);
 
         $date = now()->subDays($request->days);
@@ -113,14 +114,14 @@ class ActivityLogController extends Controller
 
         $logs = $query->limit(10000)->get();
 
-        $filename = 'activity_logs_' . date('Y-m-d_His') . '.csv';
-        
+        $filename = 'activity_logs_'.date('Y-m-d_His').'.csv';
+
         $headers = [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => "attachment; filename=\"{$filename}\"",
         ];
 
-        $callback = function() use ($logs) {
+        $callback = function () use ($logs) {
             $file = fopen('php://output', 'w');
             fputcsv($file, ['ID', 'User', 'Action', 'Description', 'IP Address', 'Date']);
 

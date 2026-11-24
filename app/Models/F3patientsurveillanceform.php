@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class F3patientsurveillanceform extends Model
 {
     public $timestamp = true;
-    protected $table = "f3patientsurveillanceforms";
+
+    protected $table = 'f3patientsurveillanceforms';
+
     protected $fillable = [
         'hospitalID',
         'date',
@@ -21,7 +23,7 @@ class F3patientsurveillanceform extends Model
         'stage',
         'other_staging',
         'other_remarks',
-        'status'
+        'status',
     ];
 
     protected $casts = [
@@ -31,7 +33,8 @@ class F3patientsurveillanceform extends Model
         'other_staging' => 'array',
     ];
 
-    public function f3cancerdiagnoseoutcomes(){
+    public function f3cancerdiagnoseoutcomes()
+    {
         return $this->hasOne(F3cancerdiagnoseoutcome::class, 'code', 'id');
     }
 

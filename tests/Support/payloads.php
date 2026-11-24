@@ -92,5 +92,6 @@ function completedRecord(): Demographicprofile
     Riskfactor::create(riskPayload() + ['code' => $p->id]);
     Cancerdiagnose::create(diagnosisPayload() + ['code' => $p->id, 'primary_site_number' => 1]);
     Treatment::create(treatmentPayload() + ['code' => $p->id]);
+
     return $p;
 }

@@ -57,13 +57,13 @@ class Treatment extends Model
     ];
 
     protected $casts = [
-        'disciplines'            => 'array',
-        'surgery_goal'           => 'array',
-        'drug_purpose'           => 'array',
-        'drug_types'             => 'array',
-        'radiotherapy_types'     => 'array',
-        'theranostics_types'     => 'array',
-        'other_therapies_types'  => 'array',
+        'disciplines' => 'array',
+        'surgery_goal' => 'array',
+        'drug_purpose' => 'array',
+        'drug_types' => 'array',
+        'radiotherapy_types' => 'array',
+        'theranostics_types' => 'array',
+        'other_therapies_types' => 'array',
     ];
 
     public function demographicprofile()

@@ -54,7 +54,8 @@ it('changes the password and keeps the user signed in', function () {
     $this->assertAuthenticatedAs($this->user);
 
     // The new password works for signing in, the old one does not
-    auth()->logout(); $this->app['auth']->forgetGuards();
+    auth()->logout();
+    $this->app['auth']->forgetGuards();
     $this->post(route('verify-auth'), ['email' => 'juan@example.test', 'password' => 'oldpass123'])->assertSessionHasErrors('error');
     $this->post(route('verify-auth'), ['email' => 'juan@example.test', 'password' => 'newpass456'])->assertRedirect(route('admin.dashboard'));
 });
