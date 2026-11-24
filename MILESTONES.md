@@ -12,23 +12,165 @@ Each task has a **Finished on** date. When you complete a task, change its statu
 
 ## Phase 1: Initial development (15 Sep – 24 Nov 2025) ✅
 
-The original build of the system. Dates come from the git history: the day the feature first appeared (**Started**) and the day it was completed in 2025 (**Finished on**).
+The original build of HBCR, the Hospital-Based Cancer Registry. It digitizes the official HBCR / CBCR paper forms (Forms 1–4), stores each cancer patient's record from first consult through follow-up, surveillance and palliative care, and produces the registry reports. Dates come from the git history: the day the feature first appeared (**Started**) and the day it was completed in 2025 (**Finished on**).
+
+### Summary
 
 | # | Feature | Status | Started | Finished on |
 |---|---|---|---|---|
-| 1 | Login page and authentication (admin / user roles) | ✅ | 15 Sep 2025 | 24 Nov 2025 |
-| 2 | Admin dashboard | ✅ | 15 Sep 2025 | 06 Nov 2025 |
-| 3 | Patient records list | ✅ | 19 Sep 2025 | 25 Sep 2025 |
-| 4 | User management (add / edit / delete users) | ✅ | 22 Sep 2025 | 25 Sep 2025 |
-| 5 | Form 1: Add Record wizard (Demographic → Risk Factors → Cancer Diagnosis → Treatment) | ✅ | 15 Sep 2025 | 06 Nov 2025 |
-| 6 | Form 1 printable version (official HBCR paper form) | ✅ | 16 Sep 2025 | 13 Oct 2025 |
-| 7 | Form 2: Follow-up (ECOG status, radiotherapy/theranostics, other therapies, change of plan, outcome) | ✅ | 25 Sep 2025 | 06 Nov 2025 |
-| 8 | Form 3: Patient Surveillance (outcome, treatment history, financial support) | ✅ | 29 Sep 2025 | 07 Oct 2025 |
-| 9 | Form 4: Palliative (ESAS-r, pain assessment, interventions, outcome, financial support) | ✅ | 29 Sep 2025 | 06 Nov 2025 |
-| 10 | Printable versions of Forms 2–4 | ✅ | 01 Oct 2025 | 28 Oct 2025 |
-| 11 | Report templates RF-0A … RF-3A (layouts; live data still partial, see M3) | 🟡 | 15 Oct 2025 | 28 Oct 2025 |
-| 12 | Support messages (users send, admin responds) | ✅ | 06 Nov 2025 | 06 Nov 2025 |
-| 13 | Activity logs (view, filter, export, cleanup) | ✅ | 06 Nov 2025 | 06 Nov 2025 |
+| 1.1 | Login and account access | ✅ | 15 Sep 2025 | 24 Nov 2025 |
+| 1.2 | Admin layout and navigation | ✅ | 15 Sep 2025 | 06 Nov 2025 |
+| 1.3 | Admin dashboard | ✅ | 15 Sep 2025 | 06 Nov 2025 |
+| 1.4 | Patient records list | ✅ | 19 Sep 2025 | 25 Sep 2025 |
+| 1.5 | User management | ✅ | 22 Sep 2025 | 25 Sep 2025 |
+| 1.6 | Hospital number check and patient lookup | ✅ | 15 Sep 2025 | 06 Nov 2025 |
+| 1.7 | Form 1, Part 1: Demographic profile | ✅ | 15 Sep 2025 | 06 Nov 2025 |
+| 1.8 | Form 1, Part 2: Risk factors and medical history | ✅ | 15 Sep 2025 | 06 Nov 2025 |
+| 1.9 | Form 1, Part 3: Cancer diagnosis and staging | ✅ | 15 Sep 2025 | 06 Nov 2025 |
+| 1.10 | Form 1, Part 4: First course of treatment | ✅ | 15 Sep 2025 | 06 Nov 2025 |
+| 1.11 | Form 1 printable version | ✅ | 16 Sep 2025 | 13 Oct 2025 |
+| 1.12 | Form 2: Patient follow-up (6 pages) | ✅ | 25 Sep 2025 | 06 Nov 2025 |
+| 1.13 | Form 3: Patient surveillance (4 pages) | ✅ | 29 Sep 2025 | 07 Oct 2025 |
+| 1.14 | Form 4: Supportive-palliative care (6 pages) | ✅ | 29 Sep 2025 | 06 Nov 2025 |
+| 1.15 | Printable versions of Forms 2–4 | ✅ | 01 Oct 2025 | 28 Oct 2025 |
+| 1.16 | Patient forms view (all forms per patient) | ✅ | 25 Sep 2025 | 06 Nov 2025 |
+| 1.17 | Registry reports RF-0A … RF-3A | 🟡 | 15 Oct 2025 | 28 Oct 2025 |
+| 1.18 | Support messages | ✅ | 06 Nov 2025 | 06 Nov 2025 |
+| 1.19 | Activity logs (audit trail) | ✅ | 06 Nov 2025 | 06 Nov 2025 |
+
+### Feature details
+
+#### 1.1 Login and account access ✅
+*15 Sep 2025 → 24 Nov 2025*
+- HBCR-branded login page with email and password, plus "remember me".
+- Two roles: **admin** (full access, user management) and **user** (encoder).
+- Logins and logouts are recorded in the activity log.
+- The login page was redesigned in the last weeks before completion (Nov 2025).
+
+#### 1.2 Admin layout and navigation ✅
+*15 Sep 2025 → 06 Nov 2025*
+- Shared admin layout with sidebar navigation: Dashboard, Record Management, Reports, Users, Activity Logs and Support.
+- Admin-only menu items are hidden from encoders and protected on the server.
+- Success and error messages shown at the top of each page.
+
+#### 1.3 Admin dashboard ✅
+*15 Sep 2025 → 06 Nov 2025*
+- Summary cards: total patient records, total sub-users, today's activities, total activities.
+- Pending support messages counter ("All Clear" when none).
+- Starting point for adding a new record.
+
+#### 1.4 Patient records list ✅
+*19 Sep 2025 → 25 Sep 2025*
+- Table of all registered patients: hospital number, name, email and phone number.
+- Actions per patient to view their forms, print and continue follow-ups.
+
+#### 1.5 User management ✅
+*22 Sep 2025 → 25 Sep 2025*
+- Admins add users (name, email, password, role).
+- Update user information and delete users from a modal dialog.
+
+#### 1.6 Hospital number check and patient lookup ✅
+*15 Sep 2025 → 06 Nov 2025*
+- First step of a new record: enter the patient's hospital number. It is zero-padded to 10 digits.
+- Blocks duplicates: a patient already in the registry cannot be added again.
+- Looks the number up in the hospital's patient database (SQL Server). If found, the demographic profile is pre-filled from it.
+
+#### 1.7 Form 1, Part 1: Demographic profile ✅
+*15 Sep 2025 → 06 Nov 2025*
+- Patient name (first, middle, last, suffix, maiden name), sex at birth, date of birth, civil status, nationality.
+- Health facility ID number, PhilHealth Identification Number (PIN), date of first encounter.
+- Permanent and current address by Province → City/Municipality → Barangay → Sitio.
+- Education, occupation and years in occupation, mobile number and email.
+- Nearest relative / legal guardian: contact number, email and address.
+
+#### 1.8 Form 1, Part 2: Risk factors and medical history ✅
+*15 Sep 2025 → 06 Nov 2025*
+- Lifestyle: tobacco use (current, previous, non-smoker), second-hand smoke, harmful alcohol use, physical activity level, diet (vegetables, fat-meat, sugar, sodium).
+- Exposures: occupational and outdoor air pollution.
+- Family history of cancer up to 3rd-degree relatives, with cancer sites.
+- Medical history: previous cancer diagnosis (sites, active/remission) and other significant conditions.
+- Sexual history (items 37–40): orientation, partners, age at first intercourse, contraceptive use.
+- Screening and vaccination history (items 41–42).
+
+#### 1.9 Form 1, Part 3: Cancer diagnosis and staging ✅
+*15 Sep 2025 → 06 Nov 2025*
+- Primary cancer site(s), with support for more than one active primary site.
+- ICD-10 code, histologic diagnosis and laterality.
+- TNM staging (T, N, M), group clinical stage, other staging systems, current status of the cancer.
+
+#### 1.10 Form 1, Part 4: First course of treatment ✅
+*15 Sep 2025 → 06 Nov 2025*
+- Date of diagnosis and multidisciplinary cancer team (disciplines involved).
+- Surgery, radiotherapy and theranostics, each with type, goal and sequence.
+- Anti-cancer drugs: purpose, drug types, regimen, line of therapy, intended cycles, time of administration.
+- Other cancer-directed therapies.
+
+#### 1.11 Form 1 printable version ✅
+*16 Sep 2025 → 13 Oct 2025*
+- Reproduces the official "Hospital-Based Cancer Registry (HBCR)" Form 1, filled in from the saved record, ready to print or save as PDF.
+
+#### 1.12 Form 2: Patient follow-up ✅
+*25 Sep 2025 → 06 Nov 2025*
+1. **Follow-up details:** follow-up date, patient name, cancer site, ICD-10, histology, laterality, staging, remarks.
+2. **Patient ECOG status:** ECOG grade and other functional assessment, surgery done (RVS code, date), ongoing anti-cancer drug therapy (drug types, regimen, chemo cycle number, goal).
+3. **Radiotherapy and theranostics:** type, body site, planned/received dose (cGy), fractions, dates, goal.
+4. **Other cancer-directed therapies:** pre-/post-operative scenario and patient treatment status.
+5. **Change in treatment plan:** what changed and why, new radiotherapy / drug plan, next chemotherapy cycle date, supportive-palliative care only.
+6. **Cancer diagnosis outcome:** outcome and date, cause of death, financial support availed (including CSPMAP medicines).
+
+#### 1.13 Form 3: Patient surveillance ✅
+*29 Sep 2025 → 07 Oct 2025*
+1. **Surveillance details:** date, patient and diagnosis summary.
+2. **Cancer diagnosis outcome:** outcome and date. If the patient died, the immediate, antecedent and underlying causes of death and other significant conditions.
+3. **Cancer treatment history:** surgery (RVS code, goal, adverse events), anti-cancer drugs (types, regimen, response, adverse events), radiotherapy (type, sequence such as concurrent chemoRT or sequential, goal), theranostics, other therapies.
+4. **Financial support mechanisms** availed.
+
+#### 1.14 Form 4: Supportive-palliative care ✅
+*29 Sep 2025 → 06 Nov 2025*
+1. **Palliative form:** patient and diagnosis summary, type of care (palliative with curative intent, with active oncologic management, supportive, hospice, end-of-life, survivorship) and setting (home, hospital, community-based).
+2. **ESAS-r:** Edmonton Symptom Assessment System (revised) symptom scores and GCS score.
+3. **Pain assessment:** presence of pain, pain diagnosis, provocation, quality, region, severity, timing, associated symptoms, acceptable pain score, pain management and medication dates, pediatric pain scale.
+4. **Palliative care interventions:** where care is given and whether quality of life improved.
+5. **Cancer diagnosis outcome.**
+6. **Financial support mechanisms**, including CSPMAP medicines.
+
+#### 1.15 Printable versions of Forms 2–4 ✅
+*01 Oct 2025 → 28 Oct 2025*
+- Each follow-up, surveillance and palliative entry prints on the official paper-form layout, with checkboxes ticked from the saved answers.
+
+#### 1.16 Patient forms view ✅
+*25 Sep 2025 → 06 Nov 2025*
+- One page per patient listing Form 1 to Form 4 with their status, plus links to view, print or continue each form.
+
+#### 1.17 Registry reports RF-0A … RF-3A 🟡
+*15 Oct 2025 → 28 Oct 2025*
+- Choose a report, enter "Prepared by" and "Noted by", and pick a year and month range.
+- 12 report layouts:
+  - **RF-1A:** new cases by primary site, sex and clinical stage
+  - **RF-1B:** sociodemographic characteristics
+  - **RF-1C:** medical history
+  - **RF-1D:** risk factor profile by sex
+  - **RF-1E:** screening and vaccination history
+  - **RF-1F:** status at first encounter
+  - **RF-2A:** first course of treatment
+  - **RF-2B:** cancer diagnosis outcome
+  - **RF-2C:** patient treatment status
+  - **RF-3A:** supportive-palliative care consults
+  - **RF-0A:** financial support mechanisms
+  - **RF-0B:** CSPMAP medicines availed
+- PDF generation with spatie/laravel-pdf.
+- Still partial: not every report reads live data yet. This is finished in Milestone 3.
+
+#### 1.18 Support messages ✅
+*06 Nov 2025 → 06 Nov 2025*
+- Users send a message (subject and message) to the admin and see their own messages and replies.
+- Admins see all messages with status (pending, read, resolved), reply to them, and delete them.
+
+#### 1.19 Activity logs ✅
+*06 Nov 2025 → 06 Nov 2025*
+- Records who did what and when: logins, logouts, creates, updates and deletes, with IP address and browser.
+- Statistics: total, today's activities, logins today, counts by activity type.
+- Filter by user, action and date range, search, view details, export, and delete logs older than N days.
 
 ---
 
