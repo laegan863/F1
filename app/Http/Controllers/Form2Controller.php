@@ -110,7 +110,7 @@ class Form2Controller extends Controller
         return $this->fuSavePage(self::FORM, 2, F2patientstatus::class, $validated, 'Patient ECOG status saved.');
     }
 
-    public function store_radiotheraphy(Request $request)
+    public function store_radiotherapy(Request $request)
     {
         $this->fuRequireEntry(self::FORM);
 
@@ -163,7 +163,7 @@ class Form2Controller extends Controller
         return $this->fuSavePage(self::FORM, 3, F2radiotheraphy::class, $validated, 'Radiotherapy and theranostics saved.');
     }
 
-    public function store_other_theraphy(Request $request)
+    public function store_other_therapy(Request $request)
     {
         $this->fuRequireEntry(self::FORM);
 

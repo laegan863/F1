@@ -16,7 +16,7 @@ use App\Traits\LogsActivity;
  * Form 1 ("Add Record") wizard.
  *
  * Step 1  Validate hospital number   -> hospital_number()
- * Step 2  Demographic profile        -> demographic_page() / submit_demograpic_profile()
+ * Step 2  Demographic profile        -> demographic_page() / submit_demographic_profile()
  * Step 3  Risk factors               -> riskfactor_page() / submit_riskfactor_data()
  * Step 4  Cancer diagnosis           -> cancer_diagnose_page() / submit_cancer_diagnose_data()
  * Step 5  Treatment                  -> treatment_page() / submit_treatment_data()
@@ -143,7 +143,7 @@ class MainController extends Controller
      |  Wizard submissions
      * =================================================================== */
 
-    public function submit_demograpic_profile(Request $request)
+    public function submit_demographic_profile(Request $request)
     {
         $hospitalID = Session::get('hospitalID');
         if (!$hospitalID) {

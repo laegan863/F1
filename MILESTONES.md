@@ -22,24 +22,28 @@ The plan starts from where the code is today: about 100 commits, Forms 1–4 wor
 | Report templates RF-0A … RF-3A | 🟡 | 12 views exist, but most are static `Route::view` pages and `ReportController` only covers part of them |
 | Forgot password | 🟡 | The page exists, but no reset flow is wired up |
 | Automated tests | 🟡 | 40 Pest tests covering the forms; none for reports, admin or security |
-| Docs, CI, deployment | ⬜ | README is still the Laravel default; no CI; `F1.zip` (90 MB) is committed in the repo |
+| Docs, CI, deployment | ⬜ | README is still the Laravel default; no CI; `F1.zip` (90 MB) was committed in the repo (removed in M1, still in history) |
 
 ---
 
 ## Milestone 1: Stabilize and clean up the foundation
-**Target:** Week 1–2 (24 Nov – 5 Dec 2026) · ⬜
+**Target:** Week 1–2 (24 Nov – 5 Dec 2026) · 🟡
 
 Goal: make the codebase safe to build on before adding features.
 
-- [ ] Remove `F1.zip` from the repository and add `*.zip` to `.gitignore`
-- [ ] Rename the middleware so the names say what they do (`IsNotAuth` actually *requires* login, and `IsAuthenticated` is for guests)
-- [ ] Whitelist the report codes in `AdminController::generate_report`. Right now it builds a view name straight from request input (`'reports.' . $request->code`)
-- [ ] Fix route-name typos and keep old aliases where they are needed (`submit-demograpic-profile`, `store-radiotheraphy`, `cancer-diagnose-outome`, `store.financial-support` as a URL)
-- [ ] Audit every `store_*` / `submit_*` endpoint for Form Request validation (only `DemographicsRequest` exists today)
-- [ ] Make sure every write goes through the `LogsActivity` trait so the audit trail is complete
-- [ ] Run `pint` once over the whole codebase to set the code style
+- [x] Remove `F1.zip` from the repository and add `*.zip` to `.gitignore`
+- [ ] Purge `F1.zip` from git history (needs a force-push, so the repo owner does it, see note below)
+- [x] Rename the middleware so the names say what they do: `IsNotAuth` → `RequireLogin`, `IsAuthenticated` → `RedirectIfLoggedIn`
+- [x] Whitelist the report codes in `AdminController::generate_report` (`AdminController::REPORT_CODES`). Unknown codes now get a validation error
+- [x] Fix route typos: `submit-demographic-profile`, `store-radiotherapy`, `store-other-therapy`, `store-financial-support` (was a dotted URL), and `form2/` + `form3/cancer-diagnose-outcome` (old `outome` URLs redirect with 301)
+- [x] Audit every POST/PUT/DELETE endpoint for validation. All input-taking endpoints already validate inline with `$request->validate()`. The unused, empty `DemographicsRequest` stub was removed
+- [x] Close the audit-trail gaps: support messages (send / respond / delete) and activity-log cleanup are now logged
+- [x] Feature tests for all of the above (`tests/Feature/FoundationTest.php`)
+- [ ] Run `pint` once over the whole codebase to set the code style (separate commit, so the style diff doesn't hide real changes)
 
 **Exit check:** `php artisan test` passes, the repo clone is under 20 MB, and every POST route has validation.
+
+> **History purge note:** removing `F1.zip` from the current tree keeps it out of new work, but it still lives in old commits, so clones stay about 90 MB. To shrink the repo, the owner runs `git filter-repo --path F1.zip --invert-paths` on a fresh mirror clone, force-pushes, and everyone re-clones.
 
 ---
 

@@ -2,7 +2,7 @@
 @section("title", "Other Therapies & Treatment Outcomes")
 @section("nav_title", "OTHER THERAPIES & TREATMENT OUTCOMES")
 @section("content")
-    <form id="form" method="POST" action="{{ route('store.other-theraphy') }}" class="card">
+    <form id="form" method="POST" action="{{ route('store.other-therapy') }}" class="card">
         @csrf
         <div class="card-body">
             <!-- Other Cancer-Directed Therapies -->

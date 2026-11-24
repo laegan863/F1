@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\SupportMessage;
+use App\Traits\LogsActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SupportMessageController extends Controller
 {
+    use LogsActivity;
+
     /**
      * Display the support form for users
      */
@@ -26,12 +29,14 @@ class SupportMessageController extends Controller
             'message' => 'required|string|max:5000',
         ]);
 
-        SupportMessage::create([
+        $message = SupportMessage::create([
             'user_id' => Auth::id(),
             'subject' => $request->subject,
             'message' => $request->message,
             'status' => 'pending',
         ]);
+
+        $this->logActivity('create', "Sent support message #{$message->id}: {$message->subject}", $message);
 
         return redirect()->back()->with('success', 'Your support message has been sent successfully. We will respond as soon as possible.');
     }
@@ -82,6 +87,8 @@ class SupportMessageController extends Controller
             'responded_at' => now(),
         ]);
 
+        $this->logActivity('update', "Responded to support message #{$message->id}: {$message->subject}", $message);
+
         return redirect()->route('admin.support-messages')->with('success', 'Response sent successfully.');
     }
 
@@ -104,6 +111,11 @@ class SupportMessageController extends Controller
     {
         $message = SupportMessage::findOrFail($id);
         $message->delete();
+
+        $this->logActivity('delete', "Deleted support message #{$id}: {$message->subject}", null, [
+            'table' => 'support_messages',
+            'record_id' => (int) $id,
+        ]);
 
         return redirect()->back()->with('success', 'Support message deleted successfully.');
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use App\Models\User;
 use App\Models\Demographicprofile;
 use App\Models\F2followup;
@@ -309,10 +310,26 @@ class AdminController extends Controller
         return view('admin.files.select-report');
     }
 
+    /** Report codes that have a template in resources/views/reports (see select-report.blade.php). */
+    public const REPORT_CODES = [
+        'RF-0A', 'RF-0B',
+        'RF-1A', 'RF-1B', 'RF-1C', 'RF-1D', 'RF-1E', 'RF-1F',
+        'RF-2A', 'RF-2B', 'RF-2C',
+        'RF-3A',
+    ];
+
     public function generate_report(Request $request)
     {
-        return view('reports.' . strtolower($request->code),[
-            'data' => $request->all()
+        // The view name comes from user input, so only accept known report codes.
+        $request->merge(['code' => strtoupper(trim((string) $request->input('code')))]);
+        $request->validate([
+            'code' => ['required', Rule::in(self::REPORT_CODES)],
+        ], [
+            'code.in' => 'Unknown report type. Please choose a report from the list.',
+        ]);
+
+        return view('reports.' . strtolower($request->code), [
+            'data' => $request->all(),
         ]);
     }
 }

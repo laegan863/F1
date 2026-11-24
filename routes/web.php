@@ -1,11 +1,12 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\IsAdmin;
-use App\Http\Middleware\IsNotAuth;
+use App\Http\Middleware\RequireLogin;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
-use App\Http\Middleware\IsAuthenticated;
+use App\Http\Middleware\RedirectIfLoggedIn;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\Form2Controller;
 use App\Http\Controllers\Form3Controller;
@@ -21,7 +22,7 @@ Route::controller(AuthController::class)->group(function(){
     Route::get("logout", "logout")->name('logout');
 });
 
-Route::middleware(IsNotAuth::class)->group(function(){
+Route::middleware(RequireLogin::class)->group(function(){
     Route::controller(AdminController::class)->group(function(){
         Route::prefix('admin')->group(function(){
             Route::get('dashboard','dashboard')->name('admin.dashboard');
@@ -106,7 +107,7 @@ Route::middleware(IsNotAuth::class)->group(function(){
     });
 
     Route::controller(MainController::class)->group(function() {
-        Route::post('submit-demograpic-profile', 'submit_demograpic_profile')->name('submit-demograpic-profile');
+        Route::post('submit-demographic-profile', 'submit_demographic_profile')->name('submit-demographic-profile');
         Route::post('submit-riskfactor-data',  'submit_riskfactor_data')->name('submit-riskfactor-data');
         Route::post('submit-cancer-diagnose-data', 'submit_cancer_diagnose_data')->name('submit-cancer-diagnose-data');
         Route::post('submit-treatment-data', 'submit_treatment_data')->name('submit-treatment-data');
@@ -135,14 +136,14 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::get("radio-theranotics", 'page')->defaults('form', 'form2')->defaults('page', 3)->name('form2-thirdpage');
         Route::get("other-cancer", 'page')->defaults('form', 'form2')->defaults('page', 4)->name('form2.fourthpage');
         Route::get("change-treatment-plan", 'page')->defaults('form', 'form2')->defaults('page', 5)->name('form2.fifthpage');
-        Route::get("cancer-diagnose-outome", 'page')->defaults('form', 'form2')->defaults('page', 6)->name('form2.sixpage');
+        Route::get("cancer-diagnose-outcome", 'page')->defaults('form', 'form2')->defaults('page', 6)->name('form2.sixpage');
     });
 
     Route::controller(Form2Controller::class)->group(function(){
         Route::post('submit-follow-up/{hospitalID}', 'submit_follow_up')->name('submit.follow-up');
         Route::post('store-patient-eco-status', 'store_patient_eco_status')->name('store.patient-eco-status');
-        Route::post("store-radiotheraphy", "store_radiotheraphy")->name("store.radiotheraphy");
-        Route::post('store-other-theraphy', "store_other_theraphy")->name("store.other-theraphy");
+        Route::post("store-radiotherapy", "store_radiotherapy")->name("store.radiotherapy");
+        Route::post('store-other-therapy', "store_other_therapy")->name("store.other-therapy");
         Route::post('form2-store-change-treatment-plan', 'change_treatment_plan')->name('form2.store.change-treatment-plan');
         Route::post('form2-store-cancer-diagnose-outcome', 'store_cancer_diagnose')->name('store-cancer-diagnose-outcome');
     });
@@ -150,7 +151,7 @@ Route::middleware(IsNotAuth::class)->group(function(){
     Route::prefix("form3")->controller(FollowUpFormController::class)->group(function(){
         Route::get('form', 'print')->defaults('form', 'form3')->name('form3');
         Route::get("patient-surveillance-form", 'page')->defaults('form', 'form3')->defaults('page', 1)->name('form3-firstpage');
-        Route::get("cancer-diagnose-outome", 'page')->defaults('form', 'form3')->defaults('page', 2)->name('form3.secondpage');
+        Route::get("cancer-diagnose-outcome", 'page')->defaults('form', 'form3')->defaults('page', 2)->name('form3.secondpage');
         Route::get("cancer-treatment-history", 'page')->defaults('form', 'form3')->defaults('page', 3)->name('form3.page3');
         Route::get("financial-support-mechanism", 'page')->defaults('form', 'form3')->defaults('page', 4)->name('form3.page4');
     });
@@ -159,7 +160,7 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::post('store-f3patientsurveillanceforms/{hospitalID}', 'f3patientsurveillanceforms')->name('store.f3patientsurveillanceforms');
         Route::post('store-cancerdiagnoseoutcome', 'cancerdiagnoseoutcome')->name('store.cancerdiagnoseoutcome');
         Route::post('store-treatment-history', 'treatment_history')->name('store.treatment-history');
-        Route::post('store.financial-support', 'financial_support')->name('store.financial-support');
+        Route::post('store-financial-support', 'financial_support')->name('store.financial-support');
     });
     
     Route::prefix("form4")->controller(FollowUpFormController::class)->group(function(){
@@ -187,9 +188,17 @@ Route::middleware(IsNotAuth::class)->group(function(){
         Route::post('store-financial-support-mechanism', 'financial_support_mechanism')->name('store.financial-support-mechanism');
     });
 
+    // Old misspelled page URLs ("outome") still work for bookmarks; they forward to the corrected ones.
+    foreach (['form2' => 'form2.sixpage', 'form3' => 'form3.secondpage'] as $prefix => $target) {
+        Route::get("{$prefix}/cancer-diagnose-outome", function (Request $request) use ($target) {
+            $query = $request->getQueryString();
+
+            return redirect()->to(route($target) . ($query ? "?{$query}" : ''), 301);
+        });
+    }
 });
 
-Route::middleware(IsAuthenticated::class)->group(function () {
+Route::middleware(RedirectIfLoggedIn::class)->group(function () {
     Route::view(uri: '/', view: 'login')->name( name: 'login');
     // Public self-registration is disabled: accounts are created by an admin under User Management.
     Route::view(uri: 'forgot-password', view: 'forgot')->name(name: 'forgot');

@@ -70,7 +70,7 @@ function renderInputPages($test): array
 
     $test->post(route('admin.validate-hospital-number'), ['HospitalID' => '42']);
     $get('f1_demographic', route('demographic-profile'));
-    $test->post(route('submit-demograpic-profile'), demographicPayload());
+    $test->post(route('submit-demographic-profile'), demographicPayload());
     $get('f1_riskfactor', route('risk-factor'));
     $test->post(route('submit-riskfactor-data'), riskPayload());
     $get('f1_cancer', route('cancer-diagnose'));

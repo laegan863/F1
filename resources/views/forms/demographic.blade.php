@@ -25,7 +25,7 @@
         $sameAddress = old('same_as_address') === 'on';
     @endphp
 
-    <form id="form" method="POST" action="{{ $formAction ?? route('submit-demograpic-profile') }}">
+    <form id="form" method="POST" action="{{ $formAction ?? route('submit-demographic-profile') }}">
         @csrf
         <div class="card-body">
 

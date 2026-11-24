@@ -14,6 +14,7 @@
                     use Carbon\Carbon;
                 @endphp
                 <div class="ibox-content">
+                    @include('admin.component.error-alert')
                     <form action="{{ route('generate-report') }}" method="GET">
                         @csrf
                         <div class="row mb-4">

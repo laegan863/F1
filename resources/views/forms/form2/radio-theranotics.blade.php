@@ -2,7 +2,7 @@
 @section("title", "Radiotherapy & Theranostics")
 @section("nav_title", "RADIOTHERAPY & THERANOSTICS")
 @section("content")
-    <form id="form" method="POST" action="{{ route('store.radiotheraphy') }}" class="card">
+    <form id="form" method="POST" action="{{ route('store.radiotherapy') }}" class="card">
         @csrf
 
         <div class="card-body">

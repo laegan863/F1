@@ -2,7 +2,7 @@
 @section("title", "Demographics Profile")
 @section("nav_title", "DEMOGRAPHIC PROFILE OF PATIENT")
 @section("content")
-    <form id="form" method="POST" action="{{ route('submit-demograpic-profile') }}">
+    <form id="form" method="POST" action="{{ route('submit-demographic-profile') }}">
         @csrf
         <div class="card-body p-5">
             {{-- {{ Session::get('hospitalID') }} --}}

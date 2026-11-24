@@ -51,7 +51,7 @@ it('completes the whole add-record wizard', function () {
 
     $this->get(route('demographic-profile'))->assertOk()->assertSee('wizard-section', false)->assertSee('Step 2 of 5');
 
-    $this->post(route('submit-demograpic-profile'), demographicPayload())->assertRedirect(route('risk-factor'));
+    $this->post(route('submit-demographic-profile'), demographicPayload())->assertRedirect(route('risk-factor'));
     $profile = Demographicprofile::firstOrFail();
     expect($profile->status)->toBe('0')
         ->and($profile->current)->toBe($profile->permanent)
@@ -82,7 +82,7 @@ it('completes the whole add-record wizard', function () {
 it('keeps the risk factor answers when validation fails', function () {
     $this->actingAs($this->user);
     $this->post(route('admin.validate-hospital-number'), ['HospitalID' => '777']);
-    $this->post(route('submit-demograpic-profile'), demographicPayload());
+    $this->post(route('submit-demographic-profile'), demographicPayload());
 
     $this->from(route('risk-factor'))
         ->post(route('submit-riskfactor-data'), riskPayload(['vaccine_hpv' => null]))
@@ -97,7 +97,7 @@ it('keeps the risk factor answers when validation fails', function () {
 it('validates radiotherapy details against the radiotherapy answer', function () {
     $this->actingAs($this->user);
     $this->post(route('admin.validate-hospital-number'), ['HospitalID' => '888']);
-    $this->post(route('submit-demograpic-profile'), demographicPayload());
+    $this->post(route('submit-demographic-profile'), demographicPayload());
     $this->post(route('submit-riskfactor-data'), riskPayload());
     $this->post(route('submit-cancer-diagnose-data'), diagnosisPayload());
 
@@ -108,7 +108,7 @@ it('validates radiotherapy details against the radiotherapy answer', function ()
 it('resumes an unfinished draft', function () {
     $this->actingAs($this->user);
     $this->post(route('admin.validate-hospital-number'), ['HospitalID' => '999']);
-    $this->post(route('submit-demograpic-profile'), demographicPayload());
+    $this->post(route('submit-demographic-profile'), demographicPayload());
     session()->flush();
 
     $this->post(route('admin.validate-hospital-number'), ['HospitalID' => '999'])
@@ -195,10 +195,10 @@ it('treats the patient email address as optional', function () {
 
     $this->get(route('demographic-profile'))->assertSee('Email Address <small class="text-muted">(optional)</small>', false);
 
-    $this->post(route('submit-demograpic-profile'), demographicPayload(['email_address' => 'not-an-email']))
+    $this->post(route('submit-demographic-profile'), demographicPayload(['email_address' => 'not-an-email']))
         ->assertSessionHasErrors('email_address');
 
-    $this->post(route('submit-demograpic-profile'), demographicPayload(['email_address' => '']))
+    $this->post(route('submit-demographic-profile'), demographicPayload(['email_address' => '']))
         ->assertSessionHasNoErrors()->assertRedirect(route('risk-factor'));
 
     expect(Demographicprofile::where('hospitalID', '0000004321')->value('email_address'))->toBeNull();
@@ -229,13 +229,13 @@ it('accepts a 12- or 13-digit PhilHealth PIN', function () {
     $this->get(route('demographic-profile'))->assertSee('placeholder="12-345678901-2"', false)->assertSee('maxlength="15"', false);
 
     foreach (['12345678901', '12345678901234', '12-34567890A-2', ''] as $bad) {
-        $this->post(route('submit-demograpic-profile'), demographicPayload(['philhealth_id' => $bad]))
+        $this->post(route('submit-demographic-profile'), demographicPayload(['philhealth_id' => $bad]))
             ->assertSessionHasErrors('philhealth_id');
     }
 
     // Both lengths are accepted (dashed or not) and stored as digits only
     foreach (['12-345678901-2' => '123456789012', '12-3456789012-3' => '1234567890123', '1234567890123' => '1234567890123'] as $typed => $stored) {
-        $this->post(route('submit-demograpic-profile'), demographicPayload(['philhealth_id' => $typed]))
+        $this->post(route('submit-demographic-profile'), demographicPayload(['philhealth_id' => $typed]))
             ->assertSessionHasNoErrors()->assertRedirect(route('risk-factor'));
         expect(Demographicprofile::where('hospitalID', '0000001212')->value('philhealth_id'))->toBe($stored);
     }
@@ -256,7 +256,7 @@ it('saves a patient with no mobile number and no email', function () {
     $this->get(route('demographic-profile'))->assertSee('Mobile No. <small class="text-muted">(optional)</small>', false)
         ->assertSee('Relative / Guardian Mobile No. <small class="text-muted">(optional)</small>', false);
 
-    $this->post(route('submit-demograpic-profile'), demographicPayload(['mobile_number' => '', 'email_address' => '', 'relative_phone_number' => '']))
+    $this->post(route('submit-demographic-profile'), demographicPayload(['mobile_number' => '', 'email_address' => '', 'relative_phone_number' => '']))
         ->assertSessionHasNoErrors()->assertRedirect(route('risk-factor'));
 
     $p = Demographicprofile::where('hospitalID', '0000006543')->firstOrFail();

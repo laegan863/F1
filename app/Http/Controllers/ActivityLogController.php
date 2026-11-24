@@ -6,9 +6,12 @@ use App\Models\ActivityLog;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Traits\LogsActivity;
 
 class ActivityLogController extends Controller
 {
+    use LogsActivity;
+
     /**
      * Display a listing of activity logs
      */
@@ -77,6 +80,12 @@ class ActivityLogController extends Controller
 
         $date = now()->subDays($request->days);
         $count = ActivityLog::where('created_at', '<', $date)->delete();
+
+        // Record the cleanup itself, so the remaining log shows who removed history and how much.
+        $this->logActivity('delete', "Cleaned up {$count} activity log(s) older than {$request->days} days", null, [
+            'days' => (int) $request->days,
+            'deleted' => $count,
+        ]);
 
         return redirect()->back()->with('success', "Deleted {$count} activity log(s) older than {$request->days} days.");
     }

@@ -60,8 +60,8 @@ function form2Pages(): array
     return [
         'submit.follow-up' => firstPage(),
         'store.patient-eco-status' => no(['ecog_status', 'surgery_done', 'ongoing_drug_therapy']),
-        'store.radiotheraphy' => no(['radiotherapy', 'theranostics']),
-        'store.other-theraphy' => no(['other_cancer_therapies']) + ['pre_op_scenario' => 'x', 'post_op_scenario' => 'y', 'treatment_status' => 'Ongoing'],
+        'store.radiotherapy' => no(['radiotherapy', 'theranostics']),
+        'store.other-therapy' => no(['other_cancer_therapies']) + ['pre_op_scenario' => 'x', 'post_op_scenario' => 'y', 'treatment_status' => 'Ongoing'],
         'form2.store.change-treatment-plan' => no(['surgery_plan', 'anti_cancer_change', 'radio_change', 'thera_change', 'palliative', 'other_cancer']),
         'store-cancer-diagnose-outcome' => ['diagnosis_outcome' => ['Stable Disease'], 'diagnosis_outcome_date' => now()->toDateString(), 'financial_support' => 'No'],
     ];
@@ -191,7 +191,7 @@ it('edits a saved entry page and keeps it complete', function () {
     $this->get(route('followup.edit', ['form' => 'form2', 'id' => $entry->id, 'page' => 3]))->assertRedirect(route('form2-thirdpage'));
     $this->get(route('form2-thirdpage'))->assertOk()->assertSee('Editing record')->assertSee('value="No"', false);
 
-    $this->post(route('store.radiotheraphy'), ['radiotherapy' => 'Yes', 'radio_date_start' => '2026-10-01', 'radio_type' => ['3DCRT'], 'radio_goal' => 'Curative', 'theranostics' => 'No'])
+    $this->post(route('store.radiotherapy'), ['radiotherapy' => 'Yes', 'radio_date_start' => '2026-10-01', 'radio_type' => ['3DCRT'], 'radio_goal' => 'Curative', 'theranostics' => 'No'])
         ->assertRedirect(route('user.multiform', ['hospitalID' => HID, 'form' => 2]));
 
     expect($entry->fresh()->status)->toBe('1')
