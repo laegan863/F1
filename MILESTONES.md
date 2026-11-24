@@ -1,40 +1,63 @@
 # HBCR Development Milestones
 
 **System:** Hospital-Based Cancer Registry (HBCR), Laravel 12 + MySQL
-**Development started:** 15 Sep 2025
-**Milestone plan started:** 24 Nov 2026 (Week 1)
+**Initial development:** 15 Sep – 24 Nov 2025
+**Maintenance update:** Nov 2026
+**Milestone plan started:** 24 Nov 2026
 **Status key:** ✅ done · 🟡 in progress · ⬜ not started
 
 Each task has a **Finished on** date. When you complete a task, change its status to ✅ and write the date (e.g. `03 Dec 2026`). Leave `—` while it is still open.
 
 ---
 
-## Week 1: Accomplishments to date (15 Sep 2025 – 24 Nov 2026)
+## Phase 1: Initial development (15 Sep – 24 Nov 2025) ✅
 
-Everything built so far, with the dates taken from the git history: the day the feature first appeared (**Started**) and its latest completed change (**Finished on**).
+The original build of the system. Dates come from the git history: the day the feature first appeared (**Started**) and the day it was completed in 2025 (**Finished on**).
 
-| # | Accomplishment | Status | Started | Finished on |
+| # | Feature | Status | Started | Finished on |
 |---|---|---|---|---|
-| 1 | Login page and authentication (admin / user roles) | ✅ | 15 Sep 2025 | 14 Jan 2026 |
-| 2 | Admin dashboard | ✅ | 15 Sep 2025 | 06 Nov 2026 |
-| 3 | Patient records list | ✅ | 19 Sep 2025 | 06 Nov 2026 |
-| 4 | User management (add / edit / delete users) | ✅ | 22 Sep 2025 | 06 Nov 2026 |
-| 5 | Form 1: Add Record wizard (Demographic → Risk Factors → Cancer Diagnosis → Treatment) | ✅ | 15 Sep 2025 | 10 Nov 2026 |
-| 6 | Form 1 printable version (official HBCR paper form) | ✅ | 16 Sep 2025 | 07 Jan 2026 |
-| 7 | Form 2: Follow-up (ECOG status, radiotherapy/theranostics, other therapies, change of plan, outcome) | ✅ | 25 Sep 2025 | 20 Nov 2026 |
-| 8 | Form 3: Patient Surveillance (outcome, treatment history, financial support) | ✅ | 29 Sep 2025 | 06 Nov 2026 |
-| 9 | Form 4: Palliative (ESAS-r, pain assessment, interventions, outcome, financial support) | ✅ | 29 Sep 2025 | 06 Nov 2026 |
-| 10 | Printable versions of Forms 2–4 | ✅ | 01 Oct 2025 | 20 Nov 2026 |
+| 1 | Login page and authentication (admin / user roles) | ✅ | 15 Sep 2025 | 24 Nov 2025 |
+| 2 | Admin dashboard | ✅ | 15 Sep 2025 | 06 Nov 2025 |
+| 3 | Patient records list | ✅ | 19 Sep 2025 | 25 Sep 2025 |
+| 4 | User management (add / edit / delete users) | ✅ | 22 Sep 2025 | 25 Sep 2025 |
+| 5 | Form 1: Add Record wizard (Demographic → Risk Factors → Cancer Diagnosis → Treatment) | ✅ | 15 Sep 2025 | 06 Nov 2025 |
+| 6 | Form 1 printable version (official HBCR paper form) | ✅ | 16 Sep 2025 | 13 Oct 2025 |
+| 7 | Form 2: Follow-up (ECOG status, radiotherapy/theranostics, other therapies, change of plan, outcome) | ✅ | 25 Sep 2025 | 06 Nov 2025 |
+| 8 | Form 3: Patient Surveillance (outcome, treatment history, financial support) | ✅ | 29 Sep 2025 | 07 Oct 2025 |
+| 9 | Form 4: Palliative (ESAS-r, pain assessment, interventions, outcome, financial support) | ✅ | 29 Sep 2025 | 06 Nov 2025 |
+| 10 | Printable versions of Forms 2–4 | ✅ | 01 Oct 2025 | 28 Oct 2025 |
 | 11 | Report templates RF-0A … RF-3A (layouts; live data still partial, see M3) | 🟡 | 15 Oct 2025 | 28 Oct 2025 |
 | 12 | Support messages (users send, admin responds) | ✅ | 06 Nov 2025 | 06 Nov 2025 |
-| 13 | Activity logs (view, filter, export, cleanup) | ✅ | 06 Nov 2025 | 14 Jan 2026 |
-| 14 | My Profile and change password | ✅ | 06 Nov 2026 | 06 Nov 2026 |
-| 15 | Edit and delete saved Form 1 steps and Form 2–4 entries | ✅ | 06 Nov 2026 | 06 Nov 2026 |
-| 16 | Option lists matched to the official print forms (`config/cbcr_options.php`) | ✅ | 06 Nov 2026 | 06 Nov 2026 |
-| 17 | Automated feature tests for the forms (40 tests) | ✅ | 06 Nov 2026 | 10 Nov 2026 |
-| 18 | Optional email / mobile / relative phone in the demographic profile | ✅ | 06 Nov 2026 | 10 Nov 2026 |
-| 19 | Fixes: therapy date processing, drug regimen and chemo cycles | ✅ | 20 Nov 2026 | 20 Nov 2026 |
-| 20 | Development milestone plan (this document) | ✅ | 24 Nov 2026 | 24 Nov 2026 |
+| 13 | Activity logs (view, filter, export, cleanup) | ✅ | 06 Nov 2025 | 06 Nov 2025 |
+
+---
+
+## Phase 2: Maintenance and updates
+
+### Small updates (Dec 2025 – Jan 2026)
+
+| # | Update | Status | Finished on |
+|---|---|---|---|
+| U1 | Redesigned the demographic profile page | ✅ | 17 Dec 2025 |
+| U2 | Small change to the cancer diagnosis page | ✅ | 05 Jan 2026 |
+| U3 | Changed the layout of the Form 1 printable version | ✅ | 07 Jan 2026 |
+| U4 | Page navigation styling, and activity logs show 10 per page | ✅ | 14 Jan 2026 |
+
+### November 2026 maintenance update
+
+| # | Update | Status | Finished on |
+|---|---|---|---|
+| U5 | My Profile page and change password | ✅ | 06 Nov 2026 |
+| U6 | Edit and delete saved Form 1 steps and Form 2–4 entries (shared follow-up wizard) | ✅ | 06 Nov 2026 |
+| U7 | Fixed saved follow-up form data (data-fix migration) and refreshed the UI styling | ✅ | 06 Nov 2026 |
+| U8 | Option lists matched to the official print forms (`config/cbcr_options.php`) | ✅ | 06 Nov 2026 |
+| U9 | Email address made optional in the demographic profile | ✅ | 06 Nov 2026 |
+| U10 | Automated feature tests for the forms (40 tests) | ✅ | 06 Nov 2026 |
+| U11 | Added missing columns to the Form 2 tables | ✅ | 10 Nov 2026 |
+| U12 | Mobile and relative phone numbers made optional | ✅ | 10 Nov 2026 |
+| U13 | Fixed therapy date processing on the Form 2 print | ✅ | 20 Nov 2026 |
+| U14 | Fixed drug regimen and chemo cycle display for patient statuses | ✅ | 20 Nov 2026 |
+| U15 | Development milestone plan (this document) | ✅ | 24 Nov 2026 |
 
 Still open from the current system: **Forgot password** is only a page with no reset flow (M4). **Docs, CI and deployment** are not started (M6).
 
@@ -174,7 +197,8 @@ Goal: production release.
 
 | Milestone | Target | Status | Finished on |
 |---|---|---|---|
-| Week 1: Accomplishments to date | 15 Sep 2025 – 24 Nov 2026 | ✅ | 24 Nov 2026 |
+| Phase 1: Initial development | 15 Sep – 24 Nov 2025 | ✅ | 24 Nov 2025 |
+| Phase 2: Maintenance and updates | Dec 2025 – Nov 2026 | ✅ | 24 Nov 2026 |
 | M1 Stabilize foundation | 24 Nov – 5 Dec 2026 | 🟡 8 of 9 tasks | — |
 | M2 Data integrity | 8 – 19 Dec 2026 | ⬜ | — |
 | M3 Reports | 4 – 22 Jan 2027 | ⬜ | — |
@@ -184,8 +208,11 @@ Goal: production release.
 | M7 Post-launch | Q2 2027 | ⬜ | — |
 
 ```
-Sep 15 2025 ── development starts
-Nov 24 2026 ─┬─ Week 1: accomplishments recorded ✅
+Sep 15 2025 ─┬─ Phase 1: initial development
+Nov 24 2025 ─┤   ✅ finished
+Dec 2025 ────┼─ Phase 2: small updates (Dec 2025 – Jan 2026)
+Nov 2026 ────┼─ Phase 2: November 2026 maintenance update ✅
+Nov 24 2026 ─┤
              ├─ M1 Stabilize ............ 2 wks  (Nov 24 – Dec 5)
 Dec 08 ──────┼─ M2 Data integrity ....... 2 wks
              │   (holiday break)
