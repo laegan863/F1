@@ -1,49 +1,65 @@
 # HBCR Development Milestones
 
 **System:** Hospital-Based Cancer Registry (HBCR), Laravel 12 + MySQL
-**Plan start:** 24 Nov 2026
+**Development started:** 15 Sep 2025
+**Milestone plan started:** 24 Nov 2026 (Week 1)
 **Status key:** ✅ done · 🟡 in progress · ⬜ not started
 
-The plan starts from where the code is today: about 100 commits, Forms 1–4 working, a basic admin panel, and 40 feature tests. Each milestone ends with a check you can actually test. The week counts are estimates for one developer, so shift them to fit your team.
+Each task has a **Finished on** date. When you complete a task, change its status to ✅ and write the date (e.g. `03 Dec 2026`). Leave `—` while it is still open.
 
 ---
 
-## Where the system is today (baseline)
+## Week 1: Accomplishments to date (15 Sep 2025 – 24 Nov 2026)
 
-| Area | State | Evidence in repo |
-|---|---|---|
-| Login, roles (admin/user), profile, password change | ✅ | `AuthController`, `ProfileController`, `IsAdmin` middleware |
-| Form 1: Add Record wizard (Demographic → Risk Factors → Cancer Diagnosis → Treatment) with step edit | ✅ | `MainController`, `forms/*.blade.php`, `RecordWizardTest` |
-| Form 2: Follow-up (patient/ECOG status, radiotherapy, other therapies, change of plan, outcome) | ✅ | `Form2Controller`, `forms/form2/*` |
-| Form 3: Patient Surveillance (outcome, treatment history, financial support) | ✅ | `Form3Controller`, `forms/form3/*` |
-| Form 4: Palliative (ESAS-r, pain assessment, interventions, outcome, financial support) | ✅ | `Form4Controller`, `forms/form4/*` |
-| Printable versions that match the official paper forms | ✅ | `PrintConditionsTest`, `config/cbcr_options.php` |
-| Admin: dashboard, records, users, activity logs, support messages | ✅ | `AdminController`, `ActivityLogController`, `SupportMessageController` |
-| Report templates RF-0A … RF-3A | 🟡 | 12 views exist, but most are static `Route::view` pages and `ReportController` only covers part of them |
-| Forgot password | 🟡 | The page exists, but no reset flow is wired up |
-| Automated tests | 🟡 | 40 Pest tests covering the forms; none for reports, admin or security |
-| Docs, CI, deployment | ⬜ | README is still the Laravel default; no CI; `F1.zip` (90 MB) was committed in the repo (removed in M1, still in history) |
+Everything built so far, with the dates taken from the git history: the day the feature first appeared (**Started**) and its latest completed change (**Finished on**).
+
+| # | Accomplishment | Status | Started | Finished on |
+|---|---|---|---|---|
+| 1 | Login page and authentication (admin / user roles) | ✅ | 15 Sep 2025 | 14 Jan 2026 |
+| 2 | Admin dashboard | ✅ | 15 Sep 2025 | 06 Nov 2026 |
+| 3 | Patient records list | ✅ | 19 Sep 2025 | 06 Nov 2026 |
+| 4 | User management (add / edit / delete users) | ✅ | 22 Sep 2025 | 06 Nov 2026 |
+| 5 | Form 1: Add Record wizard (Demographic → Risk Factors → Cancer Diagnosis → Treatment) | ✅ | 15 Sep 2025 | 10 Nov 2026 |
+| 6 | Form 1 printable version (official HBCR paper form) | ✅ | 16 Sep 2025 | 07 Jan 2026 |
+| 7 | Form 2: Follow-up (ECOG status, radiotherapy/theranostics, other therapies, change of plan, outcome) | ✅ | 25 Sep 2025 | 20 Nov 2026 |
+| 8 | Form 3: Patient Surveillance (outcome, treatment history, financial support) | ✅ | 29 Sep 2025 | 06 Nov 2026 |
+| 9 | Form 4: Palliative (ESAS-r, pain assessment, interventions, outcome, financial support) | ✅ | 29 Sep 2025 | 06 Nov 2026 |
+| 10 | Printable versions of Forms 2–4 | ✅ | 01 Oct 2025 | 20 Nov 2026 |
+| 11 | Report templates RF-0A … RF-3A (layouts; live data still partial, see M3) | 🟡 | 15 Oct 2025 | 28 Oct 2025 |
+| 12 | Support messages (users send, admin responds) | ✅ | 06 Nov 2025 | 06 Nov 2025 |
+| 13 | Activity logs (view, filter, export, cleanup) | ✅ | 06 Nov 2025 | 14 Jan 2026 |
+| 14 | My Profile and change password | ✅ | 06 Nov 2026 | 06 Nov 2026 |
+| 15 | Edit and delete saved Form 1 steps and Form 2–4 entries | ✅ | 06 Nov 2026 | 06 Nov 2026 |
+| 16 | Option lists matched to the official print forms (`config/cbcr_options.php`) | ✅ | 06 Nov 2026 | 06 Nov 2026 |
+| 17 | Automated feature tests for the forms (40 tests) | ✅ | 06 Nov 2026 | 10 Nov 2026 |
+| 18 | Optional email / mobile / relative phone in the demographic profile | ✅ | 06 Nov 2026 | 10 Nov 2026 |
+| 19 | Fixes: therapy date processing, drug regimen and chemo cycles | ✅ | 20 Nov 2026 | 20 Nov 2026 |
+| 20 | Development milestone plan (this document) | ✅ | 24 Nov 2026 | 24 Nov 2026 |
+
+Still open from the current system: **Forgot password** is only a page with no reset flow (M4). **Docs, CI and deployment** are not started (M6).
 
 ---
 
 ## Milestone 1: Stabilize and clean up the foundation
-**Target:** Week 1–2 (24 Nov – 5 Dec 2026) · 🟡
+**Target:** Week 1–2 (24 Nov – 5 Dec 2026) · 🟡 almost done
 
 Goal: make the codebase safe to build on before adding features.
 
-- [x] Remove `F1.zip` from the repository and add `*.zip` to `.gitignore`
-- [ ] Purge `F1.zip` from git history (needs a force-push, so the repo owner does it, see note below)
-- [x] Rename the middleware so the names say what they do: `IsNotAuth` → `RequireLogin`, `IsAuthenticated` → `RedirectIfLoggedIn`
-- [x] Whitelist the report codes in `AdminController::generate_report` (`AdminController::REPORT_CODES`). Unknown codes now get a validation error
-- [x] Fix route typos: `submit-demographic-profile`, `store-radiotherapy`, `store-other-therapy`, `store-financial-support` (was a dotted URL), and `form2/` + `form3/cancer-diagnose-outcome` (old `outome` URLs redirect with 301)
-- [x] Audit every POST/PUT/DELETE endpoint for validation. All input-taking endpoints already validate inline with `$request->validate()`. The unused, empty `DemographicsRequest` stub was removed
-- [x] Close the audit-trail gaps: support messages (send / respond / delete) and activity-log cleanup are now logged
-- [x] Feature tests for all of the above (`tests/Feature/FoundationTest.php`)
-- [x] Run `pint` once over the whole codebase to set the code style (separate commit, so the style diff doesn't hide real changes)
+| # | Task | Status | Finished on |
+|---|---|---|---|
+| 1.1 | Remove `F1.zip` from the repository and add `*.zip` to `.gitignore` | ✅ | 24 Nov 2026 |
+| 1.2 | Rename middleware so the names say what they do: `IsNotAuth` → `RequireLogin`, `IsAuthenticated` → `RedirectIfLoggedIn` | ✅ | 24 Nov 2026 |
+| 1.3 | Only accept known report codes in `generate_report` (`AdminController::REPORT_CODES`) | ✅ | 24 Nov 2026 |
+| 1.4 | Fix route typos (`demographic`, `radiotherapy`, `other-therapy`, `store-financial-support`, `cancer-diagnose-outcome`). Old page URLs redirect | ✅ | 24 Nov 2026 |
+| 1.5 | Audit every POST/PUT/DELETE endpoint for validation (all already validate; unused `DemographicsRequest` removed) | ✅ | 24 Nov 2026 |
+| 1.6 | Log support messages (send / respond / delete) and activity-log cleanups | ✅ | 24 Nov 2026 |
+| 1.7 | Feature tests for the above (`tests/Feature/FoundationTest.php`, 53 tests passing) | ✅ | 24 Nov 2026 |
+| 1.8 | Apply Laravel Pint code style to the whole codebase | ✅ | 24 Nov 2026 |
+| 1.9 | Purge `F1.zip` from git history (owner only, needs force-push, see note) | ⬜ | — |
 
 **Exit check:** `php artisan test` passes, the repo clone is under 20 MB, and every POST route has validation.
 
-> **History purge note:** removing `F1.zip` from the current tree keeps it out of new work, but it still lives in old commits, so clones stay about 90 MB. To shrink the repo, the owner runs `git filter-repo --path F1.zip --invert-paths` on a fresh mirror clone, force-pushes, and everyone re-clones.
+> **History purge note:** `F1.zip` is gone from the current files but still lives in old commits, so clones stay about 90 MB. To shrink the repo, the owner runs `git filter-repo --path F1.zip --invert-paths` on a fresh mirror clone, force-pushes, and everyone re-clones.
 
 ---
 
@@ -52,13 +68,15 @@ Goal: make the codebase safe to build on before adding features.
 
 Goal: every case is unique, complete and linked correctly across Forms 1–4.
 
-- [ ] Enforce a unique hospital number per facility, with a DB index and a duplicate-patient check (name + birthdate + sex)
-- [ ] Add foreign keys and indexes on the link columns (`code`, `hospitalID`) in the 20+ form tables
-- [ ] Add date-of-diagnosis and incidence-date fields as the basis for reporting (reports currently filter on `created_at`)
-- [ ] Add record status: Draft → Complete → Validated (registrar review step)
-- [ ] Add data-quality checks: required fields per cancer site, impossible dates (death before diagnosis, treatment before diagnosis), and age/sex vs. site conflicts (e.g. male + cervix)
-- [ ] Switch to soft deletes for patient records so admin deletes can be recovered
-- [ ] Add a patient timeline view showing Form 1 + all follow-ups (Forms 2/3/4) in order
+| # | Task | Status | Finished on |
+|---|---|---|---|
+| 2.1 | Unique hospital number per facility (DB index) and duplicate-patient check (name + birthdate + sex) | ⬜ | — |
+| 2.2 | Foreign keys and indexes on the link columns (`code`, `hospitalID`) in the form tables | ⬜ | — |
+| 2.3 | Date-of-diagnosis and incidence-date fields as the basis for reporting (reports now filter on `created_at`) | ⬜ | — |
+| 2.4 | Record status: Draft → Complete → Validated (registrar review step) | ⬜ | — |
+| 2.5 | Data-quality checks: required fields per site, impossible dates, age/sex vs. site conflicts | ⬜ | — |
+| 2.6 | Soft deletes for patient records, so admin deletes can be recovered | ⬜ | — |
+| 2.7 | Patient timeline view showing Form 1 + all follow-ups (Forms 2/3/4) in order | ⬜ | — |
 
 **Exit check:** you cannot save the same patient twice, and the "data quality" screen lists every incomplete or invalid record.
 
@@ -69,12 +87,14 @@ Goal: every case is unique, complete and linked correctly across Forms 1–4.
 
 Goal: every official report (RF-0A … RF-3A) is generated from live data and exported.
 
-- [ ] Move all 12 `reports.rf-*` routes from static `Route::view` to `ReportController` methods that query real data
-- [ ] Fix the date filter: the current YEAR/MONTH `whereBetween` breaks on ranges that cross a year (e.g. Nov 2026 → Feb 2027). Use a real date range
-- [ ] Group cancer sites with a normalized site code (ICD-O-3 topography) instead of string-stripping the JSON `cancer_sites` column
-- [ ] Add PDF export (spatie/laravel-pdf is already installed) and Excel/CSV export for each report
-- [ ] Dashboard: cases by site, by stage, by sex/age group, monthly trend, follow-up compliance
-- [ ] Add tests: one feature test per report that checks the totals against seeded data
+| # | Task | Status | Finished on |
+|---|---|---|---|
+| 3.1 | Move all 12 `reports.rf-*` pages from static views to `ReportController` methods with real data | ⬜ | — |
+| 3.2 | Fix the date filter for ranges that cross a year (e.g. Nov 2026 → Feb 2027) | ⬜ | — |
+| 3.3 | Group cancer sites by a normalized site code (ICD-O-3 topography) | ⬜ | — |
+| 3.4 | PDF export (spatie/laravel-pdf) and Excel/CSV export for each report | ⬜ | — |
+| 3.5 | Dashboard: cases by site, stage, sex/age group, monthly trend, follow-up compliance | ⬜ | — |
+| 3.6 | One feature test per report checking totals against seeded data | ⬜ | — |
 
 **Exit check:** an admin picks any report and date range, and the numbers match a hand count of the seeded test data.
 
@@ -85,13 +105,15 @@ Goal: every official report (RF-0A … RF-3A) is generated from live data and ex
 
 Goal: the system is safe to hold real patient data (Data Privacy Act / sensitive personal information).
 
-- [ ] Build a working forgot-password / reset-password flow with mail
-- [ ] Add a password policy, login throttling, account lockout and forced password change on first login
-- [ ] Add finer roles: Admin, Registrar/Encoder, Validator, Viewer (read-only/reports), with policies per action
-- [ ] Session timeout, HTTPS-only cookies, and CSRF checks on all forms
-- [ ] Encrypt sensitive columns (names, contact numbers, address) or at least restrict who can see them
-- [ ] Log every view and export of patient data, not just edits
-- [ ] Activity-log retention policy and scheduled cleanup (`activity-logs/cleanup` exists, so schedule it)
+| # | Task | Status | Finished on |
+|---|---|---|---|
+| 4.1 | Working forgot-password / reset-password flow with mail | ⬜ | — |
+| 4.2 | Password policy, login throttling, account lockout, forced password change on first login | ⬜ | — |
+| 4.3 | Finer roles: Admin, Registrar/Encoder, Validator, Viewer, with permissions per action | ⬜ | — |
+| 4.4 | Session timeout, HTTPS-only cookies, CSRF checks on all forms | ⬜ | — |
+| 4.5 | Encrypt or restrict sensitive patient fields (names, contact numbers, address) | ⬜ | — |
+| 4.6 | Log every view and export of patient data, not just edits | ⬜ | — |
+| 4.7 | Activity-log retention policy and scheduled cleanup | ⬜ | — |
 
 **Exit check:** security review checklist passes, and each role can only reach its own pages (with tests per role).
 
@@ -102,12 +124,14 @@ Goal: the system is safe to hold real patient data (Data Privacy Act / sensitive
 
 Goal: encoders can enter a full case quickly and without errors.
 
-- [ ] Autosave drafts in the multi-step wizards, so leaving mid-form does not lose data
-- [ ] Search and filters on Records (hospital no., name, site, date range, status) with pagination
-- [ ] Inline validation messages and a summary/review page before final submit
-- [ ] Follow-up reminders: list of patients due for Form 2/3/4 follow-up
-- [ ] Mobile/tablet layout check for the forms
-- [ ] Clean up leftover files (`forms/demo-backup.blade.php`, unused template images in `public/assets/img`)
+| # | Task | Status | Finished on |
+|---|---|---|---|
+| 5.1 | Autosave drafts in the multi-step wizards | ⬜ | — |
+| 5.2 | Search and filters on Records (hospital no., name, site, date range, status) with pagination | ⬜ | — |
+| 5.3 | Inline validation messages and a review page before final submit | ⬜ | — |
+| 5.4 | Follow-up reminders: patients due for Form 2/3/4 follow-up | ⬜ | — |
+| 5.5 | Mobile/tablet layout check for the forms | ⬜ | — |
+| 5.6 | Remove leftover files (`forms/demo-backup.blade.php`, unused template images) | ⬜ | — |
 
 **Exit check:** user-acceptance test with 2–3 actual encoders. A full Form 1 takes under 10 minutes with no data loss.
 
@@ -118,14 +142,16 @@ Goal: encoders can enter a full case quickly and without errors.
 
 Goal: production release.
 
-- [ ] CI with GitHub Actions: `composer install`, `pint --test`, `php artisan test` on every PR
-- [ ] Bring test coverage to all controllers (admin, reports, support, activity logs, auth)
-- [ ] Rewrite `README.md`: what HBCR is, local setup, `.env` keys, seeding an admin, running tests
-- [ ] User manual for encoders and admins, covering each form and each report
-- [ ] Production setup: server, MySQL, queue worker, scheduler, HTTPS, mail, PDF rendering (Chromium for spatie/pdf)
-- [ ] Automated daily database backups, plus a documented restore drill
-- [ ] Staging environment, then UAT sign-off, then production go-live
-- [ ] Release `v1.0.0` tag and changelog
+| # | Task | Status | Finished on |
+|---|---|---|---|
+| 6.1 | CI with GitHub Actions: install, `pint --test`, `php artisan test` on every PR | ⬜ | — |
+| 6.2 | Test coverage for all controllers (admin, reports, support, activity logs, auth) | ⬜ | — |
+| 6.3 | Rewrite `README.md`: what HBCR is, setup, `.env` keys, seeding an admin, running tests | ⬜ | — |
+| 6.4 | User manual for encoders and admins (each form, each report) | ⬜ | — |
+| 6.5 | Production setup: server, MySQL, queue worker, scheduler, HTTPS, mail, PDF rendering | ⬜ | — |
+| 6.6 | Automated daily database backups and a tested restore | ⬜ | — |
+| 6.7 | Staging, UAT sign-off, production go-live | ⬜ | — |
+| 6.8 | Release `v1.0.0` tag and changelog | ⬜ | — |
 
 **Exit check:** v1.0.0 runs in production, backup restore has been tested, and users are trained.
 
@@ -134,29 +160,44 @@ Goal: production release.
 ## Milestone 7 (post-launch): Integration and growth
 **Target:** after go-live, Q2 2027 · ⬜
 
-- [ ] Export in the format required by the national/population-based cancer registry (CanReg5 or DOH format)
-- [ ] Multi-facility support (facility ID on every record, data scoped per facility)
-- [ ] Survival analysis report (1-, 3-, 5-year) using follow-up vital status
-- [ ] REST API for authorized integrations (e.g. hospital EMR lookup by hospital number)
-- [ ] Performance tuning for large datasets (indexes, caching dashboard queries, queued report generation)
+| # | Task | Status | Finished on |
+|---|---|---|---|
+| 7.1 | Export for the national/population-based cancer registry (CanReg5 or DOH format) | ⬜ | — |
+| 7.2 | Multi-facility support (facility ID on every record, data scoped per facility) | ⬜ | — |
+| 7.3 | Survival analysis report (1-, 3-, 5-year) | ⬜ | — |
+| 7.4 | REST API for authorized integrations (e.g. EMR lookup by hospital number) | ⬜ | — |
+| 7.5 | Performance tuning for large datasets | ⬜ | — |
 
 ---
 
-## Timeline at a glance
+## Progress summary
+
+| Milestone | Target | Status | Finished on |
+|---|---|---|---|
+| Week 1: Accomplishments to date | 15 Sep 2025 – 24 Nov 2026 | ✅ | 24 Nov 2026 |
+| M1 Stabilize foundation | 24 Nov – 5 Dec 2026 | 🟡 8 of 9 tasks | — |
+| M2 Data integrity | 8 – 19 Dec 2026 | ⬜ | — |
+| M3 Reports | 4 – 22 Jan 2027 | ⬜ | — |
+| M4 Security | 25 Jan – 5 Feb 2027 | ⬜ | — |
+| M5 Usability | 8 – 19 Feb 2027 | ⬜ | — |
+| M6 Test, docs, go-live | 22 Feb – 12 Mar 2027 | ⬜ | — |
+| M7 Post-launch | Q2 2027 | ⬜ | — |
 
 ```
-Nov 24 ─┬─ M1 Stabilize ............ 2 wks
-Dec 08 ─┼─ M2 Data integrity ....... 2 wks
-        │   (holiday break)
-Jan 04 ─┼─ M3 Reports .............. 3 wks
-Jan 25 ─┼─ M4 Security ............. 2 wks
-Feb 08 ─┼─ M5 Usability ............ 2 wks
-Feb 22 ─┼─ M6 Test/Docs/Deploy ..... 3 wks
-Mar 12 ─┴─ 🚀 v1.0.0 go-live → M7 post-launch
+Sep 15 2025 ── development starts
+Nov 24 2026 ─┬─ Week 1: accomplishments recorded ✅
+             ├─ M1 Stabilize ............ 2 wks  (Nov 24 – Dec 5)
+Dec 08 ──────┼─ M2 Data integrity ....... 2 wks
+             │   (holiday break)
+Jan 04 2027 ─┼─ M3 Reports .............. 3 wks
+Jan 25 ──────┼─ M4 Security ............. 2 wks
+Feb 08 ──────┼─ M5 Usability ............ 2 wks
+Feb 22 ──────┼─ M6 Test/Docs/Deploy ..... 3 wks
+Mar 12 ──────┴─ 🚀 v1.0.0 go-live → M7 post-launch
 ```
 
-## How to track progress
+## How to update this file
 
-- Create one GitHub Milestone per section above (M1 … M7) and turn each checkbox into an issue.
-- Tick boxes in this file as issues close, and update the status icon in each heading.
-- Review at the end of every milestone: did the exit check pass? If not, carry the remaining items forward before starting the next one.
+1. When you finish a task, change ⬜ to ✅ and replace `—` with the date.
+2. When every task in a milestone is ✅ and its exit check passes, fill in that milestone's **Finished on** in the progress summary.
+3. If a milestone runs late, keep the original target and note the new date next to it, so the record stays honest.
